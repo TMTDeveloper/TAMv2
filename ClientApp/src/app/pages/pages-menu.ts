@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Risk Matriks Indicator',
-        link: '/pages/master/risk-mastriks-indicator',
+        link: '/pages/master/risk-matriks-indicator',
       },
     ],
   },

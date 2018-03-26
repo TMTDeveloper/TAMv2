@@ -2,14 +2,14 @@ import { Component, ViewChild } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { RiskIndicatorModalComponent } from "./modal/risk.indicator.modal.component";
+import { RiskMatriksIndicatorModalComponent } from "./modal/risk.matriks.indicator.modal.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 @Component({
-  selector: "ngx-risk-indicator",
-  templateUrl: "./risk.indicator.component.html"
+  selector: "ngx-risk-matriks-indicator",
+  templateUrl: "./risk.matriks.indicator.component.html"
 })
-export class RiskIndicatorComponent {
+export class RiskMatriksIndicatorComponent {
   @ViewChild("myForm") private myForm: NgForm;
   settings: any = {
     add: {
@@ -49,19 +49,38 @@ export class RiskIndicatorComponent {
         editable: false,
         width: "5%"
       },
-      DESCRIPTION: {
-        title: "Description",
-        type: "string",
+      CONDITION1: {
+        title: "Condition 1",
+        type: "text",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "30%",
+        editor: {
+          type: "list",
+          config: {
+            list: []
+          }
+        }
       },
-      SCORE: {
-        title: "Score ",
+      CONDITION2: {
+        title: "Condition 2",
+        type: "text",
+        filter: false,
+        editable: true,
+        width: "30%",
+        editor: {
+          type: "list",
+          config: {
+            list: []
+          }
+        }
+      },
+      RESULT: {
+        title: "Result",
         type: "number",
         filter: false,
         editable: true,
-        width: "10%"
+        width: "20%"
       }
     }
   };
@@ -149,11 +168,14 @@ export class RiskIndicatorComponent {
   }
 
   showModal(no_iku) {
-    this.activeModal = this.modalService.open(RiskIndicatorModalComponent, {
-      windowClass: "xlModal",
-      container: "nb-layout",
-      backdrop: "static"
-    });
+    this.activeModal = this.modalService.open(
+      RiskMatriksIndicatorModalComponent,
+      {
+        windowClass: "xlModal",
+        container: "nb-layout",
+        backdrop: "static"
+      }
+    );
     let lastIndex = 0;
     for (let data in this.tabledata) {
       if (

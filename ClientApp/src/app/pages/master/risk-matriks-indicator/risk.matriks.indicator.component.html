@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>Risk Indicator</nb-card-header>
+  <nb-card-header>Risk Matriks Indicator</nb-card-header>
   <nb-card-body>
     <form #myForm="ngForm" (ngSubmit)="submit()">
       <div class="form-group">
@@ -14,6 +14,20 @@
           <select class="form-control" name="condition" ngModel required (change)="reload()">
             <option *ngFor="let data of condition" value="{{data.data}}">{{data.desc}}</option>
           </select>
+        </div>
+
+      </div>
+      <div class="row ml-1 mb-1">
+
+        <div class="col-sm-6">
+
+          Condition :
+        </div>
+
+
+
+        <div class="col-sm-6">
+          Condition :
         </div>
 
       </div>
