@@ -1,0 +1,116 @@
+<nb-card>
+  <nb-card-header>Risk Indicator</nb-card-header>
+  <nb-card-body>
+    <form #myForm="ngForm" (ngSubmit)="submit()">
+      <div class="form-group">
+        <div class="col-sm-2">
+          <label>Year</label>
+          <input type="text" class="form-control" ngModel name="yearPeriode">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-3">
+          <label>Division</label>
+          <input type="text" class="form-control" ngModel name="division">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-3">
+          <label>Department</label>
+          <input type="text" class="form-control" ngModel name="department">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-3">
+          <label>Risk No</label>
+          <input type="text" class="form-control" ngModel name="riskno">
+        </div>
+      </div>
+
+      <!-- <div class="col-sm-auto row">
+        <div class="col-sm-auto">
+          <div class="form-group">
+            <button type="submit" class="btn btn-success ">Submit</button>
+          </div>
+        </div>
+        <div class="col-sm-auto">
+          <div class="form-group">
+            <button type="button" class="btn btn-success ">Add New</button>
+          </div>
+        </div>
+      </div> -->
+
+      <nb-tabset>
+        <nb-tab tabTitle="Division/Department">
+          <div class="form-group mt-3">
+            <div class="col-sm-2">
+              <label>Division</label>
+              <input type="text" class="form-control" ngModel name="division">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2">
+              <label>Department</label>
+              <input type="text" class="form-control" ngModel name="department">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5">
+              <label>Company KPI</label>
+              <textarea rows="3" type="text" class="form-control" ngModel name="company_kpi"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5">
+              <label>Department KPI</label>
+              <textarea rows="3" type="text" class="form-control" ngModel name="department_kpi"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5">
+              <label>Business Process</label>
+              <textarea rows="3" type="text" class="form-control" ngModel name="business_process"></textarea>
+            </div>
+          </div>
+        </nb-tab>
+        <nb-tab tabTitle="Risk Description">
+          <div class="form-group mt-3">
+            <div class="col-sm-5">
+              <label>Loss Event</label>
+              <textarea rows="3" type="text" class="form-control" ngModel name="Loss Event"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5">
+              <label>Caused</label>
+              <textarea rows="3" type="text" class="form-control" ngModel name="caused"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5">
+              <label>Risk Impact</label>
+              <select class="form-control" name="risk_impact" ngModel required>
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5">
+              <label>Risk Level</label>
+              <select class="form-control" name="risk_level" ngModel required>
+                <option></option>
+              </select>
+            </div>
+          </div>
+        </nb-tab>
+        <nb-tab tabTitle="Inherent Risk">
+          <span> </span>
+        </nb-tab>
+      </nb-tabset>
+
+
+
+
+    </form>
+  </nb-card-body>
+</nb-card>

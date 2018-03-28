@@ -6,6 +6,8 @@ import { RiskIndicatorComponent } from "./risk-indicator/risk.indicator.componen
 import { RiskIndicatorModalComponent } from "./risk-indicator/modal/risk.indicator.modal.component";
 import { RiskMatriksIndicatorComponent } from "./risk-matriks-indicator/risk.matriks.indicator.component";
 import { RiskMatriksIndicatorModalComponent } from "./risk-matriks-indicator/modal/risk.matriks.indicator.modal.component";
+import { RiskRegisterComponent } from "./risk-register/risk.register.component";
+import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
 const routes: Routes = [
   {
     path: "",
@@ -18,6 +20,10 @@ const routes: Routes = [
       {
         path: "risk-matriks-indicator",
         component: RiskMatriksIndicatorComponent
+      },
+      {
+        path: "risk-register",
+        component: RiskRegisterComponent
       }
     ]
   }
@@ -33,5 +39,8 @@ export const routedComponents = [
   MasterComponent,
   RiskIndicatorComponent,
   RiskIndicatorModalComponent,
-  RiskMatriksIndicatorComponent,RiskMatriksIndicatorModalComponent
+  RiskMatriksIndicatorComponent,
+  RiskMatriksIndicatorModalComponent,
+  RiskRegisterComponent,
+  RiskRegisterModalComponent
 ];
