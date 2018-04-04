@@ -4,9 +4,11 @@
     <form #myForm="ngForm" (ngSubmit)="submit()">
       <div class="form-group">
         <div class="col-sm-2">
-          <label>Periode</label>
-          <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()">
+          <select class="form-control" name="yearPeriode" ngModel required (change)="reload()">
+            <option *ngFor="let data of year" value="{{data.data}}">{{data.data}}</option>
+          </select>
         </div>
+
       </div>
       <div class="form-group">
         <div class="col-sm-5">

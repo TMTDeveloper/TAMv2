@@ -9,12 +9,16 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 })
 export class RiskIndicatorModalComponent {
   formData: {
-    COUNTER_NO: string;
-    YEAR_ACTIVE: string;
-    DESCRIPTION: string;
-    CONDITION: string;
-    INDICATOR_ID: string;
-    SCORE: string;
+    counterNo: string;
+    yearActive: string;
+    description: string;
+    condition: string;
+    indictatorId: string;
+    score: string;
+    UserCreated: string;
+    DatetimeCreated: string;
+    UserUpdate: string;
+    DatetimeUpdate: string;
   };
 
   constructor(private activeModal: NgbActiveModal) {

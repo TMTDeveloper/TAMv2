@@ -5,6 +5,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { RiskIndicatorModalComponent } from "./modal/risk.indicator.modal.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
+import { BackendService } from "../../../@core/data/backend.service";
 @Component({
   selector: "ngx-risk-indicator",
   templateUrl: "./risk.indicator.component.html"
@@ -42,21 +43,21 @@ export class RiskIndicatorComponent {
       perPage: 30
     },
     columns: {
-      COUNTER_NO: {
+      yearActive: {
         title: "No",
         type: "number",
         filter: false,
         editable: false,
         width: "5%"
       },
-      DESCRIPTION: {
+      description: {
         title: "Description",
         type: "string",
         filter: false,
         editable: true,
         width: "80%"
       },
-      SCORE: {
+      score: {
         title: "Score ",
         type: "number",
         filter: false,
@@ -65,6 +66,7 @@ export class RiskIndicatorComponent {
       }
     }
   };
+  source: LocalDataSource = new LocalDataSource();
   condition: any[] = [
     {
       data: "IMP",
@@ -88,49 +90,147 @@ export class RiskIndicatorComponent {
     },
     {
       data: "RTP",
-      desc: "Risk Type"
+      desc: "Risk Impact"
     },
     {
       data: "OVR",
-      desc: "Overall"
+      desc: "Overall Risk"
     },
     {
       data: "EFF",
-      desc: "Effectiveness"
+      desc: "Overall Control"
     }
   ];
-  source: LocalDataSource = new LocalDataSource();
-
-  tabledata: any[] = [
+  year: any[] = [
     {
-      COUNTER_NO: 1,
-      YEAR_ACTIVE: "2018",
-      DESCRIPTION: "Catasthropic",
-      CONDITION: "IMP",
-      INDICATOR_ID: "IMP001",
-      SCORE: 123
+      data: "2000"
     },
     {
-      COUNTER_NO: 1,
-      YEAR_ACTIVE: "2018",
-      DESCRIPTION: "Almost Certain",
-      CONDITION: "LKL",
-      INDICATOR_ID: "LKL001",
-      SCORE: 123
+      data: "2001"
     },
     {
-      COUNTER_NO: 1,
-      YEAR_ACTIVE: "2018",
-      DESCRIPTION: "Very High",
-      CONDITION: "OPR",
-      INDICATOR_ID: "OPR001",
-      SCORE: 123
+      data: "2002"
+    },
+    {
+      data: "2003"
+    },
+    {
+      data: "2004"
+    },
+    {
+      data: "2005"
+    },
+    {
+      data: "2006"
+    },
+    {
+      data: "2007"
+    },
+    {
+      data: "2008"
+    },
+    {
+      data: "2009"
+    },
+    {
+      data: "2010"
+    },
+    {
+      data: "2011"
+    },
+    {
+      data: "2012"
+    },
+    {
+      data: "2013"
+    },
+    {
+      data: "2014"
+    },
+    {
+      data: "2015"
+    },
+    {
+      data: "2016"
+    },
+    {
+      data: "2017"
+    },
+    {
+      data: "2018"
+    },
+    {
+      data: "2019"
+    },
+    {
+      data: "2020"
+    },
+    {
+      data: "2021"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2023"
+    },
+    {
+      data: "2024"
+    },
+    {
+      data: "2025"
+    },
+    {
+      data: "2026"
+    },
+    {
+      data: "2027"
+    },
+    {
+      data: "2028"
+    },
+    {
+      data: "2029"
+    },
+    {
+      data: "2030"
     }
   ];
+  tabledata: any[] = [];
 
   subscription: any;
   activeModal: any;
-  constructor(private modalService: NgbModal, private toastr: ToastrService) {}
+  constructor(
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    public service: BackendService
+  ) {
+    this.loadData();
+  }
+
+  ngOnInit() {}
+
+  loadData() {
+    this.service.getreq("TbMRiskIndicators").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(response);
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].score = data[ind].score.toString();
+
+          this.tabledata = data;
+          this.source.load(this.tabledata);
+        });
+      }
+      // error => {
+      //   console.log(error);
+      // };
+    });
+  }
 
   ngAfterViewInit() {
     this.source
@@ -157,11 +257,11 @@ export class RiskIndicatorComponent {
     let lastIndex = 0;
     for (let data in this.tabledata) {
       if (
-        this.tabledata[data].YEAR_ACTIVE == this.myForm.value.yearPeriode &&
-        this.tabledata[data].CONDITION == this.myForm.value.condition
+        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
+        this.tabledata[data].condition == this.myForm.value.condition
       ) {
-        lastIndex < this.tabledata[data].COUNTER_NO
-          ? (lastIndex = this.tabledata[data].COUNTER_NO)
+        lastIndex < this.tabledata[data].counterNo
+          ? (lastIndex = this.tabledata[data].counterNo)
           : null;
       }
     }
@@ -169,17 +269,22 @@ export class RiskIndicatorComponent {
     const indicator = this.indicatorGenerate(lastIndex);
 
     this.activeModal.componentInstance.formData = {
-      COUNTER_NO: lastIndex + 1,
-      YEAR_ACTIVE: this.myForm.value.yearPeriode,
-      DESCRIPTION: "",
-      CONDITION: this.myForm.value.condition,
-      INDICATOR_ID: indicator,
-      SCORE: ""
+      counterNo: lastIndex + 1,
+      yearActive: this.myForm.value.yearPeriode,
+      description: "",
+      condition: this.myForm.value.condition,
+      indicatorId: indicator,
+      score: "",
+      UserCreated: "admin",
+      DatetimeCreated: moment().format(),
+      UserUpdate: "admin",
+      DatetimeUpdate: moment().format()
     };
 
     this.activeModal.result.then(async response => {
       if (response != false) {
         this.tabledata.push(response);
+        console.log(this.tabledata);
         this.reload();
       }
     });
@@ -201,13 +306,26 @@ export class RiskIndicatorComponent {
   reload() {
     this.source.setFilter(
       [
-        { field: "CONDITION", search: this.myForm.value.condition },
-        { field: "YEAR_ACTIVE", search: this.myForm.value.yearPeriode }
+        { field: "condition", search: this.myForm.value.condition },
+        { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );
   }
   submit() {
+    console.log(JSON.stringify(this.tabledata));
+    this.tabledata.forEach((element, ind) => {
+      this.service
+        .postreq("TbMRiskIndicators", this.tabledata[ind])
+        .subscribe(response => {
+          console.log(response);
+
+          error => {
+            console.log(error);
+          };
+        });
+    });
+
     this.toastr.success("Data Saved!");
   }
 }

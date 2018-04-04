@@ -11,6 +11,7 @@ import { FinancialIndicatorRiskModalComponent } from "./financial-indicator-risk
 import { OperationalIndicatorRiskModalComponent } from "./operational-indicator-risk/modal/operational.indicator.risk.modal.component";
 import { QualitativeIndicatorModalComponent } from "./qualitative-indicator/modal/qualitative.indicator.modal.component";
 import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
+import { BackendService } from "../../@core/data/backend.service";
 @NgModule({
   imports: [
     ThemeModule,
@@ -26,8 +27,8 @@ import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.
     FinancialIndicatorRiskModalComponent,
     OperationalIndicatorRiskModalComponent,
     QualitativeIndicatorModalComponent,
-    RiskRegisterModalComponent,
+    RiskRegisterModalComponent
   ],
-  providers: []
+  providers: [BackendService]
 })
 export class MasterModule {}

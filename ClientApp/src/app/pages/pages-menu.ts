@@ -35,14 +35,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Qualitative Indicator Risk',
         link: '/pages/master/qualitative-indicator',
       },
-      {
-        title: 'Dept Input',
-        link: '/pages/master/dept-input',
-      },
-      {
-        title: 'Risk Register',
-        link: '/pages/master/risk-register',
-      }
     ],
   },
  

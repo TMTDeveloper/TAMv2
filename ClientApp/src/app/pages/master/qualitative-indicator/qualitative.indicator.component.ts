@@ -49,6 +49,13 @@ export class QualitativeIndicatorComponent {
         editable: false,
         width: "5%"
       },
+      IMPACT: {
+        title: "Impact",
+        type: "string",
+        filter: false,
+        editable: false,
+        width: "10%"
+      },
       DESCRIPTION: {
         title: "Description",
         type: "string",
