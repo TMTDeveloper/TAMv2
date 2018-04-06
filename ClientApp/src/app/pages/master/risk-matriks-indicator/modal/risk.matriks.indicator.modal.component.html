@@ -3,28 +3,22 @@
   <nb-card-body>
     <form (ngSubmit)="submit()">
       <div class="col-sm-2">
-        <div class="form-group">
-          <label>Periode</label>
-          <input type="text" disabled class="form-control" [(ngModel)]="formData.YEAR_ACTIVE" name="periode">
-        </div>
-      </div>
-      <div class="col-sm-5">
-        <div class="form-group">
-          <label>Condition</label>
-          <input type="email" disabled class="form-control" name="condition" [(ngModel)]="formData.CONDITION">
-        </div>
-      </div>
-      <div class="col-sm-12">
-        <div class="form-group">
-          <label>Description</label>
-          <input type="text" class="form-control" name="description" placeholder="Description" [(ngModel)]="formData.DESCRIPTION">
-        </div>
+        <label>Condition A</label>
+        <select class="form-control" name="Condition A" required [(ngModel)]="formData.indicatorIdA">
+          <option *ngFor="let data of data.A" value="{{data.condition}}">{{data.description}}</option>
+        </select>
       </div>
       <div class="col-sm-2">
-        <div class="form-group">
-          <label>Score</label>
-          <input type="text" class="form-control" name="score" placeholder="100" [(ngModel)]="formData.SCORE">
-        </div>
+        <label>Condition B</label>
+        <select class="form-control" name="Condition B" required [(ngModel)]="formData.indicatorIdB">
+          <option *ngFor="let data of data.B" value="{{data.data}}">{{data.data}}</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <label>Result</label>
+        <select class="form-control" name="Result" required [(ngModel)]="formData.resuldIdC">
+          <option *ngFor="let data of data.C" value="{{data.data}}">{{data.data}}</option>
+        </select>
       </div>
       <div class="col-sm-auto">
         <div class="form-group">

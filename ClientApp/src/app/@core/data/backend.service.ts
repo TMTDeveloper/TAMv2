@@ -32,7 +32,7 @@ export class BackendService {
       .map(res => res.json());
   }
 
-  patchreq(url: string, body) {
+  putreq(url: string, body) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
@@ -40,7 +40,7 @@ export class BackendService {
       headers: headers
     });
     return this.http
-      .patch(this.baseurl + url, body, options)
+      .put(this.baseurl + url, body, options)
       .map(res => res.json());
   }
 }

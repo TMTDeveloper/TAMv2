@@ -5,6 +5,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FinancialIndicatorRiskModalComponent } from "./modal/financial.indicator.risk.modal.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
+import { BackendService } from "../../../@core/data/backend.service";
 @Component({
   selector: "ngx-financial-indicator-risk",
   templateUrl: "./financial.indicator.risk.component.html"
@@ -42,28 +43,28 @@ export class FinancialIndicatorRiskComponent {
       perPage: 30
     },
     columns: {
-      COUNTER_NO: {
+      counterNo: {
         title: "No",
         type: "number",
         filter: false,
         editable: false,
         width: "5%"
       },
-      IMPACT: {
+      impact: {
         title: "Impact",
         type: "string",
         filter: false,
         editable: true,
         width: "30%"
       },
-      PERCENTAGE: {
+      percentageValue: {
         title: "Percentage",
         type: "decimal(5,2)",
         filter: false,
         editable: true,
         width: "30%"
       },
-      NUMBER: {
+      numberValue: {
         title: "Number",
         type: "numeric",
         filter: false,
@@ -72,6 +73,7 @@ export class FinancialIndicatorRiskComponent {
       }
     }
   };
+
   year: any[] = [
     {
       data: "2000"
@@ -192,24 +194,56 @@ export class FinancialIndicatorRiskComponent {
       desc: "Non operating income/charges"
     }
   ];
-  
-  source: LocalDataSource = new LocalDataSource();
 
-  tabledata: any[] = [
-    {
-      COUNTER_NO: 1,
-      YEAR_ACTIVE: "2018",
-      IMPACT: "Catastrophic",
-      PERCENTAGE: "100",
-      NUMBER: "3083639.80",
-      CONDITION: "NEP",
-      INDICATOR_ID: ""
-    },
-  ];
+  source: LocalDataSource = new LocalDataSource();
+  riskIndicatorData: any;
+  tabledata: any[] = [];
 
   subscription: any;
   activeModal: any;
-  constructor(private modalService: NgbModal, private toastr: ToastrService) {}
+  constructor(
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    public service: BackendService
+  ) {
+    this.loadData();
+  }
+
+  loadData() {
+    this.service.getreq("TbMRiskIndicators").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(response);
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+
+          data[ind].score == null
+            ? (data[ind].score = 0)
+            : data[ind].score.toString();
+          this.riskIndicatorData = data;
+        });
+        this.service.getreq("TbMFinancialImpacts").subscribe(response => {
+          if (response != null) {
+            const data = response;
+            console.log(response);
+            data.forEach((element, ind) => {
+              let impact = this.riskIndicatorData.filter(function(item) {
+                return (
+                  item.yearActive == data[ind].yearActive.toString() &&
+                  item.indicatorId == data[ind].riskIndicatorId
+                );
+              });
+              data[ind].yearActive = data[ind].yearActive.toString();
+              data[ind].status = "0";
+              data[ind].impact = impact[0].description;
+              this.tabledata = data;
+              this.source.load(this.tabledata);
+            });
+          }
+        });
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.source
@@ -217,7 +251,6 @@ export class FinancialIndicatorRiskComponent {
       .then(resp => {
         this.myForm.setValue({
           condition: "NEP",
-          year: "2018",
           yearPeriode: moment().format("YYYY")
         });
       })
@@ -229,11 +262,14 @@ export class FinancialIndicatorRiskComponent {
   }
 
   showModal(no_iku) {
-    this.activeModal = this.modalService.open(FinancialIndicatorRiskModalComponent, {
-      windowClass: "xlModal",
-      container: "nb-layout",
-      backdrop: "static"
-    });
+    this.activeModal = this.modalService.open(
+      FinancialIndicatorRiskModalComponent,
+      {
+        windowClass: "xlModal",
+        container: "nb-layout",
+        backdrop: "static"
+      }
+    );
     let lastIndex = 0;
     for (let data in this.tabledata) {
       if (
@@ -281,8 +317,8 @@ export class FinancialIndicatorRiskComponent {
   reload() {
     this.source.setFilter(
       [
-        { field: "CONDITION", search: this.myForm.value.condition },
-        { field: "YEAR_ACTIVE", search: this.myForm.value.yearPeriode }
+        { field: "category", search: this.myForm.value.condition },
+        { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );

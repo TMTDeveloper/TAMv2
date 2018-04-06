@@ -19,6 +19,7 @@ export class RiskIndicatorModalComponent {
     DatetimeCreated: string;
     UserUpdate: string;
     DatetimeUpdate: string;
+    status: string;
   };
 
   constructor(private activeModal: NgbActiveModal) {

@@ -47,7 +47,7 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbMRiskMappings/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbMRiskMapping([FromRoute] short id, [FromBody] TbMRiskMapping tbMRiskMapping)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != tbMRiskMapping.YearActive)
-            {
-                return BadRequest();
-            }
+        
 
             _context.Entry(tbMRiskMapping).State = EntityState.Modified;
 

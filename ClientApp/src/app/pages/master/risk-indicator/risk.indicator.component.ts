@@ -21,7 +21,8 @@ export class RiskIndicatorComponent {
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>'
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -220,8 +221,10 @@ export class RiskIndicatorComponent {
         console.log(response);
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].score = data[ind].score.toString();
-
+          data[ind].score == null
+            ? (data[ind].score = 0)
+            : data[ind].score.toString();
+          data[ind].status = "0";
           this.tabledata = data;
           this.source.load(this.tabledata);
         });
@@ -278,13 +281,15 @@ export class RiskIndicatorComponent {
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
-      DatetimeUpdate: moment().format()
+      DatetimeUpdate: moment().format(),
+      status: "1"
     };
 
     this.activeModal.result.then(async response => {
       if (response != false) {
         this.tabledata.push(response);
         console.log(this.tabledata);
+        this.submit();
         this.reload();
       }
     });
@@ -312,18 +317,43 @@ export class RiskIndicatorComponent {
       true
     );
   }
-  submit() {
+  submit(event?) {
+    event
+      ? this.service
+          .putreq("TbMRiskIndicators", JSON.stringify(event.newData))
+          .subscribe(response => {
+            console.log(JSON.stringify(event.newData));
+            event.confirm.resolve(event.newData);
+            error => {
+              console.log(error);
+            };
+          })
+      : null;
     console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
-      this.service
-        .postreq("TbMRiskIndicators", this.tabledata[ind])
-        .subscribe(response => {
-          console.log(response);
+      let index = ind;
+      if (this.tabledata[index].status == "1") {
+        this.service
+          .postreq("TbMRiskIndicators", this.tabledata[index])
+          .subscribe(response => {
+            console.log(response);
+            this.tabledata[index].status = "0";
+            error => {
+              console.log(error);
+            };
+          });
+      }
+      // else {
+      //   this.service
+      //     .putreq("TbMRiskIndicators", this.tabledata[index])
+      //     .subscribe(response => {
+      //       console.log(response);
 
-          error => {
-            console.log(error);
-          };
-        });
+      //       error => {
+      //         console.log(error);
+      //       };
+      //     });
+      // }
     });
 
     this.toastr.success("Data Saved!");
