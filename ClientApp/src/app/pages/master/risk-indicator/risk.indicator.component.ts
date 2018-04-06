@@ -44,7 +44,7 @@ export class RiskIndicatorComponent {
       perPage: 30
     },
     columns: {
-      yearActive: {
+      counterNo: {
         title: "No",
         type: "number",
         filter: false,
