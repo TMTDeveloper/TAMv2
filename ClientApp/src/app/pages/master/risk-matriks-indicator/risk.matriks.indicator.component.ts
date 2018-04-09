@@ -6,11 +6,18 @@ import { RiskMatriksIndicatorModalComponent } from "./modal/risk.matriks.indicat
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
+import { isNullOrUndefined } from "util";
 @Component({
   selector: "ngx-risk-matriks-indicator",
   templateUrl: "./risk.matriks.indicator.component.html"
 })
 export class RiskMatriksIndicatorComponent {
+  source: LocalDataSource = new LocalDataSource();
+
+  tabledata: any[] = [];
+  riskIndicatorData: any = [];
+  subscription: any;
+  activeModal: any;
   @ViewChild("myForm") private myForm: NgForm;
   settings: any = {
     add: {
@@ -21,7 +28,8 @@ export class RiskMatriksIndicatorComponent {
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>'
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -41,48 +49,6 @@ export class RiskMatriksIndicatorComponent {
     pager: {
       display: true,
       perPage: 30
-    },
-    columns: {
-      counterNo: {
-        title: "No",
-        type: "number",
-        filter: false,
-        editable: false,
-        width: "5%"
-      },
-      indicatorIdA: {
-        title: "Condition 1",
-        type: "text",
-        filter: false,
-        editable: true,
-        width: "30%",
-        editor: {
-          type: "list",
-          config: {
-            list: []
-          }
-        }
-      },
-      indicatorIdB: {
-        title: "Condition 2",
-        type: "text",
-        filter: false,
-        editable: true,
-        width: "30%",
-        editor: {
-          type: "list",
-          config: {
-            list: []
-          }
-        }
-      },
-      resultIdC: {
-        title: "Result",
-        type: "number",
-        filter: false,
-        editable: true,
-        width: "20%"
-      }
     }
   };
   conditionA: any = {
@@ -205,12 +171,7 @@ export class RiskMatriksIndicatorComponent {
       desc: "Effectiveness"
     }
   ];
-  source: LocalDataSource = new LocalDataSource();
 
-  tabledata: any[] = [];
-  riskIndicatorData: any;
-  subscription: any;
-  activeModal: any;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -221,6 +182,7 @@ export class RiskMatriksIndicatorComponent {
 
   loadData() {
     this.service.getreq("TbMRiskMappings").subscribe(response => {
+      console.log(response);
       if (response != null) {
         const data = response;
         console.log(response);
@@ -228,18 +190,159 @@ export class RiskMatriksIndicatorComponent {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
           this.tabledata = data;
+          console.log(this.tabledata);
           this.source.load(this.tabledata);
         });
         this.service.getreq("TbMRiskIndicators").subscribe(response => {
           if (response != null) {
             const data = response;
-            console.log(response);
+            console.log(JSON.stringify(response));
             data.forEach((element, ind) => {
               data[ind].yearActive = data[ind].yearActive.toString();
-              data[ind].score = data[ind].score.toString();
+              data[ind].score == null
+                ? (data[ind].score = 0)
+                : data[ind].score.toString();
               data[ind].status = "0";
               this.riskIndicatorData = data;
             });
+            let year = this.myForm.value.yearPeriode;
+            let conditionA = this.conditionA.data;
+            let conditionB = this.conditionB.data;
+            console.log(this.myForm.value.condition);
+            let conditionC = this.myForm.value.condition;
+            // console.log(
+            //   this.listData(
+            //     this.riskIndicatorData.filter(function search(item) {
+            //       return (
+            //         item.yearActive === year && item.condition === conditionA
+            //       );
+            //     })
+            //   )
+            // );
+            this.listData(
+              this.riskIndicatorData.filter(function search(item) {
+                return (
+                  item.yearActive === year && item.condition === conditionA
+                );
+              }),
+              this.riskIndicatorData.filter(function search(item) {
+                return (
+                  item.yearActive === year && item.condition === conditionB
+                );
+              }),
+              this.riskIndicatorData.filter(function search(item) {
+                return (
+                  item.yearActive === year && item.condition === conditionC
+                );
+              })
+            ).then(item => {
+              console.log(item);
+              this.settings = {
+                add: {
+                  addButtonContent: '<i class="nb-plus"></i>',
+                  createButtonContent: '<i class="nb-checkmark"></i>',
+                  cancelButtonContent: '<i class="nb-close"></i>'
+                },
+                edit: {
+                  editButtonContent: '<i class="nb-edit"></i>',
+                  saveButtonContent: '<i class="nb-checkmark"></i>',
+                  cancelButtonContent: '<i class="nb-close"></i>',
+                  confirmSave: true
+                },
+                delete: {
+                  deleteButtonContent: '<i class="nb-trash"></i>',
+                  confirmDelete: true
+                },
+                mode: "inline",
+                sort: true,
+                hideSubHeader: true,
+                actions: {
+                  add: false,
+                  edit: true,
+                  delete: false,
+                  position: "right",
+                  columnTitle: "Modify",
+                  width: "10%"
+                },
+                pager: {
+                  display: true,
+                  perPage: 30
+                },
+                columns: {
+                  counterNo: {
+                    title: "No",
+                    type: "number",
+                    filter: false,
+                    editable: false,
+                    width: "5%"
+                  },
+                  indicatorIdA: {
+                    title: "Condition 1",
+                    type: "text",
+                    filter: false,
+                    editable: true,
+                    width: "30%",
+                    valuePrepareFunction: value => {
+                      return isNullOrUndefined(
+                        this.riskIndicatorData.filter(function search(item) {
+                          return item.indicatorId === value;
+                        })
+                      )
+                        ? value
+                        : this.riskIndicatorData.filter(function search(item) {
+                            return item.indicatorId === value;
+                          })[0].description;
+                    },
+                    editor: {
+                      type: "list",
+                      config: {
+                        list: item.data1
+                      }
+                    }
+                  },
+                  indicatorIdB: {
+                    title: "Condition 2",
+                    type: "text",
+                    filter: false,
+                    editable: true,
+                    width: "30%",
+                    valuePrepareFunction: value => {
+                      return isNullOrUndefined(
+                        this.riskIndicatorData.filter(function search(item) {
+                          return item.indicatorId === value;
+                        })
+                      )
+                        ? value
+                        : this.riskIndicatorData.filter(function search(item) {
+                            return item.indicatorId === value;
+                          })[0].description;
+                    },
+                    editor: {
+                      type: "list",
+                      config: {
+                        list: item.data2
+                      }
+                    }
+                  },
+                  resultIdC: {
+                    title: "Result",
+                    type: "number",
+                    filter: false,
+                    editable: true,
+                    width: "30%",
+
+                    editor: {
+                      type: "list",
+                      config: {
+                        list: item.data3
+                      }
+                    }
+                  }
+                }
+              };
+            });
+            {
+            }
           }
         });
       }
@@ -257,9 +360,8 @@ export class RiskMatriksIndicatorComponent {
       })
       .then(resp => {
         this.reload();
+        console.log(this.myForm.value);
       });
-
-    console.log(this.myForm.value.condition);
   }
 
   showModal(no_iku) {
@@ -271,26 +373,26 @@ export class RiskMatriksIndicatorComponent {
         backdrop: "static"
       }
     );
-    let lastIndex = 0;
+    let lastIndex = 1;
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
         this.tabledata[data].condition == this.myForm.value.condition
       ) {
-        lastIndex < this.tabledata[data].counterNo
+        lastIndex < Number(this.tabledata[data].counterNo)
           ? (lastIndex = this.tabledata[data].counterNo)
           : null;
       }
     }
 
-    const mappingId = this.mappingGenerate(lastIndex);
+    const mappingId = this.mappingGenerate(lastIndex + 1);
     this.activeModal.componentInstance.formData = {
       counterNo: lastIndex + 1,
       yearActive: this.myForm.value.yearPeriode,
       mappingId: mappingId,
       condition: this.myForm.value.condition,
-      indictatorIdA: "",
-      indictatorIdB: "",
+      indicatorIdA: "",
+      indicatorIdB: "",
       resultIdC: "",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
@@ -300,12 +402,18 @@ export class RiskMatriksIndicatorComponent {
     };
     this.activeModal.componentInstance.conditionA = this.conditionA;
     this.activeModal.componentInstance.conditionB = this.conditionB;
+    this.activeModal.componentInstance.conditionC = this.myForm.value.condition;
     this.activeModal.componentInstance.riskIndicatorData = this.riskIndicatorData;
+    this.activeModal.componentInstance.yearActive = this.myForm.value.yearPeriode;
+    // this.activeModal.componentInstance.updateData();
 
     this.activeModal.result.then(async response => {
+      console.log(response);
       if (response != false) {
         this.tabledata.push(response);
+        console.log(this.tabledata);
         this.reload();
+        this.submit();
       }
     });
   }
@@ -324,6 +432,7 @@ export class RiskMatriksIndicatorComponent {
   }
 
   reload() {
+    console.log(this.tabledata);
     switch (this.myForm.value.condition) {
       case "OVR":
         this.conditionA = {
@@ -357,13 +466,76 @@ export class RiskMatriksIndicatorComponent {
     }
     this.source = this.source.setFilter(
       [
-        { field: "CONDITION", search: this.myForm.value.condition },
-        { field: "YEAR_ACTIVE", search: this.myForm.value.yearPeriode }
+        { field: "condition", search: this.myForm.value.condition },
+        { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );
   }
-  submit() {
+  submit(event?) {
+    console.log(event);
+    event
+      ? this.service
+          .putreq("TbMRiskMappings", JSON.stringify(event.newData))
+          .subscribe(response => {
+            console.log(JSON.stringify(event.newData));
+            event.confirm.resolve(event.newData);
+            error => {
+              console.log(error);
+            };
+          })
+      : null;
+    console.log(JSON.stringify(this.tabledata));
+    this.tabledata.forEach((element, ind) => {
+      let index = ind;
+      if (this.tabledata[index].status == "1") {
+        this.service
+          .postreq("TbMRiskMappings", this.tabledata[index])
+          .subscribe(response => {
+            console.log(response);
+            this.tabledata[index].status = "0";
+            error => {
+              console.log(error);
+            };
+          });
+      }
+    });
+
     this.toastr.success("Data Saved!");
+  }
+
+  async listData(item1, item2, item3) {
+    let loop1 = await item1;
+    let loop2 = await item2;
+    let loop3 = await item3;
+    let data1 = await [];
+    let data2 = await [];
+    let data3 = await [];
+    for (let element in loop1) {
+      let arr = await {
+        value: loop1[element].indicatorId,
+        title: loop1[element].description
+      };
+      await data1.push(arr);
+    }
+    for (let element in loop2) {
+      let arr = await {
+        value: loop2[element].indicatorId,
+        title: loop2[element].description
+      };
+      await data2.push(arr);
+    }
+    for (let element in loop3) {
+      let arr = await {
+        value: loop3[element].indicatorId,
+        title: loop3[element].description
+      };
+      await data3.push(arr);
+    }
+    return {
+      data1,
+      data2,
+      data3
+    };
   }
 }

@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-header>Financial Indicator Risk</nb-card-header>
   <nb-card-body>
-    <form #myForm="ngForm" (ngSubmit)="submit()">
+    <form #myForm="ngForm" >
       <div class="form-group">
         <div class="col-sm-2">
           <label>Periode</label>
@@ -22,7 +22,7 @@
       </div>
       <div class="col-sm-auto">
         <div class="form-group">
-          <ng2-smart-table [settings]="settings" [source]="source">
+          <ng2-smart-table (editConfirm)="submit($event)" [settings]="settings" [source]="source">
           </ng2-smart-table>
         </div>
       </div>

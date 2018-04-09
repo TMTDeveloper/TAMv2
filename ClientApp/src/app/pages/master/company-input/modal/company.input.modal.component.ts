@@ -9,12 +9,17 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 })
 export class CompanyInputModalComponent {
   formData: {
-    COUNTER_NO: string;
-    YEAR_ACTIVE: string;
-    DESCRIPTION: string;
-    CONDITION: string;
-    INDICATOR_ID: string;
-    SCORE: string;
+    yearActive: string;
+    condition: string;
+    counterNo: string;
+    comInpId: string;
+    description: string;
+    flagActive: string;
+    userCreated: string;
+    datetimeCreated: string;
+    userUpdate: string;
+    datetimeUpdate: string;
+    status: string;
   };
 
   constructor(private activeModal: NgbActiveModal) {

@@ -10,6 +10,8 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 export class RiskMatriksIndicatorModalComponent {
   conditionA: any;
   conditionB: any;
+  conditionC: any;
+  yearActive: any;
   riskIndicatorData: any;
   data: any = {
     A: [],
@@ -36,36 +38,38 @@ export class RiskMatriksIndicatorModalComponent {
   ngAfterViewInit() {
     console.log(this.formData);
     console.log(this.riskIndicatorData);
-    this.updateData();
-  }
-  updateData() {
-    this.data.A = this.riskIndicatorData.filter(this.filterData("a"));
-    this.data.B = this.riskIndicatorData.filter(this.filterData("b"));
-    this.data.C = this.riskIndicatorData.filter(this.filterData("b"));
-  }
+    // this.updateData();
+    let year = this.yearActive;
+    let conditionA = this.conditionA.data;
+    let conditionB = this.conditionB.data;
+    let conditionC = this.conditionC.data;
 
-  filterData(item) {
-    switch (item) {
-      case "a":
-        return (
-          item.yearActive === this.formData.yearActive &&
-          item.condition === this.conditionA.data
-        );
-      case "b":
-        return (
-          item.yearActive === this.formData.yearActive &&
-          item.condition === this.conditionB.data
-        );
-
-      case "c":
-        return (
-          item.yearActive === this.formData.yearActive &&
-          item.condition === this.formData.condition
-        );
-    }
+    this.riskIndicatorData
+      .filter(function search(item) {
+        return item.yearActive === year && item.condition === conditionA;
+      })
+      .forEach(element => {
+        this.data.A.push(element);
+      });
+    this.riskIndicatorData
+      .filter(function search(item) {
+        return item.yearActive === year && item.condition === conditionB;
+      })
+      .forEach(element => {
+        this.data.B.push(element);
+      });
+    this.riskIndicatorData
+      .filter(function search(item) {
+        return item.yearActive === year && item.condition === conditionC;
+      })
+      .forEach(element => {
+        this.data.C.push(element);
+      });
+    console.log(this.data);
   }
 
   submit() {
+    console.log(this.formData);
     this.activeModal.close(this.formData);
   }
 

@@ -21,7 +21,8 @@ export class FinancialIndicatorRiskComponent {
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>'
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -323,7 +324,32 @@ export class FinancialIndicatorRiskComponent {
       true
     );
   }
-  submit() {
-    this.toastr.success("Data Saved!");
+  submit(event?) {
+    event
+      ? this.service
+          .putreq("TbMComInputs", JSON.stringify(event.newData))
+          .subscribe(response => {
+            console.log(JSON.stringify(event.newData));
+            event.confirm.resolve(event.newData);
+            error => {
+              console.log(error);
+            };
+          })
+      : null;
+    console.log(JSON.stringify(this.tabledata));
+    this.tabledata.forEach((element, ind) => {
+      let index = ind;
+      if (this.tabledata[index].status == "1") {
+        this.service
+          .postreq("TbMComInputs", this.tabledata[index])
+          .subscribe(response => {
+            console.log(response);
+            this.tabledata[index].status = "0";
+            error => {
+              console.log(error);
+            };
+          });
+      }
+    });
   }
 }

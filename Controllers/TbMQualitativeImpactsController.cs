@@ -47,7 +47,7 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbMQualitativeImpacts/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbMQualitativeImpact([FromRoute] short id, [FromBody] TbMQualitativeImpact tbMQualitativeImpact)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,6 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != tbMQualitativeImpact.YearActive)
-            {
-                return BadRequest();
-            }
 
             _context.Entry(tbMQualitativeImpact).State = EntityState.Modified;
 

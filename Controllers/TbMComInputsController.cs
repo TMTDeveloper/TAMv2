@@ -47,7 +47,7 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbMComInputs/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbMComInput([FromRoute] short id, [FromBody] TbMComInput tbMComInput)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,6 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != tbMComInput.YearActive)
-            {
-                return BadRequest();
-            }
 
             _context.Entry(tbMComInput).State = EntityState.Modified;
 

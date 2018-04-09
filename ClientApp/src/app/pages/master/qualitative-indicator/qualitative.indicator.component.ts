@@ -5,12 +5,20 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { QualitativeIndicatorModalComponent } from "./modal/qualitative.indicator.modal.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
+import { BackendService } from "../../../@core/data/backend.service";
+import { isNullOrUndefined } from "util";
 @Component({
   selector: "ngx-qualitativ-indicator",
   templateUrl: "./qualitative.indicator.component.html"
 })
 export class QualitativeIndicatorComponent {
   @ViewChild("myForm") private myForm: NgForm;
+
+  tabledata: any[] = [];
+  riskIndicatorData: any = [];
+  subscription: any;
+  activeModal: any;
+
   settings: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -40,29 +48,6 @@ export class QualitativeIndicatorComponent {
     pager: {
       display: true,
       perPage: 30
-    },
-    columns: {
-      COUNTER_NO: {
-        title: "No",
-        type: "number",
-        filter: false,
-        editable: false,
-        width: "5%"
-      },
-      IMPACT: {
-        title: "Impact",
-        type: "string",
-        filter: false,
-        editable: false,
-        width: "10%"
-      },
-      DESCRIPTION: {
-        title: "Description",
-        type: "string",
-        filter: false,
-        editable: true,
-        width: "80%"
-      },
     }
   };
   year: any[] = [
@@ -187,27 +172,118 @@ export class QualitativeIndicatorComponent {
   ];
   source: LocalDataSource = new LocalDataSource();
 
-  tabledata: any[] = [
-    {
-      COUNTER_NO: 1,
-      YEAR_ACTIVE: "2018",
-      DESCRIPTION: "Catasthropic",
-      CONDITION: "EWD",
-      INDICATOR_ID: "",
-    },
-  ];
+  constructor(
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    public service: BackendService
+  ) {
+    this.loadData();
+  }
 
-  subscription: any;
-  activeModal: any;
-  constructor(private modalService: NgbModal, private toastr: ToastrService) {}
+  loadData() {
+    this.service.getreq("TbMQualitativeImpacts").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(JSON.stringify(response));
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].status = "0";
+          this.tabledata = data;
+          this.source.load(this.tabledata);
+        });
+        this.service.getreq("TbMRiskIndicators").subscribe(response => {
+          if (response != null) {
+            const data = response;
+            console.log(JSON.stringify(response));
+            data.forEach((element, ind) => {
+              data[ind].yearActive = data[ind].yearActive.toString();
+              data[ind].score == null
+                ? (data[ind].score = 0)
+                : data[ind].score.toString();
+              data[ind].status = "0";
+              this.riskIndicatorData = data;
+            });
+          }
+        });
 
+        this.settings = {
+          add: {
+            addButtonContent: '<i class="nb-plus"></i>',
+            createButtonContent: '<i class="nb-checkmark"></i>',
+            cancelButtonContent: '<i class="nb-close"></i>'
+          },
+          edit: {
+            editButtonContent: '<i class="nb-edit"></i>',
+            saveButtonContent: '<i class="nb-checkmark"></i>',
+            cancelButtonContent: '<i class="nb-close"></i>'
+          },
+          delete: {
+            deleteButtonContent: '<i class="nb-trash"></i>',
+            confirmDelete: true
+          },
+          mode: "inline",
+          sort: true,
+          hideSubHeader: true,
+          actions: {
+            add: false,
+            edit: true,
+            delete: false,
+            position: "right",
+            columnTitle: "Modify",
+            width: "10%"
+          },
+          pager: {
+            display: true,
+            perPage: 30
+          },
+          columns: {
+            counterNo: {
+              title: "No",
+              type: "number",
+              filter: false,
+              editable: false,
+              width: "5%"
+            },
+            riskIndicatorId: {
+              title: "Impact",
+              type: "string",
+              filter: false,
+              editable: false,
+              width: "10%",
+              valuePrepareFunction: value => {
+                console.log(
+                  this.riskIndicatorData.filter(function search(item) {
+                    return item.indicatorId === value;
+                  })[0].description
+                );
+                return isNullOrUndefined(this.riskIndicatorData)
+                  ? value
+                  : this.riskIndicatorData.filter(function search(item) {
+                      return item.indicatorId === value;
+                    })[0].description;
+              }
+            },
+            description: {
+              title: "Description",
+              type: "string",
+              filter: false,
+              editable: true,
+              width: "80%"
+            }
+          }
+        };
+      }
+      // error => {
+      //   console.log(error);
+      // };
+    });
+  }
   ngAfterViewInit() {
     this.source
       .load(this.tabledata)
       .then(resp => {
         this.myForm.setValue({
           condition: "EWD",
-          year: "2018",
           yearPeriode: moment().format("YYYY")
         });
       })
@@ -218,66 +294,30 @@ export class QualitativeIndicatorComponent {
     console.log(this.myForm.value.condition);
   }
 
-  showModal(no_iku) {
-    this.activeModal = this.modalService.open(QualitativeIndicatorModalComponent, {
-      windowClass: "xlModal",
-      container: "nb-layout",
-      backdrop: "static"
-    });
-    let lastIndex = 0;
-    for (let data in this.tabledata) {
-      if (
-        this.tabledata[data].YEAR_ACTIVE == this.myForm.value.yearPeriode &&
-        this.tabledata[data].CONDITION == this.myForm.value.condition
-      ) {
-        lastIndex < this.tabledata[data].COUNTER_NO
-          ? (lastIndex = this.tabledata[data].COUNTER_NO)
-          : null;
-      }
-    }
-
-    const indicator = this.indicatorGenerate(lastIndex);
-
-    this.activeModal.componentInstance.formData = {
-      COUNTER_NO: lastIndex + 1,
-      YEAR_ACTIVE: this.myForm.value.yearPeriode,
-      DESCRIPTION: "",
-      CONDITION: this.myForm.value.condition,
-      INDICATOR_ID: indicator,
-      SCORE: ""
-    };
-
-    this.activeModal.result.then(async response => {
-      if (response != false) {
-        this.tabledata.push(response);
-        this.reload();
-      }
-    });
-  }
-
-  indicatorGenerate(lastIndex) {
-    switch (lastIndex.toString().length) {
-      case 3:
-        return this.myForm.value.condition + lastIndex.toString();
-
-      case 2:
-        return this.myForm.value.condition + "0" + lastIndex.toString();
-
-      case 1:
-        return this.myForm.value.condition + "00" + lastIndex.toString();
-    }
-  }
-
   reload() {
     this.source.setFilter(
       [
-        { field: "CONDITION", search: this.myForm.value.condition },
-        { field: "YEAR_ACTIVE", search: this.myForm.value.yearPeriode }
+        { field: "category", search: this.myForm.value.condition },
+        { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );
   }
-  submit() {
+  submit(event?) {
+    console.log(event);
+    event
+      ? this.service
+          .putreq("TbMQualitativeImpacts", JSON.stringify(event.newData))
+          .subscribe(response => {
+            console.log(JSON.stringify(event.newData));
+            event.confirm.resolve(event.newData);
+            error => {
+              console.log(error);
+            };
+          })
+      : null;
+    console.log(JSON.stringify(this.tabledata));
+
     this.toastr.success("Data Saved!");
   }
 }

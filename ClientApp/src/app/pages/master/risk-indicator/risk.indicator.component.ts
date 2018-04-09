@@ -257,7 +257,7 @@ export class RiskIndicatorComponent {
       container: "nb-layout",
       backdrop: "static"
     });
-    let lastIndex = 0;
+    let lastIndex = 1;
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
@@ -269,7 +269,7 @@ export class RiskIndicatorComponent {
       }
     }
 
-    const indicator = this.indicatorGenerate(lastIndex);
+    const indicator = this.indicatorGenerate(lastIndex+1);
 
     this.activeModal.componentInstance.formData = {
       counterNo: lastIndex + 1,
@@ -343,17 +343,6 @@ export class RiskIndicatorComponent {
             };
           });
       }
-      // else {
-      //   this.service
-      //     .putreq("TbMRiskIndicators", this.tabledata[index])
-      //     .subscribe(response => {
-      //       console.log(response);
-
-      //       error => {
-      //         console.log(error);
-      //       };
-      //     });
-      // }
     });
 
     this.toastr.success("Data Saved!");
