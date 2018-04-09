@@ -202,76 +202,79 @@ export class QualitativeIndicatorComponent {
                 : data[ind].score.toString();
               data[ind].status = "0";
               this.riskIndicatorData = data;
+              this.settings = {
+                add: {
+                  addButtonContent: '<i class="nb-plus"></i>',
+                  createButtonContent: '<i class="nb-checkmark"></i>',
+                  cancelButtonContent: '<i class="nb-close"></i>'
+                },
+                edit: {
+                  editButtonContent: '<i class="nb-edit"></i>',
+                  saveButtonContent: '<i class="nb-checkmark"></i>',
+                  cancelButtonContent: '<i class="nb-close"></i>'
+                },
+                delete: {
+                  deleteButtonContent: '<i class="nb-trash"></i>',
+                  confirmDelete: true
+                },
+                mode: "inline",
+                sort: true,
+                hideSubHeader: true,
+                actions: {
+                  add: false,
+                  edit: true,
+                  delete: false,
+                  position: "right",
+                  columnTitle: "Modify",
+                  width: "10%"
+                },
+                pager: {
+                  display: true,
+                  perPage: 30
+                },
+                columns: {
+                  counterNo: {
+                    title: "No",
+                    type: "number",
+                    filter: false,
+                    editable: false,
+                    width: "5%"
+                  },
+                  riskIndicatorId: {
+                    title: "Impact",
+                    type: "string",
+                    filter: false,
+                    editable: false,
+                    width: "10%",
+                    valuePrepareFunction: value => {
+                      console.log(
+                        this.riskIndicatorData.filter(function search(item) {
+                          return item.indicatorId === value;
+                        })[0].description
+                      );
+                      return isNullOrUndefined(
+                        this.riskIndicatorData.filter(function search(item) {
+                          return item.indicatorId === value;
+                        })[0].description
+                      )
+                        ? value
+                        : this.riskIndicatorData.filter(function search(item) {
+                            return item.indicatorId === value;
+                          })[0].description;
+                    }
+                  },
+                  description: {
+                    title: "Description",
+                    type: "string",
+                    filter: false,
+                    editable: true,
+                    width: "80%"
+                  }
+                }
+              };
             });
           }
         });
-
-        this.settings = {
-          add: {
-            addButtonContent: '<i class="nb-plus"></i>',
-            createButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>'
-          },
-          edit: {
-            editButtonContent: '<i class="nb-edit"></i>',
-            saveButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>'
-          },
-          delete: {
-            deleteButtonContent: '<i class="nb-trash"></i>',
-            confirmDelete: true
-          },
-          mode: "inline",
-          sort: true,
-          hideSubHeader: true,
-          actions: {
-            add: false,
-            edit: true,
-            delete: false,
-            position: "right",
-            columnTitle: "Modify",
-            width: "10%"
-          },
-          pager: {
-            display: true,
-            perPage: 30
-          },
-          columns: {
-            counterNo: {
-              title: "No",
-              type: "number",
-              filter: false,
-              editable: false,
-              width: "5%"
-            },
-            riskIndicatorId: {
-              title: "Impact",
-              type: "string",
-              filter: false,
-              editable: false,
-              width: "10%",
-              valuePrepareFunction: value => {
-                console.log(
-                  this.riskIndicatorData.filter(function search(item) {
-                    return item.indicatorId === value;
-                  })[0].description
-                );
-                return isNullOrUndefined(this.riskIndicatorData)
-                  ? value
-                  : this.riskIndicatorData.filter(function search(item) {
-                      return item.indicatorId === value;
-                    })[0].description;
-              }
-            },
-            description: {
-              title: "Description",
-              type: "string",
-              filter: false,
-              editable: true,
-              width: "80%"
-            }
-          }
-        };
       }
       // error => {
       //   console.log(error);
