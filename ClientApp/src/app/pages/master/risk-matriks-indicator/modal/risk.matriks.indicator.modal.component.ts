@@ -42,7 +42,7 @@ export class RiskMatriksIndicatorModalComponent {
     let year = this.yearActive;
     let conditionA = this.conditionA.data;
     let conditionB = this.conditionB.data;
-    let conditionC = this.conditionC.data;
+    let conditionC = this.conditionC;
 
     this.riskIndicatorData
       .filter(function search(item) {

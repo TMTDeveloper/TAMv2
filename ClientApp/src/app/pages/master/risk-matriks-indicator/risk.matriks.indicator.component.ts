@@ -18,6 +18,7 @@ export class RiskMatriksIndicatorComponent {
   riskIndicatorData: any = [];
   subscription: any;
   activeModal: any;
+  item: any;
   @ViewChild("myForm") private myForm: NgForm;
   settings: any = {
     add: {
@@ -210,15 +211,7 @@ export class RiskMatriksIndicatorComponent {
             let conditionB = this.conditionB.data;
             console.log(this.myForm.value.condition);
             let conditionC = this.myForm.value.condition;
-            // console.log(
-            //   this.listData(
-            //     this.riskIndicatorData.filter(function search(item) {
-            //       return (
-            //         item.yearActive === year && item.condition === conditionA
-            //       );
-            //     })
-            //   )
-            // );
+            console.log(this.myForm.value.condition);
             this.listData(
               this.riskIndicatorData.filter(function search(item) {
                 return (
@@ -236,6 +229,7 @@ export class RiskMatriksIndicatorComponent {
                 );
               })
             ).then(item => {
+              this.item = item;
               console.log(item);
               this.settings = {
                 add: {
@@ -286,7 +280,7 @@ export class RiskMatriksIndicatorComponent {
                       return isNullOrUndefined(
                         this.riskIndicatorData.filter(function search(item) {
                           return item.indicatorId === value;
-                        })
+                        })[0]
                       )
                         ? value
                         : this.riskIndicatorData.filter(function search(item) {
@@ -296,7 +290,7 @@ export class RiskMatriksIndicatorComponent {
                     editor: {
                       type: "list",
                       config: {
-                        list: item.data1
+                        list: this.item.data1
                       }
                     }
                   },
@@ -310,7 +304,7 @@ export class RiskMatriksIndicatorComponent {
                       return isNullOrUndefined(
                         this.riskIndicatorData.filter(function search(item) {
                           return item.indicatorId === value;
-                        })
+                        })[0]
                       )
                         ? value
                         : this.riskIndicatorData.filter(function search(item) {
@@ -320,7 +314,7 @@ export class RiskMatriksIndicatorComponent {
                     editor: {
                       type: "list",
                       config: {
-                        list: item.data2
+                        list: this.item.data2
                       }
                     }
                   },
@@ -330,11 +324,21 @@ export class RiskMatriksIndicatorComponent {
                     filter: false,
                     editable: true,
                     width: "30%",
-
+                    valuePrepareFunction: value => {
+                      return isNullOrUndefined(
+                        this.riskIndicatorData.filter(function search(item) {
+                          return item.indicatorId === value;
+                        })[0]
+                      )
+                        ? value
+                        : this.riskIndicatorData.filter(function search(item) {
+                            return item.indicatorId === value;
+                          })[0].description;
+                    },
                     editor: {
                       type: "list",
                       config: {
-                        list: item.data3
+                        list: this.item.data3
                       }
                     }
                   }
@@ -432,7 +436,7 @@ export class RiskMatriksIndicatorComponent {
   }
 
   reload() {
-    console.log(this.tabledata);
+    console.log(this.myForm.value.condition);
     switch (this.myForm.value.condition) {
       case "OVR":
         this.conditionA = {
@@ -471,6 +475,145 @@ export class RiskMatriksIndicatorComponent {
       ],
       true
     );
+    let year = this.myForm.value.yearPeriode;
+    let conditionA = this.conditionA.data;
+    let conditionB = this.conditionB.data;
+    console.log(this.myForm.value.condition);
+    let conditionC = this.myForm.value.condition;
+    console.log(this.myForm.value.condition);
+    this.listData(
+      this.riskIndicatorData.filter(function search(item) {
+        return (
+          item.yearActive === year && item.condition === conditionA
+        );
+      }),
+      this.riskIndicatorData.filter(function search(item) {
+        return (
+          item.yearActive === year && item.condition === conditionB
+        );
+      }),
+      this.riskIndicatorData.filter(function search(item) {
+        return (
+          item.yearActive === year && item.condition === conditionC
+        );
+      })
+    ).then(item => {
+      this.item = item;
+      console.log(item);
+      this.settings = {
+        add: {
+          addButtonContent: '<i class="nb-plus"></i>',
+          createButtonContent: '<i class="nb-checkmark"></i>',
+          cancelButtonContent: '<i class="nb-close"></i>'
+        },
+        edit: {
+          editButtonContent: '<i class="nb-edit"></i>',
+          saveButtonContent: '<i class="nb-checkmark"></i>',
+          cancelButtonContent: '<i class="nb-close"></i>',
+          confirmSave: true
+        },
+        delete: {
+          deleteButtonContent: '<i class="nb-trash"></i>',
+          confirmDelete: true
+        },
+        mode: "inline",
+        sort: true,
+        hideSubHeader: true,
+        actions: {
+          add: false,
+          edit: true,
+          delete: false,
+          position: "right",
+          columnTitle: "Modify",
+          width: "10%"
+        },
+        pager: {
+          display: true,
+          perPage: 30
+        },
+        columns: {
+          counterNo: {
+            title: "No",
+            type: "number",
+            filter: false,
+            editable: false,
+            width: "5%"
+          },
+          indicatorIdA: {
+            title: "Condition 1",
+            type: "text",
+            filter: false,
+            editable: true,
+            width: "30%",
+            valuePrepareFunction: value => {
+              return isNullOrUndefined(
+                this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0]
+              )
+                ? value
+                : this.riskIndicatorData.filter(function search(item) {
+                    return item.indicatorId === value;
+                  })[0].description;
+            },
+            editor: {
+              type: "list",
+              config: {
+                list: this.item.data1
+              }
+            }
+          },
+          indicatorIdB: {
+            title: "Condition 2",
+            type: "text",
+            filter: false,
+            editable: true,
+            width: "30%",
+            valuePrepareFunction: value => {
+              return isNullOrUndefined(
+                this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0]
+              )
+                ? value
+                : this.riskIndicatorData.filter(function search(item) {
+                    return item.indicatorId === value;
+                  })[0].description;
+            },
+            editor: {
+              type: "list",
+              config: {
+                list: this.item.data2
+              }
+            }
+          },
+          resultIdC: {
+            title: "Result",
+            type: "number",
+            filter: false,
+            editable: true,
+            width: "30%",
+            valuePrepareFunction: value => {
+              return isNullOrUndefined(
+                this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0]
+              )
+                ? value
+                : this.riskIndicatorData.filter(function search(item) {
+                    return item.indicatorId === value;
+                  })[0].description;
+            },
+            editor: {
+              type: "list",
+              config: {
+                list: this.item.data3
+              }
+            }
+          }
+        }
+      };
+    });
   }
   submit(event?) {
     console.log(event);
