@@ -47,17 +47,12 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbMOperationalImpacts/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbMOperationalImpact([FromRoute] short id, [FromBody] TbMOperationalImpact tbMOperationalImpact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != tbMOperationalImpact.YearActive)
-            {
-                return BadRequest();
             }
 
             _context.Entry(tbMOperationalImpact).State = EntityState.Modified;

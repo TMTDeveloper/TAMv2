@@ -6,7 +6,7 @@
         <div class="col-sm-2">
           <label>Periode</label>
           <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
-          <select class="form-control" name="year" ngModel required (change)="reload()">
+          <select class="form-control" name="yearPeriode" ngModel required (change)="reload()">
             <option *ngFor="let data of year" value="{{data.data}}">{{data.data}}</option>
           </select>
         </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="col-sm-auto">
         <div class="form-group">
-          <ng2-smart-table [settings]="settings" [source]="source">
+          <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="submit($event)">
           </ng2-smart-table>
         </div>
       </div>
