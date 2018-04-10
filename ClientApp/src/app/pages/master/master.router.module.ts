@@ -17,7 +17,8 @@ import { QualitativeIndicatorModalComponent } from "./qualitative-indicator/moda
 import { DeptInputComponent } from "./dept-input/dept.input.component";
 import { RiskRegisterComponent } from "./risk-register/risk.register.component";
 import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
-
+import { FinancialDataComponent } from "./financial-data/financial.data.component";
+import { FinancialDataModalComponent } from "./financial-data/modal/financial.data.modal.component";
 const routes: Routes = [
   {
     path: "",
@@ -54,6 +55,10 @@ const routes: Routes = [
       {
         path: "risk-register",
         component: RiskRegisterComponent
+      },
+      {
+        path: "financial-data",
+        component: FinancialDataComponent
       }
     ]
   }
@@ -63,7 +68,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MasterRouterModule { }
+export class MasterRouterModule {}
 
 export const routedComponents = [
   MasterComponent,
@@ -81,5 +86,7 @@ export const routedComponents = [
   QualitativeIndicatorModalComponent,
   DeptInputComponent,
   RiskRegisterComponent,
-  RiskRegisterModalComponent
+  RiskRegisterModalComponent,
+  FinancialDataComponent,
+  FinancialDataModalComponent
 ];

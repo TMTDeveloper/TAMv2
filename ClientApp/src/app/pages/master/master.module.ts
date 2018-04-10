@@ -12,6 +12,7 @@ import { OperationalIndicatorRiskModalComponent } from "./operational-indicator-
 import { QualitativeIndicatorModalComponent } from "./qualitative-indicator/modal/qualitative.indicator.modal.component";
 import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
 import { BackendService } from "../../@core/data/backend.service";
+import { FinancialDataModalComponent } from "./financial-data/modal/financial.data.modal.component";
 @NgModule({
   imports: [
     ThemeModule,
@@ -27,7 +28,8 @@ import { BackendService } from "../../@core/data/backend.service";
     FinancialIndicatorRiskModalComponent,
     OperationalIndicatorRiskModalComponent,
     QualitativeIndicatorModalComponent,
-    RiskRegisterModalComponent
+    RiskRegisterModalComponent,
+    FinancialDataModalComponent
   ],
   providers: [BackendService]
 })

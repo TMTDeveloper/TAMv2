@@ -1,0 +1,145 @@
+<nb-card>
+  <nb-card-header>Financial Data</nb-card-header>
+  <nb-card-body>
+
+    <div class="form-group row">
+      <label for="year" class="col-sm-1 col-form-label">Periode</label>
+      <div class="col-sm-2">
+        <select class="form-control" [(ngModel)]="yearPeriode" required (change)="reload()">
+          <option *ngFor="let data of year" value="{{data.data}}">{{data.data}}</option>
+        </select>
+      </div>
+      <div class="col-lg-6">
+        <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+      </div>
+
+    </div>
+
+
+    <nb-card>
+      <nb-card-header>Input Data</nb-card-header>
+      <nb-card-body>
+        <div class="row full-name-inputs">
+          <div class="col-sm-4">
+            <label>Cash\cash Equivalent</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.cashCashEquivalent">
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Net Working Capital</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.netWorkingCapital">
+          </div>
+
+
+
+          <div class="col-sm-4">
+            <label>Fixed Assets</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.fixedAssets">
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Other Assets</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.otherAssets">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Other Liabilities</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.otherLiabilities">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Minority Interest BS</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.minorityInterest">
+
+          </div>
+
+          <div class="col-sm-4">
+            <label>Equity</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.equity">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Revenue</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.revenue">
+
+          </div>
+
+          <div class="col-sm-4">
+            <label>Cost Of Revenue</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.costOfRevenue">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Operating Expenses</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.operatingExpenses">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Non Operating Income</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.nonOperatingIncome">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Tax Expense</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.taxExpense">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Dividend</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.dividend">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Operating Profit</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.operatingProfit">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Net Income Profit</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.netIncomeProfit">
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <label>Operating Cash Flow</label>
+            <input step="0.01" type="number" class="form-control" [(ngModel)]="data.operatingCashFlow">
+
+          </div>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+
+
+    <div class="col-sm-auto row">
+      <div class="col-sm-auto">
+        <div class="form-group">
+          <button type="submit" class="btn btn-success " (click)="submit()">Submit</button>
+        </div>
+      </div>
+
+    </div>
+
+  </nb-card-body>
+</nb-card>

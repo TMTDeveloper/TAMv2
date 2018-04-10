@@ -47,7 +47,7 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbMAccidentDetails/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbMAccidentDetail([FromRoute] short id, [FromBody] TbMAccidentDetail tbMAccidentDetail)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,6 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != tbMAccidentDetail.YearActive)
-            {
-                return BadRequest();
-            }
 
             _context.Entry(tbMAccidentDetail).State = EntityState.Modified;
 

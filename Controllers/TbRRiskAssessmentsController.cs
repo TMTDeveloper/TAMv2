@@ -47,7 +47,7 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbRRiskAssessments/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbRRiskAssessment([FromRoute] short id, [FromBody] TbRRiskAssessment tbRRiskAssessment)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != tbRRiskAssessment.YearActive)
-            {
-                return BadRequest();
-            }
+      
 
             _context.Entry(tbRRiskAssessment).State = EntityState.Modified;
 

@@ -55,7 +55,7 @@ export class FinancialIndicatorRiskComponent {
         title: "Impact",
         type: "string",
         filter: false,
-        editable: true,
+        editable: false,
         width: "30%"
       },
       percentageValue: {
@@ -69,7 +69,7 @@ export class FinancialIndicatorRiskComponent {
         title: "Number",
         type: "numeric",
         filter: false,
-        editable: true,
+        editable: false,
         width: "30%"
       }
     }
@@ -262,59 +262,6 @@ export class FinancialIndicatorRiskComponent {
     console.log(this.myForm.value.condition);
   }
 
-  showModal(no_iku) {
-    this.activeModal = this.modalService.open(
-      FinancialIndicatorRiskModalComponent,
-      {
-        windowClass: "xlModal",
-        container: "nb-layout",
-        backdrop: "static"
-      }
-    );
-    let lastIndex = 0;
-    for (let data in this.tabledata) {
-      if (
-        this.tabledata[data].YEAR_ACTIVE == this.myForm.value.yearPeriode &&
-        this.tabledata[data].CONDITION == this.myForm.value.condition
-      ) {
-        lastIndex < this.tabledata[data].COUNTER_NO
-          ? (lastIndex = this.tabledata[data].COUNTER_NO)
-          : null;
-      }
-    }
-
-    const indicator = this.indicatorGenerate(lastIndex);
-
-    this.activeModal.componentInstance.formData = {
-      COUNTER_NO: lastIndex + 1,
-      YEAR_ACTIVE: this.myForm.value.yearPeriode,
-      DESCRIPTION: "",
-      CONDITION: this.myForm.value.condition,
-      INDICATOR_ID: indicator,
-      SCORE: ""
-    };
-
-    this.activeModal.result.then(async response => {
-      if (response != false) {
-        this.tabledata.push(response);
-        this.reload();
-      }
-    });
-  }
-
-  indicatorGenerate(lastIndex) {
-    switch (lastIndex.toString().length) {
-      case 3:
-        return this.myForm.value.condition + lastIndex.toString();
-
-      case 2:
-        return this.myForm.value.condition + "0" + lastIndex.toString();
-
-      case 1:
-        return this.myForm.value.condition + "00" + lastIndex.toString();
-    }
-  }
-
   reload() {
     this.source.setFilter(
       [
@@ -327,7 +274,7 @@ export class FinancialIndicatorRiskComponent {
   submit(event?) {
     event
       ? this.service
-          .putreq("TbMComInputs", JSON.stringify(event.newData))
+          .putreq("TbMFinancialImpacts", JSON.stringify(event.newData))
           .subscribe(response => {
             console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
@@ -337,19 +284,7 @@ export class FinancialIndicatorRiskComponent {
           })
       : null;
     console.log(JSON.stringify(this.tabledata));
-    this.tabledata.forEach((element, ind) => {
-      let index = ind;
-      if (this.tabledata[index].status == "1") {
-        this.service
-          .postreq("TbMComInputs", this.tabledata[index])
-          .subscribe(response => {
-            console.log(response);
-            this.tabledata[index].status = "0";
-            error => {
-              console.log(error);
-            };
-          });
-      }
-    });
+
+    this.toastr.success("Data Saved!");
   }
 }

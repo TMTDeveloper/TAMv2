@@ -47,7 +47,7 @@ namespace tam_risk_project.Controllers
         }
 
         // PUT: api/TbMFinancialDatas/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutTbMFinancialData([FromRoute] short id, [FromBody] TbMFinancialData tbMFinancialData)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != tbMFinancialData.Year)
-            {
-                return BadRequest();
-            }
+   
 
             _context.Entry(tbMFinancialData).State = EntityState.Modified;
 
