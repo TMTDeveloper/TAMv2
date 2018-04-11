@@ -8,6 +8,8 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./risk.indicator.modal.component.html"
 })
 export class RiskIndicatorModalComponent {
+  condition: any = [];
+
   formData: {
     counterNo: string;
     yearActive: string;
@@ -24,6 +26,17 @@ export class RiskIndicatorModalComponent {
 
   constructor(private activeModal: NgbActiveModal) {
     console.log(this.formData);
+  }
+
+  getTitle(cond) {
+    let arr = this.condition.filter(function(item) {
+      return item.data == cond;
+    });
+    if (arr[0] != null) {
+      return this.condition.filter(function(item) {
+        return item.data == cond;
+      })[0].desc;
+    }
   }
 
   submit() {

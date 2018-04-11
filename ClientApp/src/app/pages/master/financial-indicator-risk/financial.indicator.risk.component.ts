@@ -278,6 +278,7 @@ export class FinancialIndicatorRiskComponent {
           .subscribe(response => {
             console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
+            this.loadData();
             error => {
               console.log(error);
             };

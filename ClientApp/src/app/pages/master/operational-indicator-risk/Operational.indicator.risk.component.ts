@@ -277,6 +277,23 @@ export class OperationalIndicatorRiskComponent {
                           .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
                       }
                     }
+                  },
+                  uom: {
+                    title: "UIOM",
+                    type: "string",
+                    filter: false,
+                    editable: false,
+                    width: "20%",
+                    valuePrepareFunction: value => {
+                      switch (this.myForm.value.condition) {
+                        case "SAL":
+                          return "Unit";
+                        case "DOD":
+                          return "Days";
+                        default:
+                          return "Percent";
+                      }
+                    }
                   }
                 }
               };
@@ -284,6 +301,7 @@ export class OperationalIndicatorRiskComponent {
           }
         });
       }
+
       // error => {
       //   console.log(error);
       // };

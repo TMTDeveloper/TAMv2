@@ -269,8 +269,8 @@ export class RiskIndicatorComponent {
       }
     }
 
-    const indicator = this.indicatorGenerate(lastIndex+1);
-
+    const indicator = this.indicatorGenerate(lastIndex + 1);
+    this.activeModal.componentInstance.condition = this.condition;
     this.activeModal.componentInstance.formData = {
       counterNo: lastIndex + 1,
       yearActive: this.myForm.value.yearPeriode,
@@ -285,14 +285,18 @@ export class RiskIndicatorComponent {
       status: "1"
     };
 
-    this.activeModal.result.then(async response => {
-      if (response != false) {
-        this.tabledata.push(response);
-        console.log(this.tabledata);
-        this.submit();
-        this.reload();
-      }
-    });
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.tabledata.push(response);
+          console.log(this.tabledata);
+          this.submit();
+          this.reload();
+        }
+      },
+      error => {}
+    );
   }
 
   indicatorGenerate(lastIndex) {

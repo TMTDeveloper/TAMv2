@@ -409,17 +409,21 @@ export class RiskMatriksIndicatorComponent {
     this.activeModal.componentInstance.conditionC = this.myForm.value.condition;
     this.activeModal.componentInstance.riskIndicatorData = this.riskIndicatorData;
     this.activeModal.componentInstance.yearActive = this.myForm.value.yearPeriode;
+    this.activeModal.componentInstance.condition = this.condition;
     // this.activeModal.componentInstance.updateData();
 
-    this.activeModal.result.then(async response => {
-      console.log(response);
-      if (response != false) {
-        this.tabledata.push(response);
-        console.log(this.tabledata);
-        this.reload();
-        this.submit();
-      }
-    });
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != false) {
+          this.tabledata.push(response);
+          console.log(this.tabledata);
+          this.reload();
+          this.submit();
+        }
+      },
+      error => {}
+    );
   }
 
   mappingGenerate(lastIndex) {
@@ -483,19 +487,13 @@ export class RiskMatriksIndicatorComponent {
     console.log(this.myForm.value.condition);
     this.listData(
       this.riskIndicatorData.filter(function search(item) {
-        return (
-          item.yearActive === year && item.condition === conditionA
-        );
+        return item.yearActive === year && item.condition === conditionA;
       }),
       this.riskIndicatorData.filter(function search(item) {
-        return (
-          item.yearActive === year && item.condition === conditionB
-        );
+        return item.yearActive === year && item.condition === conditionB;
       }),
       this.riskIndicatorData.filter(function search(item) {
-        return (
-          item.yearActive === year && item.condition === conditionC
-        );
+        return item.yearActive === year && item.condition === conditionC;
       })
     ).then(item => {
       this.item = item;

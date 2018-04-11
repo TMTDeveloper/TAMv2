@@ -8,6 +8,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./risk.matriks.indicator.modal.component.html"
 })
 export class RiskMatriksIndicatorModalComponent {
+  condition: any = [];
   conditionA: any;
   conditionB: any;
   conditionC: any;
@@ -67,7 +68,16 @@ export class RiskMatriksIndicatorModalComponent {
       });
     console.log(this.data);
   }
-
+  getTitle(cond) {
+    let arr = this.condition.filter(function(item) {
+      return item.data == cond;
+    });
+    if (arr[0] != null) {
+      return this.condition.filter(function(item) {
+        return item.data == cond;
+      })[0].desc;
+    }
+  }
   submit() {
     console.log(this.formData);
     this.activeModal.close(this.formData);

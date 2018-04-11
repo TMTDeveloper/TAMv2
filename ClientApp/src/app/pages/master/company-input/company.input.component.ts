@@ -241,7 +241,7 @@ export class CompanyInputComponent {
     }
 
     const comInpId = this.comGenerate(lastIndex + 1);
-
+    this.activeModal.componentInstance.condition = this.condition;
     this.activeModal.componentInstance.formData = {
       yearActive: this.myForm.value.yearPeriode,
       condition: this.myForm.value.condition,
@@ -256,13 +256,16 @@ export class CompanyInputComponent {
       status: "1"
     };
 
-    this.activeModal.result.then(async response => {
-      if (response != false) {
-        this.tabledata.push(response);
-        this.reload();
-        this.submit();
-      }
-    });
+    this.activeModal.result.then(
+      async response => {
+        if (response != false) {
+          this.tabledata.push(response);
+          this.reload();
+          this.submit();
+        }
+      },
+      error => {}
+    );
   }
 
   comGenerate(lastIndex) {
