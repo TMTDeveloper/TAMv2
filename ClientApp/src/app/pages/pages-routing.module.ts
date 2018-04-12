@@ -21,6 +21,10 @@ const routes: Routes = [
       {
         path: "master",
         loadChildren: "./master/master.module#MasterModule"
+      },
+      {
+        path: "transaction",
+        loadChildren: "./transaction/transaction.module#TransactionModule"
       }
     ]
   }

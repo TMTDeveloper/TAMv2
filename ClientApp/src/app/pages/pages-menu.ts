@@ -8,6 +8,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true
   },
   {
+    title: "Transaction",
+    icon: "nb-locked",
+    children: [
+      {
+        title: "Risk Register",
+        link: "/pages/transaction/risk-register"
+      }
+    ]
+  },
+  {
     title: "Master",
     icon: "nb-locked",
     children: [

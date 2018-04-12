@@ -10,7 +10,6 @@ import { RiskMatriksIndicatorModalComponent } from "./risk-matriks-indicator/mod
 import { FinancialIndicatorRiskModalComponent } from "./financial-indicator-risk/modal/financial.indicator.risk.modal.component";
 import { OperationalIndicatorRiskModalComponent } from "./operational-indicator-risk/modal/operational.indicator.risk.modal.component";
 import { QualitativeIndicatorModalComponent } from "./qualitative-indicator/modal/qualitative.indicator.modal.component";
-import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
 import { BackendService } from "../../@core/data/backend.service";
 import { FinancialDataModalComponent } from "./financial-data/modal/financial.data.modal.component";
 @NgModule({
@@ -28,7 +27,7 @@ import { FinancialDataModalComponent } from "./financial-data/modal/financial.da
     FinancialIndicatorRiskModalComponent,
     OperationalIndicatorRiskModalComponent,
     QualitativeIndicatorModalComponent,
-    RiskRegisterModalComponent,
+
     FinancialDataModalComponent
   ],
   providers: [BackendService]
