@@ -122,6 +122,51 @@ export class RiskRegisterComponent {
 
   control: LocalDataSource = new LocalDataSource();
 
+  financialImpact = [
+    {
+      data: "NEP",
+      desc: "Net Profit"
+    },
+    {
+      data: "REV",
+      desc: "Revenue"
+    },
+    {
+      data: "COF",
+      desc: "Cost of revenue"
+    },
+    {
+      data: "OEX",
+      desc: "Operating expenses"
+    },
+    {
+      data: "CHG",
+      desc: "Non operating income/charges"
+    }
+  ];
+
+  operationalImpact = [
+    {
+      data: "MAS",
+      desc: "M/S"
+    },
+    {
+      data: "SAL",
+      desc: "Service Share"
+    },
+    {
+      data: "CSA",
+      desc: "CS Score"
+    },
+    {
+      data: "CAS",
+      desc: "Employee Satisfaction"
+    },
+    {
+      data: "DOD",
+      desc: "Days of operation disruption"
+    }
+  ];
   subscription: any;
   activeModal: any;
   riskIndicatorData: any = [];

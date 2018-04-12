@@ -143,8 +143,8 @@
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <select class="form-control" name="financial_impact_ir" ngModel required>
-              <option></option>
+            <select class="form-control" name="risk_impact">
+              <option *ngFor="let data of financialImpact" value="{{data.data}}">{{data.desc}}</option>
             </select>
           </div>
           <label class="col-sm-1 col-form-label">Amount</label>
@@ -162,8 +162,8 @@
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <select class="form-control" name="operational_impact_ir" ngModel required>
-              <option></option>
+            <select class="form-control" name="risk_impact">
+              <option *ngFor="let data of operationalImpact" value="{{data.data}}">{{data.desc}}</option>
             </select>
           </div>
           <label class="col-sm-1 col-form-label">Loss</label>
@@ -298,8 +298,8 @@
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <select class="form-control" name="financial_impact_ir" ngModel required>
-              <option></option>
+            <select class="form-control" name="risk_impact">
+              <option *ngFor="let data of financialImpact" value="{{data.data}}">{{data.desc}}</option>
             </select>
           </div>
           <label class="col-sm-1 col-form-label">Amount</label>
@@ -317,8 +317,8 @@
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <select class="form-control" name="operational_impact_ir" ngModel required>
-              <option></option>
+            <select class="form-control" name="risk_impact">
+              <option *ngFor="let data of operationalImpact" value="{{data.data}}">{{data.desc}}</option>
             </select>
           </div>
           <label class="col-sm-1 col-form-label">Loss</label>
