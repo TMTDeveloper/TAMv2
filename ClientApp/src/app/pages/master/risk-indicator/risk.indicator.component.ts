@@ -12,6 +12,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 })
 export class RiskIndicatorComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -33,7 +34,7 @@ export class RiskIndicatorComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: true,
+      edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
       columnTitle: "Modify",
@@ -204,6 +205,7 @@ export class RiskIndicatorComponent {
 
   subscription: any;
   activeModal: any;
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -313,6 +315,62 @@ export class RiskIndicatorComponent {
   }
 
   reload() {
+    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: false,
+        position: "right",
+        columnTitle: "Modify",
+        width: "10%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        description: {
+          title: "Description",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "80%"
+        },
+        score: {
+          title: "Score ",
+          type: "number",
+          filter: false,
+          editable: true,
+          width: "10%"
+        }
+      }
+    };
     this.source.setFilter(
       [
         { field: "condition", search: this.myForm.value.condition },

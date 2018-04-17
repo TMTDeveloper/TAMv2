@@ -13,7 +13,7 @@ import { isNullOrUndefined } from "util";
 })
 export class OperationalIndicatorRiskComponent {
   tabledata: any[] = [];
-
+  yearPeriode: any = moment().format("YYYY");
   subscription: any;
   activeModal: any;
   riskIndicatorData: any = [];
@@ -38,7 +38,7 @@ export class OperationalIndicatorRiskComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: true,
+      edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
       columnTitle: "Modify",
@@ -221,7 +221,7 @@ export class OperationalIndicatorRiskComponent {
                 hideSubHeader: true,
                 actions: {
                   add: false,
-                  edit: true,
+                  edit: this.yearPeriode == moment().format("YYYY"),
                   delete: false,
                   position: "right",
                   columnTitle: "Modify",
@@ -279,7 +279,7 @@ export class OperationalIndicatorRiskComponent {
                     }
                   },
                   uom: {
-                    title: "UIOM",
+                    title: "UOM",
                     type: "string",
                     filter: false,
                     editable: false,
@@ -324,6 +324,104 @@ export class OperationalIndicatorRiskComponent {
   }
 
   reload() {
+    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: false,
+        position: "right",
+        columnTitle: "Modify",
+        width: "10%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        riskIndicatorId: {
+          title: "Impact",
+          type: "string",
+          filter: false,
+          editable: false,
+          width: "10%",
+          valuePrepareFunction: value => {
+            console.log(
+              this.riskIndicatorData.filter(function search(item) {
+                return item.indicatorId === value;
+              })[0].description
+            );
+            return isNullOrUndefined(
+              this.riskIndicatorData.filter(function search(item) {
+                return item.indicatorId === value;
+              })[0].description
+            )
+              ? value
+              : this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0].description;
+          }
+        },
+        numberValue: {
+          title: "Number",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "80%",
+          valuePrepareFunction: value => {
+            if (isNaN(value)) {
+              return 0;
+            } else {
+              return Number(value)
+                .toString()
+                .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+            }
+          }
+        },
+        uom: {
+          title: "UOM",
+          type: "string",
+          filter: false,
+          editable: false,
+          width: "20%",
+          valuePrepareFunction: value => {
+            switch (this.myForm.value.condition) {
+              case "SAL":
+                return "Unit";
+              case "DOD":
+                return "Days";
+              default:
+                return "Percent";
+            }
+          }
+        }
+      }
+    };
     this.source.setFilter(
       [
         { field: "category", search: this.myForm.value.condition },

@@ -12,11 +12,13 @@ import { OperationalIndicatorRiskModalComponent } from "./operational-indicator-
 import { QualitativeIndicatorModalComponent } from "./qualitative-indicator/modal/qualitative.indicator.modal.component";
 import { BackendService } from "../../@core/data/backend.service";
 import { FinancialDataModalComponent } from "./financial-data/modal/financial.data.modal.component";
+import { CurrencyMaskModule } from "ng2-currency-mask";
 @NgModule({
   imports: [
     ThemeModule,
     Ng2SmartTableModule,
     MasterRouterModule,
+    CurrencyMaskModule,
     ToastrModule.forRoot()
   ],
   declarations: [...routedComponents],

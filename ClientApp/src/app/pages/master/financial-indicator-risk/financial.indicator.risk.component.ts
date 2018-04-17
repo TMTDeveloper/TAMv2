@@ -12,6 +12,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 })
 export class FinancialIndicatorRiskComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -33,7 +34,7 @@ export class FinancialIndicatorRiskComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: true,
+      edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
       columnTitle: "Modify",
@@ -70,7 +71,14 @@ export class FinancialIndicatorRiskComponent {
         type: "numeric",
         filter: false,
         editable: false,
-        width: "30%"
+        width: "30%",
+        valuePrepareFunction: value => {
+          if (isNaN(value)) {
+            return 0;
+          } else {
+            return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+          }
+        }
       }
     }
   };
@@ -263,6 +271,76 @@ export class FinancialIndicatorRiskComponent {
   }
 
   reload() {
+    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: false,
+        position: "right",
+        columnTitle: "Modify",
+        width: "10%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        impact: {
+          title: "Impact",
+          type: "string",
+          filter: false,
+          editable: false,
+          width: "30%"
+        },
+        percentageValue: {
+          title: "Percentage",
+          type: "decimal(5,2)",
+          filter: false,
+          editable: true,
+          width: "30%"
+        },
+        numberValue: {
+          title: "Number",
+          type: "numeric",
+          filter: false,
+          editable: false,
+          width: "30%",
+          valuePrepareFunction: value => {
+            if (isNaN(value)) {
+              return 0;
+            } else {
+              return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            }
+          }
+        }
+      }
+    };
     this.source.setFilter(
       [
         { field: "category", search: this.myForm.value.condition },

@@ -13,7 +13,7 @@ import { isNullOrUndefined } from "util";
 })
 export class RiskMatriksIndicatorComponent {
   source: LocalDataSource = new LocalDataSource();
-
+  yearPeriode: any = moment().format("YYYY");
   tabledata: any[] = [];
   riskIndicatorData: any = [];
   subscription: any;
@@ -41,7 +41,7 @@ export class RiskMatriksIndicatorComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: true,
+      edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
       columnTitle: "Modify",
@@ -252,7 +252,7 @@ export class RiskMatriksIndicatorComponent {
                 hideSubHeader: true,
                 actions: {
                   add: false,
-                  edit: true,
+                  edit: this.yearPeriode == moment().format("YYYY"),
                   delete: false,
                   position: "right",
                   columnTitle: "Modify",
@@ -440,6 +440,120 @@ export class RiskMatriksIndicatorComponent {
   }
 
   reload() {
+    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: false,
+        position: "right",
+        columnTitle: "Modify",
+        width: "10%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        indicatorIdA: {
+          title: "Condition 1",
+          type: "text",
+          filter: false,
+          editable: true,
+          width: "30%",
+          valuePrepareFunction: value => {
+            return isNullOrUndefined(
+              this.riskIndicatorData.filter(function search(item) {
+                return item.indicatorId === value;
+              })[0]
+            )
+              ? value
+              : this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0].description;
+          },
+          editor: {
+            type: "list",
+            config: {
+              list: this.item.data1
+            }
+          }
+        },
+        indicatorIdB: {
+          title: "Condition 2",
+          type: "text",
+          filter: false,
+          editable: true,
+          width: "30%",
+          valuePrepareFunction: value => {
+            return isNullOrUndefined(
+              this.riskIndicatorData.filter(function search(item) {
+                return item.indicatorId === value;
+              })[0]
+            )
+              ? value
+              : this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0].description;
+          },
+          editor: {
+            type: "list",
+            config: {
+              list: this.item.data2
+            }
+          }
+        },
+        resultIdC: {
+          title: "Result",
+          type: "number",
+          filter: false,
+          editable: true,
+          width: "30%",
+          valuePrepareFunction: value => {
+            return isNullOrUndefined(
+              this.riskIndicatorData.filter(function search(item) {
+                return item.indicatorId === value;
+              })[0]
+            )
+              ? value
+              : this.riskIndicatorData.filter(function search(item) {
+                  return item.indicatorId === value;
+                })[0].description;
+          },
+          editor: {
+            type: "list",
+            config: {
+              list: this.item.data3
+            }
+          }
+        }
+      }
+    };
     console.log(this.myForm.value.condition);
     switch (this.myForm.value.condition) {
       case "OVR":
@@ -519,7 +633,7 @@ export class RiskMatriksIndicatorComponent {
         hideSubHeader: true,
         actions: {
           add: false,
-          edit: true,
+          edit: this.yearPeriode == moment().format("YYYY"),
           delete: false,
           position: "right",
           columnTitle: "Modify",
