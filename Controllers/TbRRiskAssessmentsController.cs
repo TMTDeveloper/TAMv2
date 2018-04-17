@@ -55,7 +55,6 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-      
 
             _context.Entry(tbRRiskAssessment).State = EntityState.Modified;
 

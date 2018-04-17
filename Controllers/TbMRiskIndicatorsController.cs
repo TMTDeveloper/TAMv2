@@ -9,6 +9,7 @@ using tam_risk_project.Models;
 
 namespace tam_risk_project.Controllers
 {
+    [Produces("application/json")]
     [Route("api/TbMRiskIndicators")]
     public class TbMRiskIndicatorsController : Controller
     {
@@ -23,28 +24,27 @@ namespace tam_risk_project.Controllers
         [HttpGet]
         public IEnumerable<TbMRiskIndicator> GetTbMRiskIndicator()
         {
-            Console.Write("heheh");
             return _context.TbMRiskIndicator;
         }
 
-        // // GET: api/TbMRiskIndicators/5
-        // [HttpGet("{id}")]
-        // public async Task<IActionResult> GetTbMRiskIndicator([FromRoute] short id)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        // GET: api/TbMRiskIndicators/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTbMRiskIndicator([FromRoute] short id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //     var tbMRiskIndicator = await _context.TbMRiskIndicator.SingleOrDefaultAsync(m => m.YearActive == id);
+            var tbMRiskIndicator = await _context.TbMRiskIndicator.SingleOrDefaultAsync(m => m.YearActive == id);
 
-        //     if (tbMRiskIndicator == null)
-        //     {
-        //         return NotFound();
-        //     }
+            if (tbMRiskIndicator == null)
+            {
+                return NotFound();
+            }
 
-        //     return Ok(tbMRiskIndicator);
-        // }
+            return Ok(tbMRiskIndicator);
+        }
 
         // PUT: api/TbMRiskIndicators/5
         [HttpPut]
@@ -55,6 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
+        
 
             _context.Entry(tbMRiskIndicator).State = EntityState.Modified;
 

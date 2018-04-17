@@ -20,6 +20,7 @@ namespace tam_risk_project.Models
         public string IndicatorIdA { get; set; }
         public string IndicatorIdB { get; set; }
         public string ResultIdC { get; set; }
+        public string FlagActive { get; set; }
         public string UserCreated { get; set; }
         public DateTime? DatetimeCreated { get; set; }
         public string UserUpdate { get; set; }

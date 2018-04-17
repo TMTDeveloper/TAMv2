@@ -27,6 +27,7 @@ namespace tam_risk_project.Models
         public string IndicatorId { get; set; }
         public string Description { get; set; }
         public short? Score { get; set; }
+        public string FlagActive { get; set; }
         public string UserCreated { get; set; }
         public DateTime? DatetimeCreated { get; set; }
         public string UserUpdate { get; set; }

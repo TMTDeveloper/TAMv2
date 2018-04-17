@@ -7,8 +7,7 @@ namespace tam_risk_project.Models
     {
         public TbMComInput()
         {
-            TbRRiskAssessmentTbMComInput = new HashSet<TbRRiskAssessment>();
-            TbRRiskAssessmentTbMComInputNavigation = new HashSet<TbRRiskAssessment>();
+            TbRRiskAssessment = new HashSet<TbRRiskAssessment>();
         }
 
         public short YearActive { get; set; }
@@ -22,7 +21,6 @@ namespace tam_risk_project.Models
         public string UserUpdate { get; set; }
         public DateTime? DatetimeUpdate { get; set; }
 
-        public ICollection<TbRRiskAssessment> TbRRiskAssessmentTbMComInput { get; set; }
-        public ICollection<TbRRiskAssessment> TbRRiskAssessmentTbMComInputNavigation { get; set; }
+        public ICollection<TbRRiskAssessment> TbRRiskAssessment { get; set; }
     }
 }

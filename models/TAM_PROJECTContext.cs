@@ -20,8 +20,9 @@ namespace tam_risk_project.Models
         public virtual DbSet<TbRRiskAssessment> TbRRiskAssessment { get; set; }
 
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
-           : base(options)
-        { }
+              : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,7 +36,7 @@ namespace tam_risk_project.Models
 
                 entity.Property(e => e.AccidentId)
                     .HasColumnName("ACCIDENT_ID")
-                    .HasMaxLength(10)
+                    .HasMaxLength(16)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
@@ -90,6 +91,11 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.RelatedParties)
                     .HasColumnName("RELATED_PARTIES")
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserCreated)
+                    .HasColumnName("USER_CREATED")
+                    .HasMaxLength(45)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
@@ -295,6 +301,11 @@ namespace tam_risk_project.Models
                     .HasColumnName("DATETIME_UPDATE")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.FlagActive)
+                    .HasColumnName("FLAG_ACTIVE")
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.NumberValue).HasColumnName("NUMBER_VALUE");
 
                 entity.Property(e => e.PercentageValue).HasColumnName("PERCENTAGE_VALUE");
@@ -464,6 +475,11 @@ namespace tam_risk_project.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FlagActive)
+                    .HasColumnName("FLAG_ACTIVE")
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Score).HasColumnName("SCORE");
 
                 entity.Property(e => e.UserCreated)
@@ -504,6 +520,11 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.DatetimeUpdate)
                     .HasColumnName("DATETIME_UPDATE")
                     .HasColumnType("datetime");
+
+                entity.Property(e => e.FlagActive)
+                    .HasColumnName("FLAG_ACTIVE")
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.IndicatorIdA)
                     .HasColumnName("INDICATOR_ID_A")
@@ -556,7 +577,7 @@ namespace tam_risk_project.Models
 
                 entity.Property(e => e.AccidentId)
                     .HasColumnName("ACCIDENT_ID")
-                    .HasMaxLength(10)
+                    .HasMaxLength(16)
                     .IsUnicode(false);
 
                 entity.Property(e => e.DatetimeCreated)
@@ -679,6 +700,8 @@ namespace tam_risk_project.Models
 
                 entity.Property(e => e.ControlList).HasColumnName("CONTROL_LIST");
 
+                entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
+
                 entity.Property(e => e.DatetimeCreated)
                     .HasColumnName("DATETIME_CREATED")
                     .HasColumnType("datetime");
@@ -770,6 +793,11 @@ namespace tam_risk_project.Models
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
+                entity.Property(e => e.OverallEx)
+                    .HasColumnName("OVERALL_EX")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.OverallRd)
                     .HasColumnName("OVERALL_RD")
                     .HasMaxLength(10)
@@ -795,7 +823,16 @@ namespace tam_risk_project.Models
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
-                entity.Property(e => e.RiskImpact).HasColumnName("RISK_IMPACT");
+                entity.Property(e => e.RdImpact)
+                    .HasColumnName("RD_IMPACT")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RiskImpact)
+                    .IsRequired()
+                    .HasColumnName("RISK_IMPACT")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RiskLevel)
                     .HasColumnName("RISK_LEVEL")
@@ -827,12 +864,7 @@ namespace tam_risk_project.Models
                     .HasConstraintName("CT_APPROPRIATENESS_FK");
 
                 entity.HasOne(d => d.TbMComInput)
-                    .WithMany(p => p.TbRRiskAssessmentTbMComInput)
-                    .HasForeignKey(d => new { d.YearActive, d.BusinessProcess })
-                    .HasConstraintName("COM_BP_FK");
-
-                entity.HasOne(d => d.TbMComInputNavigation)
-                    .WithMany(p => p.TbRRiskAssessmentTbMComInputNavigation)
+                    .WithMany(p => p.TbRRiskAssessment)
                     .HasForeignKey(d => new { d.YearActive, d.CompanyKpi })
                     .HasConstraintName("COM_KPI_FK");
 

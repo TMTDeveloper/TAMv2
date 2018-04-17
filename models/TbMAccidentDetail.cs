@@ -22,6 +22,7 @@ namespace tam_risk_project.Models
         public string OtherImpact { get; set; }
         public string CurrentAction { get; set; }
         public string NextAction { get; set; }
+        public string UserCreated { get; set; }
         public DateTime? DatetimeCreated { get; set; }
         public string UserUpdate { get; set; }
         public DateTime? DatetimeUpdate { get; set; }

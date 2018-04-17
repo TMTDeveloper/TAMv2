@@ -33,23 +33,25 @@
         <div class="form-group row">
           <label for="division" class="col-sm-2 col-form-label">Division</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" id="division" ngModel name="division">
+            <input type="text" class="form-control" id="division" [(ngModel)]="dataInput.divisionDepartment.division">
           </div>
         </div>
         <div class="form-group row">
           <label for="department" class="col-sm-2 col-form-label">Department</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" id="department" ngModel name="department">
+            <input type="text" class="form-control" id="department" [(ngModel)]="dataInput.divisionDepartment.deparment">
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Company KPI</label>
           <div class="col-lg-6">
+            <button class="btn btn-success with-margins" (click)="showModal()">LOV</button>
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+
           </div>
           <div class="col-sm-12">
-            <textarea rows="3" type="text" class="form-control" ngModel name="company_kpi"></textarea>
+            <textarea disabled="true" rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.companyKpi.description"></textarea>
           </div>
         </div>
 
@@ -60,7 +62,7 @@
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
-            <textarea rows="3" type="text" class="form-control" ngModel name="department_kpi"></textarea>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.departmentKpi"></textarea>
           </div>
         </div>
         <div class="form-group row">
@@ -69,7 +71,7 @@
             <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
-            <textarea rows="3" type="text" class="form-control" ngModel name="business_process"></textarea>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.businessProcess"></textarea>
           </div>
         </div>
       </nb-tab>

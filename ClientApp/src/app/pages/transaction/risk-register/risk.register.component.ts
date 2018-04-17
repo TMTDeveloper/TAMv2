@@ -122,6 +122,19 @@ export class RiskRegisterComponent {
 
   control: LocalDataSource = new LocalDataSource();
 
+  dataInput = {
+    divisionDepartment: {
+      division: "",
+      department: "",
+      companyKpi: {
+        comInpId: "",
+        description: ""
+      },
+      departmentKpi: "",
+      businessProcess: ""
+    }
+  };
+
   financialImpact = [
     {
       data: "NEP",
@@ -208,6 +221,28 @@ export class RiskRegisterComponent {
   }
 
   ngAfterViewInit() {}
+
+  showModal() {
+    this.activeModal = this.modalService.open(RiskRegisterModalComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
+    this.activeModal.componentInstance.filterData.condition = "KPI";
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.dataInput.divisionDepartment.companyKpi.comInpId =
+            response.comInpId;
+          this.dataInput.divisionDepartment.companyKpi.description =
+            response.description;
+        }
+      },
+      error => {}
+    );
+  }
 
   submit() {
     this.toastr.success("Data Saved!");

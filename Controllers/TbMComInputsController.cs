@@ -55,7 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-
+         
             _context.Entry(tbMComInput).State = EntityState.Modified;
 
             try

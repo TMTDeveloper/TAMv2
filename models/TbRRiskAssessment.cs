@@ -16,11 +16,12 @@ namespace tam_risk_project.Models
         public string Division { get; set; }
         public string CompanyKpi { get; set; }
         public string Department { get; set; }
+        public int? CounterNo { get; set; }
         public string DepartmentKpi { get; set; }
         public string BusinessProcess { get; set; }
         public string LossEvent { get; set; }
         public string Caused { get; set; }
-        public short? RiskImpact { get; set; }
+        public string RiskImpact { get; set; }
         public string RiskLevel { get; set; }
         public short? AccidentList { get; set; }
         public string NotesIr { get; set; }
@@ -39,6 +40,7 @@ namespace tam_risk_project.Models
         public double? FinAmountRd { get; set; }
         public int? OpAmountRd { get; set; }
         public string QlImpactRd { get; set; }
+        public string RdImpact { get; set; }
         public string LikelihoodRd { get; set; }
         public string OverallRd { get; set; }
         public string OverallEf { get; set; }
@@ -46,6 +48,7 @@ namespace tam_risk_project.Models
         public string TreatmentDescription { get; set; }
         public string ImpactEx { get; set; }
         public string LikelihoodEx { get; set; }
+        public string OverallEx { get; set; }
         public string Pic { get; set; }
         public short? Schedule { get; set; }
         public string UserCreated { get; set; }
@@ -54,7 +57,6 @@ namespace tam_risk_project.Models
         public DateTime? DatetimeUpdate { get; set; }
 
         public TbMComInput TbMComInput { get; set; }
-        public TbMComInput TbMComInputNavigation { get; set; }
         public TbMDeptInput TbMDeptInput { get; set; }
         public TbMFinancialImpact TbMFinancialImpact { get; set; }
         public TbMOperationalImpact TbMOperationalImpact { get; set; }

@@ -17,6 +17,7 @@ namespace tam_risk_project.Models
         public string FinancialId { get; set; }
         public short? PercentageValue { get; set; }
         public double? NumberValue { get; set; }
+        public string FlagActive { get; set; }
         public string UserCreated { get; set; }
         public DateTime? DatetimeCreated { get; set; }
         public string UserUpdate { get; set; }
