@@ -18,7 +18,10 @@ namespace tam_risk_project.Models
         public virtual DbSet<TbRAccidentDetail> TbRAccidentDetail { get; set; }
         public virtual DbSet<TbRControlDetail> TbRControlDetail { get; set; }
         public virtual DbSet<TbRRiskAssessment> TbRRiskAssessment { get; set; }
+        public virtual DbSet<ControlMapping> ControlMapping { get; set; }
+        public virtual DbSet<ControlEffectiveness> ControlEffectiveness { get; set; }
 
+        public virtual DbSet<RiskMovement> RiskMovement { get; set; }
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
               : base(options)
         {
@@ -26,6 +29,51 @@ namespace tam_risk_project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<RiskMovement>(entity =>
+           {
+
+               entity.ToTable("RISK_MOVEMENT");
+               entity.HasKey(e => new { e.Division, e.Department });
+               entity.Property(e => e.Division).HasColumnName("DIVISION");
+               entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+               entity.Property(e => e.IrRiskExtreme).HasColumnName("IR_RISK_EXTREME");
+               entity.Property(e => e.IrRiskHigh).HasColumnName("IR_RISK_HIGH");
+               entity.Property(e => e.IrRiskMedium).HasColumnName("IR_RISK_MEDIUM");
+               entity.Property(e => e.IrRiskLow).HasColumnName("IR_RISK_LOW");
+               entity.Property(e => e.RdRiskExtreme).HasColumnName("RD_RISK_EXTREME");
+               entity.Property(e => e.RdRiskHigh).HasColumnName("RD_RISK_HIGH");
+               entity.Property(e => e.RdRiskMedium).HasColumnName("RD_RISK_MEDIUM");
+               entity.Property(e => e.RdRiskLow).HasColumnName("RD_RISK_LOW");
+               entity.Property(e => e.ExRiskExtreme).HasColumnName("EX_RISK_EXTREME");
+               entity.Property(e => e.ExRiskHigh).HasColumnName("EX_RISK_HIGH");
+               entity.Property(e => e.ExRiskMedium).HasColumnName("EX_RISK_MEDIUM");
+               entity.Property(e => e.ExRiskLow).HasColumnName("EX_RISK_LOW");
+           });
+
+            modelBuilder.Entity<ControlEffectiveness>(entity =>
+            {
+
+                entity.ToTable("CONTROL_EFFECTIVENESS");
+                entity.HasKey(e => new { e.Division, e.Department });
+                entity.Property(e => e.Division).HasColumnName("DIVISION");
+                entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+                entity.Property(e => e.CtrEff).HasColumnName("CTR_EFF");
+                entity.Property(e => e.CtrIff).HasColumnName("CTR_IFF");
+                entity.Property(e => e.CtrMod).HasColumnName("CTR_MOD");
+                entity.Property(e => e.CtrWeak).HasColumnName("CTR_WEAK");
+            });
+
+            modelBuilder.Entity<ControlMapping>(entity =>
+            {
+
+                entity.ToTable("CONTROL_MAPPING");
+                entity.HasKey(e => new { e.Division, e.Department });
+                entity.Property(e => e.Division).HasColumnName("DIVISION");
+                entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+                entity.Property(e => e.Preventive).HasColumnName("PREVENTIVE");
+                entity.Property(e => e.Detective).HasColumnName("DETECTIVE");
+                entity.Property(e => e.Corrective).HasColumnName("Corrective");
+            });
             modelBuilder.Entity<TbMAccidentDetail>(entity =>
             {
                 entity.HasKey(e => new { e.YearActive, e.AccidentId });
