@@ -328,8 +328,7 @@ export class OperationalIndicatorRiskComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "10%",
-
+          width: "10%"
         },
         numberValue: {
           title: "Number",
