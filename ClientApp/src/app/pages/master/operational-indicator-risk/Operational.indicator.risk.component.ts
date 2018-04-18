@@ -27,7 +27,8 @@ export class OperationalIndicatorRiskComponent {
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>'
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -47,6 +48,55 @@ export class OperationalIndicatorRiskComponent {
     pager: {
       display: true,
       perPage: 30
+    },
+    columns: {
+      counterNo: {
+        title: "No",
+        type: "number",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
+      descriptionrisk: {
+        title: "Impact",
+        type: "string",
+        filter: false,
+        editable: false,
+        width: "10%"
+      },
+      numberValue: {
+        title: "Number",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "80%",
+        valuePrepareFunction: value => {
+          if (isNaN(value)) {
+            return 0;
+          } else {
+            return Number(value)
+              .toString()
+              .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+          }
+        }
+      },
+      uom: {
+        title: "UOM",
+        type: "string",
+        filter: false,
+        editable: false,
+        width: "20%",
+        valuePrepareFunction: value => {
+          switch (this.myForm.value.condition) {
+            case "SAL":
+              return "Unit";
+            case "DOD":
+              return "Days";
+            default:
+              return "Percent";
+          }
+        }
+      }
     }
   };
   year: any[] = [
@@ -179,132 +229,41 @@ export class OperationalIndicatorRiskComponent {
     this.loadData();
   }
   loadData() {
-    this.service.getreq("TbMOperationalImpacts").subscribe(response => {
+    this.service.getreq("TbMRiskIndicators").subscribe(response => {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].score == null
+            ? (data[ind].score = 0)
+            : data[ind].score.toString();
           data[ind].status = "0";
-          this.tabledata = data;
-          this.source.load(this.tabledata);
+          this.riskIndicatorData = data;
         });
-        this.service.getreq("TbMRiskIndicators").subscribe(response => {
+        this.service.getreq("TbMOperationalImpacts").subscribe(response => {
           if (response != null) {
             const data = response;
             console.log(JSON.stringify(response));
             data.forEach((element, ind) => {
               data[ind].yearActive = data[ind].yearActive.toString();
-              data[ind].score == null
-                ? (data[ind].score = 0)
-                : data[ind].score.toString();
               data[ind].status = "0";
-              this.riskIndicatorData = data;
-              this.settings = {
-                add: {
-                  addButtonContent: '<i class="nb-plus"></i>',
-                  createButtonContent: '<i class="nb-checkmark"></i>',
-                  cancelButtonContent: '<i class="nb-close"></i>'
-                },
-                edit: {
-                  editButtonContent: '<i class="nb-edit"></i>',
-                  saveButtonContent: '<i class="nb-checkmark"></i>',
-                  cancelButtonContent: '<i class="nb-close"></i>',
-                  confirmSave: true
-                },
-                delete: {
-                  deleteButtonContent: '<i class="nb-trash"></i>',
-                  confirmDelete: true
-                },
-                mode: "inline",
-                sort: true,
-                hideSubHeader: true,
-                actions: {
-                  add: false,
-                  edit: this.yearPeriode == moment().format("YYYY"),
-                  delete: false,
-                  position: "right",
-                  columnTitle: "Modify",
-                  width: "10%"
-                },
-                pager: {
-                  display: true,
-                  perPage: 30
-                },
-                columns: {
-                  counterNo: {
-                    title: "No",
-                    type: "number",
-                    filter: false,
-                    editable: false,
-                    width: "5%"
-                  },
-                  riskIndicatorId: {
-                    title: "Impact",
-                    type: "string",
-                    filter: false,
-                    editable: false,
-                    width: "10%",
-                    valuePrepareFunction: value => {
-                      console.log(
-                        this.riskIndicatorData.filter(function search(item) {
-                          return item.indicatorId === value;
-                        })[0].description
-                      );
-                      return isNullOrUndefined(
-                        this.riskIndicatorData.filter(function search(item) {
-                          return item.indicatorId === value;
-                        })[0].description
-                      )
-                        ? value
-                        : this.riskIndicatorData.filter(function search(item) {
-                            return item.indicatorId === value;
-                          })[0].description;
-                    }
-                  },
-                  numberValue: {
-                    title: "Number",
-                    type: "string",
-                    filter: false,
-                    editable: true,
-                    width: "80%",
-                    valuePrepareFunction: value => {
-                      if (isNaN(value)) {
-                        return 0;
-                      } else {
-                        return Number(value)
-                          .toString()
-                          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-                      }
-                    }
-                  },
-                  uom: {
-                    title: "UOM",
-                    type: "string",
-                    filter: false,
-                    editable: false,
-                    width: "20%",
-                    valuePrepareFunction: value => {
-                      switch (this.myForm.value.condition) {
-                        case "SAL":
-                          return "Unit";
-                        case "DOD":
-                          return "Days";
-                        default:
-                          return "Percent";
-                      }
-                    }
-                  }
-                }
-              };
+              let arr = this.riskIndicatorData.filter(function(item) {
+                return item.indicatorId == data[ind].riskIndicatorId;
+              });
+              if (arr[0] != null) {
+                data[ind].descriptionrisk = arr[0].description;
+              }
+              this.tabledata = data;
+              this.source.load(this.tabledata);
             });
           }
+
+          // error => {
+          //   console.log(error);
+          // };
         });
       }
-
-      // error => {
-      //   console.log(error);
-      // };
     });
   }
   ngAfterViewInit() {
@@ -364,28 +323,13 @@ export class OperationalIndicatorRiskComponent {
           editable: false,
           width: "5%"
         },
-        riskIndicatorId: {
+        descriptionrisk: {
           title: "Impact",
           type: "string",
           filter: false,
           editable: false,
           width: "10%",
-          valuePrepareFunction: value => {
-            console.log(
-              this.riskIndicatorData.filter(function search(item) {
-                return item.indicatorId === value;
-              })[0].description
-            );
-            return isNullOrUndefined(
-              this.riskIndicatorData.filter(function search(item) {
-                return item.indicatorId === value;
-              })[0].description
-            )
-              ? value
-              : this.riskIndicatorData.filter(function search(item) {
-                  return item.indicatorId === value;
-                })[0].description;
-          }
+
         },
         numberValue: {
           title: "Number",
