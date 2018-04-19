@@ -390,7 +390,8 @@ export class RiskRegisterComponent {
         if (response != null) {
           this.dataInput.inherentRisk.qualitativeIR.id =
             response.riskIndicatorId;
-          this.dataInput.inherentRisk.qualitativeIR.desc = response.description;
+          this.dataInput.inherentRisk.qualitativeIR.desc =
+            response.descriptionrisk;
         }
       },
       error => {}
@@ -410,7 +411,7 @@ export class RiskRegisterComponent {
         if (response != null) {
           this.dataInput.residualRisk.qualitativeRD.id =
             response.riskIndicatorId;
-          this.dataInput.residualRisk.qualitativeRD.desc = response.description;
+          this.dataInput.residualRisk.qualitativeRD.desc = response.descriptionrisk;
         }
       },
       error => {}
