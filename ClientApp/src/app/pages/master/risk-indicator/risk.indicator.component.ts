@@ -12,6 +12,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 })
 export class RiskIndicatorComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  buttonDisable:boolean;
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -211,6 +212,7 @@ export class RiskIndicatorComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
+    this.buttonDisable=false;
     this.loadData();
   }
 
@@ -378,6 +380,13 @@ export class RiskIndicatorComponent {
       ],
       true
     );
+    switch (this.myForm.value.yearPeriode) {
+      case moment().format('YYYY'):
+        this.buttonDisable =false;
+        break;
+      default:
+      this.buttonDisable =true;
+    }
   }
   submit(event?) {
     event

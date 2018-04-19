@@ -13,6 +13,7 @@ import { isNullOrUndefined } from "util";
 })
 export class RiskMatriksIndicatorComponent {
   source: LocalDataSource = new LocalDataSource();
+  buttonDisable:boolean;
   yearPeriode: any = moment().format("YYYY");
   tabledata: any[] = [];
   riskIndicatorData: any = [];
@@ -54,7 +55,7 @@ export class RiskMatriksIndicatorComponent {
   };
   conditionA: any = {
     data: "EFF",
-    desc: "Effectiveness"
+    desc: "Overal Control"
   };
   conditionB: any = {
     data: "OPR",
@@ -165,11 +166,11 @@ export class RiskMatriksIndicatorComponent {
     },
     {
       data: "OVR",
-      desc: "Overall"
+      desc: "Overall Risk"
     },
     {
       data: "EFF",
-      desc: "Effectiveness"
+      desc: "Overal Control"
     }
   ];
 
@@ -178,6 +179,7 @@ export class RiskMatriksIndicatorComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
+    this.buttonDisable=false;
     this.loadData();
   }
 
@@ -555,6 +557,13 @@ export class RiskMatriksIndicatorComponent {
       }
     };
     console.log(this.myForm.value.condition);
+    switch (this.myForm.value.yearPeriode) {
+      case moment().format('YYYY'):
+        this.buttonDisable =false;
+        break;
+      default:
+      this.buttonDisable =true;
+    }
     switch (this.myForm.value.condition) {
       case "OVR":
         this.conditionA = {
@@ -579,7 +588,7 @@ export class RiskMatriksIndicatorComponent {
       default:
         this.conditionA = {
           data: "EFF",
-          desc: "Effectiveness"
+          desc: "Overal Control"
         };
         this.conditionB = {
           data: "OPR",

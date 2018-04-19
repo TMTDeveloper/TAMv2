@@ -5,6 +5,8 @@ import { MasterRouterModule, routedComponents } from "./master.router.module";
 import { ThemeModule } from "../../@theme/theme.module";
 import { CompanyInputModalComponent } from "./company-input/modal/company.input.modal.component";
 import { RiskIndicatorModalComponent } from "./risk-indicator/modal/risk.indicator.modal.component";
+import { RiskReminderModalComponent } from "./risk-reminder/modal/risk.reminder.modal.component";
+import { RiskReminderManualComponent } from "./risk-reminder/modal/risk.reminder.manual.component";
 import { ToastrModule } from "ngx-toastr";
 import { RiskMatriksIndicatorModalComponent } from "./risk-matriks-indicator/modal/risk.matriks.indicator.modal.component";
 import { FinancialIndicatorRiskModalComponent } from "./financial-indicator-risk/modal/financial.indicator.risk.modal.component";
@@ -25,6 +27,8 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
   entryComponents: [
     CompanyInputModalComponent,
     RiskIndicatorModalComponent,
+    RiskReminderModalComponent,
+    RiskReminderManualComponent,
     RiskMatriksIndicatorModalComponent,
     FinancialIndicatorRiskModalComponent,
     OperationalIndicatorRiskModalComponent,

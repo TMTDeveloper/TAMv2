@@ -1,0 +1,40 @@
+<nb-card>
+  <nb-card-header>Report</nb-card-header>
+  <nb-card-body>
+
+<nb-tabset>
+  <nb-tab tabTitle="Chart">
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Control Effectiveness</nb-card-header>
+      <nb-card-body>
+        <ngx-chartjs-pie></ngx-chartjs-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Risk Movement</nb-card-header>
+      <nb-card-body>
+        <ngx-chartjs-bar></ngx-chartjs-bar> 
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Control Mapping</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-bar></ngx-d3-bar>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+
+</div>
+</nb-tab>
+    <nb-tab tabTitle="Simplify Report">
+    </nb-tab>
+<nb-tabset>
+  <nb-card-body>
+      <nb-card>

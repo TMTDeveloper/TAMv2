@@ -6,6 +6,9 @@ import { CompanyInputComponent } from "./company-input/company.input.component";
 import { CompanyInputModalComponent } from "./company-input/modal/company.input.modal.component";
 import { RiskIndicatorComponent } from "./risk-indicator/risk.indicator.component";
 import { RiskIndicatorModalComponent } from "./risk-indicator/modal/risk.indicator.modal.component";
+import { RiskReminderComponent } from "./risk-reminder/risk.reminder.component";
+import { RiskReminderModalComponent } from "./risk-reminder/modal/risk.reminder.modal.component";
+import { RiskReminderManualComponent } from "./risk-reminder/modal/risk.reminder.manual.component";
 import { RiskMatriksIndicatorComponent } from "./risk-matriks-indicator/risk.matriks.indicator.component";
 import { RiskMatriksIndicatorModalComponent } from "./risk-matriks-indicator/modal/risk.matriks.indicator.modal.component";
 import { FinancialIndicatorRiskComponent } from "./financial-indicator-risk/financial.indicator.risk.component";
@@ -51,6 +54,10 @@ const routes: Routes = [
         component: DeptInputComponent
       },
       {
+        path: "risk-reminder",
+        component: RiskReminderComponent
+      },
+      {
         path: "financial-data",
         component: FinancialDataComponent
       }
@@ -70,6 +77,9 @@ export const routedComponents = [
   CompanyInputModalComponent,
   RiskIndicatorComponent,
   RiskIndicatorModalComponent,
+  RiskReminderComponent,
+  RiskReminderModalComponent,
+  RiskReminderManualComponent,
   RiskMatriksIndicatorComponent,
   RiskMatriksIndicatorModalComponent,
   FinancialIndicatorRiskComponent,

@@ -62,14 +62,14 @@ export class OperationalIndicatorRiskComponent {
         type: "string",
         filter: false,
         editable: false,
-        width: "10%"
+        width: "40%"
       },
       numberValue: {
         title: "Number",
         type: "string",
         filter: false,
         editable: true,
-        width: "80%",
+        width: "50%",
         valuePrepareFunction: value => {
           if (isNaN(value)) {
             return 0;
@@ -328,14 +328,14 @@ export class OperationalIndicatorRiskComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "10%"
+          width: "30%"
         },
         numberValue: {
           title: "Number",
           type: "string",
           filter: false,
           editable: true,
-          width: "80%",
+          width: "60%",
           valuePrepareFunction: value => {
             if (isNaN(value)) {
               return 0;

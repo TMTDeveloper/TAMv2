@@ -3,6 +3,10 @@ import { LocalDataSource } from "ng2-smart-table";
 import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { RiskRegisterModalComponent } from "./modal/risk.register.modal.component";
+import { RiskRegisterDeptComponent } from "./modal/risk.register.dept.component";
+import { RiskRegisterAcdComponent } from "./modal/risk.register.acd.component";
+import { RiskRegisterCtrComponent } from "./modal/risk.register.ctr.component";
+import { RiskRegisterQlComponent } from "./modal/risk.register.ql.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
@@ -62,6 +66,8 @@ export class RiskRegisterComponent {
   };
 
   accident: LocalDataSource = new LocalDataSource();
+  tabledata: any[] = [];
+  riskno: string;
 
   controlset: any = {
     add: {
@@ -95,7 +101,7 @@ export class RiskRegisterComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
+      no: {
         title: "No",
         type: "number",
         filter: false,
@@ -108,14 +114,14 @@ export class RiskRegisterComponent {
         type: "number",
         filter: false,
         editable: true,
-        width: "10%"
+        width: "80%"
       },
       type: {
         title: "Type",
         type: "string",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "10%"
       }
     }
   };
@@ -130,8 +136,24 @@ export class RiskRegisterComponent {
         comInpId: "",
         description: ""
       },
-      departmentKpi: "",
+      departmentKpi: {
+        deptInpId: "",
+        description: ""
+      },
       businessProcess: ""
+    },
+    riskDescription:
+    {
+      lossEvent:"",
+      caused:""
+    },
+    inherentRisk:
+    {
+      qualitativeIR:""
+    },
+    residualRisk:
+    {
+      qualitativeRD:""
     }
   };
 
@@ -242,6 +264,208 @@ export class RiskRegisterComponent {
       },
       error => {}
     );
+  }
+  showDept() {
+    this.activeModal = this.modalService.open(RiskRegisterDeptComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
+    this.activeModal.componentInstance.filterData.condition = "DEP";
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.dataInput.divisionDepartment.departmentKpi.deptInpId =
+            response.comInpId;
+          this.dataInput.divisionDepartment.departmentKpi.description =
+            response.description;
+        }
+      },
+      error => {}
+    );
+  }
+
+  showAccident() {
+    this.activeModal = this.modalService.open(RiskRegisterAcdComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.dataInput.divisionDepartment.companyKpi.comInpId =
+            response.comInpId;
+          this.dataInput.divisionDepartment.companyKpi.description =
+            response.description;
+        }
+      },
+      error => {}
+    );
+  }
+
+  showQLIR() {
+    this.activeModal = this.modalService.open(RiskRegisterQlComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.dataInput.inherentRisk.qualitativeIR =
+            response.riskIndicatorId;
+        }
+      },
+      error => {}
+    );
+  }
+
+  showQLRD() {
+    this.activeModal = this.modalService.open(RiskRegisterQlComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.dataInput.residualRisk.qualitativeRD =
+            response.riskIndicatorId;
+        }
+      },
+      error => {}
+    );
+  }
+
+  showCtr() {
+    this.activeModal = this.modalService.open(RiskRegisterCtrComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    let lastIndex = 1;
+    for (let data in this.tabledata) {
+      if (
+        this.tabledata[data].riskNo == this.myForm.value.riskno 
+      ) {
+        lastIndex < this.tabledata[data].no
+          ? (lastIndex = this.tabledata[data].no)
+          : null;
+      }
+    }
+
+    this.activeModal.componentInstance.riskno = this.riskno;
+    this.activeModal.componentInstance.formData = {
+      riskno:this.myForm.value.riskno,
+      no: lastIndex + 1,
+      description: "",
+      type: "",
+      UserCreated: "admin",
+      DatetimeCreated: moment().format(),
+      UserUpdate: "admin",
+      DatetimeUpdate: moment().format(),
+      status: "1"
+    };
+
+    this.activeModal.result.then(
+      async response => {
+        console.log(response);
+        if (response != null) {
+          this.tabledata.push(response);
+          console.log(this.tabledata);
+          this.reload();
+        }
+      },
+      error => {}
+    );
+  }
+
+  reload() {
+    this.riskno = this.myForm.value.riskno;
+    this.controlset  = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: true,
+        delete: false,
+        position: "right",
+        columnTitle: "Modify",
+        width: "10%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        no: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+  
+        description: {
+          title: "Description",
+          type: "number",
+          filter: false,
+          editable: true,
+          width: "80%"
+        },
+        type: {
+          title: "Type",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "10%"
+        }
+      }
+    };
+    this.control.setFilter(
+      [
+        { field: "riskno", search: this.myForm.value.riskno }
+      ],
+      true
+    );
+  }
+  
+  indicatorCtrGenerate(lastIndex) {
+    switch (lastIndex.toString().length) {
+      case 3:
+        return this.myForm.value.condition + lastIndex.toString();
+
+      case 2:
+        return this.myForm.value.condition + "0" + lastIndex.toString();
+
+      case 1:
+        return this.myForm.value.condition + "00" + lastIndex.toString();
+    }
   }
 
   submit() {

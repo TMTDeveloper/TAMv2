@@ -18,6 +18,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'Charts',
+    icon: 'nb-bar-chart',
+    children: [
+      {
+        title: 'Charts.js',
+        link: '/pages/charts/chartjs',
+      }
+    ],
+  },
+  {
+    title: 'Reminder',
+    icon: "nb-locked",
+    children: [
+      {
+        title: 'Reminder',
+        link: '/pages/master/risk-reminder',
+      }
+    ],
+  },
+  {
     title: "Master",
     icon: "nb-locked",
     children: [

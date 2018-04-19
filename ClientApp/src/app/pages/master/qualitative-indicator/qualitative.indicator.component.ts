@@ -63,14 +63,14 @@ export class QualitativeIndicatorComponent {
         type: "string",
         filter: false,
         editable: false,
-        width: "10%"
+        width: "30%"
       },
       description: {
         title: "Description",
         type: "string",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "60%"
       }
     }
   };
@@ -304,14 +304,17 @@ export class QualitativeIndicatorComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "10%"
+          width: "30%"
         },
         description: {
           title: "Description",
           type: "string",
           filter: false,
           editable: true,
-          width: "80%"
+          width: "60%",
+          editor: {
+            type: "textarea",
+          }
         }
       }
     };

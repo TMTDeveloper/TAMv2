@@ -12,6 +12,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 })
 export class FinancialIndicatorRiskComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  buttonDisable: boolean;
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -195,7 +196,7 @@ export class FinancialIndicatorRiskComponent {
       desc: "Cost of revenue"
     },
     {
-      data: "OEF",
+      data: "OEX",
       desc: "Operating expenses"
     },
     {
@@ -215,6 +216,7 @@ export class FinancialIndicatorRiskComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
+    this.buttonDisable=false;
     this.loadData();
   }
 
@@ -326,7 +328,7 @@ export class FinancialIndicatorRiskComponent {
           width: "30%"
         },
         numberValue: {
-          title: "Number",
+          title: "Amount IDR",
           type: "numeric",
           filter: false,
           editable: false,

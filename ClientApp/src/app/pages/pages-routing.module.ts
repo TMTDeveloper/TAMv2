@@ -23,6 +23,10 @@ const routes: Routes = [
         loadChildren: "./master/master.module#MasterModule"
       },
       {
+        path: "charts",
+        loadChildren: "./charts/charts.module#ChartsModule"
+      },
+      {
         path: "transaction",
         loadChildren: "./transaction/transaction.module#TransactionModule"
       }

@@ -47,7 +47,7 @@
           <label class="col-sm-2 col-form-label">Company KPI</label>
           <div class="col-lg-6">
             <button class="btn btn-success with-margins" (click)="showModal()">LOV</button>
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
 
           </div>
           <div class="col-sm-12">
@@ -59,16 +59,17 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Department KPI</label>
           <div class="col-lg-6">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+              <button class="btn btn-success with-margins" (click)="showDept()">LOV</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
-            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.departmentKpi"></textarea>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.departmentKpi.description"></textarea>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Business Process</label>
           <div class="col-lg-6">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
             <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.businessProcess"></textarea>
@@ -79,25 +80,25 @@
         <div class="form-group row mt-3">
           <label class="col-sm-2 col-form-label">Loss Event</label>
           <div class="col-lg-6">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
-            <textarea rows="3" type="text" class="form-control" ngModel name="Loss Event"></textarea>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.riskDescription.lossEvent"></textarea>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Caused</label>
           <div class="col-lg-6">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
-            <textarea rows="3" type="text" class="form-control" ngModel name="caused"></textarea>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.riskDescription.caused"></textarea>
           </div>
         </div>
         <div class="form-group row ">
           <label class="col-sm-2 col-form-label">Risk Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -108,7 +109,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Risk Level</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_level" ngModel required>
@@ -118,8 +119,9 @@
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Accident</label>
-          <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          <div class="col-lg-6">
+            <button class="btn btn-success with-margins" (click)="showAccident()">LOV</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
         </div>
         <div class="col-sm-auto">
@@ -133,7 +135,7 @@
         <div class="form-group row mt-3">
           <label class="col-sm-2 col-form-label">Notes</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
             <textarea rows="3" type="text" class="form-control" ngModel name="notes_ir"></textarea>
@@ -142,7 +144,7 @@
         <div class="form-group row ">
           <label class="col-sm-2 col-form-label">Financial Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -151,7 +153,7 @@
           </div>
           <label class="col-sm-1 col-form-label">Amount</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="amount_ir">
@@ -161,7 +163,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Operational Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -170,7 +172,7 @@
           </div>
           <label class="col-sm-1 col-form-label">Loss</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="loss_ir">
@@ -180,16 +182,19 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Qualitative Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+              <button class="btn btn-success with-margins" (click)="showQLIR()">LOV</button>
+            </div>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" ngModel name="qualitative_impact_ir">
+          <div class="col-sm-4">
+            <input type="text" class="form-control" [(ngModel)]="dataInput.inherentRisk.qualitativeIR">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Overall Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="overall_impact_ir">
@@ -198,7 +203,7 @@
         <div class="form-group row ">
           <label class="col-sm-2 col-form-label">Likelihood</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -209,7 +214,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Overall Risk</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="overall_risk_ir">
@@ -220,8 +225,9 @@
       <nb-tab tabTitle="Current Action / Controls">
         <div class="form-group row mt-3">
           <label class="col-sm-2 col-form-label">Controls</label>
-          <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          <div class="col-lg-6">
+              <button class="btn btn-success with-margins" (click)="showCtr()">Add New</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
         </div>
         <div class="col-sm-auto">
@@ -234,7 +240,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Operation</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -245,14 +251,14 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Appropriateness</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="appropriateness">
           </div>
           <label class="col-sm-2 col-form-label">Overall Control</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="overall_control">
@@ -262,21 +268,21 @@
         <div class="form-group row ">
           <label class="col-sm-1 col-form-label">Preventive</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="preventive">
           </div>
           <label class="col-sm-1 col-form-label">Detective</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="detective">
           </div>
           <label class="col-sm-1 col-form-label">Corrective</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="corrective">
@@ -288,7 +294,7 @@
         <div class="form-group row mt-3">
           <label class="col-sm-2 col-form-label">Notes</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
             <textarea rows="3" type="text" class="form-control" ngModel name="notes_ir"></textarea>
@@ -297,7 +303,7 @@
         <div class="form-group row ">
           <label class="col-sm-2 col-form-label">Financial Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -306,7 +312,7 @@
           </div>
           <label class="col-sm-1 col-form-label">Amount</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="amount_ir">
@@ -316,7 +322,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Operational Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -325,7 +331,7 @@
           </div>
           <label class="col-sm-1 col-form-label">Loss</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="loss_ir">
@@ -335,16 +341,19 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Qualitative Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+              <button class="btn btn-success with-margins" (click)="showQLRD()">LOV</button>
+          </div>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <input type="text" class="form-control" ngModel name="qualitative_impact_ir">
+            <input type="text" class="form-control" [(ngModel)]="dataInput.residualRisk.qualitativeRD">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Overall Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="overall_impact_ir">
@@ -353,7 +362,7 @@
         <div class="form-group row ">
           <label class="col-sm-2 col-form-label">Likelihood</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" name="risk_impact">
@@ -364,7 +373,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Overall Risk</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="overall_risk_ir">
@@ -375,7 +384,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Treatment Plan</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
             <textarea rows="3" type="text" class="form-control" ngModel name="treatment_plan"></textarea>
@@ -384,7 +393,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" ngModel required>
@@ -395,7 +404,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Likelihood</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
             <select class="form-control" ngModel required>
@@ -408,7 +417,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Impact</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="overall_risk_ex">
@@ -417,7 +426,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">PIC</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="pic">
@@ -426,7 +435,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Schedule</label>
           <div class="col-lg-1">
-            <button class="btn btn-success with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
             <input type="text" class="form-control" ngModel name="schedule">
