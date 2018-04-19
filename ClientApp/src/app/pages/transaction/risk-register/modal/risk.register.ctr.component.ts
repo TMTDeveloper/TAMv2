@@ -12,14 +12,15 @@ export class RiskRegisterCtrComponent {
   condition: any = [];
 
   formData: {
-    riskno: string;
+    yearActive: string;
+    riskNo: string;
+    no: number;
     description: string;
     type: string;
     UserCreated: string;
     DatetimeCreated: string;
     UserUpdate: string;
     DatetimeUpdate: string;
-    status: string;
   };
 
   ctrType = [
@@ -37,7 +38,6 @@ export class RiskRegisterCtrComponent {
   constructor(private activeModal: NgbActiveModal) {
     console.log(this.formData);
   }
-
 
   submit() {
     this.activeModal.close(this.formData);

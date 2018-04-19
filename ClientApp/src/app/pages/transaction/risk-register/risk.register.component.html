@@ -232,7 +232,7 @@
         </div>
         <div class="col-sm-auto">
           <div class="form-group">
-            <ng2-smart-table [settings]="controlset" [source]="control">
+            <ng2-smart-table [settings]="controlset" [source]="controlSrc" (deleteConfirm)="deleteControl($event)">
             </ng2-smart-table>
           </div>
         </div>

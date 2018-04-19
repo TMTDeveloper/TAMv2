@@ -73,10 +73,21 @@ export class RiskRegisterComponent {
   };
 
   accidentSrc: LocalDataSource = new LocalDataSource();
+  controlSrc: LocalDataSource = new LocalDataSource();
 
   tabledata: any[] = [];
   riskno: string;
-
+  ctrType = [
+    { value: "Preventive", title: "Preventive" },
+    {
+      value: "Detective",
+      title: "Detective"
+    },
+    {
+      value: "Corrective",
+      title: "Corrective"
+    }
+  ];
   controlset: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -86,8 +97,7 @@ export class RiskRegisterComponent {
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
+      cancelButtonContent: '<i class="nb-close"></i>'
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -98,7 +108,7 @@ export class RiskRegisterComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: false,
+      edit: true,
       delete: true,
       position: "right",
       columnTitle: "Modify",
@@ -116,25 +126,28 @@ export class RiskRegisterComponent {
         editable: false,
         width: "5%"
       },
-
       description: {
         title: "Description",
         type: "number",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "60%"
       },
       type: {
         title: "Type",
         type: "string",
         filter: false,
         editable: true,
-        width: "10%"
+        width: "20%",
+        editor: {
+          type: "list",
+          config: {
+            list: this.ctrType
+          }
+        }
       }
     }
   };
-
-  control: LocalDataSource = new LocalDataSource();
 
   dataInput = {
     divisionDepartment: {
@@ -160,6 +173,9 @@ export class RiskRegisterComponent {
     },
     residualRisk: {
       qualitativeRD: ""
+    },
+    currentAction: {
+      controls: []
     }
   };
 
@@ -391,41 +407,63 @@ export class RiskRegisterComponent {
     );
   }
 
+  deleteControl(event) {
+    event.confirm.resolve();
+    this.dataInput.currentAction.controls = this.dataInput.currentAction.controls.filter(
+      function(item) {
+        return item.no != this.no;
+      },
+      event.data
+    );
+    this.dataInput.currentAction.controls.forEach((element, ind) => {
+      element.no = ind + 1;
+    });
+    this.controlSrc.load(this.dataInput.currentAction.controls);
+  }
   showCtr() {
     this.activeModal = this.modalService.open(RiskRegisterCtrComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
       backdrop: "static"
     });
-    let lastIndex = 1;
-    for (let data in this.tabledata) {
-      if (this.tabledata[data].riskNo == this.myForm.value.riskno) {
-        lastIndex < this.tabledata[data].no
-          ? (lastIndex = this.tabledata[data].no)
-          : null;
-      }
-    }
+    // let lastIndex = 1;
+    // for (let data in this.tabledata) {
+    //   if (this.tabledata[data].riskNo == this.myForm.value.riskno) {
+    //     lastIndex < this.tabledata[data].no
+    //       ? (lastIndex = this.tabledata[data].no)
+    //       : null;
+    //   }
+    // }
 
-    this.activeModal.componentInstance.riskno = this.riskno;
+    // this.activeModal.componentInstance.riskno = this.riskno;
+    let lastIndex = 0;
+    for (let data in this.dataInput.currentAction.controls) {
+      lastIndex <= this.dataInput.currentAction.controls[data].no
+        ? (lastIndex = this.dataInput.currentAction.controls[data].no)
+        : null;
+    }
     this.activeModal.componentInstance.formData = {
-      riskno: this.myForm.value.riskno,
+      yearActive: this.yearPeriode,
+      riskNo: "",
       no: lastIndex + 1,
       description: "",
       type: "",
-      UserCreated: "admin",
-      DatetimeCreated: moment().format(),
-      UserUpdate: "admin",
-      DatetimeUpdate: moment().format(),
-      status: "1"
+      UserCreated: "Admin",
+      DatetimeCreated: moment(),
+      UserUpdate: "Admin",
+      DatetimeUpdate: moment()
     };
 
     this.activeModal.result.then(
       async response => {
-        console.log(response);
         if (response != null) {
-          this.tabledata.push(response);
-          console.log(this.tabledata);
-          this.reload();
+          // this.tabledata.push(response);
+          // console.log(this.tabledata);
+          // this.reload();
+
+          this.dataInput.currentAction.controls.push(response);
+          this.controlSrc.load(this.dataInput.currentAction.controls);
+          console.log(this.dataInput.currentAction.controls);
         }
       },
       error => {}
@@ -434,66 +472,6 @@ export class RiskRegisterComponent {
 
   reload() {
     this.riskno = this.myForm.value.riskno;
-    this.controlset = {
-      add: {
-        addButtonContent: '<i class="nb-plus"></i>',
-        createButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>'
-      },
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmSave: true
-      },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true
-      },
-      mode: "inline",
-      sort: true,
-      hideSubHeader: true,
-      actions: {
-        add: false,
-        edit: true,
-        delete: false,
-        position: "right",
-        columnTitle: "Modify",
-        width: "10%"
-      },
-      pager: {
-        display: true,
-        perPage: 30
-      },
-      columns: {
-        no: {
-          title: "No",
-          type: "number",
-          filter: false,
-          editable: false,
-          width: "5%"
-        },
-
-        description: {
-          title: "Description",
-          type: "number",
-          filter: false,
-          editable: true,
-          width: "80%"
-        },
-        type: {
-          title: "Type",
-          type: "string",
-          filter: false,
-          editable: true,
-          width: "10%"
-        }
-      }
-    };
-    this.control.setFilter(
-      [{ field: "riskno", search: this.myForm.value.riskno }],
-      true
-    );
   }
 
   indicatorCtrGenerate(lastIndex) {
