@@ -169,10 +169,16 @@ export class RiskRegisterComponent {
       accidentObj: []
     },
     inherentRisk: {
-      qualitativeIR: ""
+      qualitativeIR: {
+        id: "",
+        desc: ""
+      }
     },
     residualRisk: {
-      qualitativeRD: ""
+      qualitativeRD: {
+        id: "",
+        desc: ""
+      }
     },
     currentAction: {
       controls: []
@@ -382,7 +388,9 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.inherentRisk.qualitativeIR = response.riskIndicatorId;
+          this.dataInput.inherentRisk.qualitativeIR.id =
+            response.riskIndicatorId;
+          this.dataInput.inherentRisk.qualitativeIR.desc = response.description;
         }
       },
       error => {}
@@ -400,7 +408,9 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.residualRisk.qualitativeRD = response.riskIndicatorId;
+          this.dataInput.residualRisk.qualitativeRD.id =
+            response.riskIndicatorId;
+          this.dataInput.residualRisk.qualitativeRD.desc = response.description;
         }
       },
       error => {}

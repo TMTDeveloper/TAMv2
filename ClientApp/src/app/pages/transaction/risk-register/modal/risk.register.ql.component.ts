@@ -9,6 +9,7 @@ import { BackendService } from "../../../../@core/data/backend.service";
   templateUrl: "./risk.register.ql.component.html"
 })
 export class RiskRegisterQlComponent {
+  riskIndicatorData: any = [];
   filterData = {
     year: ""
   };
@@ -54,29 +55,47 @@ export class RiskRegisterQlComponent {
     this.loadData();
   }
   loadData() {
-    this.service.getreq("TbMQualitativeImpacts").subscribe(response => {
+    this.service.getreq("TbMRiskIndicators").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(response);
-        console.log(
-          data.filter(function(item) {
-            console.log(this);
-            return (
-              item.yearActive == this.year && item.category == "EWD"
+        console.log(JSON.stringify(response));
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].score == null
+            ? (data[ind].score = 0)
+            : data[ind].score.toString();
+          data[ind].status = "0";
+
+          this.riskIndicatorData = data;
+        });
+        this.service.getreq("TbMQualitativeImpacts").subscribe(response => {
+          const data = response;
+          console.log(JSON.stringify(response));
+          data.forEach((element, ind) => {
+            data[ind].yearActive = data[ind].yearActive.toString();
+            data[ind].status = "0";
+            let arr = this.riskIndicatorData.filter(function(item) {
+              return item.indicatorId == data[ind].riskIndicatorId;
+            });
+            if (arr[0] != null) {
+              data[ind].descriptionrisk = arr[0].description;
+            }
+          });
+
+          if (response != null) {
+            console.log(response);
+            this.source.load(
+              data.filter(function(item) {
+                return item.yearActive == this.year && item.category == "EWD";
+              }, this.filterData)
             );
-          }, this.filterData)
-        );
-        this.source.load(
-          data.filter(function(item) {
-            return (
-              item.yearActive == this.year && item.category == "EWD"
-            );
-          }, this.filterData)
-        );
+          }
+
+          // error => {
+          //   console.log(error);
+          // };
+        });
       }
-      // error => {
-      //   console.log(error);
-      // };
     });
   }
 
