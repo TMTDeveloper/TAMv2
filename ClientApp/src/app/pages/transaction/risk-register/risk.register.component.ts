@@ -37,8 +37,8 @@ export class RiskRegisterComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: true,
-      delete: false,
+      edit: false,
+      delete: true,
       position: "right",
       columnTitle: "Modify",
       width: "10%"
@@ -48,12 +48,19 @@ export class RiskRegisterComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
+      number: {
         title: "No",
         type: "number",
         filter: false,
         editable: false,
         width: "5%"
+      },
+      accidentId: {
+        title: "Accident Id",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
       },
       description: {
         title: "Description",
@@ -65,7 +72,8 @@ export class RiskRegisterComponent {
     }
   };
 
-  accident: LocalDataSource = new LocalDataSource();
+  accidentSrc: LocalDataSource = new LocalDataSource();
+
   tabledata: any[] = [];
   riskno: string;
 
@@ -90,8 +98,8 @@ export class RiskRegisterComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: true,
-      delete: false,
+      edit: false,
+      delete: true,
       position: "right",
       columnTitle: "Modify",
       width: "10%"
@@ -142,18 +150,16 @@ export class RiskRegisterComponent {
       },
       businessProcess: ""
     },
-    riskDescription:
-    {
-      lossEvent:"",
-      caused:""
+    riskDescription: {
+      lossEvent: "",
+      caused: "",
+      accidentObj: []
     },
-    inherentRisk:
-    {
-      qualitativeIR:""
+    inherentRisk: {
+      qualitativeIR: ""
     },
-    residualRisk:
-    {
-      qualitativeRD:""
+    residualRisk: {
+      qualitativeRD: ""
     }
   };
 
@@ -287,6 +293,20 @@ export class RiskRegisterComponent {
     );
   }
 
+  deleteAccident(event) {
+    event.confirm.resolve();
+    this.dataInput.riskDescription.accidentObj = this.dataInput.riskDescription.accidentObj.filter(
+      function(item) {
+        return item.number != this.number;
+      },
+      event.data
+    );
+    this.dataInput.riskDescription.accidentObj.forEach((element, ind) => {
+      element.number = ind + 1;
+    });
+    this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
+  }
+
   showAccident() {
     this.activeModal = this.modalService.open(RiskRegisterAcdComponent, {
       windowClass: "xlModal",
@@ -298,10 +318,37 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.divisionDepartment.companyKpi.comInpId =
-            response.comInpId;
-          this.dataInput.divisionDepartment.companyKpi.description =
-            response.description;
+          // this.dataInput.divisionDepartment.companyKpi.comInpId =
+          //   response.comInpId;
+          // this.dataInput.divisionDepartment.companyKpi.description =
+          //   response.description;
+          let lastIndex = 0;
+          for (let data in this.dataInput.riskDescription.accidentObj) {
+            lastIndex <= this.dataInput.riskDescription.accidentObj[data].number
+              ? (lastIndex = this.dataInput.riskDescription.accidentObj[data]
+                  .number)
+              : null;
+          }
+          let arr = this.dataInput.riskDescription.accidentObj.filter(function(
+            item
+          ) {
+            return item.accidentId == this.accidentId;
+          },
+          response);
+          if (arr[0] == null) {
+            this.dataInput.riskDescription.accidentObj.push({
+              yearActive: this.yearPeriode,
+              riskNo: "",
+              number: lastIndex + 1,
+              accidentId: response.accidentId,
+              description: response.description,
+              userCreated: "Admin",
+              datetimeCreated: moment(),
+              userUpdate: "Admin",
+              datetimeUpdate: moment()
+            });
+            this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
+          }
         }
       },
       error => {}
@@ -319,8 +366,7 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.inherentRisk.qualitativeIR =
-            response.riskIndicatorId;
+          this.dataInput.inherentRisk.qualitativeIR = response.riskIndicatorId;
         }
       },
       error => {}
@@ -338,8 +384,7 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.residualRisk.qualitativeRD =
-            response.riskIndicatorId;
+          this.dataInput.residualRisk.qualitativeRD = response.riskIndicatorId;
         }
       },
       error => {}
@@ -354,9 +399,7 @@ export class RiskRegisterComponent {
     });
     let lastIndex = 1;
     for (let data in this.tabledata) {
-      if (
-        this.tabledata[data].riskNo == this.myForm.value.riskno 
-      ) {
+      if (this.tabledata[data].riskNo == this.myForm.value.riskno) {
         lastIndex < this.tabledata[data].no
           ? (lastIndex = this.tabledata[data].no)
           : null;
@@ -365,7 +408,7 @@ export class RiskRegisterComponent {
 
     this.activeModal.componentInstance.riskno = this.riskno;
     this.activeModal.componentInstance.formData = {
-      riskno:this.myForm.value.riskno,
+      riskno: this.myForm.value.riskno,
       no: lastIndex + 1,
       description: "",
       type: "",
@@ -391,7 +434,7 @@ export class RiskRegisterComponent {
 
   reload() {
     this.riskno = this.myForm.value.riskno;
-    this.controlset  = {
+    this.controlset = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
         createButtonContent: '<i class="nb-checkmark"></i>',
@@ -430,7 +473,7 @@ export class RiskRegisterComponent {
           editable: false,
           width: "5%"
         },
-  
+
         description: {
           title: "Description",
           type: "number",
@@ -448,13 +491,11 @@ export class RiskRegisterComponent {
       }
     };
     this.control.setFilter(
-      [
-        { field: "riskno", search: this.myForm.value.riskno }
-      ],
+      [{ field: "riskno", search: this.myForm.value.riskno }],
       true
     );
   }
-  
+
   indicatorCtrGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
       case 3:
