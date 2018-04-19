@@ -34,6 +34,12 @@
 </div>
 </nb-tab>
     <nb-tab tabTitle="Simplify Report">
+            <div class="col-sm-auto">
+        <div class="form-group">
+          <ng2-smart-table (editConfirm)="submit($event)" [settings]="settings" [source]="source">
+          </ng2-smart-table>
+        </div>
+      </div>
     </nb-tab>
 <nb-tabset>
   <nb-card-body>

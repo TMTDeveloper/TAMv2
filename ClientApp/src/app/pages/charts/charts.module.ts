@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
+import { ToastrModule } from "ngx-toastr";
+import { BackendService } from "../../@core/data/backend.service";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 
 import { ThemeModule } from '../../@theme/theme.module';
 
@@ -49,7 +52,8 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule, NgxChartsModule, ChartModule],
+  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule, ChartModule,ToastrModule.forRoot()],
   declarations: [...routedComponents, ...components],
+  providers: [BackendService]
 })
 export class ChartsModule {}

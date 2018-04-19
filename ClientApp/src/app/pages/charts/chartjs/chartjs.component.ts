@@ -44,26 +44,136 @@ export class ChartjsComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
-        title: "No",
+      riskNo: {
+        title: "Risk No",
         type: "number",
         filter: false,
         editable: false,
         width: "5%"
       },
-      description: {
-        title: "Description",
+      departmentKPI: {
+        title: "Department KPI",
         type: "string",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "5%"
       },
-      score: {
-        title: "Score ",
-        type: "number",
+      lossEvent: {
+        title: "Loss Event",
+        type: "string",
         filter: false,
         editable: true,
-        width: "10%"
+        width: "5%"
+      },
+      caused: {
+        title: "Caused",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      riskImpact: {
+        title: "Risk Impact",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      irImpact: {
+        title: "Impact",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      irLkl: {
+        title: "Likelihood",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      irOvr: {
+        title: "Overall",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      control: {
+        title: "Caused",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      rdImpact: {
+        title: "Impact",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      rdLkl: {
+        title: "Likelihood",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      rdOvr: {
+        title: "Overall",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      },
+      treatmentPlan: {
+        title: "Treatment Plan",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      exImpact: {
+        title: "Impact",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      exLkl: {
+        title: "Likelihood",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      exOvr: {
+        title: "Overall",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "5%"
+      }
+      ,
+      exSchedule: {
+        title: "Schedule",
+        type: "date",
+        filter: false,
+        editable: true,
+        width: "5%"
       }
     }
   };
