@@ -171,7 +171,10 @@ export class RiskRegisterComponent {
     inherentRisk: {
       overallRisk: "",
       likelihood: "",
-      overallImpact: "",
+      overallImpact: {
+        indicatorId: "",
+        description: ""
+      },
       operationalImpact: {
         category: "MAS",
         loss: 0,
@@ -527,6 +530,7 @@ export class RiskRegisterComponent {
             item.numberValue >= this.inherentRisk.operationalImpact.loss
           );
         }, this.dataInput);
+        console.log(arrImp);
         if (arrImp[0] != null) {
           this.dataInput.inherentRisk.operationalImpact.operationalObj = this.hasmin(
             arrImp,
@@ -554,6 +558,43 @@ export class RiskRegisterComponent {
             )[0].score;
             this.findOverallImp();
             console.log(this.dataInput);
+          }
+        } else {
+          console.log("masuksini");
+          let arrImp = operationalImpact.filter(function(item) {
+            return (
+              item.yearActive == yearPeriode &&
+              item.category == this.inherentRisk.operationalImpact.category
+            );
+          }, this.dataInput);
+          if (arrImp[0] != null) {
+            this.dataInput.inherentRisk.operationalImpact.operationalObj = this.hasmax(
+              arrImp,
+              "numberValue"
+            );
+            let arrScore = this.riskIndicatorData.filter(function(item) {
+              return (
+                item.yearActive == yearPeriode &&
+                item.indicatorId ==
+                  this.inherentRisk.operationalImpact.operationalObj
+                    .riskIndicatorId
+              );
+            }, this.dataInput);
+            if (arrScore[0] != null) {
+              this.dataInput.inherentRisk.operationalImpact.score = this.riskIndicatorData.filter(
+                function(item) {
+                  return (
+                    item.yearActive == yearPeriode &&
+                    item.indicatorId ==
+                      this.inherentRisk.operationalImpact.operationalObj
+                        .riskIndicatorId
+                  );
+                },
+                this.dataInput
+              )[0].score;
+              this.findOverallImp();
+              console.log(this.dataInput);
+            }
           }
         }
       }
@@ -601,6 +642,42 @@ export class RiskRegisterComponent {
             this.findOverallImp();
             console.log(this.dataInput);
           }
+        } else {
+          console.log("masuksini");
+          let arrImp = financialImpact.filter(function(item) {
+            return (
+              item.yearActive == yearPeriode &&
+              item.category == this.inherentRisk.financialImpact.category
+            );
+          }, this.dataInput);
+          if (arrImp[0] != null) {
+            this.dataInput.inherentRisk.financialImpact.financialObj = this.hasmax(
+              arrImp,
+              "numberValue"
+            );
+            let arrScore = this.riskIndicatorData.filter(function(item) {
+              return (
+                item.yearActive == yearPeriode &&
+                item.indicatorId ==
+                  this.inherentRisk.financialImpact.financialObj.riskIndicatorId
+              );
+            }, this.dataInput);
+            if (arrScore[0] != null) {
+              this.dataInput.inherentRisk.financialImpact.score = this.riskIndicatorData.filter(
+                function(item) {
+                  return (
+                    item.yearActive == yearPeriode &&
+                    item.indicatorId ==
+                      this.inherentRisk.financialImpact.financialObj
+                        .riskIndicatorId
+                  );
+                },
+                this.dataInput
+              )[0].score;
+              this.findOverallImp();
+              console.log(this.dataInput);
+            }
+          }
         }
       }
     });
@@ -625,8 +702,38 @@ export class RiskRegisterComponent {
 
     if (arr[0] != null) {
       console.log(arr);
-      this.dataInput.inherentRisk.overallImpact = arr[0].description;
+      this.dataInput.inherentRisk.overallImpact.description =
+        arr[0].description;
+      this.dataInput.inherentRisk.overallImpact.indicatorId =
+        arr[0].indicatorId;
+      this.findOverallRisk();
     }
+  }
+
+  findOverallRisk() {
+    console.log("masuk");
+    this.service.getreq("TbMRiskMappings").subscribe(response => {
+      if (response != null) {
+        let arr = response.filter(item => {
+          item.yearActive == this.yearPeriode &&
+            item.indicatorIdA ==
+              this.dataInput.inherentRisk.overallImpact.indicatorId &&
+            item.indicatorIdB == this.dataInput.inherentRisk.likelihood;
+          console.log(arr);
+        });
+        if (arr[0] != null) {
+          let arrIndicator = this.riskIndicatorData.filter(item => {
+            item.yearActive == this.yearPeriode &&
+              item.indicatorId == arr[0].resultIdC;
+          });
+          console.log(arrIndicator);
+          arrIndicator[0] != null
+            ? this.dataInput.inherentRisk.overallRisk ==
+              arrIndicator[0].description
+            : null;
+        }
+      }
+    });
   }
 
   reload() {

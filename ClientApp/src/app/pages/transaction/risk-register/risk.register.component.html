@@ -199,7 +199,7 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" [(ngModel)]="dataInput.inherentRisk.overallImpact">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.overallImpact.description">
           </div>
         </div>
         <div class="form-group row ">
@@ -208,7 +208,7 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.likelihood">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.likelihood" (change)="findOverallRisk()">
               <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
             </select>
           </div>
@@ -219,7 +219,7 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" [(ngModel)]="dataInput.inherentRisk.overallRisk">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.overallRisk">
           </div>
         </div>
         <span> </span>
