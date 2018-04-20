@@ -169,9 +169,26 @@ export class RiskRegisterComponent {
       accidentObj: []
     },
     inherentRisk: {
+      overallRisk: "",
+      likelihood: "",
+      overallImpact: "",
+      operationalImpact: {
+        category: "MAS",
+        loss: 0,
+        operationalObj: {},
+        score: 0
+      },
+      financialImpact: {
+        category: "NEP",
+        amount: 0,
+        financialObj: {},
+        score: 0
+      },
+      notes: "",
       qualitativeIR: {
         id: "",
-        desc: ""
+        desc: "",
+        score: 0
       }
     },
     residualRisk: {
@@ -392,6 +409,7 @@ export class RiskRegisterComponent {
             response.riskIndicatorId;
           this.dataInput.inherentRisk.qualitativeIR.desc =
             response.descriptionrisk;
+          this.dataInput.inherentRisk.qualitativeIR.score = response.score;
         }
       },
       error => {}
@@ -411,7 +429,8 @@ export class RiskRegisterComponent {
         if (response != null) {
           this.dataInput.residualRisk.qualitativeRD.id =
             response.riskIndicatorId;
-          this.dataInput.residualRisk.qualitativeRD.desc = response.descriptionrisk;
+          this.dataInput.residualRisk.qualitativeRD.desc =
+            response.descriptionrisk;
         }
       },
       error => {}
@@ -479,6 +498,134 @@ export class RiskRegisterComponent {
       },
       error => {}
     );
+  }
+
+  hasmin(arr, attrib) {
+    return arr.reduce(function(prev, curr) {
+      return prev[attrib] < curr[attrib] ? prev : curr;
+    });
+  }
+
+  hasmax(arr, attrib) {
+    return arr.reduce(function(prev, curr) {
+      return prev[attrib] > curr[attrib] ? prev : curr;
+    });
+  }
+
+  findOperationalImpactRisk() {
+    let yearPeriode = this.yearPeriode;
+    let operationalImpact;
+    this.service.getreq("TbMOperationalImpacts").subscribe(response => {
+      if (response != null) {
+        console.log(response);
+        operationalImpact = response;
+        let arrImp = operationalImpact.filter(function(item) {
+          return (
+            item.yearActive == yearPeriode &&
+            item.category == this.inherentRisk.operationalImpact.category &&
+            item.numberValue >= this.inherentRisk.operationalImpact.loss
+          );
+        }, this.dataInput);
+        if (arrImp != null) {
+          this.dataInput.inherentRisk.operationalImpact.operationalObj = this.hasmin(
+            arrImp,
+            "numberValue"
+          );
+          let arrScore = this.riskIndicatorData.filter(function(item) {
+            return (
+              item.yearActive == yearPeriode &&
+              item.indicatorId ==
+                this.inherentRisk.operationalImpact.operationalObj
+                  .riskIndicatorId
+            );
+          }, this.dataInput);
+          if (arrScore != null) {
+            this.dataInput.inherentRisk.operationalImpact.score = this.riskIndicatorData.filter(
+              function(item) {
+                return (
+                  item.yearActive == yearPeriode &&
+                  item.indicatorId ==
+                    this.inherentRisk.operationalImpact.operationalObj
+                      .riskIndicatorId
+                );
+              },
+              this.dataInput
+            )[0].score;
+            this.findOverallImp();
+            console.log(this.dataInput);
+          }
+        }
+      }
+    });
+  }
+
+  findFinancialImpactRisk() {
+    let yearPeriode = this.yearPeriode;
+    let financialImpact;
+    this.service.getreq("TbMFinancialImpacts").subscribe(response => {
+      if (response != null) {
+        console.log(response);
+        financialImpact = response;
+        let arrImp = financialImpact.filter(function(item) {
+          return (
+            item.yearActive == yearPeriode &&
+            item.category == this.inherentRisk.financialImpact.category &&
+            item.numberValue >= this.inherentRisk.financialImpact.amount
+          );
+        }, this.dataInput);
+        if (arrImp != null) {
+          this.dataInput.inherentRisk.financialImpact.financialObj = this.hasmin(
+            arrImp,
+            "numberValue"
+          );
+          let arrScore = this.riskIndicatorData.filter(function(item) {
+            return (
+              item.yearActive == yearPeriode &&
+              item.indicatorId ==
+                this.inherentRisk.financialImpact.financialObj.riskIndicatorId
+            );
+          }, this.dataInput);
+          if (arrScore != null) {
+            this.dataInput.inherentRisk.financialImpact.score = this.riskIndicatorData.filter(
+              function(item) {
+                return (
+                  item.yearActive == yearPeriode &&
+                  item.indicatorId ==
+                    this.inherentRisk.financialImpact.financialObj
+                      .riskIndicatorId
+                );
+              },
+              this.dataInput
+            )[0].score;
+            this.findOverallImp();
+            console.log(this.dataInput);
+          }
+        }
+      }
+    });
+  }
+
+  findOverallImp() {
+    let arr = this.riskIndicatorData.filter(item => {
+      return (
+        item.yearActive == this.yearPeriode &&
+        item.condition == "IMP" &&
+        item.score ==
+          this.hasmax(
+            [
+              { score: this.dataInput.inherentRisk.financialImpact.score },
+              { score: this.dataInput.inherentRisk.operationalImpact.score },
+              { score: this.dataInput.inherentRisk.qualitativeIR.score }
+            ],
+            "score"
+          ).score
+      );
+    });
+
+    if (arr != null) {
+      console.log(arr);
+      this.dataInput.inherentRisk.overallImpact = arr[0].description;
+    }
   }
 
   reload() {

@@ -14,11 +14,13 @@ import { RiskRegisterCtrComponent } from "./risk-register/modal/risk.register.ct
 
 import { ToastrModule } from "ngx-toastr";
 import { BackendService } from "../../@core/data/backend.service";
+import { CurrencyMaskModule } from "ng2-currency-mask";
 @NgModule({
   imports: [
     ThemeModule,
     Ng2SmartTableModule,
     TransactionRouterModule,
+    CurrencyMaskModule,
     ToastrModule.forRoot()
   ],
   declarations: [...routedComponents],
@@ -27,7 +29,8 @@ import { BackendService } from "../../@core/data/backend.service";
     RiskRegisterDeptComponent,
     RiskRegisterAcdComponent,
     RiskRegisterQlComponent,
-    RiskRegisterCtrComponent],
+    RiskRegisterCtrComponent
+  ],
   providers: [BackendService]
 })
 export class TransactionModule {}
