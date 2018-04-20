@@ -157,7 +157,7 @@
           </div>
           <div class="col-sm-2">
             <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.inherentRisk.financialImpact.amount"
-              (change)="findFinancialImpactRisk()">
+              (keyup)="findFinancialImpactRisk()">
           </div>
         </div>
 
@@ -177,7 +177,7 @@
           </div>
           <div class="col-sm-2">
             <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision:'0'}" class="form-control" [(ngModel)]="dataInput.inherentRisk.operationalImpact.loss"
-              (change)="findOperationalImpactRisk()">
+              (keyup)="findOperationalImpactRisk()">
           </div>
         </div>
 

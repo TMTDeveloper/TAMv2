@@ -410,6 +410,7 @@ export class RiskRegisterComponent {
           this.dataInput.inherentRisk.qualitativeIR.desc =
             response.descriptionrisk;
           this.dataInput.inherentRisk.qualitativeIR.score = response.score;
+          this.findOverallImp();
         }
       },
       error => {}
@@ -526,7 +527,7 @@ export class RiskRegisterComponent {
             item.numberValue >= this.inherentRisk.operationalImpact.loss
           );
         }, this.dataInput);
-        if (arrImp != null) {
+        if (arrImp[0] != null) {
           this.dataInput.inherentRisk.operationalImpact.operationalObj = this.hasmin(
             arrImp,
             "numberValue"
@@ -539,7 +540,7 @@ export class RiskRegisterComponent {
                   .riskIndicatorId
             );
           }, this.dataInput);
-          if (arrScore != null) {
+          if (arrScore[0] != null) {
             this.dataInput.inherentRisk.operationalImpact.score = this.riskIndicatorData.filter(
               function(item) {
                 return (
@@ -573,7 +574,7 @@ export class RiskRegisterComponent {
             item.numberValue >= this.inherentRisk.financialImpact.amount
           );
         }, this.dataInput);
-        if (arrImp != null) {
+        if (arrImp[0] != null) {
           this.dataInput.inherentRisk.financialImpact.financialObj = this.hasmin(
             arrImp,
             "numberValue"
@@ -585,7 +586,7 @@ export class RiskRegisterComponent {
                 this.inherentRisk.financialImpact.financialObj.riskIndicatorId
             );
           }, this.dataInput);
-          if (arrScore != null) {
+          if (arrScore[0] != null) {
             this.dataInput.inherentRisk.financialImpact.score = this.riskIndicatorData.filter(
               function(item) {
                 return (
@@ -622,7 +623,7 @@ export class RiskRegisterComponent {
       );
     });
 
-    if (arr != null) {
+    if (arr[0] != null) {
       console.log(arr);
       this.dataInput.inherentRisk.overallImpact = arr[0].description;
     }

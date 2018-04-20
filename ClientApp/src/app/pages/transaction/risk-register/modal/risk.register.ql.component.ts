@@ -79,6 +79,7 @@ export class RiskRegisterQlComponent {
             });
             if (arr[0] != null) {
               data[ind].descriptionrisk = arr[0].description;
+              data[ind].score = arr[0].score;
             }
           });
 
