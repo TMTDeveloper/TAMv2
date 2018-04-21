@@ -169,7 +169,10 @@ export class RiskRegisterComponent {
       accidentObj: []
     },
     inherentRisk: {
-      overallRisk: "",
+      overallRisk: {
+        indicatorId: "",
+        description: ""
+      },
       likelihood: "",
       overallImpact: {
         indicatorId: "",
@@ -195,7 +198,10 @@ export class RiskRegisterComponent {
       }
     },
     residualRisk: {
-      overallRisk: "",
+      overallRisk: {
+        indicatorId: "",
+        description: ""
+      },
       likelihood: "",
       overallImpact: {
         indicatorId: "",
@@ -220,7 +226,16 @@ export class RiskRegisterComponent {
       }
     },
     currentAction: {
-      controls: []
+      operation: "",
+      controls: [],
+      overallControl: {
+        indicatorId: "",
+        description: ""
+      },
+      appropriateness: {
+        indicatorId: "",
+        description: ""
+      }
     }
   };
 
@@ -753,10 +768,13 @@ export class RiskRegisterComponent {
             );
           });
           console.log(arrIndicator);
-          arrIndicator[0] != null
-            ? (this.dataInput.inherentRisk.overallRisk =
-                arrIndicator[0].description)
-            : null;
+          if (arrIndicator[0] != null) {
+            this.dataInput.inherentRisk.overallRisk.indicatorId =
+              arrIndicator[0].indicatorId;
+            this.dataInput.inherentRisk.overallRisk.description =
+              arrIndicator[0].description;
+            this.findOverallControl();
+          }
         }
       }
     });
@@ -979,16 +997,84 @@ export class RiskRegisterComponent {
             );
           });
           console.log(arrIndicator);
-          arrIndicator[0] != null
-            ? (this.dataInput.residualRisk.overallRisk =
-                arrIndicator[0].description)
-            : null;
+          if (arrIndicator[0] != null) {
+            this.dataInput.residualRisk.overallRisk.indicatorId =
+              arrIndicator[0].indicatorId;
+            this.dataInput.residualRisk.overallRisk.description =
+              arrIndicator[0].description;
+            this.findOverallControl();
+          }
         }
       }
     });
   }
 
   // ----------------------
+  findOverallControl() {
+    this.service.getreq("TbMRiskMappings").subscribe(response => {
+      if (response != null) {
+        let arr = response.filter(item => {
+          return (
+            item.yearActive == this.yearPeriode &&
+            item.indicatorIdA ==
+              this.dataInput.inherentRisk.overallRisk.indicatorId &&
+            item.indicatorIdB ==
+              this.dataInput.residualRisk.overallRisk.indicatorId
+          );
+        });
+        console.log("ketemu");
+        console.log(arr);
+        if (arr[0] != null) {
+          let arrIndicator = this.riskIndicatorData.filter(item => {
+            return (
+              item.yearActive == this.yearPeriode &&
+              item.indicatorId == arr[0].resultIdC
+            );
+          });
+          console.log(arrIndicator);
+          if (arrIndicator[0] != null) {
+            this.dataInput.currentAction.overallControl.indicatorId =
+              arrIndicator[0].indicatorId;
+            this.dataInput.currentAction.overallControl.description =
+              arrIndicator[0].description;
+            this.findAppropriateness();
+          }
+        }
+      }
+    });
+  }
+
+  findAppropriateness() {
+    this.service.getreq("TbMRiskMappings").subscribe(response => {
+      if (response != null) {
+        let arr = response.filter(item => {
+          return (
+            item.yearActive == this.yearPeriode &&
+            item.indicatorIdA ==
+              this.dataInput.currentAction.overallControl.indicatorId &&
+            item.indicatorIdB == this.dataInput.currentAction.operation
+          );
+        });
+        console.log("ketemu");
+        console.log(arr);
+        if (arr[0] != null) {
+          let arrIndicator = this.riskIndicatorData.filter(item => {
+            return (
+              item.yearActive == this.yearPeriode &&
+              item.indicatorId == arr[0].resultIdC
+            );
+          });
+          console.log(arrIndicator);
+          if (arrIndicator[0] != null) {
+            this.dataInput.currentAction.appropriateness.indicatorId =
+              arrIndicator[0].indicatorId;
+            this.dataInput.currentAction.appropriateness.description =
+              arrIndicator[0].description;
+          }
+        }
+      }
+    });
+  }
 
   reload() {
     this.riskno = this.myForm.value.riskno;

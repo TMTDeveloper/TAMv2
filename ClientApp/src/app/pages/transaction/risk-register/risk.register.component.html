@@ -219,7 +219,7 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.overallRisk">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.overallRisk.description">
           </div>
         </div>
         <span> </span>
@@ -245,7 +245,7 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-5">
-            <select class="form-control" name="risk_impact">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.currentAction.operation" (change)="findOverallControl()">
               <option *ngFor="let data of getListRiskIndicator('OPR')" value="{{data.indicatorId}}">{{data.description}}</option>
             </select>
           </div>
@@ -256,14 +256,14 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" ngModel name="appropriateness">
+            <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.appropriateness.description" disabled="true">
           </div>
           <label class="col-sm-2 col-form-label">Overall Control</label>
           <div class="col-lg-1">
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" ngModel name="overall_control">
+            <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.overallControl.description" disabled="true">
           </div>
         </div>
 
@@ -382,7 +382,7 @@
             <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.overallRisk">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.overallRisk.description">
           </div>
         </div>
       </nb-tab>
