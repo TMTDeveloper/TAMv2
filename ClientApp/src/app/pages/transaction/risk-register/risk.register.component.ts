@@ -454,7 +454,7 @@ export class RiskRegisterComponent {
             response.riskIndicatorId;
           this.dataInput.residualRisk.qualitativeRD.desc =
             response.descriptionrisk;
-          this.dataInput.inherentRisk.qualitativeIR.score = response.score;
+          this.dataInput.residualRisk.qualitativeRD.score = response.score;
           this.findOverallImpRd();
         }
       },
@@ -980,8 +980,8 @@ export class RiskRegisterComponent {
           });
           console.log(arrIndicator);
           arrIndicator[0] != null
-            ? this.dataInput.residualRisk.overallRisk =
-              arrIndicator[0].description
+            ? (this.dataInput.residualRisk.overallRisk =
+                arrIndicator[0].description)
             : null;
         }
       }
