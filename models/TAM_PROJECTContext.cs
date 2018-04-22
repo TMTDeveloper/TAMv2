@@ -86,10 +86,12 @@ namespace tam_risk_project.Models
     entity.Property(e => e.StartDate).HasColumnName("START_DATE");
     entity.Property(e => e.EndDate).HasColumnName("END_DATE");
     entity.Property(e => e.Period).HasColumnName("PERIOD");
-    entity.Property(e => e.DatetimeCreate).HasColumnName("DATETIME_CREATE");
-    entity.Property(e => e.DatetimeUpdated).HasColumnName("DATETIME_UPDATED");
-    entity.Property(e => e.UserCreated).HasColumnName("USER_CREATED");
-    entity.Property(e => e.UserUpdated).HasColumnName("USER_UPDATED");
+    entity.Property(e => e.DatetimeCreate).HasColumnName("DATETIME_CREATE").HasColumnType("datetime"); ;
+    entity.Property(e => e.DatetimeUpdated).HasColumnName("DATETIME_UPDATED").HasColumnType("datetime"); ;
+    entity.Property(e => e.UserCreated).HasColumnName("USER_CREATED").HasMaxLength(45)
+                    .IsUnicode(false); ;
+    entity.Property(e => e.UserUpdated).HasColumnName("USER_UPDATED").HasMaxLength(45)
+                    .IsUnicode(false); ;
 });
 
 
