@@ -13,9 +13,9 @@ namespace tam_risk_project.Models
         public DateTime? EndDate { get; set; }
         public short? Period { get; set; }
         public string UserCreated { get; set; }
-        public DateTime? DatetimeCreated { get; set; }
-        public string UserUpdate { get; set; }
-        public DateTime? DatetimeUpdate { get; set; }
+        public DateTime? DatetimeCreate { get; set; }
+        public string UserUpdated { get; set; }
+        public DateTime? DatetimeUpdated { get; set; }
 
     }
 }

@@ -29,7 +29,7 @@ namespace tam_risk_project.Controllers
 
         // GET: api/Riskreports/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRiskreport([FromRoute] short id)
+        public async Task<IActionResult> GetRiskreport([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -48,7 +48,7 @@ namespace tam_risk_project.Controllers
 
         // PUT: api/Riskreports/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRiskreport([FromRoute] short id, [FromBody] Riskreport riskreport)
+        public async Task<IActionResult> PutRiskreport([FromRoute] int id, [FromBody] Riskreport riskreport)
         {
             if (!ModelState.IsValid)
             {
@@ -112,7 +112,7 @@ namespace tam_risk_project.Controllers
 
         // DELETE: api/Riskreports/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRiskreport([FromRoute] short id)
+        public async Task<IActionResult> DeleteRiskreport([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -131,7 +131,7 @@ namespace tam_risk_project.Controllers
             return Ok(riskreport);
         }
 
-        private bool RiskreportExists(short id)
+        private bool RiskreportExists(int id)
         {
             return _context.Riskreport.Any(e => e.YearActive == id);
         }

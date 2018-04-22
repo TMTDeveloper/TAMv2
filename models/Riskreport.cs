@@ -9,8 +9,8 @@ namespace tam_risk_project.Models
         /****** Script for SelectTopNRows command from SSMS  ******/
 
 
-        public short YearActive { get; set; }
-        public Int32 No { get; set; }
+        public Int16 YearActive { get; set; }
+        public Int64 No { get; set; }
         public string RiskNo { get; set; }
         public string DepartmentKpi { get; set; }
         public string LossEvent { get; set; }
