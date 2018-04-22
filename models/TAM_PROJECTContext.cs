@@ -20,8 +20,11 @@ namespace tam_risk_project.Models
         public virtual DbSet<TbRRiskAssessment> TbRRiskAssessment { get; set; }
         public virtual DbSet<ControlMapping> ControlMapping { get; set; }
         public virtual DbSet<ControlEffectiveness> ControlEffectiveness { get; set; }
+        public virtual DbSet<TbMRiskReminder> TbMRiskReminder { get; set; }
 
         public virtual DbSet<RiskMovement> RiskMovement { get; set; }
+        public virtual DbSet<TbRSendmail> TbRSendmail { get; set; }
+        public virtual DbSet<Riskreport> Riskreport { get; set; }
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
               : base(options)
         {
@@ -29,6 +32,67 @@ namespace tam_risk_project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Riskreport>(entity =>
+            {
+
+                entity.ToTable("RISKREPORT");
+                entity.HasKey(e => new { e.YearActive, e.No });
+                entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
+                entity.Property(e => e.No).HasColumnName("NO");
+                entity.Property(e => e.RiskNo).HasColumnName("RISK_NO");
+                entity.Property(e => e.DepartmentKpi).HasColumnName("DEPARTMENT_KPI");
+                entity.Property(e => e.LossEvent).HasColumnName("LOSS_EVENT");
+                entity.Property(e => e.RiskImpact).HasColumnName("RISK_IMPACT");
+                entity.Property(e => e.FinImpactIr).HasColumnName("FIN_IMPACT_IR");
+                entity.Property(e => e.OpImpactIr).HasColumnName("OP_IMPACT_IR");
+                entity.Property(e => e.FinImpactRd).HasColumnName("FIN_IMPACT_RD");
+                entity.Property(e => e.OpImpactRd).HasColumnName("OP_IMPACT_RD");
+                entity.Property(e => e.QlImpactIr).HasColumnName("QL_IMPACT_IR");
+                entity.Property(e => e.QlImpactRd).HasColumnName("QL_IMPACT_RD");
+                entity.Property(e => e.IrImpact).HasColumnName("IR_IMPACT");
+                entity.Property(e => e.RdImpact).HasColumnName("RD_IMPACT");
+                entity.Property(e => e.ExImpact).HasColumnName("EX_IMPACT");
+                entity.Property(e => e.IrLikelihood).HasColumnName("IR_LIKELIHOOD");
+                entity.Property(e => e.RdLikelihood).HasColumnName("RD_LIKELIHOOD");
+                entity.Property(e => e.ExLikelihood).HasColumnName("EX_LIKELIHOOD");
+                entity.Property(e => e.IrOverall).HasColumnName("IR_OVERALL");
+                entity.Property(e => e.RdOverall).HasColumnName("RD_OVERALL");
+                entity.Property(e => e.ExOverall).HasColumnName("EX_OVERALL");
+            });
+
+
+            modelBuilder.Entity<TbRSendmail>(entity =>
+            {
+
+                entity.ToTable("TB_R_SENDMAIL");
+                entity.HasKey(e => new { e.YearActive, e.Counter });
+                entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
+                entity.Property(e => e.Counter).HasColumnName("COUNTER");
+                entity.Property(e => e.TypeSend).HasColumnName("TYPE_SEND");
+                entity.Property(e => e.SendBody).HasColumnName("SEND_BODY");
+                entity.Property(e => e.DateSend).HasColumnName("DATE_SEND");
+                entity.Property(e => e.UserSend).HasColumnName("USER_SEND");
+            });
+
+            modelBuilder.Entity<TbMRiskReminder>(entity =>
+{
+
+    entity.ToTable("TB_M_RISK_REMINDER");
+    entity.HasKey(e => new { e.YearActive, e.TypeReminder, e.CounterNo });
+    entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
+    entity.Property(e => e.TypeReminder).HasColumnName("TYPE_REMINDER");
+    entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
+    entity.Property(e => e.StartDate).HasColumnName("START_DATE");
+    entity.Property(e => e.EndDate).HasColumnName("END_DATE");
+    entity.Property(e => e.Period).HasColumnName("PERIOD");
+    entity.Property(e => e.DatetimeCreated).HasColumnName("DATETIME_CREATED");
+    entity.Property(e => e.DatetimeUpdate).HasColumnName("DATETIME_UPDATE");
+    entity.Property(e => e.UserCreated).HasColumnName("USER_CREATED");
+    entity.Property(e => e.UserUpdate).HasColumnName("USER_UPDATE");
+});
+
+
             modelBuilder.Entity<RiskMovement>(entity =>
            {
 
