@@ -151,8 +151,14 @@ export class RiskRegisterComponent {
 
   dataInput = {
     divisionDepartment: {
-      division: "",
-      department: "",
+      division: {
+        id: "ISTD",
+        desc: "Information System and Technical Design"
+      },
+      department: {
+        id: "IS",
+        desc: "Information System"
+      },
       companyKpi: {
         comInpId: "",
         description: ""
@@ -166,7 +172,9 @@ export class RiskRegisterComponent {
     riskDescription: {
       lossEvent: "",
       caused: "",
-      accidentObj: []
+      accidentObj: [],
+      riskImpact: "",
+      riskLevel: ""
     },
     inherentRisk: {
       overallRisk: {
@@ -181,13 +189,37 @@ export class RiskRegisterComponent {
       operationalImpact: {
         category: "MAS",
         loss: 0,
-        operationalObj: {},
+        operationalObj: {
+          yearActive: "",
+          category: "",
+          riskIndicatorId: "",
+          counterNo: 0,
+          operationalId: "",
+          numberValue: 0,
+          userCreated: "",
+          datetimeCreated: "",
+          userUpdate: "",
+          datetimeUpdate: ""
+        },
         score: 0
       },
       financialImpact: {
         category: "NEP",
         amount: 0,
-        financialObj: {},
+        financialObj: {
+          yearActive: "",
+          category: "",
+          riskIndicatorId: "",
+          counterNo: 0,
+          financialId: "",
+          percentageValue: 0,
+          numberValue: 0,
+          flagActive: null,
+          userCreated: "",
+          datetimeCreated: "",
+          userUpdate: "",
+          datetimeUpdate: ""
+        },
         score: 0
       },
       notes: "",
@@ -198,6 +230,7 @@ export class RiskRegisterComponent {
       }
     },
     residualRisk: {
+      notes: "",
       overallRisk: {
         indicatorId: "",
         description: ""
@@ -210,13 +243,37 @@ export class RiskRegisterComponent {
       operationalImpact: {
         category: "MAS",
         loss: 0,
-        operationalObj: {},
+        operationalObj: {
+          yearActive: "",
+          category: "",
+          riskIndicatorId: "",
+          counterNo: 0,
+          operationalId: "",
+          numberValue: 0,
+          userCreated: "",
+          datetimeCreated: "",
+          userUpdate: "",
+          datetimeUpdate: ""
+        },
         score: 0
       },
       financialImpact: {
         category: "NEP",
         amount: 0,
-        financialObj: {},
+        financialObj: {
+          yearActive: "",
+          category: "",
+          riskIndicatorId: "",
+          counterNo: 0,
+          financialId: "",
+          percentageValue: 0,
+          numberValue: 0,
+          flagActive: null,
+          userCreated: "",
+          datetimeCreated: "",
+          userUpdate: "",
+          datetimeUpdate: ""
+        },
         score: 0
       },
       qualitativeRD: {
@@ -236,6 +293,17 @@ export class RiskRegisterComponent {
         indicatorId: "",
         description: ""
       }
+    },
+    expectedRisk: {
+      treatmentPlan: "",
+      impact: "",
+      likelihood: "",
+      risk: {
+        indicatorId: "",
+        description: ""
+      },
+      PIC: "",
+      schedule: ""
     }
   };
 
@@ -287,6 +355,7 @@ export class RiskRegisterComponent {
   subscription: any;
   activeModal: any;
   riskIndicatorData: any = [];
+  riskAssessmentData: any = [];
   yearPeriode: any = moment().format("YYYY");
   constructor(
     private modalService: NgbModal,
@@ -319,6 +388,11 @@ export class RiskRegisterComponent {
             ? (data[ind].score = 0)
             : data[ind].score.toString();
           this.riskIndicatorData = data;
+        });
+        this.service.getreq("TbRRiskAssessments").subscribe(response => {
+          if (response != null) {
+            this.riskAssessmentData = response;
+          }
         });
       }
     });
@@ -987,7 +1061,6 @@ export class RiskRegisterComponent {
               this.dataInput.residualRisk.overallImpact.indicatorId &&
             item.indicatorIdB == this.dataInput.residualRisk.likelihood
           );
-          console.log(arr);
         });
         if (arr[0] != null) {
           let arrIndicator = this.riskIndicatorData.filter(item => {
@@ -1076,20 +1149,141 @@ export class RiskRegisterComponent {
     });
   }
 
+  findExpectedRisk() {
+    this.service.getreq("TbMRiskMappings").subscribe(response => {
+      if (response != null) {
+        let arr = response.filter(item => {
+          return (
+            item.yearActive == this.yearPeriode &&
+            item.indicatorIdA == this.dataInput.expectedRisk.impact &&
+            item.indicatorIdB == this.dataInput.expectedRisk.likelihood
+          );
+        });
+        console.log("ketemu");
+        console.log(arr);
+        if (arr[0] != null) {
+          let arrIndicator = this.riskIndicatorData.filter(item => {
+            return (
+              item.yearActive == this.yearPeriode &&
+              item.indicatorId == arr[0].resultIdC
+            );
+          });
+          console.log(arrIndicator);
+          if (arrIndicator[0] != null) {
+            this.dataInput.expectedRisk.risk.indicatorId =
+              arrIndicator[0].indicatorId;
+            this.dataInput.expectedRisk.risk.description =
+              arrIndicator[0].description;
+          }
+        }
+      }
+    });
+  }
+
   reload() {
     this.riskno = this.myForm.value.riskno;
   }
 
-  indicatorCtrGenerate(lastIndex) {
-    switch (lastIndex.toString().length) {
-      case 3:
-        return this.myForm.value.condition + lastIndex.toString();
+  save() {
+    const lastIndex = this.generateCounter();
+    const savedData = {
+      yearActive: this.yearPeriode,
+      riskNo: this.riskNoGenerate(lastIndex + 1),
+      division: this.dataInput.divisionDepartment.division.id,
+      companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
+      department: this.dataInput.divisionDepartment.department.id,
+      counterNo: lastIndex + 1,
+      departmentKpi: this.dataInput.divisionDepartment.departmentKpi.deptInpId,
+      businessProcess: this.dataInput.divisionDepartment.businessProcess,
+      lossEvent: this.dataInput.riskDescription.lossEvent,
+      caused: this.dataInput.riskDescription.caused,
+      riskImpact: this.dataInput.riskDescription.riskImpact,
+      riskLevel: this.dataInput.riskDescription.riskLevel,
+      accidentList: 0,
+      notesIr: this.dataInput.inherentRisk.notes,
+      finImpactIr: this.dataInput.inherentRisk.financialImpact.financialObj
+        .financialId,
+      finAmountIr: this.dataInput.inherentRisk.financialImpact.amount,
+      opImpactIr: this.dataInput.inherentRisk.operationalImpact.operationalObj
+        .operationalId,
+      opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
+      qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
+      irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
+      likelihoodIr: this.dataInput.inherentRisk.likelihood,
+      overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
+      controlList: 0,
+      operationCt: this.dataInput.currentAction.operation,
+      appropriatenessCt: this.dataInput.currentAction.appropriateness
+        .indicatorId,
+      notesRd: this.dataInput.residualRisk.notes,
+      finAmountRd: this.dataInput.residualRisk.financialImpact.amount,
+      opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
+      qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
+      rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
+      likelihoodRd: this.dataInput.residualRisk.likelihood,
+      overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
+      overallEf: this.dataInput.currentAction.overallControl.indicatorId,
+      treatmentPlan: false,
+      treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
+      impactEx: this.dataInput.expectedRisk.impact,
+      likelihoodEx: this.dataInput.expectedRisk.likelihood,
+      overallEx: this.dataInput.expectedRisk.risk.indicatorId,
+      pic: this.dataInput.expectedRisk.PIC,
+      schedule: this.dataInput.expectedRisk.schedule,
+      userCreated: "Admin",
+      datetimeCreated: moment(),
+      userUpdate: "Admin",
+      datetimeUpdate: moment()
+    };
+    console.log(savedData);
+    this.service
+      .postreq("TbRRiskAssessments", savedData)
+      .subscribe(response => {
+        console.log(response);
+        error => {
+          console.log(error);
+        };
+      });
+  }
 
+  generateCounter() {
+    let lastIndex = 0;
+    for (let data in this.riskAssessmentData) {
+      if (
+        this.riskAssessmentData[data].yearActive == this.yearPeriode &&
+        this.riskAssessmentData[data].division ==
+          this.dataInput.divisionDepartment.division.id &&
+        this.riskAssessmentData[data].department ==
+          this.dataInput.divisionDepartment.department.id
+      ) {
+        lastIndex <= this.riskAssessmentData[data].counterNo
+          ? (lastIndex = this.riskAssessmentData[data].counterNo)
+          : null;
+      }
+    }
+    return lastIndex;
+  }
+
+  riskNoGenerate(lastIndex) {
+    switch (lastIndex.toString().length) {
       case 2:
-        return this.myForm.value.condition + "0" + lastIndex.toString();
+        return (
+          this.dataInput.divisionDepartment.division.id +
+          "/" +
+          this.dataInput.divisionDepartment.department.id +
+          "-" +
+          lastIndex.toString()
+        );
 
       case 1:
-        return this.myForm.value.condition + "00" + lastIndex.toString();
+        return (
+          this.dataInput.divisionDepartment.division.id +
+          "/" +
+          this.dataInput.divisionDepartment.department.id +
+          "-" +
+          "0" +
+          lastIndex.toString()
+        );
     }
   }
 
