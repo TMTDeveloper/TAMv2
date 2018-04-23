@@ -1180,9 +1180,7 @@ export class RiskRegisterComponent {
     });
   }
 
-  reload() {
-    this.riskno = this.myForm.value.riskno;
-  }
+  reload() {}
 
   save() {
     const lastIndex = this.generateCounter();
@@ -1236,14 +1234,16 @@ export class RiskRegisterComponent {
       datetimeUpdate: moment()
     };
     console.log(savedData);
-    this.service
-      .postreq("TbRRiskAssessments", savedData)
-      .subscribe(response => {
+    this.service.postreq("TbRRiskAssessments", savedData).subscribe(
+      response => {
         console.log(response);
-        error => {
-          console.log(error);
-        };
-      });
+        this.saveControlAccident(savedData.riskNo);
+        this.toastr.success("Data Saved!");
+      },
+      error => {
+        this.toastr.error("Data Already Saved");
+      }
+    );
   }
 
   generateCounter() {
@@ -1285,6 +1285,38 @@ export class RiskRegisterComponent {
           lastIndex.toString()
         );
     }
+  }
+
+  saveControlAccident(riskNo) {
+    this.dataInput.currentAction.controls.forEach((element, ind) => {
+      this.dataInput.currentAction.controls[ind].riskNo = riskNo;
+      this.service
+        .postreq(
+          "TbRControlDetails",
+          this.dataInput.currentAction.controls[ind]
+        )
+        .subscribe(response => {
+          console.log(response);
+          error => {
+            console.log(error);
+          };
+        });
+    });
+
+    this.dataInput.riskDescription.accidentObj.forEach((element, ind) => {
+      this.dataInput.riskDescription.accidentObj[ind].riskNo = riskNo;
+      this.service
+        .postreq(
+          "TbRAccidentDetails",
+          this.dataInput.riskDescription.accidentObj[ind]
+        )
+        .subscribe(response => {
+          console.log(response);
+          error => {
+            console.log(error);
+          };
+        });
+    });
   }
 
   submit() {
