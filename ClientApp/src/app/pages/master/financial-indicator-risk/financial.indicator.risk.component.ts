@@ -86,54 +86,6 @@ export class FinancialIndicatorRiskComponent {
 
   year: any[] = [
     {
-      data: "2000"
-    },
-    {
-      data: "2001"
-    },
-    {
-      data: "2002"
-    },
-    {
-      data: "2003"
-    },
-    {
-      data: "2004"
-    },
-    {
-      data: "2005"
-    },
-    {
-      data: "2006"
-    },
-    {
-      data: "2007"
-    },
-    {
-      data: "2008"
-    },
-    {
-      data: "2009"
-    },
-    {
-      data: "2010"
-    },
-    {
-      data: "2011"
-    },
-    {
-      data: "2012"
-    },
-    {
-      data: "2013"
-    },
-    {
-      data: "2014"
-    },
-    {
-      data: "2015"
-    },
-    {
       data: "2016"
     },
     {
@@ -147,39 +99,6 @@ export class FinancialIndicatorRiskComponent {
     },
     {
       data: "2020"
-    },
-    {
-      data: "2021"
-    },
-    {
-      data: "2022"
-    },
-    {
-      data: "2022"
-    },
-    {
-      data: "2023"
-    },
-    {
-      data: "2024"
-    },
-    {
-      data: "2025"
-    },
-    {
-      data: "2026"
-    },
-    {
-      data: "2027"
-    },
-    {
-      data: "2028"
-    },
-    {
-      data: "2029"
-    },
-    {
-      data: "2030"
     }
   ];
   condition: any[] = [

@@ -9,6 +9,7 @@ import { Ng2SmartTableModule } from "ng2-smart-table";
 import { ThemeModule } from '../../@theme/theme.module';
 
 import { ChartsRoutingModule, routedComponents } from './charts-routing.module';
+import {ControlMappingComponent} from './chartjs/control.mapping.component';
 import { ChartjsBarComponent } from './chartjs/chartjs-bar.component';
 import { ChartjsLineComponent } from './chartjs/chartjs-line.component';
 import { ChartjsPieComponent } from './chartjs/chartjs-pie.component';
@@ -36,6 +37,7 @@ const components = [
   ChartjsMultipleXaxisComponent,
   ChartjsBarHorizontalComponent,
   ChartjsRadarComponent,
+  ControlMappingComponent,
   D3BarComponent,
   D3LineComponent,
   D3PieComponent,

@@ -13,6 +13,8 @@ import { BackendService } from "../../../@core/data/backend.service";
 })
 export class RiskReminderComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  buttonDisable: boolean;
+  yearPeriode: any = moment().format("YYYY");  
   settings: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -54,14 +56,14 @@ export class RiskReminderComponent {
       },
       startDate: {
         title: "Start Date",
-        type: "string",
+        type: "date",
         filter: false,
         editable: true,
         width: "30%"
       },
       endDate: {
         title: "End Date",
-        type: "number",
+        type: "date",
         filter: false,
         editable: true,
           width: "30%"
@@ -202,12 +204,9 @@ export class RiskReminderComponent {
     this.service.getreq("TbMRiskReminders").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(response);
+        console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].score == null
-            ? (data[ind].score = 0)
-            : data[ind].score.toString();
           data[ind].status = "0";
           this.tabledata = data;
           this.source.load(this.tabledata);
@@ -232,7 +231,7 @@ export class RiskReminderComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
+    //console.log(this.myForm.value.condition);
   }
 
   showModal(no_iku) {
@@ -241,11 +240,11 @@ export class RiskReminderComponent {
       container: "nb-layout",
       backdrop: "static"
     });
-    let lastIndex = 1;
+    let lastIndex = 0;
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].condition == this.myForm.value.condition
+        this.tabledata[data].typeReminder == this.myForm.value.condition
       ) {
         lastIndex < this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
@@ -260,10 +259,10 @@ export class RiskReminderComponent {
     this.activeModal.componentInstance.formData = {
       counterNo: lastIndex + 1,
       yearActive: this.myForm.value.yearPeriode,
-      condition: this.myForm.value.condition,
+      typeReminder: this.myForm.value.condition,
       startDate: "",
       endDate: "",
-      indicatorId: indicator,
+      //indicatorId: indicator,
       periode:"",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
@@ -288,11 +287,11 @@ export class RiskReminderComponent {
       container: "nb-layout",
       backdrop: "static"
     });
-    let lastIndex = 1;
+    let lastIndex = 0;
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].condition == this.myForm.value.condition
+        this.tabledata[data].type == this.myForm.value.condition
       ) {
         lastIndex < this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
@@ -341,13 +340,83 @@ export class RiskReminderComponent {
   }
 
   reload() {
+    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: false,
+        position: "right",
+        columnTitle: "Modify",
+        width: "10%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        startDate: {
+          title: "Start Date",
+          type: "date",
+          filter: false,
+          editable: true,
+          width: "30%"
+        },
+        endDate: {
+          title: "End Date",
+          type: "date",
+          filter: false,
+          editable: true,
+            width: "30%"
+        },
+        periode: {
+          title: "Periode",
+          type: "number",
+          filter: false,
+          editable: true,
+          width: "10%"
+        }
+      }
+    };
     this.source.setFilter(
       [
-        { field: "condition", search: this.myForm.value.condition },
+        { field: "typeReminder", search: this.myForm.value.condition },
         { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );
+    switch (this.myForm.value.yearPeriode) {
+      case moment().format('YYYY'):
+        this.buttonDisable =false;
+        break;
+      default:
+      this.buttonDisable =true;
+    }
   }
   submit(event?) {
     event
