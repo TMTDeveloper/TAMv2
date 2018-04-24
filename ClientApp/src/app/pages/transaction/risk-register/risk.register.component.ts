@@ -283,6 +283,9 @@ export class RiskRegisterComponent {
       }
     },
     currentAction: {
+      Preventive: 0,
+      Detective: 0,
+      Corrective: 0,
       operation: "",
       controls: [],
       overallControl: {
@@ -565,6 +568,7 @@ export class RiskRegisterComponent {
       element.no = ind + 1;
     });
     this.controlSrc.load(this.dataInput.currentAction.controls);
+    this.countPDC();
   }
   showCtr() {
     this.activeModal = this.modalService.open(RiskRegisterCtrComponent, {
@@ -609,11 +613,29 @@ export class RiskRegisterComponent {
 
           this.dataInput.currentAction.controls.push(response);
           this.controlSrc.load(this.dataInput.currentAction.controls);
+          this.countPDC();
           console.log(this.dataInput.currentAction.controls);
         }
       },
       error => {}
     );
+  }
+
+  countPDC() {
+    this.dataInput.currentAction.Preventive = 0;
+    this.dataInput.currentAction.Detective = 0;
+    this.dataInput.currentAction.Corrective = 0;
+    this.dataInput.currentAction.controls.forEach((element, index) => {
+      element.type == "Preventive"
+        ? this.dataInput.currentAction.Preventive++
+        : null;
+      element.type == "Detective"
+        ? this.dataInput.currentAction.Detective++
+        : null;
+      element.type == "Corrective"
+        ? this.dataInput.currentAction.Corrective++
+        : null;
+    });
   }
 
   hasmin(arr, attrib) {

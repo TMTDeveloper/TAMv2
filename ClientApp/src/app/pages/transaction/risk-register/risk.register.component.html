@@ -102,8 +102,8 @@
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-5">
-              <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.riskDescription.riskImpact">
-                <option *ngFor="let data of getListRiskIndicator('RTP')" value="{{data.indicatorId}}">{{data.description}}</option>
+              <select multiple class="form-control" name="risk_impact" [(ngModel)]="dataInput.riskDescription.riskImpact">
+                <option *ngFor="let data of getListRiskIndicator('RTP')" value="{{data.description}}">{{data.description}}</option>
               </select>
             </div>
           </div>
@@ -274,21 +274,21 @@
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" ngModel name="preventive">
+              <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.Preventive" disabled="true">
             </div>
             <label class="col-sm-1 col-form-label">Detective</label>
             <div class="col-lg-1">
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" ngModel name="detective">
+              <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.Detective" disabled="true">
             </div>
             <label class="col-sm-1 col-form-label">Corrective</label>
             <div class="col-lg-1">
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" ngModel name="corrective">
+              <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.Corrective" disabled="true">
             </div>
           </div>
 
