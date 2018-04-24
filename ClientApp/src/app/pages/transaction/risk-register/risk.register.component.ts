@@ -295,6 +295,8 @@ export class RiskRegisterComponent {
       }
     },
     expectedRisk: {
+      disabled: true,
+      treatmentPlanSwitch: false,
       treatmentPlan: "",
       impact: "",
       likelihood: "",
@@ -801,21 +803,37 @@ export class RiskRegisterComponent {
         item.score ==
           this.hasmax(
             [
-              { score: this.dataInput.inherentRisk.financialImpact.score },
-              { score: this.dataInput.inherentRisk.operationalImpact.score },
+              {
+                score:
+                  this.dataInput.inherentRisk.financialImpact.amount == 0 ||
+                  this.dataInput.inherentRisk.financialImpact.amount == null
+                    ? 0
+                    : this.dataInput.inherentRisk.financialImpact.score
+              },
+              {
+                score:
+                  this.dataInput.inherentRisk.operationalImpact.loss == 0 ||
+                  this.dataInput.inherentRisk.operationalImpact.loss == null
+                    ? 0
+                    : this.dataInput.inherentRisk.operationalImpact.score
+              },
               { score: this.dataInput.inherentRisk.qualitativeIR.score }
             ],
             "score"
           ).score
       );
     });
-
     if (arr[0] != null) {
+      console.log("disinihehe");
       console.log(arr);
       this.dataInput.inherentRisk.overallImpact.description =
         arr[0].description;
       this.dataInput.inherentRisk.overallImpact.indicatorId =
         arr[0].indicatorId;
+      this.findOverallRisk();
+    } else {
+      this.dataInput.inherentRisk.overallImpact.description = "";
+      this.dataInput.inherentRisk.overallImpact.indicatorId = "";
       this.findOverallRisk();
     }
   }
@@ -1031,8 +1049,20 @@ export class RiskRegisterComponent {
         item.score ==
           this.hasmax(
             [
-              { score: this.dataInput.residualRisk.financialImpact.score },
-              { score: this.dataInput.residualRisk.operationalImpact.score },
+              {
+                score:
+                  this.dataInput.residualRisk.financialImpact.amount == 0 ||
+                  this.dataInput.residualRisk.financialImpact.amount == null
+                    ? 0
+                    : this.dataInput.residualRisk.financialImpact.score
+              },
+              {
+                score:
+                  this.dataInput.residualRisk.operationalImpact.loss == 0 ||
+                  this.dataInput.residualRisk.operationalImpact.loss == null
+                    ? 0
+                    : this.dataInput.residualRisk.operationalImpact.score
+              },
               { score: this.dataInput.residualRisk.qualitativeRD.score }
             ],
             "score"
@@ -1046,6 +1076,14 @@ export class RiskRegisterComponent {
         arr[0].description;
       this.dataInput.residualRisk.overallImpact.indicatorId =
         arr[0].indicatorId;
+      this.findOverallRiskRd();
+    } else {
+      this.dataInput.residualRisk.overallImpact.description = "";
+      this.dataInput.residualRisk.overallImpact.indicatorId = "";
+      this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
+      this.dataInput.residualRisk.likelihood == ""
+        ? (this.dataInput.expectedRisk.disabled = true)
+        : (this.dataInput.expectedRisk.disabled = false);
       this.findOverallRiskRd();
     }
   }
@@ -1075,6 +1113,10 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.residualRisk.overallRisk.description =
               arrIndicator[0].description;
+            this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
+            this.dataInput.residualRisk.likelihood == ""
+              ? (this.dataInput.expectedRisk.disabled = true)
+              : (this.dataInput.expectedRisk.disabled = false);
             this.findOverallControl();
           }
         }
@@ -1144,6 +1186,9 @@ export class RiskRegisterComponent {
             this.dataInput.currentAction.appropriateness.description =
               arrIndicator[0].description;
           }
+        } else {
+          this.dataInput.currentAction.appropriateness.indicatorId = "";
+          this.dataInput.currentAction.appropriateness.description = "";
         }
       }
     });
@@ -1317,6 +1362,35 @@ export class RiskRegisterComponent {
           };
         });
     });
+  }
+  //   treatmentPlanSwitch: false,
+  //   treatmentPlan: "",
+  //   impact: "",
+  //   likelihood: "",
+  //   risk: {
+  //     indicatorId: "",
+  //     description: ""
+  //   },
+  //   PIC: "",
+  //   schedule: ""
+  // }
+  treatmentPlanSwitch() {
+    if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
+      this.dataInput.expectedRisk.impact = this.dataInput.residualRisk.overallImpact.indicatorId;
+      this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood;
+      this.dataInput.expectedRisk.PIC = "";
+      this.dataInput.expectedRisk.schedule = "";
+      this.dataInput.expectedRisk.treatmentPlan = "Accept";
+    } else {
+      this.dataInput.expectedRisk.impact = "";
+      this.dataInput.expectedRisk.likelihood = "";
+      this.dataInput.expectedRisk.PIC = "";
+      this.dataInput.expectedRisk.schedule = "";
+      this.dataInput.expectedRisk.treatmentPlan = "";
+      this.dataInput.expectedRisk.risk.description = "";
+      this.dataInput.expectedRisk.risk.indicatorId = "";
+    }
+    this.findExpectedRisk();
   }
 
   submit() {

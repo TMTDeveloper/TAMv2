@@ -389,12 +389,16 @@
         </nb-tab>
         <nb-tab tabTitle="Expected Risk">
           <div class="form-group row">
+            <nb-checkbox status="success" class="col-sm-4" (change)="treatmentPlanSwitch()" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"
+              disabled="{{dataInput.expectedRisk.disabled}}">Anda setuju tidak diperlukan Treament Plan ?</nb-checkbox>
+          </div>
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">Treatment Plan</label>
             <div class="col-lg-1">
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-12">
-              <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.treatmentPlan"></textarea>
+              <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.treatmentPlan" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}"></textarea>
             </div>
           </div>
           <div class="form-group row">
@@ -403,7 +407,7 @@
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-5">
-              <select class="form-control" [(ngModel)]="dataInput.expectedRisk.impact" (change)="findExpectedRisk()">
+              <select class="form-control" [(ngModel)]="dataInput.expectedRisk.impact" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
                 <option *ngFor="let data of getListRiskIndicator('IMP')" value="{{data.indicatorId}}">{{data.description}}</option>
               </select>
             </div>
@@ -414,7 +418,7 @@
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-5">
-              <select class="form-control" [(ngModel)]="dataInput.expectedRisk.likelihood" (change)="findExpectedRisk()">
+              <select class="form-control" [(ngModel)]="dataInput.expectedRisk.likelihood" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
 
                 <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
 
@@ -436,7 +440,7 @@
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.PIC">
+              <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.PIC" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
             </div>
           </div>
           <div class="form-group row">
@@ -445,7 +449,7 @@
               <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.schedule">
+              <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.schedule" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
             </div>
           </div>
         </nb-tab>
