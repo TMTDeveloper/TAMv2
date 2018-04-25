@@ -25,6 +25,8 @@ namespace tam_risk_project.Models
         public virtual DbSet<RiskMovement> RiskMovement { get; set; }
         public virtual DbSet<TbRSendmail> TbRSendmail { get; set; }
         public virtual DbSet<Riskreport> Riskreport { get; set; }
+        public virtual DbSet<Qllov> Qllov { get; set; }
+        public virtual DbSet<DraftRisk> DraftRisk { get; set; }
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
               : base(options)
         {
@@ -32,6 +34,32 @@ namespace tam_risk_project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+            modelBuilder.Entity<DraftRisk>(entity =>
+     {
+
+         entity.ToTable("DRAFT_RISK");
+         entity.HasKey(e => new { e.DraftKey });
+         entity.Property(e => e.DraftKey).HasColumnName("DRAFT_KEY");
+         entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON");
+     });
+            modelBuilder.Entity<Qllov>(entity =>
+      {
+
+          entity.ToTable("QLLOV");
+          entity.HasKey(e => new { e.YearActive, e.IndicatorId });
+          entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
+          entity.Property(e => e.IndicatorId).HasColumnName("INDICATOR_ID");
+          entity.Property(e => e.Impact).HasColumnName("IMPACT");
+          entity.Property(e => e.EntityWide).HasColumnName("ENTITIY_WIDE");
+          entity.Property(e => e.Output).HasColumnName("OUTPUT");
+          entity.Property(e => e.HumanResources).HasColumnName("HUMAN_RESOURCES");
+          entity.Property(e => e.LegalAndRegulatory).HasColumnName("LEGAL_AND_REGULATORY");
+          entity.Property(e => e.Financial).HasColumnName("FINANCIAL");
+          entity.Property(e => e.Score).HasColumnName("SCORE");
+      });
+
 
             modelBuilder.Entity<Riskreport>(entity =>
             {

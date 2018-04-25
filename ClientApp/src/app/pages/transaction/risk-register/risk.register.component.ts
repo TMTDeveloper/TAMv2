@@ -97,7 +97,8 @@ export class RiskRegisterComponent {
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>'
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -397,6 +398,17 @@ export class RiskRegisterComponent {
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
           if (response != null) {
             this.riskAssessmentData = response;
+            this.service.getreq("Draftrisks").subscribe(response => {
+              if (response != null) {
+                console.log(response[0].draftJson);
+                const data = response[0].draftJson
+                try {
+                  JSON.parse(data);
+                } catch (e) {
+                  console.log("Error parsing JSON", e);
+                }
+              }
+            });
           }
         });
       }
@@ -521,10 +533,8 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.inherentRisk.qualitativeIR.id =
-            response.riskIndicatorId;
-          this.dataInput.inherentRisk.qualitativeIR.desc =
-            response.descriptionrisk;
+          this.dataInput.inherentRisk.qualitativeIR.id = response.indicatorId;
+          this.dataInput.inherentRisk.qualitativeIR.desc = response.impact;
           this.dataInput.inherentRisk.qualitativeIR.score = response.score;
           this.findOverallImp();
         }
@@ -544,10 +554,8 @@ export class RiskRegisterComponent {
       async response => {
         console.log(response);
         if (response != null) {
-          this.dataInput.residualRisk.qualitativeRD.id =
-            response.riskIndicatorId;
-          this.dataInput.residualRisk.qualitativeRD.desc =
-            response.descriptionrisk;
+          this.dataInput.residualRisk.qualitativeRD.id = response.indicatorId;
+          this.dataInput.residualRisk.qualitativeRD.desc = response.impact;
           this.dataInput.residualRisk.qualitativeRD.score = response.score;
           this.findOverallImpRd();
         }
@@ -568,6 +576,15 @@ export class RiskRegisterComponent {
       element.no = ind + 1;
     });
     this.controlSrc.load(this.dataInput.currentAction.controls);
+    this.countPDC();
+  }
+  saveControl(event) {
+    event.confirm.resolve(event.newData);
+    this.dataInput.currentAction.controls.forEach((element, ind) => {
+      element.no == event.newData.no
+        ? (element.type = event.newData.type)
+        : null;
+    });
     this.countPDC();
   }
   showCtr() {
@@ -727,7 +744,7 @@ export class RiskRegisterComponent {
                 this.dataInput
               )[0].score;
               this.findOverallImp();
-              console.log(this.dataInput);
+              console.log(JSON.stringify(this.dataInput));
             }
           }
         }
@@ -1419,3 +1436,5 @@ export class RiskRegisterComponent {
     this.toastr.success("Data Saved!");
   }
 }
+
+

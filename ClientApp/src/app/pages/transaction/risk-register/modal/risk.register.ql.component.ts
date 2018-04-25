@@ -31,22 +31,51 @@ export class RiskRegisterQlComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
-        title: "No",
-        type: "number",
+      impact: {
+        title: "Qualitative Impact",
+        type: "text",
         filter: false,
         editable: false,
         width: "5%"
       },
-      description: {
-        title: "Description",
-        type: "string",
+      entityWide: {
+        title: "Entitiy Wide",
+        type: "text",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "20%"
+      },
+      output: {
+        title: "Output",
+        type: "text",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      humanResources: {
+        title: "Human Resources",
+        type: "text",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      legalAndRegulatory: {
+        title: "Legal And Regulatory",
+        type: "text",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      financial: {
+        title: "Financial",
+        type: "text",
+        filter: false,
+        editable: true,
+        width: "20%"
       }
     }
   };
+
   source: LocalDataSource = new LocalDataSource();
   constructor(
     private activeModal: NgbActiveModal,
@@ -54,57 +83,70 @@ export class RiskRegisterQlComponent {
   ) {
     this.loadData();
   }
+  // loadData() {
+  //   this.service.getreq("TbMRiskIndicators").subscribe(response => {
+  //     if (response != null) {
+  //       const data = response;
+  //       console.log(JSON.stringify(response));
+  //       data.forEach((element, ind) => {
+  //         data[ind].yearActive = data[ind].yearActive.toString();
+  //         data[ind].score == null
+  //           ? (data[ind].score = 0)
+  //           : data[ind].score.toString();
+  //         data[ind].status = "0";
+
+  //         this.riskIndicatorData = data;
+  //       });
+  //       this.service.getreq("TbMQualitativeImpacts").subscribe(response => {
+  //         const data = response;
+  //         console.log(JSON.stringify(response));
+  //         data.forEach((element, ind) => {
+  //           data[ind].yearActive = data[ind].yearActive.toString();
+  //           data[ind].status = "0";
+  //           let arr = this.riskIndicatorData.filter(function(item) {
+  //             return item.indicatorId == data[ind].riskIndicatorId;
+  //           });
+  //           if (arr[0] != null) {
+  //             data[ind].descriptionrisk = arr[0].description;
+  //             data[ind].score = arr[0].score;
+  //           }
+  //         });
+
+  //         if (response != null) {
+  //           console.log(response);
+  //           this.source.load(
+  //             data.filter(function(item) {
+  //               return item.yearActive == this.year && item.category == "EWD";
+  //             }, this.filterData)
+  //           );
+  //         }
+
+  //         // error => {
+  //         //   console.log(error);
+  //         // };
+  //       });
+  //     }
+  //   });
+  // }
   loadData() {
-    this.service.getreq("TbMRiskIndicators").subscribe(response => {
+    this.service.getreq("qllovs").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
-        data.forEach((element, ind) => {
-          data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].score == null
-            ? (data[ind].score = 0)
-            : data[ind].score.toString();
-          data[ind].status = "0";
-
-          this.riskIndicatorData = data;
-        });
-        this.service.getreq("TbMQualitativeImpacts").subscribe(response => {
-          const data = response;
-          console.log(JSON.stringify(response));
-          data.forEach((element, ind) => {
-            data[ind].yearActive = data[ind].yearActive.toString();
-            data[ind].status = "0";
-            let arr = this.riskIndicatorData.filter(function(item) {
-              return item.indicatorId == data[ind].riskIndicatorId;
-            });
-            if (arr[0] != null) {
-              data[ind].descriptionrisk = arr[0].description;
-              data[ind].score = arr[0].score;
-            }
-          });
-
-          if (response != null) {
-            console.log(response);
-            this.source.load(
-              data.filter(function(item) {
-                return item.yearActive == this.year && item.category == "EWD";
-              }, this.filterData)
-            );
-          }
-
-          // error => {
-          //   console.log(error);
-          // };
-        });
+        console.log(data);
+        this.source.load(
+          data.filter(function(item) {
+            return item.yearActive == this.year;
+          }, this.filterData)
+        );
       }
     });
   }
-
   refreshSelected(event) {
     this.selectedData = event.data;
   }
 
   submit() {
+    console.log(this.selectedData);
     this.activeModal.close(this.selectedData);
   }
 
