@@ -3,7 +3,6 @@ import { LocalDataSource } from "ng2-smart-table";
 import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
-import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../@core/data/backend.service";
 
 @Component({
@@ -94,7 +93,6 @@ export class DashboardComponent {
   activeModal: any;
   constructor(
     private modalService: NgbModal,
-    private toastr: ToastrService,
     public service: BackendService
   ) {
     this.buttonDisable= false;
@@ -244,7 +242,5 @@ export class DashboardComponent {
           });
       }
     });
-
-    this.toastr.success("Data Saved!");
   }
 }
