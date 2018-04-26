@@ -400,13 +400,10 @@ export class RiskRegisterComponent {
             this.riskAssessmentData = response;
             this.service.getreq("Draftrisks").subscribe(response => {
               if (response != null) {
-                console.log(response[0].draftJson);
-                const data = response[0].draftJson
-                try {
-                  JSON.parse(data);
-                } catch (e) {
-                  console.log("Error parsing JSON", e);
-                }
+                console.log(JSON.stringify(response[0].draftJson));
+                const data = response[0].draftJson;
+                this.dataInput = JSON.parse(data);
+              
               }
             });
           }
@@ -1436,5 +1433,3 @@ export class RiskRegisterComponent {
     this.toastr.success("Data Saved!");
   }
 }
-
-
