@@ -6,8 +6,8 @@ import * as moment from "moment";
 import { BackendService } from "../../@core/data/backend.service";
 
 @Component({
-  selector: 'ngx-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: "ngx-dashboard",
+  templateUrl: "./dashboard.component.html"
 })
 export class DashboardComponent {
   @ViewChild("myForm") private myForm: NgForm;
@@ -47,14 +47,14 @@ export class DashboardComponent {
         type: "number",
         filter: false,
         editable: false,
-        width: "2%"
+        width: "10%"
       },
       riskNo: {
         title: "Risk No",
         type: "string",
         filter: false,
         editable: true,
-        width: "2%",
+        width: "30%",
         editor: {
           type: "textarea"
         }
@@ -64,7 +64,7 @@ export class DashboardComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "10%",
+        width: "40%",
         editor: {
           type: "textarea"
         }
@@ -91,11 +91,8 @@ export class DashboardComponent {
 
   subscription: any;
   activeModal: any;
-  constructor(
-    private modalService: NgbModal,
-    public service: BackendService
-  ) {
-    this.buttonDisable= false;
+  constructor(private modalService: NgbModal, public service: BackendService) {
+    this.buttonDisable = false;
     this.loadData();
   }
   loadData() {
@@ -103,12 +100,8 @@ export class DashboardComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
-        data.forEach((element, ind) => {
-          data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].status = "0";
-          this.tabledata = data;
-          this.source.load(this.tabledata);
-        });
+        this.tabledata = data;
+        this.source.load(this.tabledata);
       }
       // error => {
       //   console.log(error);
@@ -116,23 +109,8 @@ export class DashboardComponent {
     });
   }
   ngAfterViewInit() {
-    this.source
-      .load(this.tabledata)
-      .then(resp => {
-        this.myForm.setValue({
-          condition: "OBJ",
-
-          yearPeriode: moment().format("YYYY")
-        });
-      })
-      .then(resp => {
-        this.reload();
-      });
-
-    console.log(this.myForm.value.condition);
+    this.source.load(this.tabledata);
   }
-
- 
 
   comGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
@@ -208,11 +186,11 @@ export class DashboardComponent {
       true
     );
     switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
         break;
       default:
-      this.buttonDisable =true;
+        this.buttonDisable = true;
     }
   }
   submit(event?) {

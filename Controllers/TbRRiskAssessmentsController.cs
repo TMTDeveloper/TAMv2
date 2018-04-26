@@ -64,14 +64,14 @@ namespace tam_risk_project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TbRRiskAssessmentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
+                // if (!TbRRiskAssessmentExists(id))
+                // {
+                //     return NotFound();
+                // }
+                // else
+                // {
                     throw;
-                }
+                // }
             }
 
             return NoContent();
@@ -93,7 +93,7 @@ namespace tam_risk_project.Controllers
             }
             catch (DbUpdateException)
             {
-                if (TbRRiskAssessmentExists(tbRRiskAssessment.YearActive))
+                if (TbRRiskAssessmentExists(tbRRiskAssessment.YearActive, tbRRiskAssessment.RiskNo))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -127,9 +127,9 @@ namespace tam_risk_project.Controllers
             return Ok(tbRRiskAssessment);
         }
 
-        private bool TbRRiskAssessmentExists(short id)
+        private bool TbRRiskAssessmentExists(short id, string riskno)
         {
-            return _context.TbRRiskAssessment.Any(e => e.YearActive == id);
+            return _context.TbRRiskAssessment.Any(e => e.YearActive == id && e.RiskNo == riskno);
         }
     }
 }

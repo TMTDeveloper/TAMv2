@@ -1,5 +1,6 @@
 .chart-container {
-  width: 600px;
-  height: 400px;
+  position: inherit;
+  height: 480px;
+  width: 99%;
   margin-top: 5px;
 }

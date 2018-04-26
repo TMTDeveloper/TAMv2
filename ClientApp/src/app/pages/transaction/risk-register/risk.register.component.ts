@@ -403,7 +403,6 @@ export class RiskRegisterComponent {
                 console.log(JSON.stringify(response[0].draftJson));
                 const data = response[0].draftJson;
                 this.dataInput = JSON.parse(data);
-              
               }
             });
           }
@@ -1272,7 +1271,7 @@ export class RiskRegisterComponent {
       companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
       department: this.dataInput.divisionDepartment.department.id,
       counterNo: lastIndex + 1,
-      departmentKpi: this.dataInput.divisionDepartment.departmentKpi.deptInpId,
+      departmentKpi: "woi",
       businessProcess: this.dataInput.divisionDepartment.businessProcess,
       lossEvent: this.dataInput.riskDescription.lossEvent,
       caused: this.dataInput.riskDescription.caused,
@@ -1310,10 +1309,11 @@ export class RiskRegisterComponent {
       pic: this.dataInput.expectedRisk.PIC,
       schedule: this.dataInput.expectedRisk.schedule,
       userCreated: "Admin",
-      datetimeCreated: moment(),
+      datetimeCreated: moment().format(),
       userUpdate: "Admin",
-      datetimeUpdate: moment()
+      datetimeUpdate: moment().format()
     };
+    console.log(JSON.stringify(savedData));
     console.log(savedData);
     this.service.postreq("TbRRiskAssessments", savedData).subscribe(
       response => {
@@ -1322,7 +1322,8 @@ export class RiskRegisterComponent {
         this.toastr.success("Data Saved!");
       },
       error => {
-        this.toastr.error("Data Already Saved");
+        console.log(error);
+        this.toastr.error("Data Save Failed! Reason: " + error.statusText);
       }
     );
   }
@@ -1376,12 +1377,14 @@ export class RiskRegisterComponent {
           "TbRControlDetails",
           this.dataInput.currentAction.controls[ind]
         )
-        .subscribe(response => {
-          console.log(response);
+        .subscribe(
+          response => {
+            console.log(response);
+          },
           error => {
             console.log(error);
-          };
-        });
+          }
+        );
     });
 
     this.dataInput.riskDescription.accidentObj.forEach((element, ind) => {
@@ -1391,12 +1394,14 @@ export class RiskRegisterComponent {
           "TbRAccidentDetails",
           this.dataInput.riskDescription.accidentObj[ind]
         )
-        .subscribe(response => {
-          console.log(response);
+        .subscribe(
+          response => {
+            console.log(response);
+          },
           error => {
             console.log(error);
-          };
-        });
+          }
+        );
     });
   }
   //   treatmentPlanSwitch: false,
