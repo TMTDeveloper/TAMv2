@@ -118,23 +118,23 @@ export class ControlMappingComponent implements OnDestroy {
             labels: ['Control'],
             datasets: [{
               data: [this.chartdata.preventive],
-              label: 'Preventive',
+              label: 'Prevent',
               backgroundColor: NbColorHelper.hexToRgbA(colors.primaryLight, 0.8),
             }, {
               data: [this.chartdata.detective],
-              label: 'Detective',
+              label: 'Detect',
               backgroundColor: NbColorHelper.hexToRgbA(colors.infoLight, 0.8),
             },
             {
               data: [this.chartdata.corrective],
-              label: 'Corrective',
+              label: 'Correct',
               backgroundColor: NbColorHelper.hexToRgbA(colors.warningLight, 0.8),
             }],
           };
     
           this.options = {
-            maintainAspectRatio: false,
-            responsive: true,
+            maintainAspectRatio: true,
+            responsive: false,
             legend: {
               labels: {
                 fontColor: chartjs.textColor,

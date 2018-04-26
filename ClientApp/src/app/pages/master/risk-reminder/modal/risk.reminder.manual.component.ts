@@ -11,13 +11,9 @@ export class RiskReminderManualComponent {
   formData: {
     counterNo: string;
     yearActive: string;
-    condition: string;
-    indictatorId: string;
-    body: string;
-    UserCreated: string;
-    DatetimeCreated: string;
-    UserUpdate: string;
-    DatetimeUpdate: string;
+    typeSend: string;
+    dateSend: string;
+    userSend: string;
     status: string;
   };
 

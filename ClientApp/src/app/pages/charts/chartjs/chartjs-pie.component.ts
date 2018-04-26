@@ -103,8 +103,8 @@ export class ChartjsPieComponent implements OnDestroy {
           };
     
           this.options = {
-            maintainAspectRatio: false,
-            responsive: true,
+            maintainAspectRatio: true,
+            responsive: false,
             scales: {
               xAxes: [
                 {

@@ -7,16 +7,15 @@
   ngx-chartjs-line,
   ngx-d3-bar,
   ngx-chartjs-multiple-xaxis,
+  ngx-control-mapping,
   ngx-chartjs-bar-horizontal,
   ngx-chartjs-radar {
-    display: block;
-    height: nb-theme(card-height-medium);
-    width: 100%;
+
 
     /deep/ chart {
       display: block;
       height: 100%;
-      width: 100%;
+      width: 90%;
     }
   }
 }

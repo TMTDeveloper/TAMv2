@@ -68,7 +68,7 @@ export class RiskReminderComponent {
         editable: true,
           width: "30%"
       },
-      periode: {
+      period: {
         title: "Periode",
         type: "number",
         filter: false,
@@ -90,103 +90,39 @@ export class RiskReminderComponent {
   ];
   year: any[] = [
     {
-      data: "2000"
+      data: moment().subtract(9,'years').format("YYYY")
     },
     {
-      data: "2001"
+      data: moment().subtract(8,'years').format("YYYY")
     },
     {
-      data: "2002"
+      data: moment().subtract(7,'years').format("YYYY")
     },
     {
-      data: "2003"
+      data: moment().subtract(6,'years').format("YYYY")
     },
     {
-      data: "2004"
+      data: moment().subtract(5,'years').format("YYYY")
     },
     {
-      data: "2005"
+      data: moment().subtract(4,'years').format("YYYY")
     },
     {
-      data: "2006"
+      data: moment().subtract(3,'years').format("YYYY")
     },
     {
-      data: "2007"
+      data: moment().subtract(2,'years').format("YYYY")
     },
     {
-      data: "2008"
+      data: moment().subtract(1,'years').format("YYYY")
     },
     {
-      data: "2009"
-    },
-    {
-      data: "2010"
-    },
-    {
-      data: "2011"
-    },
-    {
-      data: "2012"
-    },
-    {
-      data: "2013"
-    },
-    {
-      data: "2014"
-    },
-    {
-      data: "2015"
-    },
-    {
-      data: "2016"
-    },
-    {
-      data: "2017"
-    },
-    {
-      data: "2018"
-    },
-    {
-      data: "2019"
-    },
-    {
-      data: "2020"
-    },
-    {
-      data: "2021"
-    },
-    {
-      data: "2022"
-    },
-    {
-      data: "2022"
-    },
-    {
-      data: "2023"
-    },
-    {
-      data: "2024"
-    },
-    {
-      data: "2025"
-    },
-    {
-      data: "2026"
-    },
-    {
-      data: "2027"
-    },
-    {
-      data: "2028"
-    },
-    {
-      data: "2029"
-    },
-    {
-      data: "2030"
+      data: moment().format("YYYY")
     }
   ];
   tabledata: any[] = [];
+
+  senddata: any[]= [];
 
   subscription: any;
   activeModal: any;
@@ -210,6 +146,23 @@ export class RiskReminderComponent {
           data[ind].status = "0";
           this.tabledata = data;
           this.source.load(this.tabledata);
+        });
+      }
+      // error => {
+      //   console.log(error);
+      // };
+    });
+  }
+
+  loadManual() {
+    this.service.getreq("TbRSendmails").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(JSON.stringify(response));
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].status = "0";
+          this.senddata = data;
         });
       }
       // error => {
@@ -263,7 +216,7 @@ export class RiskReminderComponent {
       startDate: "",
       endDate: "",
       //indicatorId: indicator,
-      periode:"",
+      period:"",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -288,10 +241,9 @@ export class RiskReminderComponent {
       backdrop: "static"
     });
     let lastIndex = 0;
-    for (let data in this.tabledata) {
+    for (let data in this.senddata) {
       if (
-        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].type == this.myForm.value.condition
+        this.tabledata[data].yearActive == this.myForm.value.yearPeriode
       ) {
         lastIndex < this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
@@ -304,22 +256,20 @@ export class RiskReminderComponent {
     const indicator = this.indicatorGenerate(lastIndex+1);
 
     this.activeModal.componentInstance.formData = {
-      counterNo: lastIndex + 1,
+      counter: lastIndex + 1,
       yearActive: this.myForm.value.yearPeriode,
-      condition: this.myForm.value.condition,
-      indicatorId: indicator,
+      typeSend: "Manual",
+      //indicatorId: indicator,
       body:"",
-      UserCreated: "admin",
-      DatetimeCreated: moment().format(),
-      UserUpdate: "admin",
-      DatetimeUpdate: moment().format(),
+      usersend: "admin",
+      dateSend: moment().format(),
       status: "1"
     };
 
     this.activeModal.result.then(async response => {
       if (response != false) {
-        this.tabledata.push(response);
-        console.log(this.tabledata);
+        this.senddata.push(response);
+        console.log(this.senddata);
         this.submit();
         this.reload();
       }
@@ -338,6 +288,7 @@ export class RiskReminderComponent {
         return this.myForm.value.condition + "00" + lastIndex.toString();
     }
   }
+
 
   reload() {
     this.yearPeriode = this.myForm.value.yearPeriode;
@@ -394,7 +345,7 @@ export class RiskReminderComponent {
           editable: true,
             width: "30%"
         },
-        periode: {
+        period: {
           title: "Periode",
           type: "number",
           filter: false,

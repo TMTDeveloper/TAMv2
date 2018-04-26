@@ -4,6 +4,8 @@ import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
+import { Injectable } from '@angular/core';
+import { BackendService } from "../../../@core/data/backend.service";
 
 @Component({
   selector: 'ngx-chartjs',
@@ -51,7 +53,7 @@ export class ChartjsComponent {
         editable: false,
         width: "5%"
       },
-      departmentKPI: {
+      departmentKpi: {
         title: "Department KPI",
         type: "string",
         filter: false,
@@ -89,7 +91,7 @@ export class ChartjsComponent {
         width: "5%"
       }
       ,
-      irLkl: {
+      irLikelihood: {
         title: "Likelihood",
         type: "string",
         filter: false,
@@ -97,7 +99,7 @@ export class ChartjsComponent {
         width: "5%"
       }
       ,
-      irOvr: {
+      irOverall: {
         title: "Overall",
         type: "string",
         filter: false,
@@ -121,7 +123,7 @@ export class ChartjsComponent {
         width: "5%"
       }
       ,
-      rdLkl: {
+      rdLikelihood: {
         title: "Likelihood",
         type: "string",
         filter: false,
@@ -129,7 +131,7 @@ export class ChartjsComponent {
         width: "5%"
       }
       ,
-      rdOvr: {
+      rdOverall: {
         title: "Overall",
         type: "string",
         filter: false,
@@ -152,7 +154,7 @@ export class ChartjsComponent {
         width: "5%"
       }
       ,
-      exLkl: {
+      exLikelihood: {
         title: "Likelihood",
         type: "string",
         filter: false,
@@ -160,7 +162,7 @@ export class ChartjsComponent {
         width: "5%"
       }
       ,
-      exOvr: {
+      exOverall: {
         title: "Overall",
         type: "string",
         filter: false,
@@ -177,5 +179,68 @@ export class ChartjsComponent {
       }
     }
   };
-  source: LocalDataSource = new LocalDataSource();
+
+
+  tabledata: any[] = [];
+  effectivedata: any[] = [];
+  moderatedata: any[] = [];
+  ineffectivedata: any[] = [];
+  weakdata: any[] = [];
+  
+
+  subscription: any;
+  activeModal: any;
+  constructor(
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    public service: BackendService
+  ) {
+    this.loadData();
+  }
+
+  division: any[] = [
+    {
+      data: "ISTD",
+      desc: "Information system and technical division"
+    }
+  ];
+  department: any[] = [
+    {
+      data: "IS",
+      desc: "Information system"
+    }
+  ];
+
+  loadData() {
+    this.service.getreq("Riskreports").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(JSON.stringify(response));
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].status = "0";
+          this.tabledata = data;
+          let arr1 =this.tabledata.filter(item => {
+            return item.efOverall === "Effective";
+          });
+          this.effectivedata=arr1;
+          let arr2=this.tabledata.filter(item => {
+            return item.efOverall === "Moderate";
+          });
+          this.moderatedata=arr2;
+          let arr3 =this.tabledata.filter(item => {
+            return item.efOverall === "Ineffective";
+          });
+          this.ineffectivedata=arr3;
+          let arr4 =this.tabledata.filter(item => {
+            return item.efOverall === "Weak";
+          });
+          this.weakdata=arr4;
+        });
+      }
+      // error => {
+      //   console.log(error);
+      // };
+    });
+  }
 }

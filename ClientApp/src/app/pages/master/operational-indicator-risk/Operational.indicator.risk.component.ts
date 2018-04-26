@@ -101,19 +101,34 @@ export class OperationalIndicatorRiskComponent {
   };
   year: any[] = [
     {
-      data: "2016"
+      data: moment().subtract(9,'years').format("YYYY")
     },
     {
-      data: "2017"
+      data: moment().subtract(8,'years').format("YYYY")
     },
     {
-      data: "2018"
+      data: moment().subtract(7,'years').format("YYYY")
     },
     {
-      data: "2019"
+      data: moment().subtract(6,'years').format("YYYY")
     },
     {
-      data: "2020"
+      data: moment().subtract(5,'years').format("YYYY")
+    },
+    {
+      data: moment().subtract(4,'years').format("YYYY")
+    },
+    {
+      data: moment().subtract(3,'years').format("YYYY")
+    },
+    {
+      data: moment().subtract(2,'years').format("YYYY")
+    },
+    {
+      data: moment().subtract(1,'years').format("YYYY")
+    },
+    {
+      data: moment().format("YYYY")
     }
   ];
   condition: any[] = [

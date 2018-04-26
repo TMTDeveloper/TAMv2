@@ -87,6 +87,8 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.IrOverall).HasColumnName("IR_OVERALL");
                 entity.Property(e => e.RdOverall).HasColumnName("RD_OVERALL");
                 entity.Property(e => e.ExOverall).HasColumnName("EX_OVERALL");
+                entity.Property(e => e.TreatmentPlan).HasColumnName("TREATMENT_PLAN");
+                entity.Property(e => e.EfOverall).HasColumnName("EF_OVERALL");
             });
 
 

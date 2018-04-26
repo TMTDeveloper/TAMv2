@@ -15,7 +15,7 @@ export class RiskReminderModalComponent {
     startDate: string;
     endDate: string;
     indictatorId: string;
-    periode: string;
+    period: string;
     UserCreated: string;
     DatetimeCreated: string;
     UserUpdate: string;

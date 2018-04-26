@@ -31,6 +31,8 @@ namespace tam_risk_project.Models
         public string IrOverall { get; set; }
         public string RdOverall { get; set; }
         public string ExOverall { get; set; }
+        public string TreatmentPlan {get; set;}
+        public string EfOverall {get; set;}
 
 
     }

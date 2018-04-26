@@ -1,45 +1,223 @@
 <nb-card>
   <nb-card-header>Report</nb-card-header>
   <nb-card-body>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" >Division</label>
+    <div class="col-sm-5">
+      <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
+      <select class="form-control" name="division" ngModel required (change)="reload()">
+        <option *ngFor="let data of division" value="{{data.data}}">{{data.desc}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Department</label>
+    <div class="col-sm-5">
+      <select class="form-control" name="department" ngModel required (change)="reload()">
+        <option *ngFor="let data of department" value="{{data.data}}">{{data.desc}}</option>
+      </select>
+    </div>
 
+</div>
 <nb-tabset>
   <nb-tab tabTitle="Chart">
-<div class="row">
-  <div class="col-lg-6">
-    <nb-card>
-      <nb-card-header>Control Effectiveness</nb-card-header>
-      <nb-card-body>
+
+    <div class="col-lg-8">
+<label>Risk Movement</label>
+            <ngx-chartjs-bar></ngx-chartjs-bar> 
+
+      </div>
+      <div class="row">
+  <div class="col-lg-4">
+      <label>Control Effectiveness</label>
         <ngx-chartjs-pie></ngx-chartjs-pie>
-      </nb-card-body>
-    </nb-card>
+
   </div>
-  <div class="col-lg-6">
-    <nb-card>
-      <nb-card-header>Risk Movement</nb-card-header>
-      <nb-card-body>
-        <ngx-chartjs-bar></ngx-chartjs-bar> 
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-lg-6">
-    <nb-card>
-      <nb-card-header>Control Mapping</nb-card-header>
-      <nb-card-body>
+
+  <div class="col-lg-4">
+      <label>Control Mapping</label>
         <ngx-control-mapping></ngx-control-mapping>
-      </nb-card-body>
-    </nb-card>
+
   </div>
 
 
 </div>
+
+<div class="horizontal-scroll">
+    <div class="form-group row">
+        <div class="col-lg-2">
+    <table class="table table-condensed">
+      <font size="1">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Risk&nbsp;No</th>
+        <th>Loss&nbsp;Event</th>
+       
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of tabledata">
+          <td>{{ item.no }}</td>
+        <td>{{ item.riskNo }}</td>
+        <td >{{ item.lossEvent }}</td>
+        
+      </tr>
+      </tbody>
+    </font>
+    </table>
+</div>
+    <div class="col-lg-2">
+    <table class="table table-condensed">
+        <font size="1">
+        <thead>
+        <tr>
+          <th>Risk&nbsp;No</th>
+          <th>Before</th>
+          <th>After</th>
+         
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of effectivedata">
+            <td>{{ item.riskNo }}</td>
+          <td>{{ item.irOverall }}</td>
+          <td >{{ item.rdOverall }}</td>
+          
+        </tr>
+        </tbody>
+      </font>
+      </table>
+    </div>
+    <div class="col-lg-2">
+      <table class="table table-condensed">
+          <font size="1">
+          <thead>
+          <tr>
+            <th>Risk&nbsp;No</th>
+            <th>Before</th>
+            <th>After</th>
+           
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of moderatedata">
+              <td>{{ item.riskNo }}</td>
+            <td>{{ item.irOverall }}</td>
+            <td >{{ item.rdOverall }}</td>
+            
+          </tr>
+          </tbody>
+        </font>
+        </table>
+      </div>
+      <div class="col-lg-2"> 
+        <table class="table table-condensed">
+            <font size="1">
+            <thead>
+            <tr>
+              <th>Risk&nbsp;No</th>
+              <th>Before</th>
+              <th>After</th>
+             
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of ineffectivedata">
+                <td>{{ item.riskNo }}</td>
+              <td>{{ item.irOverall }}</td>
+              <td >{{ item.rdOverall }}</td>
+              
+            </tr>
+            </tbody>
+          </font>
+          </table>
+          </div>
+          <div class="col-lg-2">
+          <table class="table table-condensed">
+              <font size="1">
+              <thead>
+              <tr>
+                <th>Risk&nbsp;No</th>
+                <th>Before</th>
+                <th>After</th>
+               
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of weakdata">
+                  <td>{{ item.riskNo }}</td>
+                <td>{{ item.irOverall }}</td>
+                <td >{{ item.rdOverall }}</td>
+                
+              </tr>
+              </tbody>
+            </font>
+            </table>
+          </div>
+        </div>
+  </div>
+
+
+
 </nb-tab>
     <nb-tab tabTitle="Simplify Report">
-            <div class="col-sm-auto">
+         <!--  <div class="col-sm-auto">
         <div class="form-group">
           <ng2-smart-table (editConfirm)="submit($event)" [settings]="settings" [source]="source">
           </ng2-smart-table>
         </div>
-      </div>
+      </div>-->
+
+      <div class="horizontal-scroll">
+          <table class="table table-condensed">
+            <font size="1">
+            <thead>
+            <tr>
+              <th>Risk No</th>
+              <th>Department KPI</th>
+              <th>Loss Event</th>
+              <th>Caused</th>
+              <th>Risk Impact</th>
+              <th>Impact</th>
+              <th>Likelihood</th>
+              <th>Overall</th>
+              <th>Control</th>
+              <th>Impact</th>
+              <th>Likelihood</th>
+              <th>Overall</th>
+              <th>Treatment Plan</th>
+              <th>Impact</th>
+              <th>Likelihood</th>
+              <th>Overall</th>
+              <th>Schedule</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of tabledata">
+              <td>{{ item.riskNo }}</td>
+              <td>{{ item.departmentKpi }}</td>
+              <td>{{ item.lossEvent }}</td>
+              <td>{{ item.caused }}</td>
+              <td>{{ item.riskImpact }}</td>
+              <td>{{ item.irImpact }}</td>
+              <td>{{ item.irLikelihood }}</td>
+              <td>{{ item.irOverall }}</td>
+              <td>{{ item.control}}</td>
+              <td>{{ item.rdImpact }}</td>
+              <td>{{ item.rdLikelihood }}</td>
+              <td>{{ item.rdOverall }}</td>
+              <td>{{ item.exTreatmentPlan }}</td>
+              <td>{{ item.exImpact }}</td>
+              <td>{{ item.exLikelihood }}</td>
+              <td>{{ item.exOverall }}</td>
+              <td>{{ item.schedule}}</td>
+            </tr>
+            </tbody>
+          </font>
+          </table>
+        </div>
+        
     </nb-tab>
 <nb-tabset>
   <nb-card-body>
