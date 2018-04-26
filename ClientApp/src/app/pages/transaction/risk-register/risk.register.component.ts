@@ -165,7 +165,7 @@ export class RiskRegisterComponent {
         description: ""
       },
       departmentKpi: {
-        deptInpId: "",
+        deptInpId: "IMP001",
         description: ""
       },
       businessProcess: ""
@@ -1276,7 +1276,7 @@ export class RiskRegisterComponent {
       businessProcess: this.dataInput.divisionDepartment.businessProcess,
       lossEvent: this.dataInput.riskDescription.lossEvent,
       caused: this.dataInput.riskDescription.caused,
-      riskImpact: this.dataInput.riskDescription.riskImpact,
+      riskImpact: this.dataInput.riskDescription.riskImpact[0],
       riskLevel: this.dataInput.riskDescription.riskLevel,
       accidentList: 0,
       notesIr: this.dataInput.inherentRisk.notes,
