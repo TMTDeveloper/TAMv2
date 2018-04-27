@@ -398,13 +398,13 @@ export class RiskRegisterComponent {
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
           if (response != null) {
             this.riskAssessmentData = response;
-            this.service.getreq("Draftrisks").subscribe(response => {
-              if (response != null) {
-                console.log(JSON.stringify(response[0].draftJson));
-                const data = response[0].draftJson;
-                this.dataInput = JSON.parse(data);
-              }
-            });
+            // this.service.getreq("Draftrisks").subscribe(response => {
+            //   if (response != null) {
+            //     console.log(JSON.stringify(response[0].draftJson));
+            //     const data = response[0].draftJson;
+            //     this.dataInput = JSON.parse(data);
+            //   }
+            // });
           }
         });
       }
