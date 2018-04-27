@@ -14,28 +14,32 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: "Risk Register",
         link: "/pages/transaction/risk-register"
+      },
+      {
+        title: "View Draft",
+        link: "/pages/transaction/view-draft"
       }
     ]
   },
   {
-    title: 'Charts',
-    icon: 'nb-bar-chart',
+    title: "Charts",
+    icon: "nb-bar-chart",
     children: [
       {
-        title: 'Charts.js',
-        link: '/pages/charts/chartjs',
+        title: "Charts.js",
+        link: "/pages/charts/chartjs"
       }
-    ],
+    ]
   },
   {
-    title: 'Reminder',
+    title: "Reminder",
     icon: "nb-locked",
     children: [
       {
-        title: 'Reminder',
-        link: '/pages/master/risk-reminder',
+        title: "Reminder",
+        link: "/pages/master/risk-reminder"
       }
-    ],
+    ]
   },
   {
     title: "Master",

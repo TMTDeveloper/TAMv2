@@ -10,6 +10,7 @@ import { RiskRegisterQlComponent } from "./modal/risk.register.ql.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
+import { ActivatedRoute, Router } from "@angular/router";
 @Component({
   selector: "ngx-risk-register",
   templateUrl: "./risk.register.component.html"
@@ -151,6 +152,8 @@ export class RiskRegisterComponent {
   };
 
   dataInput = {
+    draftDisabled: false,
+    riskNo: "",
     divisionDepartment: {
       division: {
         id: "ISTD",
@@ -366,7 +369,9 @@ export class RiskRegisterComponent {
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
-    public service: BackendService
+    public service: BackendService,
+    public router: Router,
+    private route: ActivatedRoute
   ) {
     this.loadData();
   }
@@ -398,15 +403,16 @@ export class RiskRegisterComponent {
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
           if (response != null) {
             this.riskAssessmentData = response;
-            this.service.getreq("Draftrisks").subscribe(response => {
-              if (response != null) {
-                console.log(JSON.stringify(response[0].draftJson));
-                const data = response[0].draftJson;
-                this.dataInput = JSON.parse(data);
-              }
-            });
           }
         });
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params.draftJson != null) {
+        this.dataInput = JSON.parse(params.draftJson);
       }
     });
   }
@@ -1264,9 +1270,12 @@ export class RiskRegisterComponent {
 
   save() {
     const lastIndex = this.generateCounter();
+    let riskNo = this.riskNoGenerate(lastIndex + 1);
+    this.dataInput.riskNo = riskNo;
+    this.dataInput.draftDisabled = true;
     const savedData = {
       yearActive: this.yearPeriode,
-      riskNo: this.riskNoGenerate(lastIndex + 1),
+      riskNo: this.dataInput.riskNo,
       division: this.dataInput.divisionDepartment.division.id,
       companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
       department: this.dataInput.divisionDepartment.department.id,
@@ -1432,6 +1441,52 @@ export class RiskRegisterComponent {
       this.dataInput.expectedRisk.risk.indicatorId = "";
     }
     this.findExpectedRisk();
+  }
+
+  saveAsDraft() {
+    if (this.dataInput.riskNo.substring(0, 3) == "DRF") {
+      const savedData = {
+        draftKey: this.dataInput.riskNo,
+        draftJson: JSON.stringify(this.dataInput),
+        division: this.dataInput.divisionDepartment.division.id,
+        department: this.dataInput.divisionDepartment.department.id,
+        userUpdated: "Admin",
+        dateUpdated: moment().format()
+      };
+      this.service.putreq("draftrisks", savedData).subscribe(
+        response => {
+          console.log(response);
+          this.toastr.success("Draft Saved!");
+        },
+        error => {
+          console.log(error);
+          this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
+        }
+      );
+    } else {
+      let draftKey = "DRF/" + moment().format("YYYYMMDDHHMMSS");
+      this.dataInput.riskNo = draftKey;
+      const savedData = {
+        draftKey: draftKey,
+        draftJson: JSON.stringify(this.dataInput),
+        division: this.dataInput.divisionDepartment.division.id,
+        department: this.dataInput.divisionDepartment.department.id,
+        userUpdated: "Admin",
+        dateUpdated: moment().format(),
+        userCreated: "Admin",
+        dateCreated: moment().format()
+      };
+      this.service.postreq("draftrisks", savedData).subscribe(
+        response => {
+          console.log(response);
+          this.toastr.success("Draft Saved!");
+        },
+        error => {
+          console.log(error);
+          this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
+        }
+      );
+    }
   }
 
   submit() {

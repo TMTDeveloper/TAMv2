@@ -9,6 +9,7 @@ import { RiskRegisterDeptComponent } from "./risk-register/modal/risk.register.d
 import { RiskRegisterAcdComponent } from "./risk-register/modal/risk.register.acd.component";
 import { RiskRegisterQlComponent } from "./risk-register/modal/risk.register.ql.component";
 import { RiskRegisterCtrComponent } from "./risk-register/modal/risk.register.ctr.component";
+import { ViewDraftComponent } from "./view-draft/view.draft.component";
 const routes: Routes = [
   {
     path: "",
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: "risk-overview",
         component: RiskOverviewComponent
+      },
+      {
+        path: "view-draft",
+        component: ViewDraftComponent
       }
     ]
   }
@@ -41,5 +46,6 @@ export const routedComponents = [
   RiskRegisterAcdComponent,
   RiskRegisterQlComponent,
   RiskRegisterCtrComponent,
-  TransactionComponent
+  TransactionComponent,
+  ViewDraftComponent
 ];

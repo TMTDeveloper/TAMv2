@@ -35,15 +35,23 @@ namespace tam_risk_project.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
             modelBuilder.Entity<DraftRisk>(entity =>
-     {
+         {
 
-         entity.ToTable("DRAFT_RISK");
-         entity.HasKey(e => new { e.DraftKey });
-         entity.Property(e => e.DraftKey).HasColumnName("DRAFT_KEY");
-         entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON");
-     });
+             entity.ToTable("DRAFT_RISK");
+             entity.HasKey(e => new
+             {
+                 e.DraftKey
+             });
+             entity.Property(e => e.DraftKey).HasColumnName("DRAFT_KEY");
+             entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON");
+             entity.Property(e => e.Division).HasColumnName("DIVISION");
+             entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+             entity.Property(e => e.UserUpdated).HasColumnName("USER_UPDATED");
+             entity.Property(e => e.DateUpdated).HasColumnName("DATE_UPDATED");
+             entity.Property(e => e.UserCreated).HasColumnName("USER_CREATED");
+             entity.Property(e => e.DateCreated).HasColumnName("DATE_CREATED");
+         });
             modelBuilder.Entity<Qllov>(entity =>
       {
 
@@ -179,73 +187,73 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.AccidentId)
-                    .HasColumnName("ACCIDENT_ID")
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
+                                    .HasColumnName("ACCIDENT_ID")
+                                    .HasMaxLength(16)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.CurrentAction)
-                    .HasColumnName("CURRENT_ACTION")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("CURRENT_ACTION")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.DateAccident)
-                    .HasColumnName("DATE_ACCIDENT")
-                    .HasColumnType("date");
+                                    .HasColumnName("DATE_ACCIDENT")
+                                    .HasColumnType("date");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Department)
-                    .HasColumnName("DEPARTMENT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("DEPARTMENT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("DESCRIPTION")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("DESCRIPTION")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Division)
-                    .HasColumnName("DIVISION")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("DIVISION")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.FinancialImpact)
-                    .HasColumnName("FINANCIAL_IMPACT")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("FINANCIAL_IMPACT")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.NextAction)
-                    .HasColumnName("NEXT_ACTION")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("NEXT_ACTION")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OtherImpact)
-                    .HasColumnName("OTHER_IMPACT")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("OTHER_IMPACT")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.RelatedParties)
-                    .HasColumnName("RELATED_PARTIES")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                                    .HasColumnName("RELATED_PARTIES")
+                                    .HasMaxLength(100)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TbMComInput>(entity =>
@@ -257,44 +265,44 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.ComInpId)
-                    .HasColumnName("COM_INP_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("COM_INP_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Condition)
-                    .HasColumnName("CONDITION")
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
+                                    .HasColumnName("CONDITION")
+                                    .HasMaxLength(30)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("DESCRIPTION")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                                    .HasColumnName("DESCRIPTION")
+                                    .HasMaxLength(200)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.FlagActive)
-                    .HasColumnName("FLAG_ACTIVE")
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
+                                    .HasColumnName("FLAG_ACTIVE")
+                                    .HasMaxLength(1)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TbMDeptInput>(entity =>
@@ -306,54 +314,54 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.DeptInpId)
-                    .HasColumnName("DEPT_INP_ID")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                                    .HasColumnName("DEPT_INP_ID")
+                                    .HasMaxLength(20)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Condition)
-                    .HasColumnName("CONDITION")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("CONDITION")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Departement)
-                    .HasColumnName("DEPARTEMENT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("DEPARTEMENT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("DESCRIPTION")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                                    .HasColumnName("DESCRIPTION")
+                                    .HasMaxLength(200)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Division)
-                    .HasColumnName("DIVISION")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("DIVISION")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.FlagActive)
-                    .HasColumnName("FLAG_ACTIVE")
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
+                                    .HasColumnName("FLAG_ACTIVE")
+                                    .HasMaxLength(1)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TbMFinancialData>(entity =>
@@ -371,12 +379,12 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.CostOfRevenue).HasColumnName("COST_OF_REVENUE");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Dividend).HasColumnName("DIVIDEND");
 
@@ -407,14 +415,14 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.TaxExpense).HasColumnName("TAX_EXPENSE");
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TbMFinancialImpact>(entity =>
@@ -426,59 +434,59 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.FinancialId)
-                    .HasColumnName("FINANCIAL_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("FINANCIAL_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Category)
-                    .HasColumnName("CATEGORY")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("CATEGORY")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.FlagActive)
-                    .HasColumnName("FLAG_ACTIVE")
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
+                                    .HasColumnName("FLAG_ACTIVE")
+                                    .HasMaxLength(1)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.NumberValue).HasColumnName("NUMBER_VALUE");
 
                 entity.Property(e => e.PercentageValue).HasColumnName("PERCENTAGE_VALUE");
 
                 entity.Property(e => e.RiskIndicatorId)
-                    .HasColumnName("RISK_INDICATOR_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_INDICATOR_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.YearActiveNavigation)
-                    .WithMany(p => p.TbMFinancialImpact)
-                    .HasForeignKey(d => d.YearActive)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("RISK_FIN_DATA_FK");
+                                    .WithMany(p => p.TbMFinancialImpact)
+                                    .HasForeignKey(d => d.YearActive)
+                                    .OnDelete(DeleteBehavior.ClientSetNull)
+                                    .HasConstraintName("RISK_FIN_DATA_FK");
 
                 entity.HasOne(d => d.TbMRiskIndicator)
-                    .WithMany(p => p.TbMFinancialImpact)
-                    .HasForeignKey(d => new { d.YearActive, d.RiskIndicatorId })
-                    .HasConstraintName("RISK_FINANCIAL_FK");
+                                    .WithMany(p => p.TbMFinancialImpact)
+                                    .HasForeignKey(d => new { d.YearActive, d.RiskIndicatorId })
+                                    .HasConstraintName("RISK_FINANCIAL_FK");
             });
 
             modelBuilder.Entity<TbMOperationalImpact>(entity =>
@@ -490,46 +498,46 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.OperationalId)
-                    .HasColumnName("OPERATIONAL_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OPERATIONAL_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Category)
-                    .HasColumnName("CATEGORY")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("CATEGORY")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.NumberValue).HasColumnName("NUMBER_VALUE");
 
                 entity.Property(e => e.RiskIndicatorId)
-                    .HasColumnName("RISK_INDICATOR_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_INDICATOR_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TbMRiskIndicator)
-                    .WithMany(p => p.TbMOperationalImpact)
-                    .HasForeignKey(d => new { d.YearActive, d.RiskIndicatorId })
-                    .HasConstraintName("RISK_OPERATIONAL_FK");
+                                    .WithMany(p => p.TbMOperationalImpact)
+                                    .HasForeignKey(d => new { d.YearActive, d.RiskIndicatorId })
+                                    .HasConstraintName("RISK_OPERATIONAL_FK");
             });
 
             modelBuilder.Entity<TbMQualitativeImpact>(entity =>
@@ -541,49 +549,49 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.QualitativeId)
-                    .HasColumnName("QUALITATIVE_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("QUALITATIVE_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Category)
-                    .HasColumnName("CATEGORY")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("CATEGORY")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("DESCRIPTION")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                                    .HasColumnName("DESCRIPTION")
+                                    .HasMaxLength(200)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.RiskIndicatorId)
-                    .HasColumnName("RISK_INDICATOR_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_INDICATOR_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TbMRiskIndicator)
-                    .WithMany(p => p.TbMQualitativeImpact)
-                    .HasForeignKey(d => new { d.YearActive, d.RiskIndicatorId })
-                    .HasConstraintName("RISK_QUALITATIVE_FK");
+                                    .WithMany(p => p.TbMQualitativeImpact)
+                                    .HasForeignKey(d => new { d.YearActive, d.RiskIndicatorId })
+                                    .HasConstraintName("RISK_QUALITATIVE_FK");
             });
 
             modelBuilder.Entity<TbMRiskIndicator>(entity =>
@@ -595,46 +603,46 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.IndicatorId)
-                    .HasColumnName("INDICATOR_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("INDICATOR_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Condition)
-                    .HasColumnName("CONDITION")
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
+                                    .HasColumnName("CONDITION")
+                                    .HasMaxLength(30)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("DESCRIPTION")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                                    .HasColumnName("DESCRIPTION")
+                                    .HasMaxLength(50)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.FlagActive)
-                    .HasColumnName("FLAG_ACTIVE")
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
+                                    .HasColumnName("FLAG_ACTIVE")
+                                    .HasMaxLength(1)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Score).HasColumnName("SCORE");
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TbMRiskMapping>(entity =>
@@ -646,64 +654,64 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.MappingId)
-                    .HasColumnName("MAPPING_ID")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("MAPPING_ID")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Condition)
-                    .HasColumnName("CONDITION")
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
+                                    .HasColumnName("CONDITION")
+                                    .HasMaxLength(30)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.FlagActive)
-                    .HasColumnName("FLAG_ACTIVE")
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
+                                    .HasColumnName("FLAG_ACTIVE")
+                                    .HasMaxLength(1)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.IndicatorIdA)
-                    .HasColumnName("INDICATOR_ID_A")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("INDICATOR_ID_A")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.IndicatorIdB)
-                    .HasColumnName("INDICATOR_ID_B")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("INDICATOR_ID_B")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.ResultIdC)
-                    .HasColumnName("RESULT_ID_C")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("RESULT_ID_C")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TbMRiskIndicator)
-                    .WithMany(p => p.TbMRiskMappingTbMRiskIndicator)
-                    .HasForeignKey(d => new { d.YearActive, d.IndicatorIdA })
-                    .HasConstraintName("RISK_MAPPING_FKA");
+                                    .WithMany(p => p.TbMRiskMappingTbMRiskIndicator)
+                                    .HasForeignKey(d => new { d.YearActive, d.IndicatorIdA })
+                                    .HasConstraintName("RISK_MAPPING_FKA");
 
                 entity.HasOne(d => d.TbMRiskIndicatorNavigation)
-                    .WithMany(p => p.TbMRiskMappingTbMRiskIndicatorNavigation)
-                    .HasForeignKey(d => new { d.YearActive, d.IndicatorIdB })
-                    .HasConstraintName("RISK_MAPPING_FKB");
+                                    .WithMany(p => p.TbMRiskMappingTbMRiskIndicatorNavigation)
+                                    .HasForeignKey(d => new { d.YearActive, d.IndicatorIdB })
+                                    .HasConstraintName("RISK_MAPPING_FKB");
             });
 
             modelBuilder.Entity<TbRAccidentDetail>(entity =>
@@ -715,46 +723,46 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.RiskNo)
-                    .HasColumnName("RISK_NO")
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_NO")
+                                    .HasMaxLength(16)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.AccidentId)
-                    .HasColumnName("ACCIDENT_ID")
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
+                                    .HasColumnName("ACCIDENT_ID")
+                                    .HasMaxLength(16)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Number).HasColumnName("NUMBER");
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TbMAccidentDetail)
-                    .WithMany(p => p.TbRAccidentDetail)
-                    .HasForeignKey(d => new { d.YearActive, d.AccidentId })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ACCIDENT_MASTER_FK");
+                                    .WithMany(p => p.TbRAccidentDetail)
+                                    .HasForeignKey(d => new { d.YearActive, d.AccidentId })
+                                    .OnDelete(DeleteBehavior.ClientSetNull)
+                                    .HasConstraintName("ACCIDENT_MASTER_FK");
 
                 entity.HasOne(d => d.TbRRiskAssessment)
-                    .WithMany(p => p.TbRAccidentDetail)
-                    .HasForeignKey(d => new { d.YearActive, d.RiskNo })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ACCIDENT_RISK_FK");
+                                    .WithMany(p => p.TbRAccidentDetail)
+                                    .HasForeignKey(d => new { d.YearActive, d.RiskNo })
+                                    .OnDelete(DeleteBehavior.ClientSetNull)
+                                    .HasConstraintName("ACCIDENT_RISK_FK");
             });
 
             modelBuilder.Entity<TbRControlDetail>(entity =>
@@ -766,45 +774,45 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.RiskNo)
-                    .HasColumnName("RISK_NO")
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_NO")
+                                    .HasMaxLength(16)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.No).HasColumnName("NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("DESCRIPTION")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                                    .HasColumnName("DESCRIPTION")
+                                    .HasMaxLength(100)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Type)
-                    .HasColumnName("TYPE")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("TYPE")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TbRRiskAssessment)
-                    .WithMany(p => p.TbRControlDetail)
-                    .HasForeignKey(d => new { d.YearActive, d.RiskNo })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("CONTROL_DETAIL_FK");
+                                    .WithMany(p => p.TbRControlDetail)
+                                    .HasForeignKey(d => new { d.YearActive, d.RiskNo })
+                                    .OnDelete(DeleteBehavior.ClientSetNull)
+                                    .HasConstraintName("CONTROL_DETAIL_FK");
             });
 
             modelBuilder.Entity<TbRRiskAssessment>(entity =>
@@ -816,266 +824,266 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
 
                 entity.Property(e => e.RiskNo)
-                    .HasColumnName("RISK_NO")
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_NO")
+                                    .HasMaxLength(16)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.AccidentList).HasColumnName("ACCIDENT_LIST");
 
                 entity.Property(e => e.AppropriatenessCt)
-                    .HasColumnName("APPROPRIATENESS_CT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("APPROPRIATENESS_CT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.BusinessProcess)
-                    .HasColumnName("BUSINESS_PROCESS")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("BUSINESS_PROCESS")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Caused)
-                    .HasColumnName("CAUSED")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                                    .HasColumnName("CAUSED")
+                                    .HasMaxLength(200)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.CompanyKpi)
-                    .HasColumnName("COMPANY_KPI")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("COMPANY_KPI")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.ControlList).HasColumnName("CONTROL_LIST");
 
                 entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
 
                 entity.Property(e => e.DatetimeCreated)
-                    .HasColumnName("DATETIME_CREATED")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_CREATED")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeUpdate)
-                    .HasColumnName("DATETIME_UPDATE")
-                    .HasColumnType("datetime");
+                                    .HasColumnName("DATETIME_UPDATE")
+                                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Department)
-                    .HasColumnName("DEPARTMENT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("DEPARTMENT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.DepartmentKpi)
-                    .HasColumnName("DEPARTMENT_KPI")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                                    .HasColumnName("DEPARTMENT_KPI")
+                                    .HasMaxLength(20)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Division)
-                    .HasColumnName("DIVISION")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("DIVISION")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.FinAmountIr).HasColumnName("FIN_AMOUNT_IR");
 
                 entity.Property(e => e.FinAmountRd).HasColumnName("FIN_AMOUNT_RD");
 
                 entity.Property(e => e.FinImpactIr)
-                    .HasColumnName("FIN_IMPACT_IR")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("FIN_IMPACT_IR")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.ImpactEx)
-                    .HasColumnName("IMPACT_EX")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("IMPACT_EX")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.IrImpact)
-                    .HasColumnName("IR_IMPACT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("IR_IMPACT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.LikelihoodEx)
-                    .HasColumnName("LIKELIHOOD_EX")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("LIKELIHOOD_EX")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.LikelihoodIr)
-                    .HasColumnName("LIKELIHOOD_IR")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("LIKELIHOOD_IR")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.LikelihoodRd)
-                    .HasColumnName("LIKELIHOOD_RD")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("LIKELIHOOD_RD")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.LossEvent)
-                    .HasColumnName("LOSS_EVENT")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                                    .HasColumnName("LOSS_EVENT")
+                                    .HasMaxLength(200)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.NotesIr)
-                    .HasColumnName("NOTES_IR")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("NOTES_IR")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.NotesRd)
-                    .HasColumnName("NOTES_RD")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("NOTES_RD")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OpAmountIr).HasColumnName("OP_AMOUNT_IR");
 
                 entity.Property(e => e.OpAmountRd).HasColumnName("OP_AMOUNT_RD");
 
                 entity.Property(e => e.OpImpactIr)
-                    .HasColumnName("OP_IMPACT_IR")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OP_IMPACT_IR")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OperationCt)
-                    .HasColumnName("OPERATION_CT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OPERATION_CT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OverallEf)
-                    .HasColumnName("OVERALL_EF")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OVERALL_EF")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OverallEx)
-                    .HasColumnName("OVERALL_EX")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OVERALL_EX")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OverallRd)
-                    .HasColumnName("OVERALL_RD")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OVERALL_RD")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.OverallRiskIr)
-                    .HasColumnName("OVERALL_RISK_IR")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("OVERALL_RISK_IR")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Pic)
-                    .HasColumnName("PIC")
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
+                                    .HasColumnName("PIC")
+                                    .HasMaxLength(30)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.QlImpactIr)
-                    .HasColumnName("QL_IMPACT_IR")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("QL_IMPACT_IR")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.QlImpactRd)
-                    .HasColumnName("QL_IMPACT_RD")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("QL_IMPACT_RD")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.RdImpact)
-                    .HasColumnName("RD_IMPACT")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("RD_IMPACT")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.RiskImpact)
-                    .IsRequired()
-                    .HasColumnName("RISK_IMPACT")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                                    .IsRequired()
+                                    .HasColumnName("RISK_IMPACT")
+                                    .HasMaxLength(50)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.RiskLevel)
-                    .HasColumnName("RISK_LEVEL")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                                    .HasColumnName("RISK_LEVEL")
+                                    .HasMaxLength(10)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.Schedule).HasColumnName("SCHEDULE");
 
                 entity.Property(e => e.TreatmentDescription)
-                    .HasColumnName("TREATMENT_DESCRIPTION")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                                    .HasColumnName("TREATMENT_DESCRIPTION")
+                                    .HasMaxLength(500)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.TreatmentPlan).HasColumnName("TREATMENT_PLAN");
 
                 entity.Property(e => e.UserCreated)
-                    .HasColumnName("USER_CREATED")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_CREATED")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.UserUpdate)
-                    .HasColumnName("USER_UPDATE")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                                    .HasColumnName("USER_UPDATE")
+                                    .HasMaxLength(45)
+                                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TbMRiskMapping)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMapping)
-                    .HasForeignKey(d => new { d.YearActive, d.AppropriatenessCt })
-                    .HasConstraintName("CT_APPROPRIATENESS_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMapping)
+                                    .HasForeignKey(d => new { d.YearActive, d.AppropriatenessCt })
+                                    .HasConstraintName("CT_APPROPRIATENESS_FK");
 
                 entity.HasOne(d => d.TbMComInput)
-                    .WithMany(p => p.TbRRiskAssessment)
-                    .HasForeignKey(d => new { d.YearActive, d.CompanyKpi })
-                    .HasConstraintName("COM_KPI_FK");
+                                    .WithMany(p => p.TbRRiskAssessment)
+                                    .HasForeignKey(d => new { d.YearActive, d.CompanyKpi })
+                                    .HasConstraintName("COM_KPI_FK");
 
                 entity.HasOne(d => d.TbMDeptInput)
-                    .WithMany(p => p.TbRRiskAssessment)
-                    .HasForeignKey(d => new { d.YearActive, d.DepartmentKpi })
-                    .HasConstraintName("DEPT_KPI_FK");
+                                    .WithMany(p => p.TbRRiskAssessment)
+                                    .HasForeignKey(d => new { d.YearActive, d.DepartmentKpi })
+                                    .HasConstraintName("DEPT_KPI_FK");
 
                 entity.HasOne(d => d.TbMFinancialImpact)
-                    .WithMany(p => p.TbRRiskAssessment)
-                    .HasForeignKey(d => new { d.YearActive, d.FinImpactIr })
-                    .HasConstraintName("FIN_IR_FK");
+                                    .WithMany(p => p.TbRRiskAssessment)
+                                    .HasForeignKey(d => new { d.YearActive, d.FinImpactIr })
+                                    .HasConstraintName("FIN_IR_FK");
 
                 entity.HasOne(d => d.TbMRiskIndicator)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator)
-                    .HasForeignKey(d => new { d.YearActive, d.ImpactEx })
-                    .HasConstraintName("EX_IMPACT");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator)
+                                    .HasForeignKey(d => new { d.YearActive, d.ImpactEx })
+                                    .HasConstraintName("EX_IMPACT");
 
                 entity.HasOne(d => d.TbMRiskIndicatorNavigation)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicatorNavigation)
-                    .HasForeignKey(d => new { d.YearActive, d.IrImpact })
-                    .HasConstraintName("IR_IMPACT_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicatorNavigation)
+                                    .HasForeignKey(d => new { d.YearActive, d.IrImpact })
+                                    .HasConstraintName("IR_IMPACT_FK");
 
                 entity.HasOne(d => d.TbMRiskIndicator1)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator1)
-                    .HasForeignKey(d => new { d.YearActive, d.LikelihoodEx })
-                    .HasConstraintName("EX_LIKELIHOOD");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator1)
+                                    .HasForeignKey(d => new { d.YearActive, d.LikelihoodEx })
+                                    .HasConstraintName("EX_LIKELIHOOD");
 
                 entity.HasOne(d => d.TbMRiskIndicator2)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator2)
-                    .HasForeignKey(d => new { d.YearActive, d.LikelihoodIr })
-                    .HasConstraintName("IR_LIKELIHOOD_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator2)
+                                    .HasForeignKey(d => new { d.YearActive, d.LikelihoodIr })
+                                    .HasConstraintName("IR_LIKELIHOOD_FK");
 
                 entity.HasOne(d => d.TbMRiskIndicator3)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator3)
-                    .HasForeignKey(d => new { d.YearActive, d.LikelihoodRd })
-                    .HasConstraintName("RD_LIKELIHOOD_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator3)
+                                    .HasForeignKey(d => new { d.YearActive, d.LikelihoodRd })
+                                    .HasConstraintName("RD_LIKELIHOOD_FK");
 
                 entity.HasOne(d => d.TbMOperationalImpact)
-                    .WithMany(p => p.TbRRiskAssessment)
-                    .HasForeignKey(d => new { d.YearActive, d.OpImpactIr })
-                    .HasConstraintName("OP_IR_FK");
+                                    .WithMany(p => p.TbRRiskAssessment)
+                                    .HasForeignKey(d => new { d.YearActive, d.OpImpactIr })
+                                    .HasConstraintName("OP_IR_FK");
 
                 entity.HasOne(d => d.TbMRiskIndicator4)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator4)
-                    .HasForeignKey(d => new { d.YearActive, d.OperationCt })
-                    .HasConstraintName("CT_OPERATION_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator4)
+                                    .HasForeignKey(d => new { d.YearActive, d.OperationCt })
+                                    .HasConstraintName("CT_OPERATION_FK");
 
                 entity.HasOne(d => d.TbMRiskMappingNavigation)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMappingNavigation)
-                    .HasForeignKey(d => new { d.YearActive, d.OverallEf })
-                    .HasConstraintName("EF_OVERALL_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMappingNavigation)
+                                    .HasForeignKey(d => new { d.YearActive, d.OverallEf })
+                                    .HasConstraintName("EF_OVERALL_FK");
 
                 entity.HasOne(d => d.TbMRiskMapping1)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMapping1)
-                    .HasForeignKey(d => new { d.YearActive, d.OverallRd })
-                    .HasConstraintName("RD_OVERALL_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMapping1)
+                                    .HasForeignKey(d => new { d.YearActive, d.OverallRd })
+                                    .HasConstraintName("RD_OVERALL_FK");
 
                 entity.HasOne(d => d.TbMRiskMapping2)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMapping2)
-                    .HasForeignKey(d => new { d.YearActive, d.OverallRiskIr })
-                    .HasConstraintName("IR_OVERALL_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskMapping2)
+                                    .HasForeignKey(d => new { d.YearActive, d.OverallRiskIr })
+                                    .HasConstraintName("IR_OVERALL_FK");
 
                 entity.HasOne(d => d.TbMRiskIndicator5)
-                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator5)
-                    .HasForeignKey(d => new { d.YearActive, d.QlImpactIr })
-                    .HasConstraintName("QL_IR_FK");
+                                    .WithMany(p => p.TbRRiskAssessmentTbMRiskIndicator5)
+                                    .HasForeignKey(d => new { d.YearActive, d.QlImpactIr })
+                                    .HasConstraintName("QL_IR_FK");
             });
         }
     }
