@@ -277,9 +277,17 @@ export class RiskMatriksIndicatorComponent {
                         list: this.item.data3
                       }
                     }
+                    
                   }
                 }
               };
+              this.source = this.source.setFilter(
+                [
+                  { field: "condition", search: this.myForm.value.condition },
+                  { field: "yearActive", search: this.myForm.value.yearPeriode }
+                ],
+                true
+              );
             });
             {
             }
@@ -334,6 +342,7 @@ export class RiskMatriksIndicatorComponent {
       indicatorIdA: "",
       indicatorIdB: "",
       resultIdC: "",
+      flagActive:"Y",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
