@@ -71,15 +71,15 @@ export class ChartComponent implements OnInit {
             this.getData("irdata") != null ||
             this.getData("rddata") != null
           ) {
-            return (
-              "IR: " +
-              this.getData("irdata") +
-              "<br/>" +
-              "RD: " +
-              this.getData("rddata")
-            );
+            return "IR: " + this.getData("irdata") != null
+              ? this.getData("irdata")
+              : "" + "<br/>" + "RD: " + this.getData("rddata") != null
+                ? this.getData("rddata")
+                : "";
           } else {
-            return "<span style='font-size:14px'>"+namesList[this.heat]+"</span>";
+            return (
+              "<span style='font-size:14px'>" + namesList[this.heat] + "</span>"
+            );
           }
         });
     });
