@@ -1,4 +1,4 @@
-@import '../../../@theme/styles/themes';
+@import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
   ngx-chartjs-pie,
@@ -10,12 +10,19 @@
   ngx-control-mapping,
   ngx-chartjs-bar-horizontal,
   ngx-chartjs-radar {
-
-
     /deep/ chart {
       display: block;
       height: 100%;
       width: 90%;
+    }
+  }
+
+  @media print {
+    .print_this * {
+      display: block;
+    }
+    .fixed * {
+      display: none;
     }
   }
 }

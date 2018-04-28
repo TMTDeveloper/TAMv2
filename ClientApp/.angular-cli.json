@@ -7,11 +7,7 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico",
-        "favicon.png"
-      ],
+      "assets": ["assets", "favicon.ico", "favicon.png"],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -29,7 +25,8 @@
         "./app/@theme/styles/styles.scss"
       ],
       "scripts": [
-        "../node_modules/pace-js/pace.min.js"
+        "../node_modules/pace-js/pace.min.js",
+        "../node_modules/jspdf/dist/jspdf.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
