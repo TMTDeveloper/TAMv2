@@ -55,8 +55,6 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-
-
             _context.Entry(draftRisk).State = EntityState.Modified;
 
             try

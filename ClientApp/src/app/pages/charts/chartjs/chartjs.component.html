@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card >
   <nb-card-header>Report</nb-card-header>
   <nb-card-body>
     <div class="form-group row">
@@ -21,7 +21,7 @@
 </div>
 <nb-tabset>
   <nb-tab tabTitle="Chart">
-
+<div #printEl>
     <div class="col-lg-8">
 <label>Risk Movement</label>
             <ngx-chartjs-bar></ngx-chartjs-bar> 
@@ -158,8 +158,8 @@
         </div>
   </div>
 
-
-
+</div>
+<button (click)="print()">print</button>
 </nb-tab>
     <nb-tab tabTitle="Simplify Report">
          <!--  <div class="col-sm-auto">
@@ -220,5 +220,6 @@
         
     </nb-tab>
 <nb-tabset>
+  
   <nb-card-body>
       <nb-card>

@@ -177,7 +177,7 @@ export class RiskRegisterComponent {
       lossEvent: "",
       caused: "",
       accidentObj: [],
-      riskImpact: "",
+      riskImpact: [],
       riskLevel: ""
     },
     inherentRisk: {
@@ -361,6 +361,7 @@ export class RiskRegisterComponent {
       desc: "Days of operation disruption"
     }
   ];
+  draftData: any;
   subscription: any;
   activeModal: any;
   riskIndicatorData: any = [];
@@ -413,6 +414,7 @@ export class RiskRegisterComponent {
     this.route.queryParams.subscribe(params => {
       if (params.draftJson != null) {
         this.dataInput = JSON.parse(params.draftJson);
+        this.draftData = params;
       }
     });
   }
@@ -1273,6 +1275,7 @@ export class RiskRegisterComponent {
     let riskNo = this.riskNoGenerate(lastIndex + 1);
     this.dataInput.riskNo = riskNo;
     this.dataInput.draftDisabled = true;
+
     const savedData = {
       yearActive: this.yearPeriode,
       riskNo: this.dataInput.riskNo,
@@ -1280,11 +1283,11 @@ export class RiskRegisterComponent {
       companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
       department: this.dataInput.divisionDepartment.department.id,
       counterNo: lastIndex + 1,
-      departmentKpi: "woi",
+      departmentKpi: this.dataInput.divisionDepartment.departmentKpi.deptInpId,
       businessProcess: this.dataInput.divisionDepartment.businessProcess,
       lossEvent: this.dataInput.riskDescription.lossEvent,
       caused: this.dataInput.riskDescription.caused,
-      riskImpact: this.dataInput.riskDescription.riskImpact[0],
+      riskImpact: this.loopRiskImpact(),
       riskLevel: this.dataInput.riskDescription.riskLevel,
       accidentList: 0,
       notesIr: this.dataInput.inherentRisk.notes,
@@ -1335,6 +1338,19 @@ export class RiskRegisterComponent {
         this.toastr.error("Data Save Failed! Reason: " + error.statusText);
       }
     );
+  }
+
+  loopRiskImpact() {
+    let data = "";
+
+    for (let i = 0; i < this.dataInput.riskDescription.riskImpact.length; i++) {
+      data == ""
+        ? (data = this.dataInput.riskDescription.riskImpact[i])
+        : (data = data + "," + this.dataInput.riskDescription.riskImpact[i]);
+      if (this.dataInput.riskDescription.riskImpact.length - i == 1) {
+        return data;
+      }
+    }
   }
 
   generateCounter() {
@@ -1451,7 +1467,9 @@ export class RiskRegisterComponent {
         division: this.dataInput.divisionDepartment.division.id,
         department: this.dataInput.divisionDepartment.department.id,
         userUpdated: "Admin",
-        dateUpdated: moment().format()
+        dateUpdated: moment().format(),
+        userCreated: this.draftData.dateCreated,
+        dateCreated: this.draftData.dateCreated
       };
       this.service.putreq("draftrisks", savedData).subscribe(
         response => {
@@ -1492,4 +1510,40 @@ export class RiskRegisterComponent {
   submit() {
     this.toastr.success("Data Saved!");
   }
+
+  saveValidation = () => {
+    if (
+      this.dataInput.divisionDepartment.companyKpi.description == "" ||
+      this.dataInput.divisionDepartment.departmentKpi.description == "" ||
+      this.dataInput.divisionDepartment.businessProcess == "" ||
+      this.dataInput.riskDescription.lossEvent == "" ||
+      this.dataInput.riskDescription.caused == "" ||
+      this.dataInput.riskDescription.riskImpact[0] == null ||
+      this.dataInput.riskDescription.riskLevel == "" ||
+      this.dataInput.inherentRisk.overallImpact.description == "" ||
+      this.dataInput.inherentRisk.likelihood == "" ||
+      this.dataInput.inherentRisk.overallRisk.description == "" ||
+      this.dataInput.currentAction.operation == "" ||
+      this.dataInput.currentAction.appropriateness.description == "" ||
+      this.dataInput.currentAction.overallControl.description == "" ||
+      this.dataInput.currentAction.Preventive +
+        this.dataInput.currentAction.Detective +
+        this.dataInput.currentAction.Corrective ==
+        0 ||
+      this.dataInput.residualRisk.financialImpact.amount >
+        this.dataInput.inherentRisk.financialImpact.amount ||
+      this.dataInput.residualRisk.operationalImpact.loss >
+        this.dataInput.inherentRisk.operationalImpact.loss ||
+      this.dataInput.residualRisk.overallImpact.description == "" ||
+      this.dataInput.residualRisk.likelihood == "" ||
+      this.dataInput.residualRisk.overallRisk.description == "" ||
+      this.dataInput.expectedRisk.treatmentPlan == "" ||
+      this.dataInput.expectedRisk.impact == "" ||
+      this.dataInput.expectedRisk.likelihood == ""
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 }

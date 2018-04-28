@@ -1,18 +1,19 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild,ElementRef } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { BackendService } from "../../../@core/data/backend.service";
 
 @Component({
-  selector: 'ngx-chartjs',
-  styleUrls: ['./chartjs.component.scss'],
-  templateUrl: './chartjs.component.html',
+  selector: "ngx-chartjs",
+  styleUrls: ["./chartjs.component.scss"],
+  templateUrl: "./chartjs.component.html"
 })
 export class ChartjsComponent {
+  @ViewChild('printEl') printEl: ElementRef;
   @ViewChild("myForm") private myForm: NgForm;
   settings: any = {
     add: {
@@ -73,64 +74,56 @@ export class ChartjsComponent {
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       riskImpact: {
         title: "Risk Impact",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       irImpact: {
         title: "Impact",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       irLikelihood: {
         title: "Likelihood",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       irOverall: {
         title: "Overall",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       control: {
         title: "Caused",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       rdImpact: {
         title: "Impact",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       rdLikelihood: {
         title: "Likelihood",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       rdOverall: {
         title: "Overall",
         type: "string",
@@ -144,32 +137,28 @@ export class ChartjsComponent {
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       exImpact: {
         title: "Impact",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       exLikelihood: {
         title: "Likelihood",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       exOverall: {
         title: "Overall",
         type: "string",
         filter: false,
         editable: true,
         width: "5%"
-      }
-      ,
+      },
       exSchedule: {
         title: "Schedule",
         type: "date",
@@ -180,13 +169,11 @@ export class ChartjsComponent {
     }
   };
 
-
   tabledata: any[] = [];
   effectivedata: any[] = [];
   moderatedata: any[] = [];
   ineffectivedata: any[] = [];
   weakdata: any[] = [];
-  
 
   subscription: any;
   activeModal: any;
@@ -220,22 +207,22 @@ export class ChartjsComponent {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
           this.tabledata = data;
-          let arr1 =this.tabledata.filter(item => {
+          let arr1 = this.tabledata.filter(item => {
             return item.efOverall === "Effective";
           });
-          this.effectivedata=arr1;
-          let arr2=this.tabledata.filter(item => {
+          this.effectivedata = arr1;
+          let arr2 = this.tabledata.filter(item => {
             return item.efOverall === "Moderate";
           });
-          this.moderatedata=arr2;
-          let arr3 =this.tabledata.filter(item => {
+          this.moderatedata = arr2;
+          let arr3 = this.tabledata.filter(item => {
             return item.efOverall === "Ineffective";
           });
-          this.ineffectivedata=arr3;
-          let arr4 =this.tabledata.filter(item => {
+          this.ineffectivedata = arr3;
+          let arr4 = this.tabledata.filter(item => {
             return item.efOverall === "Weak";
           });
-          this.weakdata=arr4;
+          this.weakdata = arr4;
         });
       }
       // error => {
@@ -243,4 +230,30 @@ export class ChartjsComponent {
       // };
     });
   }
+  // print(): void {
+  //   let printContents, popupWin;
+  //   printContents = document.getElementById("print-section");
+  //   popupWin = window.frames["print-section"];
+  //   popupWin.document.write('<body onload="window.print()">dddd</body>');
+  //   popupWin.document.close();
+  // }
+  printbro(printEl: HTMLElement) {
+    let printContainer: HTMLElement = document.querySelector('#print-container');
+
+    if (!printContainer) {
+      printContainer = document.createElement('div');
+      printContainer.id = 'print-container';
+    } 
+
+    printContainer.innerHTML = '';
+
+    let elementCopy = printEl.cloneNode(true);
+    printContainer.appendChild(elementCopy);
+    document.body.appendChild(printContainer);
+
+    (window as any).print();
+  }
+ print(){
+    this.printbro(this.printEl.nativeElement);
+ }
 }
