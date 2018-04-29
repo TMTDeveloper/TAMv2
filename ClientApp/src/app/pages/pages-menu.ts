@@ -18,6 +18,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: "View Draft",
         link: "/pages/transaction/view-draft"
+      },
+      {
+        title: "Dept Input",
+        link: "/pages/transaction/dept-input"
+      },
+      {
+        title: "Accident Input",
+        link: "/pages/transaction/accident-input"
       }
     ]
   },

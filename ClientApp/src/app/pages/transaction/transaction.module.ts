@@ -11,7 +11,8 @@ import { RiskRegisterDeptComponent } from "./risk-register/modal/risk.register.d
 import { RiskRegisterAcdComponent } from "./risk-register/modal/risk.register.acd.component";
 import { RiskRegisterQlComponent } from "./risk-register/modal/risk.register.ql.component";
 import { RiskRegisterCtrComponent } from "./risk-register/modal/risk.register.ctr.component";
-
+import { AccidentInputModalComponent } from "./accident-input/modal/accident.input.modal.component";
+import { DeptInputModalComponent } from "./dept-input/modal/dept.input.modal.component";
 import { ToastrModule } from "ngx-toastr";
 import { BackendService } from "../../@core/data/backend.service";
 import { CurrencyMaskModule } from "ng2-currency-mask";
@@ -26,6 +27,8 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
   declarations: [...routedComponents],
   entryComponents: [
     RiskRegisterModalComponent,
+    AccidentInputModalComponent,
+    DeptInputModalComponent,
     RiskRegisterDeptComponent,
     RiskRegisterAcdComponent,
     RiskRegisterQlComponent,

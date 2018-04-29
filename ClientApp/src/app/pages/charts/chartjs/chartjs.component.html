@@ -22,7 +22,10 @@
 <nb-tabset>
   <nb-tab tabTitle="Chart">
 <div class="print_this">
-    <div class="col-lg-8">
+    <div class="col-lg-4">
+    <app-chart [heat]="tabledata"></app-chart>
+    </div>
+    <div class="col-lg-4">
 <label>Risk Movement</label>
             <ngx-chartjs-bar></ngx-chartjs-bar> 
 
@@ -39,9 +42,10 @@
         <ngx-control-mapping></ngx-control-mapping>
 
   </div>
-
+  
 
 </div>
+
 
 <div class="horizontal-scroll">
     <div class="form-group row">

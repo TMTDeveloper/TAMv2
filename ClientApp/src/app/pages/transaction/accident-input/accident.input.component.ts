@@ -2,16 +2,15 @@ import { Component, ViewChild } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { CompanyInputModalComponent } from "./modal/company.input.modal.component";
+import { AccidentInputModalComponent } from "./modal/accident.input.modal.component"; // modal belum diedit
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
 @Component({
-  selector: "ngx-company-input",
-  templateUrl: "./company.input.component.html"
+  selector: "ngx-accident-input",
+  templateUrl: "./accident.input.component.html"
 })
-export class CompanyInputComponent {
-  selectedData: any;
+export class AccidentInputComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
   yearPeriode: any = moment().format("YYYY");
@@ -47,22 +46,63 @@ export class CompanyInputComponent {
       perPage: 30
     },
     columns: {
+      counterNo: {
+        title: "No",
+        type: "number",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
+      dateAccident: {
+        title: "Date",
+        type: "date",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
       description: {
         title: "Description",
         type: "string",
         filter: false,
         editable: true,
-        width: "80%",
-        editor: {
-          type: "textarea"
-        }
+        width: "15%"
       },
-      flagActive: { title: 'Flag Active', 
-      type: 'html', 
-      editor:
-       { type: 'list', config: 
-       { list: [{ value: 'Y', title: 'Y' }, 
-       { value: 'N', title: 'N' }] } } }
+      relatedParties: {
+        title: "Related Parties",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "15%"
+      },
+      financialImpact: {
+        title: "Financial Impact",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "15%"
+      },
+      otherImpact: {
+        title: "Other Impact",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "15%"
+      },
+      currentAction: {
+        title: "Current Action",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "15%"
+      }
+      ,
+      nextAction: {
+        title: "Next Action",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "15%"
+      }
     }
   };
   year: any[] = [
@@ -98,19 +138,26 @@ export class CompanyInputComponent {
     }
   ];
   condition: any[] = [
+
     {
-      data: "OBJ",
-      desc: "Company Objectives"
-    },
-    {
-      data: "KPI",
-      desc: "Company KPI"
-    },
-    {
-      data: "BP",
-      desc: "Company BP"
+      data: "DEP",
+      desc: "Department KPI"
     }
   ];
+
+  division: any[] = [
+    {
+      data: "ISTD",
+      desc: "Information system and technical division"
+    }
+  ];
+  departement: any[] = [
+    {
+      data: "IS",
+      desc: "Information system"
+    }
+  ];
+
   source: LocalDataSource = new LocalDataSource();
 
   tabledata: any[] = [];
@@ -126,10 +173,10 @@ export class CompanyInputComponent {
     this.loadData();
   }
   loadData() {
-    this.service.getreq("TbMComInputs").subscribe(response => {
+    this.service.getreq("TbMAccidentDetails").subscribe(response => {
       if (response != null) {
         const data = response;
-       // console.log(JSON.stringify(response));
+        console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
@@ -147,20 +194,21 @@ export class CompanyInputComponent {
       .load(this.tabledata)
       .then(resp => {
         this.myForm.setValue({
-          condition: "OBJ",
-
-          yearPeriode: moment().format("YYYY")
+          condition: "DEP",
+          yearPeriode: moment().format("YYYY"),
+          division:"ISTD",
+          departement:"IS"
         });
       })
       .then(resp => {
         this.reload();
       });
 
-   // console.log(this.myForm.value.condition);
+    console.log(this.myForm.value.condition);
   }
 
   showModal(no_iku) {
-    this.activeModal = this.modalService.open(CompanyInputModalComponent, {
+    this.activeModal = this.modalService.open(AccidentInputModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
       backdrop: "static"
@@ -169,7 +217,8 @@ export class CompanyInputComponent {
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].condition == this.myForm.value.condition
+        this.tabledata[data].division == this.myForm.value.division  &&
+        this.tabledata[data].department == this.myForm.value.departement
       ) {
         lastIndex <= this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
@@ -177,14 +226,21 @@ export class CompanyInputComponent {
       }
     }
 
-    const comInpId = this.comGenerate(lastIndex + 1);
+    const accidentId = this.comGenerate(lastIndex + 1);
     this.activeModal.componentInstance.condition = this.condition;
     this.activeModal.componentInstance.formData = {
       yearActive: this.myForm.value.yearPeriode,
-      condition: this.myForm.value.condition,
       counterNo: lastIndex + 1,
-      comInpId: comInpId,
+      division: this.myForm.value.division,
+      department: this.myForm.value.departement,
+      accidentId: accidentId,
+      dateAccident:"",
       description: "",
+      relatedParties: "",
+      financialImpact: "",
+      otherImpact: "",
+      currentAction: "",
+      nextAction: "",
       flagActive: "Y",
       userCreated: "Admin",
       datetimeCreated: moment().format(),
@@ -197,8 +253,8 @@ export class CompanyInputComponent {
       async response => {
         if (response != false) {
           this.tabledata.push(response);
-          this.submit();
           this.reload();
+          this.submit();
         }
       },
       error => {}
@@ -208,13 +264,13 @@ export class CompanyInputComponent {
   comGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
       case 3:
-        return this.myForm.value.condition + lastIndex.toString();
+        return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
 
       case 2:
-        return this.myForm.value.condition + "0" + lastIndex.toString();
+      return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
 
       case 1:
-        return this.myForm.value.condition + "00" + lastIndex.toString();
+      return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
     }
   }
 
@@ -252,30 +308,70 @@ export class CompanyInputComponent {
         perPage: 30
       },
       columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        dateAccident: {
+          title: "Date",
+          type: "date",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
         description: {
           title: "Description",
           type: "string",
           filter: false,
           editable: true,
-          width: "80%",
-          editor: {
-            type: "textarea"
-          }
-          
+          width: "15%"
         },
-        flagActive: { title: 'Flag Active', 
-        type: 'html', 
-        editor:
-         { type: 'list', config: 
-         { list: [{ value: 'Y', title: 'Y' }, 
-         { value: 'N', title: 'N' }] } } }
+        relatedParties: {
+          title: "Related Parties",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        financialImpact: {
+          title: "Financial Impact",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        otherImpact: {
+          title: "Other Impact",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        currentAction: {
+          title: "Current Action",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        }
+        ,
+        nextAction: {
+          title: "Next Action",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        }
       }
     };
     this.source.setFilter(
       [
-        { field: "condition", search: this.myForm.value.condition },
         { field: "yearActive", search: this.myForm.value.yearPeriode },
-        { field: "flagActive", search: "Y" }
+        { field: "division", search: this.myForm.value.division },
+        { field: "department", search: this.myForm.value.departement }
       ],
       true
     );
@@ -287,48 +383,32 @@ export class CompanyInputComponent {
       this.buttonDisable =true;
     }
   }
-
-  refreshSelected(event) {
-    this.selectedData = event.data;
-    console.log(this.selectedData);
-  }
-
-  onSaveConfirm(event) {
-    if (event.newData.description!='') {
-      event.confirm.resolve(event.newData);
-      this.submit(event);
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   submit(event?) {
     event
       ? this.service
-          .putreq("TbMComInputs", JSON.stringify(event.newData))
+          .putreq("TbMAccidentDetails", JSON.stringify(event.newData))
           .subscribe(response => {
-            //console.log(JSON.stringify(event.newData));
+            console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-             // console.log(error);
+              console.log(error);
             };
           })
       : null;
-    //console.log(JSON.stringify(this.tabledata));
+    console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
         this.service
-          .postreq("TbMComInputs", this.tabledata[index])
+          .postreq("TbMAccidentDetails", this.tabledata[index])
           .subscribe(response => {
-           // console.log(response);
+            console.log(response);
             this.tabledata[index].status = "0";
             error => {
-             // console.log(error);
+              console.log(error);
             };
           });
       }
-      this.reload();
     });
 
     this.toastr.success("Data Saved!");

@@ -47,13 +47,6 @@ export class RiskIndicatorComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
-        title: "No",
-        type: "number",
-        filter: false,
-        editable: false,
-        width: "5%"
-      },
       description: {
         title: "Description",
         type: "string",
@@ -67,7 +60,13 @@ export class RiskIndicatorComponent {
         filter: false,
         editable: true,
         width: "10%"
-      }
+      },
+      flagActive: { title: 'Flag Active', 
+        type: 'html', 
+        editor:
+         { type: 'list', config: 
+         { list: [{ value: 'Y', title: 'Y' }, 
+         { value: 'N', title: 'N' }] } } }
     }
   };
   source: LocalDataSource = new LocalDataSource();
@@ -287,13 +286,6 @@ export class RiskIndicatorComponent {
         perPage: 30
       },
       columns: {
-        counterNo: {
-          title: "No",
-          type: "number",
-          filter: false,
-          editable: false,
-          width: "5%"
-        },
         description: {
           title: "Description",
           type: "string",
@@ -307,13 +299,20 @@ export class RiskIndicatorComponent {
           filter: false,
           editable: true,
           width: "10%"
-        }
+        },
+        flagActive: { title: 'Flag Active', 
+        type: 'html', 
+        editor:
+         { type: 'list', config: 
+         { list: [{ value: 'Y', title: 'Y' }, 
+         { value: 'N', title: 'N' }] } } }
       }
     };
     this.source.setFilter(
       [
         { field: "condition", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode }
+        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "flagActive", search: "Y" }
       ],
       true
     );
@@ -335,6 +334,16 @@ export class RiskIndicatorComponent {
       this.scoreDisable =true;
     }
   }
+
+  onSaveConfirm(event) {
+    if (event.newData.description!='') {
+      event.confirm.resolve(event.newData);
+      this.submit(event);
+    } else {
+      event.confirm.reject();
+    }
+  }
+
   submit(event?) {
     event
       ? this.service

@@ -525,6 +525,37 @@ export class RiskRegisterComponent {
       error => {}
     );
   }
+  clearIR(){
+    this.dataInput.inherentRisk.qualitativeIR.desc='';
+    this.dataInput.inherentRisk.qualitativeIR.id='';
+    this.dataInput.inherentRisk.qualitativeIR.score=0;
+    this.dataInput.inherentRisk.financialImpact.amount=0;
+    this.dataInput.inherentRisk.financialImpact.score=0;
+    this.dataInput.inherentRisk.financialImpact.financialObj
+        .financialId='';
+    this.dataInput.inherentRisk.operationalImpact.loss=0;
+    this.dataInput.inherentRisk.operationalImpact.score=0;
+    this.dataInput.inherentRisk.operationalImpact.operationalObj
+        .operationalId='';
+        this.dataInput.inherentRisk.overallImpact.description='';
+        this.dataInput.inherentRisk.overallImpact.indicatorId='';
+  }
+
+  clearRD(){
+    this.dataInput.residualRisk.qualitativeRD.desc='';
+    this.dataInput.residualRisk.qualitativeRD.id='';
+    this.dataInput.residualRisk.qualitativeRD.score=0;
+    this.dataInput.residualRisk.financialImpact.amount=0;
+    this.dataInput.residualRisk.financialImpact.score=0;
+    this.dataInput.residualRisk.financialImpact.financialObj
+        .financialId='';
+    this.dataInput.residualRisk.operationalImpact.loss=0;
+    this.dataInput.residualRisk.operationalImpact.score=0;
+    this.dataInput.residualRisk.operationalImpact.operationalObj
+        .operationalId='';
+        this.dataInput.residualRisk.overallImpact.description='';
+        this.dataInput.residualRisk.overallImpact.indicatorId='';
+  }
 
   showQLIR() {
     this.activeModal = this.modalService.open(RiskRegisterQlComponent, {

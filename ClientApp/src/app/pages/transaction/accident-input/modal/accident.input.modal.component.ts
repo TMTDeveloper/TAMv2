@@ -4,15 +4,18 @@ import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: "ngx-company-input-modal",
-  templateUrl: "./company.input.modal.component.html"
+  selector: "ngx-accident-input-modal",
+  templateUrl: "./accident.input.modal.component.html"
 })
-export class CompanyInputModalComponent {
+export class AccidentInputModalComponent {
   condition: any = [];
   formData: {
     yearActive: string;
     condition: string;
     counterNo: string;
+    division: string;
+    departement: string;
+    date:string;
     comInpId: string;
     description: string;
     flagActive: string;
@@ -21,7 +24,6 @@ export class CompanyInputModalComponent {
     userUpdate: string;
     datetimeUpdate: string;
     status: string;
-    name: string;
   };
 
   constructor(private activeModal: NgbActiveModal) {

@@ -196,6 +196,9 @@
             <div class="col-sm-4">
               <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.qualitativeIR.desc">
             </div>
+            <div class="col-lg-1">
+              <button class="btn btn-success with-margins" (click)="clearIR()">Clear</button>
+            </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Overall Impact</label>
@@ -250,7 +253,7 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-1 col-form-label">Operation</label>
+            <label class="col-sm-2 col-form-label">Operation</label>
             <nb-actions size="medium">
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
@@ -262,7 +265,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-1 col-form-label">Appropriateness</label>
+            <label class="col-sm-2 col-form-label">Appropriateness</label>
             <nb-actions size="medium">
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
@@ -372,6 +375,9 @@
             </nb-actions>
             <div class="col-sm-5">
               <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.qualitativeRD.desc">
+            </div>
+            <div class="col-lg-1">
+              <button class="btn btn-success with-margins" (click)="clearRD()">Clear</button>
             </div>
           </div>
           <div class="form-group row">

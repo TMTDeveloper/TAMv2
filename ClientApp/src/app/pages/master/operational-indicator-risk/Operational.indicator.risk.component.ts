@@ -12,6 +12,7 @@ import { isNullOrUndefined } from "util";
   templateUrl: "./operational.indicator.risk.component.html"
 })
 export class OperationalIndicatorRiskComponent {
+  percentageCheck: boolean;
   tabledata: any[] = [];
   yearPeriode: any = moment().format("YYYY");
   subscription: any;
@@ -161,6 +162,7 @@ export class OperationalIndicatorRiskComponent {
     public service: BackendService
   ) {
     this.loadData();
+    this.percentageCheck= false;
   }
   loadData() {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
@@ -218,6 +220,16 @@ export class OperationalIndicatorRiskComponent {
 
   reload() {
     this.yearPeriode = this.myForm.value.yearPeriode;
+    switch (this.myForm.value.condition) {
+      case "SAL":
+       this.percentageCheck=false;
+       break;
+      case "DOD":
+     this.percentageCheck=false;
+     break;
+      default:
+      this.percentageCheck=true;
+    };
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -306,7 +318,18 @@ export class OperationalIndicatorRiskComponent {
       ],
       true
     );
+    
   }
+
+  onSaveConfirm(event) {
+    if (event.newData.numberValue>100&&this.percentageCheck) {
+      event.confirm.reject();
+    } else {
+      event.confirm.resolve(event.newData);
+      this.submit(event);
+    }
+  }
+
   submit(event?) {
     console.log(event);
     event

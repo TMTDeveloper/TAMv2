@@ -199,13 +199,6 @@ export class RiskMatriksIndicatorComponent {
                   perPage: 30
                 },
                 columns: {
-                  counterNo: {
-                    title: "No",
-                    type: "number",
-                    filter: false,
-                    editable: false,
-                    width: "5%"
-                  },
                   indicatorIdA: {
                     title: "Condition 1",
                     type: "text",
@@ -418,13 +411,6 @@ export class RiskMatriksIndicatorComponent {
         perPage: 30
       },
       columns: {
-        counterNo: {
-          title: "No",
-          type: "number",
-          filter: false,
-          editable: false,
-          width: "5%"
-        },
         indicatorIdA: {
           title: "Condition 1",
           type: "text",

@@ -22,7 +22,7 @@
       </div>
       <div class="col-sm-auto">
         <div class="form-group">
-          <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="submit($event)">
+          <ng2-smart-table [settings]="settings" [source]="source"  (editConfirm)="onSaveConfirm($event)">
           </ng2-smart-table>
         </div>
       </div>

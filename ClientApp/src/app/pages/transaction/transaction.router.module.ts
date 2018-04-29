@@ -1,8 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { RiskRegisterComponent } from "./risk-register/risk.register.component";
+import { DeptInputComponent } from "./dept-input/dept.input.component";
+import { AccidentInputComponent } from "./accident-input/accident.input.component";
 import { RiskOverviewComponent } from "./risk-overview/risk.overview.component";
 import { TransactionComponent } from "./transaction.component";
+import { DeptInputModalComponent } from "./dept-input/modal/dept.input.modal.component";
+import { AccidentInputModalComponent } from "./accident-input/modal/accident.input.modal.component";
 import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
 import { RiskOverviewModalComponent } from "./risk-overview/modal/risk.overview.modal.component";
 import { RiskRegisterDeptComponent } from "./risk-register/modal/risk.register.dept.component";
@@ -20,12 +24,20 @@ const routes: Routes = [
         component: RiskRegisterComponent
       },
       {
+        path: "dept-input",
+        component: DeptInputComponent
+      },
+      {
         path: "risk-overview",
         component: RiskOverviewComponent
       },
       {
         path: "view-draft",
         component: ViewDraftComponent
+      },
+      {
+        path: "accident-input",
+        component: AccidentInputComponent
       }
     ]
   }
@@ -40,6 +52,10 @@ export class TransactionRouterModule {}
 export const routedComponents = [
   RiskRegisterComponent,
   RiskOverviewComponent,
+  DeptInputComponent,
+  DeptInputModalComponent,
+  AccidentInputComponent,
+  AccidentInputModalComponent,
   RiskRegisterModalComponent,
   RiskOverviewModalComponent,
   RiskRegisterDeptComponent,

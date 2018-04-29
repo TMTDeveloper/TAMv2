@@ -285,6 +285,16 @@ export class FinancialIndicatorRiskComponent {
       true
     );
   }
+
+  onSaveConfirm(event) {
+    if (event.newData.percentageValue<101) {
+      event.confirm.resolve(event.newData);
+      this.submit(event);
+    } else {
+      event.confirm.reject();
+    }
+  }
+
   submit(event?) {
     event
       ? this.service
