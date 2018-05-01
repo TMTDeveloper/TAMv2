@@ -30,11 +30,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
-    title: "Charts",
+    title: "Report",
     icon: "nb-bar-chart",
     children: [
       {
-        title: "Charts.js",
+        title: "Report And Chart",
         link: "/pages/charts/chartjs"
       }
     ]

@@ -275,4 +275,26 @@ export class ChartjsComponent {
       doc.save(`Report-${Date.now()}.pdf`);
     });
   }
+
+  printtext() {
+    let doc = new jsPDF();
+    doc.setFontSize(12);
+    doc.text(12, 10, "Report");
+
+    // Create your table here (The dynamic table needs to be converted to canvas).
+    let element = <HTMLScriptElement>document.getElementsByClassName(
+      "print_report"
+    )[0];
+    html2canvas(element).then((canvas: any) => {
+      doc.addImage(
+        canvas.toDataURL("image/jpeg"),
+        "JPEG",
+        0,
+        50,
+        doc.internal.pageSize.width,
+        element.offsetHeight / 5
+      );
+      doc.save(`Report-${Date.now()}.pdf`);
+    });
+  }
 }

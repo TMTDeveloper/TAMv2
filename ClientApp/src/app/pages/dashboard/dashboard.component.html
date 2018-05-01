@@ -33,7 +33,9 @@
                           <th> </th>
                         <th bgcolor="#FF0000" > </th>
                         <th bgcolor="#FF0000" > </th>
-                        <th bgcolor="#FF0000" >Inherent&nbsp;Risk</th>
+                        <th bgcolor="#FF0000" > </th>
+                        <th bgcolor="#FF0000" >Inherent&nbsp;Risk </th>
+                        <th bgcolor="#FF0000" > </th>
                         <th bgcolor="#FF0000" > </th>
                         <th bgcolor="#FF0000" > </th>
                         <th bgcolor="#0000FF" > </th>
@@ -49,6 +51,8 @@
                 <thead>
                   <tr>
                     <th>RiskNo</th>
+                    <th>Fin&nbsp;Category</th>
+                    <th>Op&nbsp;Category</th>
                     <th>Financial</th>
                     <th>Operational</th>
                     <th>Qualitative</th>
@@ -67,13 +71,15 @@
                 <tbody>
                   <tr *ngFor="let item of tabledata">
                     <td>{{ item.riskNo }}</td>
-                    <td>{{ item.finImpactIr }}</td>
-                    <td>{{ item.opImpactIr }}</td>
+                    <td>{{ item.finImpactCategory }}</td>
+                    <td>{{ item.opImpactCategory }}</td>
+                    <td>{{ item.finAmountIr }}</td>
+                    <td>{{ item.opAmountIr }}</td>
                     <td>{{ item.qlImpactIr }}</td>
                     <td>{{ item.irLikelihood }}</td>
                     <td>{{ item.irOverall }}</td>
-                    <td>{{ item.finImpactRd }}</td>
-                    <td>{{ item.opImpactRd }}</td>
+                    <td>{{ item.finAmountRd }}</td>
+                    <td>{{ item.opAmountRd }}</td>
                     <td>{{ item.qlImpactRd }}</td>
                     <td>{{ item.rdLikelihood }}</td>
                     <td>{{ item.rdOverall }}</td>
