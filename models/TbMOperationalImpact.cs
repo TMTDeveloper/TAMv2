@@ -16,6 +16,8 @@ namespace tam_risk_project.Models
         public short? CounterNo { get; set; }
         public string OperationalId { get; set; }
         public double? NumberValue { get; set; }
+        public string FlagActive{ get; set; }
+
         public string UserCreated { get; set; }
         public DateTime? DatetimeCreated { get; set; }
         public string UserUpdate { get; set; }

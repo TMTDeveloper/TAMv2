@@ -15,11 +15,18 @@ namespace tam_risk_project.Models
         public string DepartmentKpi { get; set; }
         public string LossEvent { get; set; }
         public string Caused { get; set; }
+        public string Control { get; set; }
         public string RiskImpact { get; set; }
         public string FinImpactIr { get; set; }
+        public string FinImpactCategory { get; set; }
+        public double? FinAmountIr { get; set; }
         public string OpImpactIr { get; set; }
+        public float? OpAmountIr { get; set; }
+        public string OpImpactCategory { get; set; }
         public string FinImpactRd { get; set; }
+        public double? FinAmountRd { get; set; }
         public string OpImpactRd { get; set; }
+        public int? OpAmountRd { get; set; }
         public string QlImpactIr { get; set; }
         public string QlImpactRd { get; set; }
         public string IrImpact { get; set; }

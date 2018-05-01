@@ -79,11 +79,18 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.RiskNo).HasColumnName("RISK_NO");
                 entity.Property(e => e.DepartmentKpi).HasColumnName("DEPARTMENT_KPI");
                 entity.Property(e => e.LossEvent).HasColumnName("LOSS_EVENT");
+                entity.Property(e => e.Control).HasColumnName("Control");
                 entity.Property(e => e.RiskImpact).HasColumnName("RISK_IMPACT");
                 entity.Property(e => e.FinImpactIr).HasColumnName("FIN_IMPACT_IR");
+                entity.Property(e => e.FinImpactCategory).HasColumnName("FIN_IMPACT_CATEGORY");
+                entity.Property(e => e.FinAmountIr).HasColumnName("FIN_AMOUNT_IR");
                 entity.Property(e => e.OpImpactIr).HasColumnName("OP_IMPACT_IR");
+                entity.Property(e => e.OpAmountIr).HasColumnName("OP_AMOUNT_IR");
+                entity.Property(e => e.OpImpactCategory).HasColumnName("OP_IMPACT_CATEGORY");
                 entity.Property(e => e.FinImpactRd).HasColumnName("FIN_IMPACT_RD");
+                entity.Property(e => e.FinAmountRd).HasColumnName("FIN_AMOUNT_RD");
                 entity.Property(e => e.OpImpactRd).HasColumnName("OP_IMPACT_RD");
+                entity.Property(e => e.OpAmountRd).HasColumnName("OP_AMOUNT_RD");
                 entity.Property(e => e.QlImpactIr).HasColumnName("QL_IMPACT_IR");
                 entity.Property(e => e.QlImpactRd).HasColumnName("QL_IMPACT_RD");
                 entity.Property(e => e.IrImpact).HasColumnName("IR_IMPACT");
@@ -518,6 +525,11 @@ namespace tam_risk_project.Models
                                     .HasColumnType("datetime");
 
                 entity.Property(e => e.NumberValue).HasColumnName("NUMBER_VALUE");
+
+                entity.Property(e => e.FlagActive)
+                                    .HasColumnName("FLAG_ACTIVE")
+                                    .HasMaxLength(1)
+                                    .IsUnicode(false);
 
                 entity.Property(e => e.RiskIndicatorId)
                                     .HasColumnName("RISK_INDICATOR_ID")
