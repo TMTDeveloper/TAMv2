@@ -8,6 +8,8 @@ import { Injectable } from "@angular/core";
 import { BackendService } from "../../../@core/data/backend.service";
 import * as jsPDF from "jspdf";
 import * as html2canvas from "html2canvas";
+import * as rasterizeHTML from "rasterizehtml";
+
 @Component({
   selector: "ngx-chartjs",
   styleUrls: ["./chartjs.component.scss"],
@@ -170,12 +172,17 @@ export class ChartjsComponent {
     }
   };
 
+  dataInput = {
+    division: {},
+    department: {}
+  };
+
   tabledata: any[] = [];
   effectivedata: any[] = [];
   moderatedata: any[] = [];
   ineffectivedata: any[] = [];
   weakdata: any[] = [];
-
+  svg: string;
   subscription: any;
   activeModal: any;
   constructor(
@@ -254,24 +261,26 @@ export class ChartjsComponent {
 
   //   (window as any).print();
   // }
-  print() {
-    let doc = new jsPDF();
-    doc.setFontSize(12);
-    doc.text(12, 10, "Report");
+  print(id) {
+    let element = <HTMLScriptElement>document.getElementById(id);
 
+    var divHeight = element.offsetHeight;
+    var divWidth = element.offsetWidth;
+    var ratio = divHeight / divWidth;
     // Create your table here (The dynamic table needs to be converted to canvas).
-    let element = <HTMLScriptElement>document.getElementsByClassName(
-      "print_this"
-    )[0];
-    html2canvas(element).then((canvas: any) => {
-      doc.addImage(
-        canvas.toDataURL("image/jpeg"),
-        "JPEG",
-        0,
-        50,
-        doc.internal.pageSize.width,
-        element.offsetHeight / 5
-      );
+
+    html2canvas(element, {
+      useCORS: true
+    }).then((canvas: any) => {
+      var width = canvas.width;
+      var height = canvas.height;
+      var imgData = canvas.toDataURL("image/png");
+      var doc = new jsPDF({
+        orientation: id=="print_tab1"?"portrait":"landscape",
+        unit: "mm",
+        format: [Math.floor(width * 0.264583), Math.floor(height * 0.264583)]
+      });
+      doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 1, 5);
       doc.save(`Report-${Date.now()}.pdf`);
     });
   }
@@ -296,5 +305,28 @@ export class ChartjsComponent {
       );
       doc.save(`Report-${Date.now()}.pdf`);
     });
+  }
+
+  heatmapRaster() {
+    let doc = new jsPDF();
+    doc.setFontSize(12);
+    doc.text(12, 10, "Report");
+    var input = <HTMLScriptElement>document.getElementById("svgholder"),
+      canvas = <HTMLCanvasElement>document.getElementById("liveDemoCanvas");
+    var parser = new DOMParser();
+    var docs = parser.parseFromString(this.svg, "image/svg+xml");
+    let svg = docs.getElementsByTagName("svg")[0];
+    svg.setAttribute("viewBox", "0,0,1000,1000");
+    rasterizeHTML.drawDocument(docs, canvas).then(
+      function(result) {},
+      function(e) {
+        console.log("demo II error", e);
+      }
+    );
+  }
+  savesvg(event) {
+    console.log(event);
+    this.svg = event;
+    this.heatmapRaster();
   }
 }

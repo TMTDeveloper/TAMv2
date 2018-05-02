@@ -1,21 +1,6 @@
 .chart-container {
   position: inherit;
-  height: 240px;
-  width: 100%;
+  height: 600px;
+  width: 1000px;
   margin-top: 5px;
-}
-#arrow-up {
-  width: 0; 
-  height: 0; 
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  
-  border-bottom: 30px solid red;
-}
-@media print {
-  .print_this * {
-    display: block;
-    height: 100%;
-    width: 90%;
-  }
 }

@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import "anychart";
 import { Subject } from "rxjs/Subject";
@@ -82,6 +89,7 @@ export class ChartComponent implements OnInit {
             );
           }
         });
+      this.svg.emit(this.chart.toSvg(300, 400));
     });
   }
 
@@ -96,6 +104,8 @@ export class ChartComponent implements OnInit {
     this.setCurrentDataSet(this.data);
   }
 
+  @Output() svg: EventEmitter<string> = new EventEmitter<string>();
+
   setCurrentDataSet(key) {
     this.dataSetChangeSource.next(key);
   }
@@ -107,6 +117,9 @@ export class ChartComponent implements OnInit {
     this.chart.yAxis().orientation("left");
     this.chart.xScale().inverted(false);
     this.chart.yScale().inverted(false);
+    this.chart.bounds(0, 0, "100%", "100%");
+    this.chart.minWidth(1000);
+    this.chart.minHeight(600);
     this.chart.autoRedraw(true);
   }
 
@@ -140,6 +153,7 @@ export class ChartComponent implements OnInit {
     console.log();
     let namesList = ["Low", "Medium", "High", "Extreme"];
     this.chart.legend(true);
+    this.chart.credits().enabled(false);
     this.chart.container(this.container.nativeElement);
     this.chart.draw();
   }
