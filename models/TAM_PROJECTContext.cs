@@ -27,6 +27,7 @@ namespace tam_risk_project.Models
         public virtual DbSet<Riskreport> Riskreport { get; set; }
         public virtual DbSet<Qllov> Qllov { get; set; }
         public virtual DbSet<DraftRisk> DraftRisk { get; set; }
+        public virtual DbSet<TbRApprove> TbRApprove { get; set; }
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
               : base(options)
         {
@@ -34,6 +35,30 @@ namespace tam_risk_project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+            modelBuilder.Entity<TbRApprove>(entity =>
+                    {
+
+                        entity.ToTable("TB_R_APPROVE");
+                        entity.HasKey(e => new
+                        {
+                            e.YearActive,
+                            e.Division,
+                            e.Department,
+                            e.CounterNo
+                        });
+                        entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
+                        entity.Property(e => e.Division).HasColumnName("DIVISION");
+                        entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+                        entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
+                        entity.Property(e => e.Status).HasColumnName("STATUS");
+                        entity.Property(e => e.Notes).HasColumnName("NOTES");
+                        entity.Property(e => e.UserUpdated).HasColumnName("USER_UPDATED");
+                        entity.Property(e => e.DatetimeUpdated).HasColumnName("DATE_TIME_UPDATED");
+                        entity.Property(e => e.UserCreated).HasColumnName("USER_CREATED");
+                        entity.Property(e => e.DatetimeCreated).HasColumnName("DATE_TIME_CREATED");
+                    });
 
             modelBuilder.Entity<DraftRisk>(entity =>
          {
