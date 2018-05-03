@@ -9,6 +9,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 import * as jsPDF from "jspdf";
 import * as html2canvas from "html2canvas";
 import * as rasterizeHTML from "rasterizehtml";
+import { ReportApproveModalComponent } from "./approval/report.approve.modal.component";
 
 @Component({
   selector: "ngx-chartjs",
@@ -182,6 +183,9 @@ export class ChartjsComponent {
   moderatedata: any[] = [];
   ineffectivedata: any[] = [];
   weakdata: any[] = [];
+  approvedata: any;
+  tableapprove: any[]=[];
+
   svg: string;
   subscription: any;
   activeModal: any;
@@ -205,6 +209,115 @@ export class ChartjsComponent {
       desc: "Information system"
     }
   ];
+
+  loadApprove() {
+    this.service.getreq("TbRApproves").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(JSON.stringify(response));
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].status = "0";
+          this.tableapprove = data;
+          console.log(this.tableapprove);
+        });
+        this.reloadApprove();
+      }
+    });
+  }
+
+  reloadApprove() {
+    let year = moment().format("YYYY");;
+    let arr = this.tableapprove.filter(item => {
+      return item.division=="ISTD"
+
+    });
+   // console.log(arr[0] != null);
+    if (arr[0] != null) {
+      console.log("masukapprove");
+      this.approvedata= arr[0];
+      console.log(this.approvedata);
+    } 
+  }
+  
+  showModal(no_iku) {
+    this.activeModal = this.modalService.open(ReportApproveModalComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    let lastIndex = 0;
+    for (let data in this.tableapprove) {
+      if (
+        this.tableapprove[data].yearActive == moment().format('YYYY')&&
+        this.tableapprove[data].division == "ISTD"&&
+        this.tableapprove[data].department == "IS"
+      ) {
+        lastIndex <= this.tableapprove[data].counterNo
+          ? (lastIndex = this.tableapprove[data].counterNo)
+          : null;
+      }
+    }
+
+    
+    this.activeModal.componentInstance.formData = {
+      yearActive: moment().format('YYYY'),
+      division:"ISTD",
+      department:"IS",
+      counterNo: lastIndex + 1,
+      stat:"APPROVE",
+      notes:"",
+      userCreated: "Admin",
+      datetimeCreated: moment().format(),
+      userUpdate: "Admin",
+      datetimeUpdate: moment().format(),
+      status: "1"
+    };
+
+    this.activeModal.result.then(
+      async response => {
+        if (response != false) {
+          console.log(this.tableapprove)
+          this.tableapprove.push(response);
+          this.submit();
+          this.reloadApprove();
+        }
+      },
+      error => {}
+    );
+  }
+
+  submit(event?) {
+    event
+      ? this.service
+          .putreq("TbRApproves", JSON.stringify(event.newData))
+          .subscribe(response => {
+            //console.log(JSON.stringify(event.newData));
+            event.confirm.resolve(event.newData);
+            error => {
+             // console.log(error);
+            };
+          })
+      : null;
+    //console.log(JSON.stringify(this.tabledata));
+    this.tableapprove.forEach((element, ind) => {
+      let index = ind;
+      if (this.tableapprove[index].status == "1") {
+        this.service
+          .postreq("TbRApproves", this.tableapprove[index])
+          .subscribe(response => {
+           // console.log(response);
+            this.tabledata[index].status = "0";
+            error => {
+             // console.log(error);
+            };
+          });
+      }
+      this.reloadApprove();
+    });
+
+    this.toastr.success("Data Saved!");
+  }
 
   loadData() {
     this.service.getreq("Riskreports").subscribe(response => {

@@ -8,9 +8,9 @@ import { BackendService } from "../../../@core/data/backend.service";
 import { Router } from "@angular/router";
 @Component({
   selector: "ngx-view-draft",
-  templateUrl: "./view.draft.component.html"
+  templateUrl: "./update.risk.component.html"
 })
-export class ViewDraftComponent {
+export class UpdateRiskComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
   yearPeriode: any = moment().format("YYYY");
@@ -107,7 +107,7 @@ export class ViewDraftComponent {
     });
     this.source = this.source.setFilter(
       [
-        { field: "type", search: 'DRAFT' },
+        { field: "type", search: 'RISK' },
         { field: "year", search: moment().format('YYYY') }
       ],
       true

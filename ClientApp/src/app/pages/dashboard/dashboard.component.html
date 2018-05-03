@@ -17,10 +17,13 @@
               <option *ngFor="let data of department" value="{{data.data}}">{{data.desc}}</option>
             </select>
           </div>
-          <div class="col-md-2">
-          <input type="text" class="form-control" name="status" readonly="true" placeholder="Submit">
+
+        <label class="col-md-1 mt-3">{{dataapprove.stat}}</label>
+        <nb-actions size="medium">
+          <nb-action icon="nb-email" nbPopover="{{dataapprove.notes}}">?</nb-action>
+        </nb-actions>
         </div>
-        </div>
+        
       </div>
       <div class="col-md-12">
       <nb-tabset>
@@ -30,7 +33,7 @@
               <font size="1">
                   <thead>
                       <tr>
-                          <th> </th>
+                          <th bgcolor="yellow" > </th>
                         <th bgcolor="#FF0000" > </th>
                         <th bgcolor="#FF0000" > </th>
                         <th bgcolor="#FF0000" > </th>

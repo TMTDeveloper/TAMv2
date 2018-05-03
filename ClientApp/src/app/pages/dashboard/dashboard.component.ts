@@ -88,12 +88,15 @@ export class DashboardComponent {
   source: LocalDataSource = new LocalDataSource();
 
   tabledata: any[] = [];
+  tableapprove: any[]=[];
+  dataapprove: any;
 
   subscription: any;
   activeModal: any;
   constructor(private modalService: NgbModal, public service: BackendService) {
     this.buttonDisable = false;
     this.loadData();
+    this.loadApprove();
   }
   loadData() {
     this.service.getreq("Riskreports").subscribe(response => {
@@ -108,6 +111,30 @@ export class DashboardComponent {
       // };
     });
   }
+
+  loadApprove() {
+    this.service.getreq("TbRApproves").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        let find=0;
+        console.log(JSON.stringify(response));
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].status = "0";
+          this.tableapprove = data;
+          find=find+1;
+          console.log(this.tableapprove);
+          console.log("liatapprove");
+        });
+        //this.reloadApprove();
+        
+        this.dataapprove=this.tableapprove[find-1];
+        console.log("dataapprove");
+        console.log(this.dataapprove);
+      }
+    });
+  }
+
   ngAfterViewInit() {
     this.source.load(this.tabledata);
   }

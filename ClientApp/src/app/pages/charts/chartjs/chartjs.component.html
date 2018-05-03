@@ -21,6 +21,8 @@
 
     <button class="btn btn-success" (click)="print('print_tab1')">Print Chart</button>
     <button class="btn btn-success" (click)="print('print_tab2')">Print Report</button>
+    <button class="btn btn-success" (click)="showModal()">Approval</button>
+    
     <nb-tabset>
       <nb-tab tabTitle="Chart" id="print_tab1" class="col=lg=12">
         <div class="form-group">
@@ -267,7 +269,68 @@
       </nb-tab>
       <nb-tab tabTitle="Simplify Report" id="print_tab2">
 
+        <div class="row">
+          <div class="col-lg-10 float-left">
+            <table class="table table-bordered col-lg-10">
+              <tbody>
+                <tr>
+                  <td width="30%">
+                    <b> Division</b>
+                  </td>
+                  <td>
+                    {{dataInput.division.desc}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b> Department</b>
+                  </td>
+                  <td>
+                    {{dataInput.department.desc}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-bordered col-lg-4">
+              <thead>
+                <tr>
+                  <th>
+                    <b> Count Of Risk</b>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {{tabledata.length}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+          <div class="col-lg-2">
+            <table class="table table-bordered float-right">
+              <thead>
+                <tr>
+                  <th>
+                    <b> Approved&nbsp;By</b>
+                  </th>
+                  <th>
+                    <b>Prepared&nbsp;By</b>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td height="100"> </td>
+                  <td height="100"> </td>
+                </tr>
+              </tbody>
 
+            </table>
+          </div>
+        </div>
 
         <div class="print_report">
           <table class="table table-condensed">

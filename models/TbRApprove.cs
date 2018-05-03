@@ -9,7 +9,7 @@ namespace tam_risk_project.Models
         public string Division { get; set; }
         public string Department { get; set; }
         public short? CounterNo { get; set; }
-        public string Status { get; set; }
+        public string Stat { get; set; }
         public string Notes { get; set; }
         public string UserCreated { get; set; }
         public DateTime? DatetimeCreated { get; set; }

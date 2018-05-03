@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { RiskRegisterComponent } from "./risk-register/risk.register.component";
+import { UpdateRiskComponent } from "./update-risk/update.risk.component";
 import { DeptInputComponent } from "./dept-input/dept.input.component";
 import { AccidentInputComponent } from "./accident-input/accident.input.component";
 import { RiskOverviewComponent } from "./risk-overview/risk.overview.component";
@@ -36,6 +37,10 @@ const routes: Routes = [
         component: ViewDraftComponent
       },
       {
+        path: "update-risk",
+        component: UpdateRiskComponent
+      },
+      {
         path: "accident-input",
         component: AccidentInputComponent
       }
@@ -51,6 +56,7 @@ export class TransactionRouterModule {}
 
 export const routedComponents = [
   RiskRegisterComponent,
+  UpdateRiskComponent,
   RiskOverviewComponent,
   DeptInputComponent,
   DeptInputModalComponent,

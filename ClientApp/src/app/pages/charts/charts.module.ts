@@ -7,7 +7,7 @@ import { BackendService } from "../../@core/data/backend.service";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 
 import { ThemeModule } from '../../@theme/theme.module';
-
+import {ReportApproveModalComponent} from './chartjs/approval/report.approve.modal.component'
 import { ChartsRoutingModule, routedComponents } from './charts-routing.module';
 import {ControlMappingComponent} from './chartjs/control.mapping.component';
 import { ChartjsBarComponent } from './chartjs/chartjs-bar.component';
@@ -33,6 +33,7 @@ import { ChartComponent } from './chart/chart.component';
 
 const components = [
   ChartjsBarComponent,
+  ReportApproveModalComponent,
   ChartjsLineComponent,
   ChartjsPieComponent,
   ChartjsMultipleXaxisComponent,
@@ -58,6 +59,7 @@ const components = [
 @NgModule({
   imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule, ChartModule,ToastrModule.forRoot()],
   declarations: [...routedComponents, ...components],
+  entryComponents: [ReportApproveModalComponent],  
   providers: [BackendService]
 })
 export class ChartsModule {}

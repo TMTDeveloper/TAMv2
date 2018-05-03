@@ -1369,6 +1369,28 @@ export class RiskRegisterComponent {
         this.toastr.error("Data Save Failed! Reason: " + error.statusText);
       }
     );
+    const savedDraft = {
+      draftKey: this.dataInput.riskNo,
+      draftJson: JSON.stringify(this.dataInput),
+      division: this.dataInput.divisionDepartment.division.id,
+      department: this.dataInput.divisionDepartment.department.id,
+      type:"RISK",
+      year:moment().format('YYYY'),
+      userUpdated: "Admin",
+      dateUpdated: moment().format(),
+      userCreated: this.draftData.dateCreated,
+      dateCreated: this.draftData.dateCreated
+    };
+    this.service.putreq("draftrisks", savedData).subscribe(
+      response => {
+        console.log(response);
+       // this.toastr.success("Draft Saved!");
+      },
+      error => {
+        console.log(error);
+        this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
+      }
+    );
   }
 
   loopRiskImpact() {
@@ -1497,6 +1519,8 @@ export class RiskRegisterComponent {
         draftJson: JSON.stringify(this.dataInput),
         division: this.dataInput.divisionDepartment.division.id,
         department: this.dataInput.divisionDepartment.department.id,
+        type:"DRAFT",
+      year:moment().format('YYYY'),
         userUpdated: "Admin",
         dateUpdated: moment().format(),
         userCreated: this.draftData.dateCreated,
@@ -1520,6 +1544,8 @@ export class RiskRegisterComponent {
         draftJson: JSON.stringify(this.dataInput),
         division: this.dataInput.divisionDepartment.division.id,
         department: this.dataInput.divisionDepartment.department.id,
+        type:"DRAFT",
+      year:moment().format('YYYY'),
         userUpdated: "Admin",
         dateUpdated: moment().format(),
         userCreated: "Admin",

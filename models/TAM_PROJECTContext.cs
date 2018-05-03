@@ -52,7 +52,7 @@ namespace tam_risk_project.Models
                         entity.Property(e => e.Division).HasColumnName("DIVISION");
                         entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
                         entity.Property(e => e.CounterNo).HasColumnName("COUNTER_NO");
-                        entity.Property(e => e.Status).HasColumnName("STATUS");
+                        entity.Property(e => e.Stat).HasColumnName("STATUS");
                         entity.Property(e => e.Notes).HasColumnName("NOTES");
                         entity.Property(e => e.UserUpdated).HasColumnName("USER_UPDATED");
                         entity.Property(e => e.DatetimeUpdated).HasColumnName("DATE_TIME_UPDATED");
@@ -72,6 +72,8 @@ namespace tam_risk_project.Models
              entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON");
              entity.Property(e => e.Division).HasColumnName("DIVISION");
              entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+             entity.Property(e => e.Type).HasColumnName("TYPE");
+             entity.Property(e => e.Year).HasColumnName("YEAR");
              entity.Property(e => e.UserUpdated).HasColumnName("USER_UPDATED");
              entity.Property(e => e.DateUpdated).HasColumnName("DATE_UPDATED");
              entity.Property(e => e.UserCreated).HasColumnName("USER_CREATED");
