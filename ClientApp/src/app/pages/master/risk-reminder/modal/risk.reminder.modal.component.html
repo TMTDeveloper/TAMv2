@@ -2,19 +2,19 @@
   <nb-card-header>Reminder</nb-card-header>
   <nb-card-body>
     <form (ngSubmit)="submit()">
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group">
           <label>Start Date</label>
           <input type="date" class="form-control" name="startDate" placeholder="Start Date" [(ngModel)]="formData.startDate">
         </div>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group">
           <label>End Date</label>
           <input type="date" class="form-control" name="endDate" placeholder="End Date" [(ngModel)]="formData.endDate">
         </div>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group">
           <label>Periode</label>
           <input type="number" class="form-control" name="period" placeholder="1" [(ngModel)]="formData.period">

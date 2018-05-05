@@ -39,7 +39,7 @@ export class CompanyInputComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Modify",
+      columnTitle: "Edit",
       width: "10%"
     },
     pager: {
@@ -244,7 +244,7 @@ export class CompanyInputComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Modify",
+        columnTitle: "Edit",
         width: "10%"
       },
       pager: {

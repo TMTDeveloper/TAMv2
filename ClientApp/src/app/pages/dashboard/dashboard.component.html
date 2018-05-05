@@ -1,5 +1,14 @@
 <nb-card>
-  <nb-card-header>Risk Overview</nb-card-header>
+  <nb-card-header>
+      <div class="form-group row">
+          <div class="col-lg-10">
+    Risk Overview
+  </div>
+      <nb-actions size="medium">
+          <nb-action icon="nb-email" ></nb-action>
+        </nb-actions>
+        </div>
+  </nb-card-header>
   <nb-card-body>
 
       <div class="col-md-12">
@@ -18,14 +27,10 @@
             </select>
           </div>
 
-        <label class="col-md-1 mt-3">{{dataapprove.stat}}</label>
-        <nb-actions size="medium">
-          <nb-action icon="nb-email" nbPopover="{{dataapprove.notes}}">?</nb-action>
-        </nb-actions>
         </div>
         
       </div>
-      <div class="col-md-12">
+      
       <nb-tabset>
         <nb-tab tabTitle="Detail">
           <div class="form-group ">
@@ -94,34 +99,38 @@
               </font>
             </table>
           </div>
+          
         </nb-tab>
         <nb-tab tabTitle="Heatmap">
-          <div class="row">
+          
+          <div class="form-group row">
             <div class="form-group ">
+                <div class= "col-md-4">
                 <table class="table table-condensed mt-3">
                   <font size="1">
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Risk No</th>
+                        <th width="30%" >Risk&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th>Loss Event</th>                        
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of tabledata">
                         <td>{{ item.no}}</td>
-                        <td>{{ item.riskNo}}</td>
+                        <td width="80">{{ item.riskNo}}</td>
                         <td>{{ item.lossEvent }}</td>                        
                       </tr>
                     </tbody>
                   </font>
                 </table>
               </div>
+              </div>
           <app-chart [heat]="tabledata"></app-chart>
         </div>
         </nb-tab>
       </nb-tabset>
-    </div>
+  
 
   
     <!-- <div class="col-sm-auto row">

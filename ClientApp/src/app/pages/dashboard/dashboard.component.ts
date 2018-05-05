@@ -137,6 +137,7 @@ export class DashboardComponent {
 
   ngAfterViewInit() {
     this.source.load(this.tabledata);
+    document.getElementsByClassName('column_name')['0'].style.width = '100px'
   }
 
   comGenerate(lastIndex) {

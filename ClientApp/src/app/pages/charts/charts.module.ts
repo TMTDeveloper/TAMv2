@@ -5,6 +5,7 @@ import { ChartModule } from 'angular2-chartjs';
 import { ToastrModule } from "ngx-toastr";
 import { BackendService } from "../../@core/data/backend.service";
 import { Ng2SmartTableModule } from "ng2-smart-table";
+import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import {ReportApproveModalComponent} from './chartjs/approval/report.approve.modal.component'
@@ -57,7 +58,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule, ChartModule,ToastrModule.forRoot()],
+  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule,Nl2BrPipeModule, ChartModule,ToastrModule.forRoot()],
   declarations: [...routedComponents, ...components],
   entryComponents: [ReportApproveModalComponent],  
   providers: [BackendService]
