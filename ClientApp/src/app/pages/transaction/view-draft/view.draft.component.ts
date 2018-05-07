@@ -36,7 +36,10 @@ export class ViewDraftComponent {
     actions: {
       add: false,
       edit: false,
-      delete: false
+      delete: true,
+      position: "right",
+      columnTitle: "Modify",
+      width: "10%"
     },
     pager: {
       display: true,
@@ -89,7 +92,8 @@ export class ViewDraftComponent {
   constructor(
     private modalService: NgbModal,
     public service: BackendService,
-    public router: Router
+    public router: Router,
+    private toastr: ToastrService
   ) {
     this.buttonDisable = false;
     this.loadData();
@@ -98,6 +102,7 @@ export class ViewDraftComponent {
     this.service.getreq("Draftrisks").subscribe(response => {
       if (response != null) {
         const data = response;
+        console.log(data);
         this.tabledata = data;
         this.source.load(this.tabledata);
       }
@@ -107,8 +112,8 @@ export class ViewDraftComponent {
     });
     this.source = this.source.setFilter(
       [
-        { field: "type", search: 'DRAFT' },
-        { field: "year", search: moment().format('YYYY') }
+        { field: "type", search: "DRAFT" },
+        { field: "year", search: moment().format("YYYY") }
       ],
       true
     );
@@ -127,12 +132,41 @@ export class ViewDraftComponent {
   }
   goToPage() {
     console.log(this.selectedData);
-    let selectedData=this.selectedData;
+    let selectedData = this.selectedData;
     this.router.navigate(["/pages/transaction/risk-register"], {
       queryParams: {
         draftKey: selectedData.draftKey,
         draftJson: selectedData.draftJson
       }
     });
+  }
+
+  deleteControl(event) {
+    this.tabledata.forEach((element, ind) => {
+      element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
+    });
+    const savedData = {
+      draftKey: event.data.draftKey,
+      draftJson: event.data.draftJson,
+      division: event.data.division,
+      department: event.data.department,
+      type: "RISK",
+      year: moment().format("YYYY"),
+      userUpdated: "Admin",
+      dateUpdated: moment().format(),
+      userCreated: event.data.userCreated,
+      dateCreated: event.data.dateCreated
+    };
+    this.service.putreq("draftrisks", savedData).subscribe(
+      response => {
+        console.log(response);
+        this.toastr.success("Draft Deleted!");
+        event.confirm.resolve();
+      },
+      error => {
+        console.log(error);
+        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+      }
+    );
   }
 }

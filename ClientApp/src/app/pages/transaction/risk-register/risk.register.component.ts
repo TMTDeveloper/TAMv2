@@ -7,16 +7,29 @@ import { RiskRegisterDeptComponent } from "./modal/risk.register.dept.component"
 import { RiskRegisterAcdComponent } from "./modal/risk.register.acd.component";
 import { RiskRegisterCtrComponent } from "./modal/risk.register.ctr.component";
 import { RiskRegisterQlComponent } from "./modal/risk.register.ql.component";
+import { RiskRegisterTrtComponent } from "./modal/risk.register.trt.component";
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
 import { ActivatedRoute, Router } from "@angular/router";
 @Component({
   selector: "ngx-risk-register",
-  templateUrl: "./risk.register.component.html"
+  templateUrl: "./risk.register.component.html",
+  styleUrls: ["./risk.register.component.scss"]
 })
 export class RiskRegisterComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  ctrType = [
+    { value: "Preventive", title: "Preventive" },
+    {
+      value: "Detective",
+      title: "Detective"
+    },
+    {
+      value: "Corrective",
+      title: "Corrective"
+    }
+  ];
   accidentset: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -73,22 +86,89 @@ export class RiskRegisterComponent {
     }
   };
 
+  treatmentset: any = {
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>'
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true
+    },
+    mode: "inline",
+    sort: true,
+    hideSubHeader: true,
+    actions: {
+      add: false,
+      edit: false,
+      delete: true,
+      position: "right",
+      columnTitle: "Modify",
+      width: "10%"
+    },
+    pager: {
+      display: true,
+      perPage: 30
+    },
+    columns: {
+      no: {
+        title: "No",
+        type: "number",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
+      description: {
+        title: "Treatment Plan",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      type: {
+        title: "Type",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%",
+        editor: {
+          type: "list",
+          config: {
+            list: this.ctrType
+          }
+        }
+      },
+      pic: {
+        title: "Description",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      dueDate: {
+        title: "Due Date",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
+      }
+    }
+  };
+
   accidentSrc: LocalDataSource = new LocalDataSource();
   controlSrc: LocalDataSource = new LocalDataSource();
+  treatmentSrc: LocalDataSource = new LocalDataSource();
 
   tabledata: any[] = [];
   riskno: string;
-  ctrType = [
-    { value: "Preventive", title: "Preventive" },
-    {
-      value: "Detective",
-      title: "Detective"
-    },
-    {
-      value: "Corrective",
-      title: "Corrective"
-    }
-  ];
+
   controlset: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -152,6 +232,7 @@ export class RiskRegisterComponent {
   };
 
   dataInput = {
+    activateValidation: false,
     draftDisabled: false,
     riskNo: "",
     divisionDepartment: {
@@ -312,7 +393,8 @@ export class RiskRegisterComponent {
         description: ""
       },
       PIC: "",
-      schedule: ""
+      schedule: "",
+      treatmentPlanArr: []
     }
   };
 
@@ -375,6 +457,9 @@ export class RiskRegisterComponent {
     private route: ActivatedRoute
   ) {
     this.loadData();
+    this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
+    this.controlSrc.load(this.dataInput.currentAction.controls);
+    this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
   }
 
   getListRiskIndicator(value) {
@@ -415,6 +500,9 @@ export class RiskRegisterComponent {
       if (params.draftJson != null) {
         this.dataInput = JSON.parse(params.draftJson);
         this.draftData = params;
+        this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
+        this.controlSrc.load(this.dataInput.currentAction.controls);
+        this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
       }
     });
   }
@@ -525,36 +613,34 @@ export class RiskRegisterComponent {
       error => {}
     );
   }
-  clearIR(){
-    this.dataInput.inherentRisk.qualitativeIR.desc='';
-    this.dataInput.inherentRisk.qualitativeIR.id='';
-    this.dataInput.inherentRisk.qualitativeIR.score=0;
-    this.dataInput.inherentRisk.financialImpact.amount=0;
-    this.dataInput.inherentRisk.financialImpact.score=0;
-    this.dataInput.inherentRisk.financialImpact.financialObj
-        .financialId='';
-    this.dataInput.inherentRisk.operationalImpact.loss=0;
-    this.dataInput.inherentRisk.operationalImpact.score=0;
-    this.dataInput.inherentRisk.operationalImpact.operationalObj
-        .operationalId='';
-        this.dataInput.inherentRisk.overallImpact.description='';
-        this.dataInput.inherentRisk.overallImpact.indicatorId='';
+  clearIR() {
+    this.dataInput.inherentRisk.qualitativeIR.desc = "";
+    this.dataInput.inherentRisk.qualitativeIR.id = "";
+    this.dataInput.inherentRisk.qualitativeIR.score = 0;
+    this.dataInput.inherentRisk.financialImpact.amount = 0;
+    this.dataInput.inherentRisk.financialImpact.score = 0;
+    this.dataInput.inherentRisk.financialImpact.financialObj.financialId = "";
+    this.dataInput.inherentRisk.operationalImpact.loss = 0;
+    this.dataInput.inherentRisk.operationalImpact.score = 0;
+    this.dataInput.inherentRisk.operationalImpact.operationalObj.operationalId =
+      "";
+    this.dataInput.inherentRisk.overallImpact.description = "";
+    this.dataInput.inherentRisk.overallImpact.indicatorId = "";
   }
 
-  clearRD(){
-    this.dataInput.residualRisk.qualitativeRD.desc='';
-    this.dataInput.residualRisk.qualitativeRD.id='';
-    this.dataInput.residualRisk.qualitativeRD.score=0;
-    this.dataInput.residualRisk.financialImpact.amount=0;
-    this.dataInput.residualRisk.financialImpact.score=0;
-    this.dataInput.residualRisk.financialImpact.financialObj
-        .financialId='';
-    this.dataInput.residualRisk.operationalImpact.loss=0;
-    this.dataInput.residualRisk.operationalImpact.score=0;
-    this.dataInput.residualRisk.operationalImpact.operationalObj
-        .operationalId='';
-        this.dataInput.residualRisk.overallImpact.description='';
-        this.dataInput.residualRisk.overallImpact.indicatorId='';
+  clearRD() {
+    this.dataInput.residualRisk.qualitativeRD.desc = "";
+    this.dataInput.residualRisk.qualitativeRD.id = "";
+    this.dataInput.residualRisk.qualitativeRD.score = 0;
+    this.dataInput.residualRisk.financialImpact.amount = 0;
+    this.dataInput.residualRisk.financialImpact.score = 0;
+    this.dataInput.residualRisk.financialImpact.financialObj.financialId = "";
+    this.dataInput.residualRisk.operationalImpact.loss = 0;
+    this.dataInput.residualRisk.operationalImpact.score = 0;
+    this.dataInput.residualRisk.operationalImpact.operationalObj.operationalId =
+      "";
+    this.dataInput.residualRisk.overallImpact.description = "";
+    this.dataInput.residualRisk.overallImpact.indicatorId = "";
   }
 
   showQLIR() {
@@ -1302,6 +1388,31 @@ export class RiskRegisterComponent {
   reload() {}
 
   save() {
+    if (this.dataInput.riskNo.substring(0, 3) == "DRF") {
+      const savedData = {
+        draftKey: this.dataInput.riskNo,
+        draftJson: JSON.stringify(this.dataInput),
+        division: this.dataInput.divisionDepartment.division.id,
+        department: this.dataInput.divisionDepartment.department.id,
+        type: "RISK",
+        year: moment().format("YYYY"),
+        userUpdated: "Admin",
+        dateUpdated: moment().format(),
+        userCreated: this.draftData.dateCreated,
+        dateCreated: this.draftData.dateCreated
+      };
+      this.service.putreq("draftrisks", savedData).subscribe(
+        response => {
+          console.log(response);
+          this.toastr.success("Draft Deleted!");
+        },
+        error => {
+          console.log(error);
+          this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        }
+      );
+    }
+
     const lastIndex = this.generateCounter();
     let riskNo = this.riskNoGenerate(lastIndex + 1);
     this.dataInput.riskNo = riskNo;
@@ -1362,33 +1473,12 @@ export class RiskRegisterComponent {
       response => {
         console.log(response);
         this.saveControlAccident(savedData.riskNo);
+        this.saveTreatmentNo(savedData.riskNo);
         this.toastr.success("Data Saved!");
       },
       error => {
         console.log(error);
         this.toastr.error("Data Save Failed! Reason: " + error.statusText);
-      }
-    );
-    const savedDraft = {
-      draftKey: this.dataInput.riskNo,
-      draftJson: JSON.stringify(this.dataInput),
-      division: this.dataInput.divisionDepartment.division.id,
-      department: this.dataInput.divisionDepartment.department.id,
-      type:"RISK",
-      year:moment().format('YYYY'),
-      userUpdated: "Admin",
-      dateUpdated: moment().format(),
-      userCreated: this.draftData.dateCreated,
-      dateCreated: this.draftData.dateCreated
-    };
-    this.service.putreq("draftrisks", savedData).subscribe(
-      response => {
-        console.log(response);
-       // this.toastr.success("Draft Saved!");
-      },
-      error => {
-        console.log(error);
-        this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
       }
     );
   }
@@ -1482,6 +1572,42 @@ export class RiskRegisterComponent {
         );
     });
   }
+
+  saveTreatmentNo(riskNo) {
+    this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
+      this.dataInput.expectedRisk.treatmentPlanArr[ind].riskNo = riskNo;
+      this.service
+        .postreq(
+          "TbRTreatmentDetails",
+          this.dataInput.expectedRisk.treatmentPlanArr[ind]
+        )
+        .subscribe(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+
+    this.dataInput.riskDescription.accidentObj.forEach((element, ind) => {
+      this.dataInput.riskDescription.accidentObj[ind].riskNo = riskNo;
+      this.service
+        .postreq(
+          "TbRAccidentDetails",
+          this.dataInput.riskDescription.accidentObj[ind]
+        )
+        .subscribe(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
   //   treatmentPlanSwitch: false,
   //   treatmentPlan: "",
   //   impact: "",
@@ -1500,6 +1626,22 @@ export class RiskRegisterComponent {
       this.dataInput.expectedRisk.PIC = "";
       this.dataInput.expectedRisk.schedule = "";
       this.dataInput.expectedRisk.treatmentPlan = "Accept";
+      this.dataInput.expectedRisk.treatmentPlanArr = [
+        {
+          yearActive: this.yearPeriode,
+          riskNo: "",
+          no: 1,
+          description: "Accept",
+          type: "Preventive",
+          pic: "",
+          dueDate: "",
+          UserCreated: "Admin",
+          DatetimeCreated: moment(),
+          UserUpdate: "Admin",
+          DatetimeUpdate: moment()
+        }
+      ];
+      this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
     } else {
       this.dataInput.expectedRisk.impact = "";
       this.dataInput.expectedRisk.likelihood = "";
@@ -1508,6 +1650,8 @@ export class RiskRegisterComponent {
       this.dataInput.expectedRisk.treatmentPlan = "";
       this.dataInput.expectedRisk.risk.description = "";
       this.dataInput.expectedRisk.risk.indicatorId = "";
+      this.dataInput.expectedRisk.treatmentPlanArr = [];
+      this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
     }
     this.findExpectedRisk();
   }
@@ -1519,8 +1663,8 @@ export class RiskRegisterComponent {
         draftJson: JSON.stringify(this.dataInput),
         division: this.dataInput.divisionDepartment.division.id,
         department: this.dataInput.divisionDepartment.department.id,
-        type:"DRAFT",
-      year:moment().format('YYYY'),
+        type: "DRAFT",
+        year: moment().format("YYYY"),
         userUpdated: "Admin",
         dateUpdated: moment().format(),
         userCreated: this.draftData.dateCreated,
@@ -1544,8 +1688,8 @@ export class RiskRegisterComponent {
         draftJson: JSON.stringify(this.dataInput),
         division: this.dataInput.divisionDepartment.division.id,
         department: this.dataInput.divisionDepartment.department.id,
-        type:"DRAFT",
-      year:moment().format('YYYY'),
+        type: "DRAFT",
+        year: moment().format("YYYY"),
         userUpdated: "Admin",
         dateUpdated: moment().format(),
         userCreated: "Admin",
@@ -1594,13 +1738,88 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.overallImpact.description == "" ||
       this.dataInput.residualRisk.likelihood == "" ||
       this.dataInput.residualRisk.overallRisk.description == "" ||
-      this.dataInput.expectedRisk.treatmentPlan == "" ||
+      this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
       this.dataInput.expectedRisk.impact == "" ||
       this.dataInput.expectedRisk.likelihood == ""
     ) {
-      return true;
+      this.toastr.error("Please Complete The Form!");
+      this.dataInput.activateValidation = true;
     } else {
-      return false;
+      this.save();
     }
   };
+
+  deleteTreatment(event) {
+    event.confirm.resolve();
+    this.dataInput.expectedRisk.treatmentPlanArr = this.dataInput.expectedRisk.treatmentPlanArr.filter(
+      function(item) {
+        return item.no != this.no;
+      },
+      event.data
+    );
+    this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
+      element.no = ind + 1;
+    });
+    this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
+    console.log(this.dataInput.expectedRisk.treatmentPlanArr);
+  }
+  saveTreatment(event) {
+    event.confirm.resolve(event.newData);
+    this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
+      element.no == event.newData.no
+        ? (element.type = event.newData.type)
+        : null;
+    });
+  }
+
+  showTrt() {
+    this.activeModal = this.modalService.open(RiskRegisterTrtComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    // let lastIndex = 1;
+    // for (let data in this.tabledata) {
+    //   if (this.tabledata[data].riskNo == this.myForm.value.riskno) {
+    //     lastIndex < this.tabledata[data].no
+    //       ? (lastIndex = this.tabledata[data].no)
+    //       : null;
+    //   }
+    // }
+
+    // this.activeModal.componentInstance.riskno = this.riskno;
+    let lastIndex = 0;
+    for (let data in this.dataInput.expectedRisk.treatmentPlanArr) {
+      lastIndex <= this.dataInput.expectedRisk.treatmentPlanArr[data].no
+        ? (lastIndex = this.dataInput.expectedRisk.treatmentPlanArr[data].no)
+        : null;
+    }
+    this.activeModal.componentInstance.formData = {
+      yearActive: this.yearPeriode,
+      riskNo: "",
+      no: lastIndex + 1,
+      description: "",
+      type: "",
+      pic: "",
+      dueDate: "",
+      UserCreated: "Admin",
+      DatetimeCreated: moment(),
+      UserUpdate: "Admin",
+      DatetimeUpdate: moment()
+    };
+
+    this.activeModal.result.then(
+      async response => {
+        if (response != null) {
+          // this.tabledata.push(response);
+          // console.log(this.tabledata);
+          // this.reload();
+
+          this.dataInput.expectedRisk.treatmentPlanArr.push(response);
+          this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
+        }
+      },
+      error => {}
+    );
+  }
 }

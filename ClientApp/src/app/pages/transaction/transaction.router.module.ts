@@ -15,6 +15,7 @@ import { RiskRegisterAcdComponent } from "./risk-register/modal/risk.register.ac
 import { RiskRegisterQlComponent } from "./risk-register/modal/risk.register.ql.component";
 import { RiskRegisterCtrComponent } from "./risk-register/modal/risk.register.ctr.component";
 import { ViewDraftComponent } from "./view-draft/view.draft.component";
+import { RiskRegisterTrtComponent } from "./risk-register/modal/risk.register.trt.component";
 const routes: Routes = [
   {
     path: "",
@@ -68,6 +69,7 @@ export const routedComponents = [
   RiskRegisterAcdComponent,
   RiskRegisterQlComponent,
   RiskRegisterCtrComponent,
+  RiskRegisterTrtComponent,
   TransactionComponent,
   ViewDraftComponent
 ];

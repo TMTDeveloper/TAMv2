@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-12 pl-0 pr-0">
           <div class="col-md-12 mt-4 pl-0 pr-0">
-            <ng2-smart-table [settings]="settings" [source]="source" (rowSelect)="refreshSelected($event)">
+            <ng2-smart-table [settings]="settings" [source]="source" (rowSelect)="refreshSelected($event)" (deleteConfirm)="deleteControl($event)">
             </ng2-smart-table>
           </div>
 

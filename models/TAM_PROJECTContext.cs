@@ -28,6 +28,7 @@ namespace tam_risk_project.Models
         public virtual DbSet<Qllov> Qllov { get; set; }
         public virtual DbSet<DraftRisk> DraftRisk { get; set; }
         public virtual DbSet<TbRApprove> TbRApprove { get; set; }
+        public virtual DbSet<TbRTreatmentDetail> TbRTreatmentDetail { get; set; }
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
               : base(options)
         {
@@ -35,7 +36,61 @@ namespace tam_risk_project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TbRTreatmentDetail>(entity =>
+                       {
+                           entity.HasKey(e => new { e.YearActive, e.RiskNo, e.No });
 
+                           entity.ToTable("TB_R_TREATMENT_DETAIL");
+
+                           entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
+
+                           entity.Property(e => e.RiskNo)
+                                               .HasColumnName("RISK_NO")
+                                               .HasMaxLength(16)
+                                               .IsUnicode(false);
+
+                           entity.Property(e => e.No).HasColumnName("NO");
+
+                           entity.Property(e => e.DatetimeCreated)
+                                               .HasColumnName("DATETIME_CREATED")
+                                               .HasColumnType("datetime");
+
+                           entity.Property(e => e.DatetimeUpdate)
+                                               .HasColumnName("DATETIME_UPDATE")
+                                               .HasColumnType("datetime");
+
+                           entity.Property(e => e.Description)
+                                               .HasColumnName("DESCRIPTION")
+                                               .HasMaxLength(100)
+                                               .IsUnicode(false);
+
+                           entity.Property(e => e.Type)
+                                               .HasColumnName("TYPE")
+                                               .HasMaxLength(10)
+                                               .IsUnicode(false);
+
+                           entity.Property(e => e.Pic)
+             .HasColumnName("PIC")
+             .HasMaxLength(100)
+             .IsUnicode(false);
+
+                           entity.Property(e => e.DueDate)
+                                       .HasColumnName("DUE_DATE")
+                                       .HasMaxLength(100)
+                                       .IsUnicode(false);
+
+                           entity.Property(e => e.UserCreated)
+                                               .HasColumnName("USER_CREATED")
+                                               .HasMaxLength(45)
+                                               .IsUnicode(false);
+
+                           entity.Property(e => e.UserUpdate)
+                                               .HasColumnName("USER_UPDATE")
+                                               .HasMaxLength(45)
+                                               .IsUnicode(false);
+
+
+                       });
 
             modelBuilder.Entity<TbRApprove>(entity =>
                     {
