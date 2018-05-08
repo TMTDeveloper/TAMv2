@@ -111,15 +111,16 @@ namespace tam_risk_project.Controllers
         }
 
         // DELETE: api/TbRTreatmentDetails/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTbRTreatmentDetail([FromRoute] short id)
+        [HttpPost("deletecontrol")]
+        public async Task<IActionResult> DeleteTbRTreatmentDetail([FromBody] TbRTreatmentDetail controlDelete)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tbRTreatmentDetail = await _context.TbRTreatmentDetail.SingleOrDefaultAsync(m => m.YearActive == id);
+            var tbRTreatmentDetail = await
+            _context.TbRTreatmentDetail.SingleOrDefaultAsync(e => e.YearActive == controlDelete.YearActive && e.RiskNo == controlDelete.RiskNo && e.No == controlDelete.No);
             if (tbRTreatmentDetail == null)
             {
                 return NotFound();

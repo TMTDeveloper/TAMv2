@@ -55,7 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-      
+
             _context.Entry(tbRAccidentDetail).State = EntityState.Modified;
 
             try
@@ -107,15 +107,15 @@ namespace tam_risk_project.Controllers
         }
 
         // DELETE: api/TbRAccidentDetails/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTbRAccidentDetail([FromRoute] short id)
+        [HttpPost]
+        public async Task<IActionResult> DeleteTbRAccidentDetail([FromBody] TbRAccidentDetail controlDelete)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tbRAccidentDetail = await _context.TbRAccidentDetail.SingleOrDefaultAsync(m => m.YearActive == id);
+            var tbRAccidentDetail = await _context.TbRAccidentDetail.SingleOrDefaultAsync(e => e.YearActive == controlDelete.YearActive && e.AccidentId == controlDelete.AccidentId && e.RiskNo == controlDelete.RiskNo);
             if (tbRAccidentDetail == null)
             {
                 return NotFound();

@@ -4,10 +4,12 @@ import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { BackendService } from "../../@core/data/backend.service";
-
+import { DashboardModalComponent } from "./modal/dashboard.modal.component";
+import { Router } from "@angular/router";
 @Component({
   selector: "ngx-dashboard",
-  templateUrl: "./dashboard.component.html"
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"]
 })
 export class DashboardComponent {
   @ViewChild("myForm") private myForm: NgForm;
@@ -88,12 +90,16 @@ export class DashboardComponent {
   source: LocalDataSource = new LocalDataSource();
 
   tabledata: any[] = [];
-  tableapprove: any[]=[];
+  tableapprove: any[] = [];
   dataapprove: any;
 
   subscription: any;
   activeModal: any;
-  constructor(private modalService: NgbModal, public service: BackendService) {
+  constructor(
+    private modalService: NgbModal,
+    public service: BackendService,
+    public router: Router
+  ) {
     this.buttonDisable = false;
     this.loadData();
     this.loadApprove();
@@ -116,19 +122,19 @@ export class DashboardComponent {
     this.service.getreq("TbRApproves").subscribe(response => {
       if (response != null) {
         const data = response;
-        let find=0;
+        let find = 0;
         console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
           this.tableapprove = data;
-          find=find+1;
+          find = find + 1;
           console.log(this.tableapprove);
           console.log("liatapprove");
         });
         //this.reloadApprove();
-        
-        this.dataapprove=this.tableapprove[find-1];
+
+        this.dataapprove = this.tableapprove[find - 1];
         console.log("dataapprove");
         console.log(this.dataapprove);
       }
@@ -137,7 +143,7 @@ export class DashboardComponent {
 
   ngAfterViewInit() {
     this.source.load(this.tabledata);
-    document.getElementsByClassName('column_name')['0'].style.width = '100px'
+    document.getElementsByClassName("column_name")["0"].style.width = "100px";
   }
 
   comGenerate(lastIndex) {
@@ -247,6 +253,63 @@ export class DashboardComponent {
             };
           });
       }
+    });
+  }
+  showModal(data) {
+    this.activeModal = this.modalService.open(DashboardModalComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.activeModal.componentInstance.formData = {
+      finImpactCategory: data.finImpactCategory,
+      finAmountIr: data.finAmountIr,
+      opAmountIr: data.opAmountIr,
+      opImpactCategory: data.opImpactCategory,
+      finImpactRd: data.finImpactRd,
+      finAmountRd: data.finAmountRd,
+      opImpactRd: data.opImpactRd,
+      opAmountRd: data.opAmountRd,
+      qlImpactIr: data.qlImpactIr,
+      qlImpactRd: data.qlImpactRd,
+      irLikelihood: data.irLikelihood,
+      rdLikelihood: data.rdLikelihood
+    };
+    console.log({
+      finImpactCategory: data.finImpactCategory,
+      finAmountIr: data.finAmountIr,
+      opAmountIr: data.opAmountIr,
+      opImpactCategory: data.opImpactCategory,
+      finImpactRd: data.finImpactRd,
+      finAmountRd: data.finAmountRd,
+      opImpactRd: data.opImpactRd,
+      opAmountRd: data.opAmountRd,
+      qlImpactIr: data.qlImpactIr,
+      qlImpactRd: data.qlImpactRd,
+      irLikelihood: data.irLikelihood,
+      rdLikelihood: data.rdLikelihood
+    });
+  }
+
+  goToPage(riskno) {
+    this.service.getreq("Draftrisks").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        console.log(data);
+        response.forEach(element => {
+          element.draftKey == riskno
+            ? this.router.navigate(["/pages/transaction/risk-register"], {
+                queryParams: {
+                  draftKey: element.draftKey,
+                  draftJson: element.draftJson
+                }
+              })
+            : null;
+        });
+      }
+      // error => {
+      //   console.log(error);
+      // };
     });
   }
 }

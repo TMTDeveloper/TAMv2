@@ -55,7 +55,7 @@ namespace tam_risk_project.Controllers
                 return BadRequest(ModelState);
             }
 
-      
+
 
             _context.Entry(tbRControlDetail).State = EntityState.Modified;
 
@@ -65,7 +65,7 @@ namespace tam_risk_project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TbRControlDetailExists(id))
+                if (!TbRControlDetailExists(tbRControlDetail.YearActive, tbRControlDetail.RiskNo, tbRControlDetail.No))
                 {
                     return NotFound();
                 }
@@ -94,7 +94,7 @@ namespace tam_risk_project.Controllers
             }
             catch (DbUpdateException)
             {
-                if (TbRControlDetailExists(tbRControlDetail.YearActive))
+                if (TbRControlDetailExists(tbRControlDetail.YearActive, tbRControlDetail.RiskNo, tbRControlDetail.No))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -108,15 +108,16 @@ namespace tam_risk_project.Controllers
         }
 
         // DELETE: api/TbRControlDetails/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTbRControlDetail([FromRoute] short id)
+        [HttpPost("deletecontrol")]
+        public async Task<IActionResult> DeleteTbRControlDetail([FromBody] TbRControlDetail controlDelete)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tbRControlDetail = await _context.TbRControlDetail.SingleOrDefaultAsync(m => m.YearActive == id);
+            var tbRControlDetail = await
+             _context.TbRControlDetail.SingleOrDefaultAsync(e => e.YearActive == controlDelete.YearActive && e.RiskNo == controlDelete.RiskNo && e.No == controlDelete.No);
             if (tbRControlDetail == null)
             {
                 return NotFound();
@@ -128,9 +129,9 @@ namespace tam_risk_project.Controllers
             return Ok(tbRControlDetail);
         }
 
-        private bool TbRControlDetailExists(short id)
+        private bool TbRControlDetailExists(short id, string riskno, short no)
         {
-            return _context.TbRControlDetail.Any(e => e.YearActive == id);
+            return _context.TbRControlDetail.Any(e => e.YearActive == id && e.RiskNo == riskno && e.No == no);
         }
     }
 }

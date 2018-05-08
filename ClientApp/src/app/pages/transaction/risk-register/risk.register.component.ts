@@ -232,6 +232,8 @@ export class RiskRegisterComponent {
   };
 
   dataInput = {
+    counterNo: 0,
+    edit: false,
     activateValidation: false,
     draftDisabled: false,
     riskNo: "",
@@ -1388,99 +1390,213 @@ export class RiskRegisterComponent {
   reload() {}
 
   save() {
-    if (this.dataInput.riskNo.substring(0, 3) == "DRF") {
+    if (!this.dataInput.edit) {
+      if (this.dataInput.riskNo.substring(0, 3) == "DRF") {
+        const savedData = {
+          draftKey: this.dataInput.riskNo,
+          draftJson: JSON.stringify(this.dataInput),
+          division: this.dataInput.divisionDepartment.division.id,
+          department: this.dataInput.divisionDepartment.department.id,
+          type: "RISK",
+          year: moment().format("YYYY"),
+          userUpdated: "Admin",
+          dateUpdated: moment().format(),
+          userCreated: this.draftData.dateCreated,
+          dateCreated: this.draftData.dateCreated
+        };
+        this.service.putreq("draftrisks", savedData).subscribe(
+          response => {
+            console.log(response);
+            this.toastr.success("Draft Deleted!");
+          },
+          error => {
+            console.log(error);
+            this.toastr.error(
+              "Draft Delete Failed! Reason: " + error.statusText
+            );
+          }
+        );
+      }
+      console.log("masuksini")
+
+      const lastIndex = this.generateCounter();
+      let riskNo = this.riskNoGenerate(lastIndex + 1);
+      this.dataInput.riskNo = riskNo;
+      this.dataInput.draftDisabled = true;
+
       const savedData = {
-        draftKey: this.dataInput.riskNo,
-        draftJson: JSON.stringify(this.dataInput),
+        yearActive: this.yearPeriode,
+        riskNo: this.dataInput.riskNo,
         division: this.dataInput.divisionDepartment.division.id,
+        companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
         department: this.dataInput.divisionDepartment.department.id,
-        type: "RISK",
-        year: moment().format("YYYY"),
-        userUpdated: "Admin",
-        dateUpdated: moment().format(),
-        userCreated: this.draftData.dateCreated,
-        dateCreated: this.draftData.dateCreated
+        counterNo: lastIndex + 1,
+        departmentKpi: this.dataInput.divisionDepartment.departmentKpi
+          .deptInpId,
+        businessProcess: this.dataInput.divisionDepartment.businessProcess,
+        lossEvent: this.dataInput.riskDescription.lossEvent,
+        caused: this.dataInput.riskDescription.caused,
+        riskImpact: this.loopRiskImpact(),
+        riskLevel: this.dataInput.riskDescription.riskLevel,
+        accidentList: 0,
+        notesIr: this.dataInput.inherentRisk.notes,
+        finImpactIr: this.dataInput.inherentRisk.financialImpact.financialObj
+          .financialId,
+        finAmountIr: this.dataInput.inherentRisk.financialImpact.amount,
+        opImpactIr: this.dataInput.inherentRisk.operationalImpact.operationalObj
+          .operationalId,
+        opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
+        qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
+        irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
+        likelihoodIr: this.dataInput.inherentRisk.likelihood,
+        overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
+        controlList: 0,
+        operationCt: this.dataInput.currentAction.operation,
+        appropriatenessCt: this.dataInput.currentAction.appropriateness
+          .indicatorId,
+        notesRd: this.dataInput.residualRisk.notes,
+        finAmountRd: this.dataInput.residualRisk.financialImpact.amount,
+        opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
+        qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
+        rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
+        likelihoodRd: this.dataInput.residualRisk.likelihood,
+        overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
+        overallEf: this.dataInput.currentAction.overallControl.indicatorId,
+        treatmentPlan: false,
+        treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
+        impactEx: this.dataInput.expectedRisk.impact,
+        likelihoodEx: this.dataInput.expectedRisk.likelihood,
+        overallEx: this.dataInput.expectedRisk.risk.indicatorId,
+        pic: this.dataInput.expectedRisk.PIC,
+        schedule: this.dataInput.expectedRisk.schedule,
+        userCreated: "Admin",
+        datetimeCreated: moment().format(),
+        userUpdate: "Admin",
+        datetimeUpdate: moment().format()
       };
-      this.service.putreq("draftrisks", savedData).subscribe(
+      console.log(JSON.stringify(savedData));
+      console.log(savedData);
+      this.service.postreq("TbRRiskAssessments", savedData).subscribe(
         response => {
           console.log(response);
-          this.toastr.success("Draft Deleted!");
+          this.saveControlAccident(savedData.riskNo);
+          this.saveTreatmentNo(savedData.riskNo);
+          this.dataInput.edit = true;
+          const savedDataRisk = {
+            draftKey: this.dataInput.riskNo,
+            draftJson: JSON.stringify(this.dataInput),
+            division: this.dataInput.divisionDepartment.division.id,
+            department: this.dataInput.divisionDepartment.department.id,
+            type: "RISK",
+            year: moment().format("YYYY"),
+            userUpdated: "Admin",
+            dateUpdated: moment().format(),
+            userCreated: "Admin",
+            dateCreated: moment().format()
+          };
+          this.service.postreq("draftrisks", savedDataRisk).subscribe(
+            response => {
+              console.log(response);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+          this.toastr.success("Data Saved!");
         },
         error => {
           console.log(error);
-          this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+          this.toastr.error("Data Save Failed! Reason: " + error.statusText);
+        }
+      );
+    } else {
+      const savedData = {
+        yearActive: this.yearPeriode,
+        riskNo: this.dataInput.riskNo,
+        division: this.dataInput.divisionDepartment.division.id,
+        companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
+        department: this.dataInput.divisionDepartment.department.id,
+        counterNo: this.dataInput.counterNo,
+        departmentKpi: this.dataInput.divisionDepartment.departmentKpi
+          .deptInpId,
+        businessProcess: this.dataInput.divisionDepartment.businessProcess,
+        lossEvent: this.dataInput.riskDescription.lossEvent,
+        caused: this.dataInput.riskDescription.caused,
+        riskImpact: this.loopRiskImpact(),
+        riskLevel: this.dataInput.riskDescription.riskLevel,
+        accidentList: 0,
+        notesIr: this.dataInput.inherentRisk.notes,
+        finImpactIr: this.dataInput.inherentRisk.financialImpact.financialObj
+          .financialId,
+        finAmountIr: this.dataInput.inherentRisk.financialImpact.amount,
+        opImpactIr: this.dataInput.inherentRisk.operationalImpact.operationalObj
+          .operationalId,
+        opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
+        qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
+        irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
+        likelihoodIr: this.dataInput.inherentRisk.likelihood,
+        overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
+        controlList: 0,
+        operationCt: this.dataInput.currentAction.operation,
+        appropriatenessCt: this.dataInput.currentAction.appropriateness
+          .indicatorId,
+        notesRd: this.dataInput.residualRisk.notes,
+        finAmountRd: this.dataInput.residualRisk.financialImpact.amount,
+        opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
+        qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
+        rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
+        likelihoodRd: this.dataInput.residualRisk.likelihood,
+        overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
+        overallEf: this.dataInput.currentAction.overallControl.indicatorId,
+        treatmentPlan: false,
+        treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
+        impactEx: this.dataInput.expectedRisk.impact,
+        likelihoodEx: this.dataInput.expectedRisk.likelihood,
+        overallEx: this.dataInput.expectedRisk.risk.indicatorId,
+        pic: this.dataInput.expectedRisk.PIC,
+        schedule: this.dataInput.expectedRisk.schedule,
+        userCreated: "Admin",
+        datetimeCreated: moment().format(),
+        userUpdate: "Admin",
+        datetimeUpdate: moment().format()
+      };
+      console.log(JSON.stringify(savedData));
+      console.log(savedData);
+      this.service.putreq("TbRRiskAssessments", savedData).subscribe(
+        response => {
+          console.log(response);
+          this.editTransaction(savedData.riskNo);
+          this.saveControlAccident(savedData.riskNo);
+          this.saveTreatmentNo(savedData.riskNo);
+          this.dataInput.edit = true;
+          const savedDataRisk = {
+            draftKey: this.dataInput.riskNo,
+            draftJson: JSON.stringify(this.dataInput),
+            division: this.dataInput.divisionDepartment.division.id,
+            department: this.dataInput.divisionDepartment.department.id,
+            type: "RISK",
+            year: moment().format("YYYY"),
+            userUpdated: "Admin",
+            dateUpdated: moment().format(),
+            userCreated: this.draftData.dateCreated,
+            dateCreated: this.draftData.dateCreated
+          };
+          this.service.putreq("draftrisks", savedDataRisk).subscribe(
+            response => {
+              console.log(response);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+          this.toastr.success("Data Saved!");
+        },
+        error => {
+          console.log(error);
+          this.toastr.error("Data Save Failed! Reason: " + error.statusText);
         }
       );
     }
-
-    const lastIndex = this.generateCounter();
-    let riskNo = this.riskNoGenerate(lastIndex + 1);
-    this.dataInput.riskNo = riskNo;
-    this.dataInput.draftDisabled = true;
-
-    const savedData = {
-      yearActive: this.yearPeriode,
-      riskNo: this.dataInput.riskNo,
-      division: this.dataInput.divisionDepartment.division.id,
-      companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
-      department: this.dataInput.divisionDepartment.department.id,
-      counterNo: lastIndex + 1,
-      departmentKpi: this.dataInput.divisionDepartment.departmentKpi.deptInpId,
-      businessProcess: this.dataInput.divisionDepartment.businessProcess,
-      lossEvent: this.dataInput.riskDescription.lossEvent,
-      caused: this.dataInput.riskDescription.caused,
-      riskImpact: this.loopRiskImpact(),
-      riskLevel: this.dataInput.riskDescription.riskLevel,
-      accidentList: 0,
-      notesIr: this.dataInput.inherentRisk.notes,
-      finImpactIr: this.dataInput.inherentRisk.financialImpact.financialObj
-        .financialId,
-      finAmountIr: this.dataInput.inherentRisk.financialImpact.amount,
-      opImpactIr: this.dataInput.inherentRisk.operationalImpact.operationalObj
-        .operationalId,
-      opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
-      qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
-      irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
-      likelihoodIr: this.dataInput.inherentRisk.likelihood,
-      overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
-      controlList: 0,
-      operationCt: this.dataInput.currentAction.operation,
-      appropriatenessCt: this.dataInput.currentAction.appropriateness
-        .indicatorId,
-      notesRd: this.dataInput.residualRisk.notes,
-      finAmountRd: this.dataInput.residualRisk.financialImpact.amount,
-      opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
-      qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
-      rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
-      likelihoodRd: this.dataInput.residualRisk.likelihood,
-      overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
-      overallEf: this.dataInput.currentAction.overallControl.indicatorId,
-      treatmentPlan: false,
-      treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
-      impactEx: this.dataInput.expectedRisk.impact,
-      likelihoodEx: this.dataInput.expectedRisk.likelihood,
-      overallEx: this.dataInput.expectedRisk.risk.indicatorId,
-      pic: this.dataInput.expectedRisk.PIC,
-      schedule: this.dataInput.expectedRisk.schedule,
-      userCreated: "Admin",
-      datetimeCreated: moment().format(),
-      userUpdate: "Admin",
-      datetimeUpdate: moment().format()
-    };
-    console.log(JSON.stringify(savedData));
-    console.log(savedData);
-    this.service.postreq("TbRRiskAssessments", savedData).subscribe(
-      response => {
-        console.log(response);
-        this.saveControlAccident(savedData.riskNo);
-        this.saveTreatmentNo(savedData.riskNo);
-        this.toastr.success("Data Saved!");
-      },
-      error => {
-        console.log(error);
-        this.toastr.error("Data Save Failed! Reason: " + error.statusText);
-      }
-    );
   }
 
   loopRiskImpact() {
@@ -1573,6 +1689,75 @@ export class RiskRegisterComponent {
     });
   }
 
+  editTransaction(riskno) {
+    this.service.getreq("TbRControlDetails").subscribe(
+      response => {
+        console.log(response);
+        response.forEach(element => {
+          element.yearActive == this.yearPeriode && element.riskNo == riskno
+            ? this.service
+                .postreq("TbRControlDetails/deletecontrol", element)
+                .subscribe(
+                  response => {
+                    console.log(response);
+                  },
+                  error => {
+                    console.log(error);
+                  }
+                )
+            : null;
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    this.service.getreq("TbRTreatmentDetails").subscribe(
+      response => {
+        console.log(response);
+        response.forEach(element => {
+          element.yearActive == this.yearPeriode && element.riskNo == riskno
+            ? this.service
+                .postreq("TbRTreatmentDetails/deletecontrol", element)
+                .subscribe(
+                  response => {
+                    console.log(response);
+                  },
+                  error => {
+                    console.log(error);
+                  }
+                )
+            : null;
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    this.service.getreq("TbRAccidentDetails").subscribe(
+      response => {
+        console.log(response);
+        response.forEach(element => {
+          element.yearActive == this.yearPeriode && element.riskNo == riskno
+            ? this.service
+                .postreq("TbRAccidentDetails/deletecontrol", element)
+                .subscribe(
+                  response => {
+                    console.log(response);
+                  },
+                  error => {
+                    console.log(error);
+                  }
+                )
+            : null;
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   saveTreatmentNo(riskNo) {
     this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
       this.dataInput.expectedRisk.treatmentPlanArr[ind].riskNo = riskNo;
@@ -1580,23 +1765,6 @@ export class RiskRegisterComponent {
         .postreq(
           "TbRTreatmentDetails",
           this.dataInput.expectedRisk.treatmentPlanArr[ind]
-        )
-        .subscribe(
-          response => {
-            console.log(response);
-          },
-          error => {
-            console.log(error);
-          }
-        );
-    });
-
-    this.dataInput.riskDescription.accidentObj.forEach((element, ind) => {
-      this.dataInput.riskDescription.accidentObj[ind].riskNo = riskNo;
-      this.service
-        .postreq(
-          "TbRAccidentDetails",
-          this.dataInput.riskDescription.accidentObj[ind]
         )
         .subscribe(
           response => {
