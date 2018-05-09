@@ -441,4 +441,18 @@ export class ChartjsComponent {
     this.svg = event;
     this.heatmapRaster();
   }
+
+  insertSpace(data: string) {
+    console.log(data);
+    let arrString = [];
+    let lastPosition = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (data.slice(i - 1, i) == ",") {
+        arrString.push(data.slice(lastPosition, i));
+        lastPosition = i;
+      }
+    }
+
+    return arrString;
+  }
 }

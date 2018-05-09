@@ -411,7 +411,12 @@
                     <td>{{ item.irImpact }}</td>
                     <td>{{ item.irLikelihood }}</td>
                     <td>{{ item.irOverall }}</td>
-                    <td>{{ item.control}}</td>
+                    <td>
+                      <div *ngFor="let data of insertSpace(item.control)">
+                        {{data}}
+                        <br>
+                      </div>
+                    </td>
                     <td>{{ item.rdImpact }}</td>
                     <td>{{ item.rdLikelihood }}</td>
                     <td>{{ item.rdOverall }}</td>
