@@ -443,7 +443,6 @@ export class ChartjsComponent {
   }
 
   insertSpace(data: string) {
-    console.log(data);
     let arrString = [];
     let lastPosition = 0;
     for (let i = 0; i <= data.length; i++) {
@@ -451,7 +450,7 @@ export class ChartjsComponent {
         arrString.push(data.slice(lastPosition, i));
         lastPosition = i;
       }
-      if(i==data.length){
+      if (i == data.length) {
         arrString.push(data.slice(lastPosition, i));
       }
     }

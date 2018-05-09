@@ -75,7 +75,15 @@ export class ChartComponent implements OnInit {
               this.getData("irdata") != null ? this.getData("irdata") : "";
             let RD =
               this.getData("rddata") != null ? this.getData("rddata") : "";
-            return "IR: " + IR + "<br/>" + "RD: " + RD;
+            return (
+              "<span style='color:yellow'>" +
+              IR +
+              "</span>" +
+              "<br/>" +
+              "<span style='color:blue'>" +
+              RD +
+              "</span>"
+            );
           } else {
             return (
               "<span style='font-size:14px'>" + namesList[this.heat] + "</span>"
@@ -198,11 +206,13 @@ export class ChartComponent implements OnInit {
       .minFontSize(4)
       .format(function() {
         return (
-          "IR: " +
+          "<font color='yellow'>" +
           this.getData("irdata") +
+          "</font>" +
           "<br/>" +
-          "RD: " +
-          this.getData("rddata")
+          "<font color='blue'>" +
+          this.getData("rddata") +
+          "</font>"
         );
       });
   }
