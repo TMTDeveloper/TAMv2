@@ -1417,7 +1417,7 @@ export class RiskRegisterComponent {
           }
         );
       }
-      console.log("masuksini")
+      console.log("masuksini");
 
       const lastIndex = this.generateCounter();
       let riskNo = this.riskNoGenerate(lastIndex + 1);
@@ -1566,8 +1566,7 @@ export class RiskRegisterComponent {
         response => {
           console.log(response);
           this.editTransaction(savedData.riskNo);
-          this.saveControlAccident(savedData.riskNo);
-          this.saveTreatmentNo(savedData.riskNo);
+
           this.dataInput.edit = true;
           const savedDataRisk = {
             draftKey: this.dataInput.riskNo,
@@ -1578,8 +1577,8 @@ export class RiskRegisterComponent {
             year: moment().format("YYYY"),
             userUpdated: "Admin",
             dateUpdated: moment().format(),
-            userCreated: this.draftData.dateCreated,
-            dateCreated: this.draftData.dateCreated
+            userCreated: "Admin",
+            dateCreated: moment().format()
           };
           this.service.putreq("draftrisks", savedDataRisk).subscribe(
             response => {
@@ -1707,50 +1706,53 @@ export class RiskRegisterComponent {
                 )
             : null;
         });
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    this.service.getreq("TbRTreatmentDetails").subscribe(
-      response => {
-        console.log(response);
-        response.forEach(element => {
-          element.yearActive == this.yearPeriode && element.riskNo == riskno
-            ? this.service
-                .postreq("TbRTreatmentDetails/deletecontrol", element)
-                .subscribe(
-                  response => {
-                    console.log(response);
-                  },
-                  error => {
-                    console.log(error);
-                  }
-                )
-            : null;
-        });
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    this.service.getreq("TbRAccidentDetails").subscribe(
-      response => {
-        console.log(response);
-        response.forEach(element => {
-          element.yearActive == this.yearPeriode && element.riskNo == riskno
-            ? this.service
-                .postreq("TbRAccidentDetails/deletecontrol", element)
-                .subscribe(
-                  response => {
-                    console.log(response);
-                  },
-                  error => {
-                    console.log(error);
-                  }
-                )
-            : null;
-        });
+        this.service.getreq("TbRTreatmentDetails").subscribe(
+          response => {
+            console.log(response);
+            response.forEach(element => {
+              element.yearActive == this.yearPeriode && element.riskNo == riskno
+                ? this.service
+                    .postreq("TbRTreatmentDetails/deletecontrol", element)
+                    .subscribe(
+                      response => {
+                        console.log(response);
+                      },
+                      error => {
+                        console.log(error);
+                      }
+                    )
+                : null;
+            });
+            this.service.getreq("TbRAccidentDetails").subscribe(
+              response => {
+                console.log(response);
+                response.forEach(element => {
+                  element.yearActive == this.yearPeriode &&
+                  element.riskNo == riskno
+                    ? this.service
+                        .postreq("TbRAccidentDetails/deletecontrol", element)
+                        .subscribe(
+                          response => {
+                            console.log(response);
+                          },
+                          error => {
+                            console.log(error);
+                          }
+                        )
+                    : null;
+                });
+                this.saveControlAccident(riskno);
+                this.saveTreatmentNo(riskno);
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          },
+          error => {
+            console.log(error);
+          }
+        );
       },
       error => {
         console.log(error);

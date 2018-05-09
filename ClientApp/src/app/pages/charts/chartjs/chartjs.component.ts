@@ -184,7 +184,7 @@ export class ChartjsComponent {
   ineffectivedata: any[] = [];
   weakdata: any[] = [];
   approvedata: any;
-  tableapprove: any[]=[];
+  tableapprove: any[] = [];
 
   svg: string;
   subscription: any;
@@ -227,19 +227,18 @@ export class ChartjsComponent {
   }
 
   reloadApprove() {
-    let year = moment().format("YYYY");;
+    let year = moment().format("YYYY");
     let arr = this.tableapprove.filter(item => {
-      return item.division=="ISTD"
-
+      return item.division == "ISTD";
     });
-   // console.log(arr[0] != null);
+    // console.log(arr[0] != null);
     if (arr[0] != null) {
       console.log("masukapprove");
-      this.approvedata= arr[0];
+      this.approvedata = arr[0];
       console.log(this.approvedata);
-    } 
+    }
   }
-  
+
   showModal(no_iku) {
     this.activeModal = this.modalService.open(ReportApproveModalComponent, {
       windowClass: "xlModal",
@@ -249,8 +248,8 @@ export class ChartjsComponent {
     let lastIndex = 0;
     for (let data in this.tableapprove) {
       if (
-        this.tableapprove[data].yearActive == moment().format('YYYY')&&
-        this.tableapprove[data].division == "ISTD"&&
+        this.tableapprove[data].yearActive == moment().format("YYYY") &&
+        this.tableapprove[data].division == "ISTD" &&
         this.tableapprove[data].department == "IS"
       ) {
         lastIndex <= this.tableapprove[data].counterNo
@@ -259,14 +258,13 @@ export class ChartjsComponent {
       }
     }
 
-    
     this.activeModal.componentInstance.formData = {
-      yearActive: moment().format('YYYY'),
-      division:"ISTD",
-      department:"IS",
+      yearActive: moment().format("YYYY"),
+      division: "ISTD",
+      department: "IS",
       counterNo: lastIndex + 1,
-      stat:"APPROVE",
-      notes:"",
+      stat: "APPROVE",
+      notes: "",
       userCreated: "Admin",
       datetimeCreated: moment().format(),
       userUpdate: "Admin",
@@ -277,7 +275,7 @@ export class ChartjsComponent {
     this.activeModal.result.then(
       async response => {
         if (response != false) {
-          console.log(this.tableapprove)
+          console.log(this.tableapprove);
           this.tableapprove.push(response);
           this.submit();
           this.reloadApprove();
@@ -295,7 +293,7 @@ export class ChartjsComponent {
             //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-             // console.log(error);
+              // console.log(error);
             };
           })
       : null;
@@ -306,10 +304,10 @@ export class ChartjsComponent {
         this.service
           .postreq("TbRApproves", this.tableapprove[index])
           .subscribe(response => {
-           // console.log(response);
+            // console.log(response);
             this.tabledata[index].status = "0";
             error => {
-             // console.log(error);
+              // console.log(error);
             };
           });
       }
@@ -328,6 +326,7 @@ export class ChartjsComponent {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
           this.tabledata = data;
+          console.log(this.tabledata);
           let arr1 = this.tabledata.filter(item => {
             return item.efOverall === "Effective";
           });
@@ -389,11 +388,11 @@ export class ChartjsComponent {
       var height = canvas.height;
       var imgData = canvas.toDataURL("image/png");
       var doc = new jsPDF({
-        orientation: id=="print_tab1"?"portrait":"landscape",
+        orientation: id == "print_tab1" ? "portrait" : "landscape",
         unit: "mm",
         format: [Math.floor(width * 0.264583), Math.floor(height * 0.264583)]
       });
-      doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 1, 5);
+      doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 0, 0);
       doc.save(`Report-${Date.now()}.pdf`);
     });
   }
