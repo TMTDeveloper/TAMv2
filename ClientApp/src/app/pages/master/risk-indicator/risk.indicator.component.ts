@@ -190,7 +190,7 @@ export class RiskIndicatorComponent {
     console.log(this.myForm.value.condition);
   }
 
-  showModal(no_iku) {
+  showModal() {
     this.activeModal = this.modalService.open(RiskIndicatorModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",

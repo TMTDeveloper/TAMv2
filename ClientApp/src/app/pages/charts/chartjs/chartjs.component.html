@@ -10,8 +10,8 @@
         </select>
       </div>
 
-      <label class="col-sm-1 col-form-label">Department</label>
-      <div class="col-sm-5">
+      <label class="col-sm-2 col-form-label">Department</label>
+      <div class="col-sm-4">
         <select class="form-control" name="department" [(ngModel)]="dataInput.department" required (change)="reload()">
           <option *ngFor="let data of department" value="{{data}}">{{data.desc}}</option>
         </select>
@@ -276,7 +276,7 @@
         </div>
 
       </nb-tab>
-      <nb-tab tabTitle="Simplify Report">
+      <nb-tab tabTitle="List Report">
         <div class="printclass2" id="print_tab2">
           <div class="row">
             <div class="col">

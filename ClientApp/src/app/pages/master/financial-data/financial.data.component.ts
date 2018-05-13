@@ -13,6 +13,7 @@ import { isNullOrUndefined } from "util";
 })
 export class FinancialDataComponent {
   @ViewChild("myForm") private myForm: NgForm;
+  buttonDisable:boolean;
 
   year: any[] = [
     {
@@ -120,6 +121,7 @@ export class FinancialDataComponent {
     public service: BackendService
   ) {
     this.loadData();
+    this.buttonDisable=false;
   }
   loadData() {
     this.service.getreq("TbMFinancialDatas").subscribe(response => {
@@ -195,6 +197,13 @@ export class FinancialDataComponent {
         datetimeUpdate: moment().format(),
         status: "1"
       };
+    }
+    switch (this.myForm.value.yearPeriode) {
+      case moment().format('YYYY'):
+        this.buttonDisable =false;
+        break;
+      default:
+      this.buttonDisable =true;
     }
   }
 

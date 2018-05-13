@@ -187,7 +187,7 @@ export class RiskReminderComponent {
     //console.log(this.myForm.value.condition);
   }
 
-  showModal(no_iku) {
+  showModal() {
     this.activeModal = this.modalService.open(RiskReminderModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
@@ -234,7 +234,7 @@ export class RiskReminderComponent {
     });
   }
 
-  showManual(no_iku) {
+  showManual() {
     this.activeModal = this.modalService.open(RiskReminderManualComponent, {
       windowClass: "xlModal",
       container: "nb-layout",

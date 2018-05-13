@@ -305,7 +305,7 @@ export class RiskMatriksIndicatorComponent {
       });
   }
 
-  showModal(no_iku) {
+  showModal() {
     this.activeModal = this.modalService.open(
       RiskMatriksIndicatorModalComponent,
       {

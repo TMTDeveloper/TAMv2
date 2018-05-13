@@ -12,6 +12,7 @@ export class RiskReminderManualComponent {
     counterNo: string;
     yearActive: string;
     typeSend: string;
+    bodySend: string;
     dateSend: string;
     userSend: string;
     status: string;

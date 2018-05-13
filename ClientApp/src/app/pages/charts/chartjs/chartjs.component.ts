@@ -174,8 +174,14 @@ export class ChartjsComponent {
   };
 
   dataInput = {
-    division: {},
-    department: {}
+    division: {
+        data: "",
+        desc: ""
+    },
+    department: {
+      data: "",
+      desc: ""
+    }
   };
 
   tabledata: any[] = [];
@@ -239,7 +245,21 @@ export class ChartjsComponent {
     }
   }
 
-  showModal(no_iku) {
+  reload() {
+    let year = moment().format("YYYY");
+    let arr = this.tableapprove.filter(item => {
+      return item.division == "ISTD";
+    });
+    // console.log(arr[0] != null);
+    if (arr[0] != null) {
+      console.log("masukapprove");
+      this.approvedata = arr[0];
+      console.log(this.approvedata);
+    }
+  }
+
+
+  showModal() {
     this.activeModal = this.modalService.open(ReportApproveModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",

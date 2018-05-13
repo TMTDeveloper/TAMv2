@@ -11,13 +11,17 @@ export class AccidentInputModalComponent {
   condition: any = [];
   formData: {
     yearActive: string;
-    condition: string;
     counterNo: string;
     division: string;
     departement: string;
-    date:string;
-    comInpId: string;
+    accidentId: string;
+    dateAccident:string;
     description: string;
+    relatedParties: string,
+    financialImpact: string,
+    otherImpact: string,
+    currentAction: string,
+    nextAction: string,
     flagActive: string;
     userCreated: string;
     datetimeCreated: string;

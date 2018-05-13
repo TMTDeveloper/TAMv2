@@ -167,7 +167,7 @@ export class DeptInputComponent {
     console.log(this.myForm.value.condition);
   }
 
-  showModal(no_iku) {
+  showModal() {
     this.activeModal = this.modalService.open(DeptInputModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
