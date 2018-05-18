@@ -93,7 +93,7 @@ export class ChartComponent implements OnInit {
             );
           } else {
             return (
-              "<span style='font-size:14px'>" + namesList[this.heat] + "</span>"
+              "<span style='font-size:20px'>" + namesList[this.heat] + "</span>"
             );
           }
         });

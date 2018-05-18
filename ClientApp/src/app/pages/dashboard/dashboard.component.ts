@@ -6,6 +6,8 @@ import * as moment from "moment";
 import { BackendService } from "../../@core/data/backend.service";
 import { DashboardModalComponent } from "./modal/dashboard.modal.component";
 import { Router } from "@angular/router";
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 @Component({
   selector: "ngx-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -104,7 +106,7 @@ export class DashboardComponent {
     this.buttonDisable = false;
     this.loadData();
     this.loadApprove();
-    this.riskstat ='Not Yet Submitted'
+    this.riskstat ='Not Yet Submitted'    
   }
   loadData() {
     this.service.getreq("Riskreports").subscribe(response => {
@@ -300,6 +302,20 @@ export class DashboardComponent {
     });
   }
 
+  saveCSV()
+  {
+    console.log(this.tabledata);
+    var options = { 
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true, 
+      showTitle: false/*,
+      headers: ['Year', 'No', 'Risk No',]*/
+    };
+
+    new Angular2Csv(this.tabledata, 'My Report',options);
+  }
   goToPage(riskno) {
     this.service.getreq("Draftrisks").subscribe(response => {
       if (response != null) {

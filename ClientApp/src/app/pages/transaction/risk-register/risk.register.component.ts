@@ -12,6 +12,7 @@ import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 @Component({
   selector: "ngx-risk-register",
   templateUrl: "./risk.register.component.html",
@@ -30,6 +31,9 @@ export class RiskRegisterComponent {
       title: "Corrective"
     }
   ];
+  optionsModel: number[];
+  myOptions: IMultiSelectOption[];
+  multiSelect: any[];
   accidentset: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -470,6 +474,8 @@ export class RiskRegisterComponent {
     this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
     this.controlSrc.load(this.dataInput.currentAction.controls);
     this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
+
+
   }
 
   getListRiskIndicator(value) {
@@ -496,6 +502,23 @@ export class RiskRegisterComponent {
             : data[ind].score.toString();
           this.riskIndicatorData = data;
         });
+        let yearPeriode = this.yearPeriode;
+    let arr = this.riskIndicatorData.filter(function(item) {
+      return item.condition =='RTP' && item.yearActive == yearPeriode && item.flagActive == 'Y';
+    });
+    if (arr[0] != null) {
+      this.multiSelect= this.riskIndicatorData.filter(function(item) {
+        return item.condition == 'RTP' && item.yearActive == yearPeriode && item.flagActive == 'Y';
+      });
+    }
+
+    this.myOptions = [
+      { id: this.multiSelect[0].description , name: this.multiSelect[0].description},
+      { id: this.multiSelect[1].description , name: this.multiSelect[1].description},
+      { id: this.multiSelect[2].description , name: this.multiSelect[2].description},
+      { id: this.multiSelect[3].description , name: this.multiSelect[3].description}
+  ];
+
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
           if (response != null) {
             this.riskAssessmentData = response;
@@ -503,6 +526,7 @@ export class RiskRegisterComponent {
         });
       }
     });
+
   }
 
   ngOnInit() {
@@ -514,6 +538,7 @@ export class RiskRegisterComponent {
         this.controlSrc.load(this.dataInput.currentAction.controls);
         this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
       }
+
     });
   }
 

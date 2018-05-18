@@ -6,6 +6,10 @@ import { DeptInputModalComponent } from "./modal/dept.input.modal.component"; //
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 @Component({
   selector: "ngx-dept-input",
   templateUrl: "./dept.input.component.html"
@@ -14,6 +18,13 @@ export class DeptInputComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
   yearPeriode: any = moment().format("YYYY");
+  
+
+  optionsModel: number[];
+  myOptions: IMultiSelectOption[];
+
+ 
+
   settings: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -131,6 +142,7 @@ export class DeptInputComponent {
   ) {
     this.buttonDisable= false;
     this.loadData();
+    
   }
   loadData() {
     this.service.getreq("TbMDeptInputs").subscribe(response => {

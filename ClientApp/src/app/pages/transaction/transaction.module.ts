@@ -17,11 +17,15 @@ import { DeptInputModalComponent } from "./dept-input/modal/dept.input.modal.com
 import { ToastrModule } from "ngx-toastr";
 import { BackendService } from "../../@core/data/backend.service";
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+
+
 @NgModule({
   imports: [
     ThemeModule,
     Ng2SmartTableModule,
     TransactionRouterModule,
+    MultiselectDropdownModule,
     CurrencyMaskModule,
     ToastrModule.forRoot()
   ],

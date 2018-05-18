@@ -98,8 +98,8 @@
           <div class="row">
             <canvas id="liveDemoCanvas" width="500px" height="300px"></canvas>
 
-            <div class="col-lg-2">
-              <table class="table table-condensed">
+            <div class="col-lg-4">
+              <table class="table table-bordered">
                 <font size="1">
                   <thead>
                     <tr>
@@ -112,7 +112,7 @@
                     <tr>
                       <th>No</th>
                       <th>Risk&nbsp;No</th>
-                      <th>Loss&nbsp;Event</th>
+                      <th>Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
                     </tr>
                   </thead>
@@ -155,116 +155,109 @@
 
           <div class="form-group row">
 
-            <div class="col-lg-3">
+            <div class="col-lg-1">
               <table class="table table-condensed">
                 <font size="1">
                   <thead>
                     <tr>
-                      <th bgcolor="33FFC1"></th>
+  
                       <th bgcolor="33FFC1">Effective</th>
-                      <th bgcolor="33FFC1"></th>
+   
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <th>Risk&nbsp;No</th>
-                      <th>Before</th>
-                      <th>After</th>
+ 
+
 
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of effectivedata">
                       <td>{{ item.riskNo }}</td>
-                      <td>{{ item.irOverall }}</td>
-                      <td>{{ item.rdOverall }}</td>
+
 
                     </tr>
                   </tbody>
                 </font>
               </table>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-1">
               <table class="table table-condensed">
                 <font size="1">
                   <thead>
                     <tr>
-                      <th bgcolor="33FFC1"></th>
+
                       <th bgcolor="33FFC1">Moderate</th>
-                      <th bgcolor="33FFC1"></th>
+
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <th>Risk&nbsp;No</th>
-                      <th>Before</th>
-                      <th>After</th>
+
 
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of moderatedata">
                       <td>{{ item.riskNo }}</td>
-                      <td>{{ item.irOverall }}</td>
-                      <td>{{ item.rdOverall }}</td>
+
 
                     </tr>
                   </tbody>
                 </font>
               </table>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-1">
               <table class="table table-condensed">
                 <font size="1">
                   <thead>
                     <tr>
-                      <th bgcolor="33FFC1"></th>
+
                       <th bgcolor="33FFC1">Ineffective</th>
-                      <th bgcolor="33FFC1"></th>
+
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <th>Risk&nbsp;No</th>
-                      <th>Before</th>
-                      <th>After</th>
+
 
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of ineffectivedata">
                       <td>{{ item.riskNo }}</td>
-                      <td>{{ item.irOverall }}</td>
-                      <td>{{ item.rdOverall }}</td>
+
 
                     </tr>
                   </tbody>
                 </font>
               </table>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-1">
               <table class="table table-condensed">
                 <font size="1">
                   <thead>
                     <tr>
-                      <th bgcolor="33FFC1"></th>
+ 
                       <th bgcolor="33FFC1">Weak</th>
-                      <th bgcolor="33FFC1"></th>
+
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <th>Risk&nbsp;No</th>
-                      <th>Before</th>
-                      <th>After</th>
+
 
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of weakdata">
                       <td>{{ item.riskNo }}</td>
-                      <td>{{ item.irOverall }}</td>
-                      <td>{{ item.rdOverall }}</td>
+
 
                     </tr>
                   </tbody>
