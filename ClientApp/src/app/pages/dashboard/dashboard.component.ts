@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 export class DashboardComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
+  riskstat: any;
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -103,6 +104,7 @@ export class DashboardComponent {
     this.buttonDisable = false;
     this.loadData();
     this.loadApprove();
+    this.riskstat ='Not Yet Submitted'
   }
   loadData() {
     this.service.getreq("Riskreports").subscribe(response => {
@@ -225,6 +227,13 @@ export class DashboardComponent {
         break;
       default:
         this.buttonDisable = true;
+    }
+    switch (this.dataapprove.stat) {
+      case "submit":
+        this.riskstat='Submit'
+      break;
+      default:
+      this.riskstat='Not Yet Submitted'
     }
   }
   submit(event?) {

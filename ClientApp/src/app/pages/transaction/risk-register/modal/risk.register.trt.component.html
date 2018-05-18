@@ -29,11 +29,9 @@
           <input type="text" class="form-control" name="description" placeholder="Due Date" [(ngModel)]="formData.dueDate">
         </div>
       </div>
-      <div class="col-sm-auto">
-        <div class="form-group">
+
           <button type="submit" class="btn btn-danger">Submit</button>
-        </div>
-      </div>
+          <button type="submit" class="btn btn-success" (click)="closeModal()">Close</button>
     </form>
   </nb-card-body>
 </nb-card>

@@ -154,7 +154,6 @@ export class DeptInputComponent {
       .load(this.tabledata)
       .then(resp => {
         this.myForm.setValue({
-          condition: "DEP",
           yearPeriode: moment().format("YYYY"),
           division:"ISTD",
           departement:"IS"
@@ -164,7 +163,6 @@ export class DeptInputComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
   }
 
   showModal() {
@@ -177,7 +175,6 @@ export class DeptInputComponent {
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].condition == this.myForm.value.condition  &&
         this.tabledata[data].division == this.myForm.value.division  &&
         this.tabledata[data].departement == this.myForm.value.departement
       ) {
@@ -188,10 +185,9 @@ export class DeptInputComponent {
     }
 
     const deptInpId = this.comGenerate(lastIndex + 1);
-    this.activeModal.componentInstance.condition = this.condition;
     this.activeModal.componentInstance.formData = {
       yearActive: this.myForm.value.yearPeriode,
-      condition: this.myForm.value.condition,
+      condition: 'DEP',
       counterNo: lastIndex + 1,
       division: this.myForm.value.division,
       departement: this.myForm.value.departement,
@@ -285,7 +281,6 @@ export class DeptInputComponent {
     };
     this.source.setFilter(
       [
-        { field: "condition", search: this.myForm.value.condition },
         { field: "yearActive", search: this.myForm.value.yearPeriode },
         { field: "division", search: this.myForm.value.division },
         { field: "departement", search: this.myForm.value.departement }

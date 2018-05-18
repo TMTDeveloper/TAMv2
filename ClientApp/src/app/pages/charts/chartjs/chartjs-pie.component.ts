@@ -95,7 +95,6 @@ export class ChartjsPieComponent implements OnDestroy {
     
     
           this.data = {
-            labels: ['Effective', 'Moderate', 'Ineffective','Weak'],
             datasets: [{
               data: [this.chartdata.ctrEff, this.chartdata.ctrMod, this.chartdata.ctrIff,this.chartdata.ctrWeak],
               backgroundColor: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight],
@@ -104,7 +103,8 @@ export class ChartjsPieComponent implements OnDestroy {
     
           this.options = {
             maintainAspectRatio: true,
-            responsive: false,
+            showTooltips: false,
+            responsive: true,
             scales: {
               xAxes: [
                 {
@@ -117,11 +117,7 @@ export class ChartjsPieComponent implements OnDestroy {
                 },
               ],
             },
-            legend: {
-              labels: {
-                fontColor: chartjs.textColor,
-              },
-            },
+            
           };
         });
       }

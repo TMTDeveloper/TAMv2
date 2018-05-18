@@ -1,8 +1,11 @@
 <nb-card>
   <nb-card-header>
     <div class="form-group row">
-      <div class="col-lg-10">
+      <div class="col-lg-8">
         Risk Overview
+      </div>
+      <div class="col-sm-3">
+        Status: {{this.riskstat}}
       </div>
       <nb-actions size="medium">
         <nb-action icon="nb-email"></nb-action>
@@ -14,14 +17,14 @@
     <div class="col-md-12">
       <div class="form-group row">
         <label class="col-md-2 mt-3">Division</label>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
           <select class="form-control" name="division" ngModel required (change)="reload()">
             <option *ngFor="let data of division" value="{{data.data}}">{{data.desc}}</option>
           </select>
         </div>
         <label class="col-md-2 mt-3">Department</label>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <select class="form-control" name="department" ngModel required (change)="reload()">
             <option *ngFor="let data of department" value="{{data.data}}">{{data.desc}}</option>
           </select>

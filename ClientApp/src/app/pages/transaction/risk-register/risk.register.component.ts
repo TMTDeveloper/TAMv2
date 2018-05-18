@@ -146,7 +146,7 @@ export class RiskRegisterComponent {
         }
       },
       pic: {
-        title: "Description",
+        title: "PIC",
         type: "string",
         filter: false,
         editable: true,
@@ -402,6 +402,10 @@ export class RiskRegisterComponent {
 
   financialImpact = [
     {
+      data: "",
+      desc: ""
+    },
+    {
       data: "NEP",
       desc: "Net Profit"
     },
@@ -424,6 +428,10 @@ export class RiskRegisterComponent {
   ];
 
   operationalImpact = [
+    {
+      data: "",
+      desc: ""
+    },
     {
       data: "MAS",
       desc: "M/S"
@@ -467,11 +475,11 @@ export class RiskRegisterComponent {
   getListRiskIndicator(value) {
     let yearPeriode = this.yearPeriode;
     let arr = this.riskIndicatorData.filter(function(item) {
-      return item.condition == value && item.yearActive == yearPeriode;
+      return item.condition == value && item.yearActive == yearPeriode && item.flagActive == 'Y';
     });
     if (arr[0] != null) {
       return this.riskIndicatorData.filter(function(item) {
-        return item.condition == value && item.yearActive == yearPeriode;
+        return item.condition == value && item.yearActive == yearPeriode && item.flagActive == 'Y';
       });
     }
   }
@@ -1598,7 +1606,7 @@ export class RiskRegisterComponent {
     }
   }
 
-  loopRiskImpact() {
+ public loopRiskImpact() {
     let data = "";
 
     for (let i = 0; i < this.dataInput.riskDescription.riskImpact.length; i++) {
@@ -1802,7 +1810,7 @@ export class RiskRegisterComponent {
           riskNo: "",
           no: 1,
           description: "Accept",
-          type: "Preventive",
+          type: "",
           pic: "",
           dueDate: "",
           UserCreated: "Admin",

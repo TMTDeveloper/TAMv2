@@ -1,11 +1,11 @@
 <nb-card>
-  <nb-card-header>Input Accident</nb-card-header>
+  <nb-card-header>Detail Risk</nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-lg-6">
         <h5>Inherent Risk</h5>
         <div *ngIf="formData.finAmountIr>0 && formData.finImpactCategory" class="mt-1">
-          <h6>Financial</h6>
+          <h6>Financial Impact</h6>
           <div class="form-group row">
             <label class="col-md-2 mt-3">Category
             </label>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div *ngIf="formData.opAmountIr>0 && formData.opImpactCategory" class="mt-1">
-          <h6>Operational</h6>
+          <h6>Operational Impact</h6>
           <div class="form-group row">
             <label class="col-md-2 mt-3">Category
             </label>
@@ -47,7 +47,7 @@
         <div *ngIf="formData.qlImpactIr" class="mt-3">
 
           <div class="form-group row">
-            <label class="col-md-2 mt-3">Qualitative
+            <label class="col-md-2 mt-3">Qualitative Impact
             </label>
             <div class="col-md-6">
 
@@ -70,7 +70,7 @@
       <div class="col-lg-6">
         <h5>Residual Risk</h5>
         <div *ngIf="formData.finAmountRd>0 && formData.finImpactCategory" class="mt-1">
-          <h6>Financial</h6>
+          <h6>Financial Impact</h6>
           <div class="form-group row">
             <label class="col-md-2 mt-3">Category
             </label>
@@ -90,7 +90,7 @@
           </div>
         </div>
         <div *ngIf="formData.opAmountRd>0 && formData.opImpactCategory" class="mt-1">
-          <h6>Operational</h6>
+          <h6>Operational Impact</h6>
           <div class="form-group row">
             <label class="col-md-2 mt-3">Category
             </label>
@@ -112,7 +112,7 @@
         <div *ngIf="formData.qlImpactRd" class="mt-3">
 
           <div class="form-group row">
-            <label class="col-md-2 mt-3">Qualitative
+            <label class="col-md-2 mt-3">Qualitative Impact
             </label>
             <div class="col-md-6">
 

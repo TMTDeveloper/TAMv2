@@ -4,11 +4,11 @@
     <div class="form-group row">
       <label class="col-sm-1 col-form-label ">Year</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" [(ngModel)]="yearPeriode" disabled="true">
+        <input style="background-color:gainsboro;" type="text" class="form-control" [(ngModel)]="yearPeriode" disabled="true">
       </div>
       <label class="col-sm-1 col-form-label">Risk No</label>
       <div class="col-sm-3">
-        <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.riskNo">
+        <input style="background-color:gainsboro;" type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.riskNo">
       </div>
       <div class="row mt-2 ml-1">
         <div class="col-sm-auto">
@@ -26,13 +26,13 @@
           <div class="form-group row">
             <label for="division" class="col-sm-2 col-form-label">Division</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="division" [(ngModel)]="dataInput.divisionDepartment.division.desc">
+              <input style="background-color:gainsboro;" type="text" class="form-control" id="division" [(ngModel)]="dataInput.divisionDepartment.division.desc">
             </div>
           </div>
           <div class="form-group row">
             <label for="department" class="col-sm-2 col-form-label">Department</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="department" [(ngModel)]="dataInput.divisionDepartment.department.desc">
+              <input style="background-color:gainsboro;" type="text" class="form-control" id="department" [(ngModel)]="dataInput.divisionDepartment.department.desc">
             </div>
           </div>
 
@@ -48,7 +48,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-12">
-              <textarea readonly="true" rows="3" type="text" [ngClass]="dataInput.divisionDepartment.companyKpi.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <textarea  readonly="true" rows="3" type="text" [ngClass]="dataInput.divisionDepartment.companyKpi.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.divisionDepartment.companyKpi.description"></textarea>
             </div>
           </div>
@@ -119,6 +119,9 @@
                 name="risk_impact" [(ngModel)]="dataInput.riskDescription.riskImpact">
                 <option *ngFor="let data of getListRiskIndicator('RTP')" value="{{data.description}}">{{data.description}}</option>
               </select>
+            </div>
+            <div class="col-sm-4">
+              <textarea rows="3" type="text" class="form-control" readonly="true">{{loopRiskImpact()}}</textarea>
             </div>
           </div>
           <div class="form-group row">
@@ -231,7 +234,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.inherentRisk.overallImpact.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.inherentRisk.overallImpact.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.inherentRisk.overallImpact.description">
             </div>
           </div>
@@ -254,7 +257,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.inherentRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.inherentRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.inherentRisk.overallRisk.description">
             </div>
           </div>
@@ -296,7 +299,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-2">
-              <input type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.currentAction.Preventive" readonly="true">
             </div>
           </div>
@@ -306,7 +309,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.currentAction.appropriateness.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.appropriateness.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.currentAction.appropriateness.description" readonly="true">
             </div>
             <label class="col-sm-1 col-form-label">Detective</label>
@@ -314,7 +317,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-2">
-              <input type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.currentAction.Detective" readonly="true">
             </div>
           </div>
@@ -326,7 +329,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.currentAction.overallControl.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.overallControl.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.currentAction.overallControl.description" readonly="true">
             </div>
             <label class="col-sm-1 col-form-label">Corrective</label>
@@ -334,7 +337,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-2">
-              <input type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.currentAction.Corrective" readonly="true">
             </div>
           </div>
@@ -423,7 +426,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.residualRisk.overallImpact.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.residualRisk.overallImpact.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.residualRisk.overallImpact.description">
             </div>
           </div>
@@ -446,7 +449,7 @@
               <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.residualRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.residualRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.residualRisk.overallRisk.description">
             </div>
           </div>

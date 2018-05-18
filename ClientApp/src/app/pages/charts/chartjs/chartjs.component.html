@@ -3,7 +3,7 @@
   <nb-card-body>
     <div class="form-group row">
       <label class="col-sm-1 col-form-label">Division</label>
-      <div class="col-sm-5">
+      <div class="col-sm-4">
         <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
         <select class="form-control" name="division" [(ngModel)]="dataInput.division" (change)="reload()">
           <option *ngFor="let data of division" value="{{data}}">{{data.desc}}</option>
@@ -57,7 +57,7 @@
                   <thead>
                     <tr>
                       <th>
-                        <b> Count Of Risk</b>
+                        <b> Number Of Risk</b>
                       </th>
                     </tr>
                   </thead>
@@ -131,7 +131,7 @@
           </div>
           <div>
             <label>Risk Movement</label>
-            <ngx-chartjs-bar width="500px !important" height="300px !important"></ngx-chartjs-bar>
+            <ngx-chartjs-bar width="500px !important" height="400px !important"></ngx-chartjs-bar>
           </div>
           <div>
             <app-chart style="display: none;" data-html2canvas-ignore (svg)="savesvg($event)" [heat]="tabledata"></app-chart>
@@ -303,26 +303,7 @@
                 </table>
               </font>
             </div>
-            <div class="col">
-              <font size="2">
-                <table class="table table-bordered ml-2">
-                  <thead>
-                    <tr>
-                      <th>
-                        <b> Count Of Risk</b>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        {{tabledata.length}}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </font>
-            </div>
+           
             <div class="col">
               <font size="2" class="float-right">
                 <table class="table table-bordered ">
@@ -355,11 +336,9 @@
                   <tr>
                     <th bgcolor="cyan">Division/Dept</th>
                     <th bgcolor="cyan"> </th>
-                    <th bgcolor="purple"> </th>
                     <th bgcolor="purple">
                       <font color="white">Risk&nbsp;Description</font>
                     </th>
-                    <th bgcolor="purple"> </th>
                     <th bgcolor="light blue"> </th>
                     <th bgcolor="light blue">
                       <font color="white">Inherent&nbsp;Risk</font>
@@ -368,15 +347,11 @@
                     <th bgcolor="orange">
                       <font color="white">Control</font>
                     </th>
-                    <th bgcolor="yellow"></th>
                     <th bgcolor="yellow">Residual&nbsp;Risk</th>
-                    <th bgcolor="yellow"> </th>
-                    <th bgcolor="green"> </th>
                     <th bgcolor="green"> </th>
                     <th bgcolor="green">
                       <font color="white">Expected&nbsp;Risk</font>
                     </th>
-                    <th bgcolor="green"> </th>
                     <th bgcolor="green"> </th>
                   </tr>
                 </thead>
@@ -385,18 +360,12 @@
                     <th>Risk No</th>
                     <th>Department KPI</th>
                     <th>Loss Event</th>
-                    <th>Caused</th>
-                    <th>Risk Impact</th>
                     <th>Impact</th>
                     <th>Likelihood</th>
                     <th>Overall</th>
                     <th>Control</th>
-                    <th>Impact</th>
-                    <th>Likeli1od</th>
                     <th>Overall</th>
                     <th>Treatment Plan</th>
-                    <th>Impact</th>
-                    <th>Likelihood</th>
                     <th>Overall</th>
                     <th>Schedule</th>
                   </tr>
@@ -406,8 +375,6 @@
                     <td>{{ item.riskNo }}</td>
                     <td>{{ item.departmentKpi }}</td>
                     <td>{{ item.lossEvent }}</td>
-                    <td>{{ item.caused }}</td>
-                    <td>{{ item.riskImpact }}</td>
                     <td>{{ item.irImpact }}</td>
                     <td>{{ item.irLikelihood }}</td>
                     <td>{{ item.irOverall }}</td>
@@ -417,12 +384,8 @@
                         <br>
                       </div>
                     </td>
-                    <td>{{ item.rdImpact }}</td>
-                    <td>{{ item.rdLikelihood }}</td>
                     <td>{{ item.rdOverall }}</td>
                     <td>{{ item.exTreatmentPlan }}</td>
-                    <td>{{ item.exImpact }}</td>
-                    <td>{{ item.exLikelihood }}</td>
                     <td>{{ item.exOverall }}</td>
                     <td>{{ item.schedule}}</td>
                   </tr>

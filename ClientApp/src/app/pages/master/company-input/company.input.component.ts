@@ -57,12 +57,12 @@ export class CompanyInputComponent {
           type: "textarea"
         }
       },
-      flagActive: { title: 'Flag Active', 
+      flagActive: { title: 'Status', 
       type: 'html', 
       editor:
        { type: 'list', config: 
-       { list: [{ value: 'Y', title: 'Y' }, 
-       { value: 'N', title: 'N' }] } } }
+       { list: [{ value: 'Aktif', title: 'Aktif' }, 
+       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
     }
   };
   year: any[] = [
@@ -185,7 +185,7 @@ export class CompanyInputComponent {
       counterNo: lastIndex + 1,
       comInpId: comInpId,
       description: "",
-      flagActive: "Y",
+      flagActive: "Aktif",
       userCreated: "Admin",
       datetimeCreated: moment().format(),
       userUpdate: "Admin",
@@ -263,19 +263,18 @@ export class CompanyInputComponent {
           }
           
         },
-        flagActive: { title: 'Flag Active', 
-        type: 'html', 
-        editor:
-         { type: 'list', config: 
-         { list: [{ value: 'Y', title: 'Y' }, 
-         { value: 'N', title: 'N' }] } } }
+        flagActive: { title: 'Status', 
+      type: 'html', 
+      editor:
+       { type: 'list', config: 
+       { list: [{ value: 'Aktif', title: 'Aktif' }, 
+       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
       }
     };
     this.source.setFilter(
       [
         { field: "condition", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode },
-        { field: "flagActive", search: "Y" }
+        { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );

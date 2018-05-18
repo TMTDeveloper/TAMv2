@@ -61,12 +61,12 @@ export class RiskIndicatorComponent {
         editable: true,
         width: "10%"
       },
-      flagActive: { title: 'Flag Active', 
-        type: 'html', 
-        editor:
-         { type: 'list', config: 
-         { list: [{ value: 'Y', title: 'Y' }, 
-         { value: 'N', title: 'N' }] } } }
+      flagActive: { title: 'Status', 
+      type: 'html', 
+      editor:
+       { type: 'list', config: 
+       { list: [{ value: 'Aktif', title: 'Aktif' }, 
+       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
     }
   };
   source: LocalDataSource = new LocalDataSource();
@@ -300,19 +300,18 @@ export class RiskIndicatorComponent {
           editable: true,
           width: "10%"
         },
-        flagActive: { title: 'Flag Active', 
+        flagActive: { title: 'Status', 
         type: 'html', 
         editor:
          { type: 'list', config: 
-         { list: [{ value: 'Y', title: 'Y' }, 
-         { value: 'N', title: 'N' }] } } }
+         { list: [{ value: 'Aktif', title: 'Aktif' }, 
+         { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
       }
     };
     this.source.setFilter(
       [
         { field: "condition", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode },
-        { field: "flagActive", search: "Y" }
+        { field: "yearActive", search: this.myForm.value.yearPeriode }
       ],
       true
     );
