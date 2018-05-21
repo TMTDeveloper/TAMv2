@@ -37,10 +37,10 @@ export class RiskReminderComponent {
     actions: {
       add: false,
       edit: true,
-      delete: false,
+      delete: true,
       position: "right",
-      columnTitle: "Modify",
-      width: "10%"
+      columnTitle: "Action",
+      width: "5%"
     },
     pager: {
       display: true,
@@ -59,14 +59,14 @@ export class RiskReminderComponent {
         type: "date",
         filter: false,
         editable: true,
-        width: "30%"
+        width: "40%"
       },
       endDate: {
         title: "End Date",
         type: "date",
         filter: false,
         editable: true,
-          width: "30%"
+          width: "40%"
       },
       period: {
         title: "Periode",
@@ -314,10 +314,10 @@ export class RiskReminderComponent {
       actions: {
         add: false,
         edit: this.yearPeriode == moment().format("YYYY"),
-        delete: false,
+        delete: true,
         position: "right",
-        columnTitle: "Modify",
-        width: "10%"
+        columnTitle: "Action",
+        width: "5%"
       },
       pager: {
         display: true,
@@ -336,14 +336,14 @@ export class RiskReminderComponent {
           type: "date",
           filter: false,
           editable: true,
-          width: "30%"
+          width: "40%"
         },
         endDate: {
           title: "End Date",
           type: "date",
           filter: false,
           editable: true,
-            width: "30%"
+            width: "40%"
         },
         period: {
           title: "Periode",
@@ -398,5 +398,34 @@ export class RiskReminderComponent {
     });
 
     this.toastr.success("Data Saved!");
+  }
+
+  deleteControl(event) {
+    this.tabledata.forEach((element, ind) => {
+      element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
+    });
+    const savedData = {
+      draftKey: event.data.draftKey,
+      draftJson: event.data.draftJson,
+      division: event.data.division,
+      department: event.data.department,
+      type: "RISK",
+      year: moment().format("YYYY"),
+      userUpdated: "Admin",
+      dateUpdated: moment().format(),
+      userCreated: event.data.userCreated,
+      dateCreated: event.data.dateCreated
+    };
+    this.service.putreq("TbMRiskReminders", savedData).subscribe(
+      response => {
+        console.log(response);
+        this.toastr.success("Draft Deleted!");
+        event.confirm.resolve();
+      },
+      error => {
+        console.log(error);
+        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+      }
+    );
   }
 }

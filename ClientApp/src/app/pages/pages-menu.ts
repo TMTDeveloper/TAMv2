@@ -14,6 +14,38 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: "Risk Register",
         link: "/pages/transaction/risk-register"
+      },
+      {
+        title: "View Draft",
+        link: "/pages/transaction/view-draft"
+      },
+      {
+        title: "Input Department KPI",
+        link: "/pages/transaction/dept-input"
+      },
+      {
+        title: "Accident Input",
+        link: "/pages/transaction/accident-input"
+      }
+    ]
+  },
+  {
+    title: "Report",
+    icon: "nb-bar-chart",
+    children: [
+      {
+        title: "Report And Chart",
+        link: "/pages/charts/chartjs"
+      }
+    ]
+  },
+  {
+    title: "Reminder",
+    icon: "nb-locked",
+    children: [
+      {
+        title: "Reminder",
+        link: "/pages/master/risk-reminder"
       }
     ]
   },
