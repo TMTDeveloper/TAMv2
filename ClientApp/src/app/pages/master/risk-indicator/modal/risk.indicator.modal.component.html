@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>Input Risk Indicator {{getTitle(formData.condition)}} {{formData.scoreDisable}}</nb-card-header>
+  <nb-card-header>Input Risk Indicator {{getTitle(formData.condition)}}</nb-card-header>
   <nb-card-body>
     <form (ngSubmit)="submit()">
 
@@ -12,12 +12,12 @@
       <div class="col-sm-2">
         <div class="form-group">
           <label>Score</label>
-          <input type="text" class="form-control" name="score" placeholder="100" [disabled]="formData.scoreDisable" [(ngModel)]="formData.score">
+          <input type="text" class="form-control" name="score" placeholder="100" [(ngModel)]="formData.score">
         </div>
       </div>
       <div class="col-sm-auto">
         <div class="form-group">
-          <button type="submit" [disabled]="formData.description==''" class="btn btn-danger" >Submit</button>
+          <button type="submit" class="btn btn-danger">Submit</button>
         </div>
       </div>
     </form>

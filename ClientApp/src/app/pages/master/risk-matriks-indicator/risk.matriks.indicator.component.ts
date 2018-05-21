@@ -13,7 +13,6 @@ import { isNullOrUndefined } from "util";
 })
 export class RiskMatriksIndicatorComponent {
   source: LocalDataSource = new LocalDataSource();
-  buttonDisable:boolean;
   yearPeriode: any = moment().format("YYYY");
   tabledata: any[] = [];
   riskIndicatorData: any = [];
@@ -55,7 +54,7 @@ export class RiskMatriksIndicatorComponent {
   };
   conditionA: any = {
     data: "EFF",
-    desc: "Overal Control"
+    desc: "Effectiveness"
   };
   conditionB: any = {
     data: "OPR",
@@ -63,34 +62,100 @@ export class RiskMatriksIndicatorComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: "2000"
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: "2001"
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: "2002"
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: "2003"
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: "2004"
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: "2005"
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: "2006"
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: "2007"
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: "2008"
     },
     {
-      data: moment().format("YYYY")
+      data: "2009"
+    },
+    {
+      data: "2010"
+    },
+    {
+      data: "2011"
+    },
+    {
+      data: "2012"
+    },
+    {
+      data: "2013"
+    },
+    {
+      data: "2014"
+    },
+    {
+      data: "2015"
+    },
+    {
+      data: "2016"
+    },
+    {
+      data: "2017"
+    },
+    {
+      data: "2018"
+    },
+    {
+      data: "2019"
+    },
+    {
+      data: "2020"
+    },
+    {
+      data: "2021"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2023"
+    },
+    {
+      data: "2024"
+    },
+    {
+      data: "2025"
+    },
+    {
+      data: "2026"
+    },
+    {
+      data: "2027"
+    },
+    {
+      data: "2028"
+    },
+    {
+      data: "2029"
+    },
+    {
+      data: "2030"
     }
   ];
   condition: any[] = [
@@ -100,11 +165,11 @@ export class RiskMatriksIndicatorComponent {
     },
     {
       data: "OVR",
-      desc: "Overall Risk"
+      desc: "Overall"
     },
     {
       data: "EFF",
-      desc: "Overal Control"
+      desc: "Effectiveness"
     }
   ];
 
@@ -113,7 +178,6 @@ export class RiskMatriksIndicatorComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
-    this.buttonDisable=false;
     this.loadData();
   }
 
@@ -199,6 +263,13 @@ export class RiskMatriksIndicatorComponent {
                   perPage: 30
                 },
                 columns: {
+                  counterNo: {
+                    title: "No",
+                    type: "number",
+                    filter: false,
+                    editable: false,
+                    width: "5%"
+                  },
                   indicatorIdA: {
                     title: "Condition 1",
                     type: "text",
@@ -270,17 +341,9 @@ export class RiskMatriksIndicatorComponent {
                         list: this.item.data3
                       }
                     }
-                    
                   }
                 }
               };
-              this.source = this.source.setFilter(
-                [
-                  { field: "condition", search: this.myForm.value.condition },
-                  { field: "yearActive", search: this.myForm.value.yearPeriode }
-                ],
-                true
-              );
             });
             {
             }
@@ -305,7 +368,7 @@ export class RiskMatriksIndicatorComponent {
       });
   }
 
-  showModal() {
+  showModal(no_iku) {
     this.activeModal = this.modalService.open(
       RiskMatriksIndicatorModalComponent,
       {
@@ -314,7 +377,7 @@ export class RiskMatriksIndicatorComponent {
         backdrop: "static"
       }
     );
-    let lastIndex = 0;
+    let lastIndex = 1;
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
@@ -335,7 +398,6 @@ export class RiskMatriksIndicatorComponent {
       indicatorIdA: "",
       indicatorIdB: "",
       resultIdC: "",
-      flagActive:"Y",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -411,6 +473,13 @@ export class RiskMatriksIndicatorComponent {
         perPage: 30
       },
       columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
         indicatorIdA: {
           title: "Condition 1",
           type: "text",
@@ -486,13 +555,6 @@ export class RiskMatriksIndicatorComponent {
       }
     };
     console.log(this.myForm.value.condition);
-    switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
-        break;
-      default:
-      this.buttonDisable =true;
-    }
     switch (this.myForm.value.condition) {
       case "OVR":
         this.conditionA = {
@@ -517,7 +579,7 @@ export class RiskMatriksIndicatorComponent {
       default:
         this.conditionA = {
           data: "EFF",
-          desc: "Overal Control"
+          desc: "Effectiveness"
         };
         this.conditionB = {
           data: "OPR",

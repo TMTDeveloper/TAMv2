@@ -63,47 +63,113 @@ export class QualitativeIndicatorComponent {
         type: "string",
         filter: false,
         editable: false,
-        width: "30%"
+        width: "10%"
       },
       description: {
         title: "Description",
         type: "string",
         filter: false,
         editable: true,
-        width: "60%"
+        width: "80%"
       }
     }
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: "2000"
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: "2001"
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: "2002"
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: "2003"
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: "2004"
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: "2005"
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: "2006"
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: "2007"
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: "2008"
     },
     {
-      data: moment().format("YYYY")
+      data: "2009"
+    },
+    {
+      data: "2010"
+    },
+    {
+      data: "2011"
+    },
+    {
+      data: "2012"
+    },
+    {
+      data: "2013"
+    },
+    {
+      data: "2014"
+    },
+    {
+      data: "2015"
+    },
+    {
+      data: "2016"
+    },
+    {
+      data: "2017"
+    },
+    {
+      data: "2018"
+    },
+    {
+      data: "2019"
+    },
+    {
+      data: "2020"
+    },
+    {
+      data: "2021"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2023"
+    },
+    {
+      data: "2024"
+    },
+    {
+      data: "2025"
+    },
+    {
+      data: "2026"
+    },
+    {
+      data: "2027"
+    },
+    {
+      data: "2028"
+    },
+    {
+      data: "2029"
+    },
+    {
+      data: "2030"
     }
   ];
   condition: any[] = [
@@ -238,17 +304,14 @@ export class QualitativeIndicatorComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "30%"
+          width: "10%"
         },
         description: {
           title: "Description",
           type: "string",
           filter: false,
           editable: true,
-          width: "60%",
-          editor: {
-            type: "textarea",
-          }
+          width: "80%"
         }
       }
     };
@@ -260,16 +323,6 @@ export class QualitativeIndicatorComponent {
       true
     );
   }
-
-  onSaveConfirm(event) {
-    if (event.newData.description!='') {
-      event.confirm.resolve(event.newData);
-      this.submit(event);
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   submit(event?) {
     console.log(event);
     event

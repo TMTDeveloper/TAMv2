@@ -12,7 +12,6 @@ import { isNullOrUndefined } from "util";
   templateUrl: "./operational.indicator.risk.component.html"
 })
 export class OperationalIndicatorRiskComponent {
-  percentageCheck: boolean;
   tabledata: any[] = [];
   yearPeriode: any = moment().format("YYYY");
   subscription: any;
@@ -43,7 +42,7 @@ export class OperationalIndicatorRiskComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Edit",
+      columnTitle: "Modify",
       width: "10%"
     },
     pager: {
@@ -63,14 +62,14 @@ export class OperationalIndicatorRiskComponent {
         type: "string",
         filter: false,
         editable: false,
-        width: "40%"
+        width: "10%"
       },
       numberValue: {
         title: "Number",
         type: "string",
         filter: false,
         editable: true,
-        width: "50%",
+        width: "80%",
         valuePrepareFunction: value => {
           if (isNaN(value)) {
             return 0;
@@ -102,34 +101,100 @@ export class OperationalIndicatorRiskComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: "2000"
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: "2001"
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: "2002"
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: "2003"
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: "2004"
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: "2005"
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: "2006"
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: "2007"
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: "2008"
     },
     {
-      data: moment().format("YYYY")
+      data: "2009"
+    },
+    {
+      data: "2010"
+    },
+    {
+      data: "2011"
+    },
+    {
+      data: "2012"
+    },
+    {
+      data: "2013"
+    },
+    {
+      data: "2014"
+    },
+    {
+      data: "2015"
+    },
+    {
+      data: "2016"
+    },
+    {
+      data: "2017"
+    },
+    {
+      data: "2018"
+    },
+    {
+      data: "2019"
+    },
+    {
+      data: "2020"
+    },
+    {
+      data: "2021"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2023"
+    },
+    {
+      data: "2024"
+    },
+    {
+      data: "2025"
+    },
+    {
+      data: "2026"
+    },
+    {
+      data: "2027"
+    },
+    {
+      data: "2028"
+    },
+    {
+      data: "2029"
+    },
+    {
+      data: "2030"
     }
   ];
   condition: any[] = [
@@ -162,7 +227,6 @@ export class OperationalIndicatorRiskComponent {
     public service: BackendService
   ) {
     this.loadData();
-    this.percentageCheck= false;
   }
   loadData() {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
@@ -220,16 +284,6 @@ export class OperationalIndicatorRiskComponent {
 
   reload() {
     this.yearPeriode = this.myForm.value.yearPeriode;
-    switch (this.myForm.value.condition) {
-      case "SAL":
-       this.percentageCheck=false;
-       break;
-      case "DOD":
-     this.percentageCheck=false;
-     break;
-      default:
-      this.percentageCheck=true;
-    };
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -254,7 +308,7 @@ export class OperationalIndicatorRiskComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Edit",
+        columnTitle: "Modify",
         width: "10%"
       },
       pager: {
@@ -274,14 +328,14 @@ export class OperationalIndicatorRiskComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "30%"
+          width: "10%"
         },
         numberValue: {
           title: "Number",
           type: "string",
           filter: false,
           editable: true,
-          width: "60%",
+          width: "80%",
           valuePrepareFunction: value => {
             if (isNaN(value)) {
               return 0;
@@ -318,18 +372,7 @@ export class OperationalIndicatorRiskComponent {
       ],
       true
     );
-    
   }
-
-  onSaveConfirm(event) {
-    if (event.newData.numberValue>100&&this.percentageCheck) {
-      event.confirm.reject();
-    } else {
-      event.confirm.resolve(event.newData);
-      this.submit(event);
-    }
-  }
-
   submit(event?) {
     console.log(event);
     event

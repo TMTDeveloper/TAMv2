@@ -12,8 +12,6 @@ import { BackendService } from "../../../@core/data/backend.service";
 })
 export class RiskIndicatorComponent {
   @ViewChild("myForm") private myForm: NgForm;
-  buttonDisable:boolean;
-  scoreDisable:boolean;
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -47,6 +45,13 @@ export class RiskIndicatorComponent {
       perPage: 30
     },
     columns: {
+      counterNo: {
+        title: "No",
+        type: "number",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
       description: {
         title: "Description",
         type: "string",
@@ -60,13 +65,7 @@ export class RiskIndicatorComponent {
         filter: false,
         editable: true,
         width: "10%"
-      },
-      flagActive: { title: 'Status', 
-      type: 'html', 
-      editor:
-       { type: 'list', config: 
-       { list: [{ value: 'Aktif', title: 'Aktif' }, 
-       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+      }
     }
   };
   source: LocalDataSource = new LocalDataSource();
@@ -106,34 +105,100 @@ export class RiskIndicatorComponent {
   ];
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: "2000"
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: "2001"
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: "2002"
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: "2003"
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: "2004"
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: "2005"
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: "2006"
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: "2007"
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: "2008"
     },
     {
-      data: moment().format("YYYY")
+      data: "2009"
+    },
+    {
+      data: "2010"
+    },
+    {
+      data: "2011"
+    },
+    {
+      data: "2012"
+    },
+    {
+      data: "2013"
+    },
+    {
+      data: "2014"
+    },
+    {
+      data: "2015"
+    },
+    {
+      data: "2016"
+    },
+    {
+      data: "2017"
+    },
+    {
+      data: "2018"
+    },
+    {
+      data: "2019"
+    },
+    {
+      data: "2020"
+    },
+    {
+      data: "2021"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2022"
+    },
+    {
+      data: "2023"
+    },
+    {
+      data: "2024"
+    },
+    {
+      data: "2025"
+    },
+    {
+      data: "2026"
+    },
+    {
+      data: "2027"
+    },
+    {
+      data: "2028"
+    },
+    {
+      data: "2029"
+    },
+    {
+      data: "2030"
     }
   ];
   tabledata: any[] = [];
@@ -146,8 +211,6 @@ export class RiskIndicatorComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
-    this.buttonDisable=false;
-    this.scoreDisable=false;
     this.loadData();
   }
 
@@ -190,13 +253,13 @@ export class RiskIndicatorComponent {
     console.log(this.myForm.value.condition);
   }
 
-  showModal() {
+  showModal(no_iku) {
     this.activeModal = this.modalService.open(RiskIndicatorModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
       backdrop: "static"
     });
-    let lastIndex = 0;
+    let lastIndex = 1;
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
@@ -221,7 +284,6 @@ export class RiskIndicatorComponent {
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
       DatetimeUpdate: moment().format(),
-      scoreDisable:this.scoreDisable,
       status: "1"
     };
 
@@ -286,6 +348,13 @@ export class RiskIndicatorComponent {
         perPage: 30
       },
       columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
         description: {
           title: "Description",
           type: "string",
@@ -299,13 +368,7 @@ export class RiskIndicatorComponent {
           filter: false,
           editable: true,
           width: "10%"
-        },
-        flagActive: { title: 'Status', 
-        type: 'html', 
-        editor:
-         { type: 'list', config: 
-         { list: [{ value: 'Aktif', title: 'Aktif' }, 
-         { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+        }
       }
     };
     this.source.setFilter(
@@ -315,34 +378,7 @@ export class RiskIndicatorComponent {
       ],
       true
     );
-    switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
-        break;
-      default:
-      this.buttonDisable =true;
-    }
-    switch (this.myForm.value.condition) {
-      case 'IMP':
-        this.scoreDisable =false;
-        break;
-        case 'LKL':
-        this.scoreDisable =false;
-        break;
-      default:
-      this.scoreDisable =true;
-    }
   }
-
-  onSaveConfirm(event) {
-    if (event.newData.description!='') {
-      event.confirm.resolve(event.newData);
-      this.submit(event);
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   submit(event?) {
     event
       ? this.service

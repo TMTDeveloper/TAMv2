@@ -39,7 +39,7 @@ export class CompanyInputComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Edit",
+      columnTitle: "Modify",
       width: "10%"
     },
     pager: {
@@ -47,6 +47,13 @@ export class CompanyInputComponent {
       perPage: 30
     },
     columns: {
+      counterNo: {
+        title: "No",
+        type: "number",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
       description: {
         title: "Description",
         type: "string",
@@ -57,12 +64,13 @@ export class CompanyInputComponent {
           type: "textarea"
         }
       },
-      flagActive: { title: 'Status', 
+      userId: { title: 'Company Id', 
       type: 'html', 
       editor:
        { type: 'list', config: 
-       { list: [{ value: 'Aktif', title: 'Aktif' }, 
-       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+       { list: [{ value: 'Antonette', title: 'Antonette' }, 
+       { value: 'Bret', title: 'Bret' }, 
+       { value: '<b>Samantha</b>', title: 'Samantha' }] } } }
     }
   };
   year: any[] = [
@@ -159,7 +167,7 @@ export class CompanyInputComponent {
    // console.log(this.myForm.value.condition);
   }
 
-  showModal() {
+  showModal(no_iku) {
     this.activeModal = this.modalService.open(CompanyInputModalComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
@@ -185,7 +193,7 @@ export class CompanyInputComponent {
       counterNo: lastIndex + 1,
       comInpId: comInpId,
       description: "",
-      flagActive: "Aktif",
+      flagActive: "Y",
       userCreated: "Admin",
       datetimeCreated: moment().format(),
       userUpdate: "Admin",
@@ -197,8 +205,8 @@ export class CompanyInputComponent {
       async response => {
         if (response != false) {
           this.tabledata.push(response);
-          this.submit();
           this.reload();
+          this.submit();
         }
       },
       error => {}
@@ -244,7 +252,7 @@ export class CompanyInputComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Edit",
+        columnTitle: "Modify",
         width: "10%"
       },
       pager: {
@@ -252,6 +260,13 @@ export class CompanyInputComponent {
         perPage: 30
       },
       columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
         description: {
           title: "Description",
           type: "string",
@@ -263,18 +278,19 @@ export class CompanyInputComponent {
           }
           
         },
-        flagActive: { title: 'Status', 
-      type: 'html', 
-      editor:
-       { type: 'list', config: 
-       { list: [{ value: 'Aktif', title: 'Aktif' }, 
-       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+        flagActive: { title: 'Flag Active', 
+        type: 'html', 
+        editor:
+         { type: 'list', config: 
+         { list: [{ value: 'Y', title: 'Y' }, 
+         { value: 'N', title: 'N' }] } } }
       }
     };
     this.source.setFilter(
       [
         { field: "condition", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode }
+        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "flagActive", search: "Y" }
       ],
       true
     );
@@ -290,15 +306,6 @@ export class CompanyInputComponent {
   refreshSelected(event) {
     this.selectedData = event.data;
     console.log(this.selectedData);
-  }
-
-  onSaveConfirm(event) {
-    if (event.newData.description!='') {
-      event.confirm.resolve(event.newData);
-      this.submit(event);
-    } else {
-      event.confirm.reject();
-    }
   }
 
   submit(event?) {

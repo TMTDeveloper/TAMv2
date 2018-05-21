@@ -24,8 +24,8 @@ export class RiskMatriksIndicatorModalComponent {
     yearActive: string;
     mappingId: string;
     condition: string;
-    indicatorIdA: string;
-    indicatorIdB: string;
+    indictatorIdA: string;
+    indictatorIdB: string;
     resultIdC: string;
     userCreated: string;
     datetimeCreated: string;

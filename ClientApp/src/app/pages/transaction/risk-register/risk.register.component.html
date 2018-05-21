@@ -1,556 +1,458 @@
 <nb-card>
   <nb-card-header>Risk Register</nb-card-header>
   <nb-card-body>
-    <div class="form-group row">
-      <label class="col-sm-1 col-form-label ">Year</label>
+    <div class="form-group">
       <div class="col-sm-2">
-        <input style="background-color:gainsboro;" type="text" class="form-control" [(ngModel)]="yearPeriode" disabled="true">
+        <label>Year</label>
+        <input type="text" class="form-control" [(ngModel)]="yearPeriode" disabled="true">
       </div>
-      <label class="col-sm-1 col-form-label">Risk No</label>
+    </div>
+
+    <div class="form-group">
       <div class="col-sm-3">
-        <input style="background-color:gainsboro;" type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.riskNo">
-      </div>
-      <div class="row mt-2 ml-1">
-        <div class="col-sm-auto">
-          <button type=" button " class="btn btn-success " (click)="saveValidation()">Save</button>
-        </div>
-        <div class="col-sm-auto">
-          <button type=" button " class="btn btn-success" [disabled]="dataInput.draftDisabled" (click)="saveAsDraft()">Save As Draft</button>
-        </div>
+        <label>Risk No</label>
+        <input type="text" class="form-control" ngModel name="riskno">
       </div>
     </div>
 
-    <div class="col-sm-auto">
-      <nb-tabset>
-        <nb-tab tabTitle="Division/Department">
-          <div class="form-group row">
-            <label for="division" class="col-sm-2 col-form-label">Division</label>
-            <div class="col-sm-6">
-              <input style="background-color:gainsboro;" type="text" class="form-control" id="division" [(ngModel)]="dataInput.divisionDepartment.division.desc">
-            </div>
+    <!-- <div class="col-sm-auto row">
+        <div class="col-sm-auto">
+          <div class="form-group">
+            <button type="submit" class="btn btn-success ">Submit</button>
           </div>
-          <div class="form-group row">
-            <label for="department" class="col-sm-2 col-form-label">Department</label>
-            <div class="col-sm-6">
-              <input style="background-color:gainsboro;" type="text" class="form-control" id="department" [(ngModel)]="dataInput.divisionDepartment.department.desc">
-            </div>
+        </div>
+        <div class="col-sm-auto">
+          <div class="form-group">
+            <button type="button" class="btn btn-success ">Add New</button>
           </div>
+        </div>
+      </div> -->
 
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Company&nbsp;KPI<font color="red">*</font>
-            </label>
-            <div class="col-lg-1">
-              <button class="btn btn-success btn-icon" (click)="showModal()">
-                <i class="nb-list"></i>
-              </button>
-            </div>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea  readonly="true" rows="3" type="text" [ngClass]="dataInput.divisionDepartment.companyKpi.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.divisionDepartment.companyKpi.description"></textarea>
-            </div>
+    <nb-tabset>
+      <nb-tab tabTitle="Division/Department">
+        <div class="form-group row">
+          <label for="division" class="col-sm-2 col-form-label">Division</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="division" [(ngModel)]="dataInput.divisionDepartment.division">
           </div>
+        </div>
+        <div class="form-group row">
+          <label for="department" class="col-sm-2 col-form-label">Department</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="department" [(ngModel)]="dataInput.divisionDepartment.deparment">
+          </div>
+        </div>
 
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Company KPI</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success with-margins" (click)="showModal()">LOV</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
 
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Department&nbsp;KPI<font color="red">*</font>
-            </label>
-            <div class="col-lg-1">
-              <button class="btn btn-success btn-icon" (click)="showDept()">
-                <i class="nb-list"></i>
-              </button>
-            </div>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" [ngClass]="dataInput.divisionDepartment.departmentKpi.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.divisionDepartment.departmentKpi.description" readonly="true"></textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Business&nbsp;Process<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" [ngClass]="dataInput.divisionDepartment.businessProcess==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.divisionDepartment.businessProcess"></textarea>
-            </div>
-          </div>
-        </nb-tab>
-        <nb-tab tabTitle="Risk Description">
-          <div class="form-group row mt-3">
-            <label class="col-sm-1 col-form-label">Loss&nbsp;Event<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" [ngClass]="dataInput.riskDescription.lossEvent==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.riskDescription.lossEvent"></textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-1 col-form-label">Caused<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" [ngClass]="dataInput.riskDescription.caused==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.riskDescription.caused"></textarea>
-            </div>
-          </div>
-          <div class="form-group row ">
-            <label class="col-sm-1 col-form-label">Risk&nbsp;Impact<font color="red">*</font>
-            </label>
-            <div class="col-lg-1">
-              <nb-actions size="small">
-                <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-              </nb-actions>
-            </div>
-        <!--    <div class="col-sm-5">
-              <select multiple [ngClass]="dataInput.riskDescription.riskImpact[0]==null&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                name="risk_impact" [(ngModel)]="dataInput.riskDescription.riskImpact">
-                <option *ngFor="let data of getListRiskIndicator('RTP')" value="{{data.description}}">{{data.description}}</option>
-              </select>
-            </div>
-            <div class="col-sm-4">
-              <textarea rows="3" type="text" class="form-control" readonly="true">{{loopRiskImpact()}}</textarea>
-            </div>-->
-            <div class="col-sm-5">
-              <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>
-            </div> 
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-1 col-form-label">Risk&nbsp;Level<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <select [ngClass]="dataInput.riskDescription.riskLevel==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                name="risk_level" [(ngModel)]="dataInput.riskDescription.riskLevel">
-                <option *ngFor="let data of getListRiskIndicator('LVL')" value="{{data.indicatorId}}">{{data.description}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Accident</label>
-            <div class="col-lg-1">
-              <button class="btn btn-success btn-icon" (click)="showAccident()">
-                <i class="nb-list"></i>
-              </button>
-            </div>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-          </div>
-          <div class="col-sm-auto">
-            <div class="form-group">
-              <ng2-smart-table [settings]="accidentset" [source]="accidentSrc" (deleteConfirm)="deleteAccident($event)">
-              </ng2-smart-table>
-            </div>
-          </div>
-        </nb-tab>
-        <nb-tab tabTitle="Inherent Risk">
-          <div class="form-group row mt-3">
-            <label class="col-sm-1 col-form-label">Notes</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.inherentRisk.notes"></textarea>
-            </div>
           </div>
           <div class="col-sm-12">
-          <nb-card>
-            <nb-card-body>
-              <div class="form-group row ">
-                <label class="col-sm-2 col-form-label">Financial&nbsp;Impact</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-5">
-                  <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.financialImpact.category" (change)="findFinancialImpactRisk()">
-                    <option *ngFor="let data of financialImpact" value="{{data.data}}">{{data.desc}}</option>
-                  </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Amount</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-2">
-                  <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.inherentRisk.financialImpact.amount"
-                    (keyup)="findFinancialImpactRisk()">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Operational&nbsp;Impact</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-5">
-                  <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.operationalImpact.category" (change)="findOperationalImpactRisk()">
-                    <option *ngFor="let data of operationalImpact" value="{{data.data}}">{{data.desc}}</option>
-                  </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Loss</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-2">
-                  <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision:'0'}" class="form-control" [(ngModel)]="dataInput.inherentRisk.operationalImpact.loss"
-                    (keyup)="findOperationalImpactRisk()">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Qualitative&nbsp;Impact</label>
-                <div class="col-lg-1">
-                  <button class="btn btn-success btn-icon" (click)="showQLIR()">
-                    <i class="nb-list"></i>
-                  </button>
-                </div>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-4">
-                  <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.qualitativeIR.desc">
-                </div>
-                <div class="col-lg-1">
-                  <button class="btn btn-success with-margins" (click)="clearIR()">Clear</button>
-                </div>
-              </div>
-            </nb-card-body>
-          </nb-card>
+            <textarea disabled="true" rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.companyKpi.description"></textarea>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Impact</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.inherentRisk.overallImpact.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                readonly="true" [(ngModel)]="dataInput.inherentRisk.overallImpact.description">
-            </div>
-          </div>
-          <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <select [ngClass]="dataInput.inherentRisk.likelihood==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                name="risk_impact" [(ngModel)]="dataInput.inherentRisk.likelihood" (change)="findOverallRisk()">
-                <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Inherent&nbsp;Risk</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.inherentRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                readonly="true" [(ngModel)]="dataInput.inherentRisk.overallRisk.description">
-            </div>
-          </div>
-          <span> </span>
-        </nb-tab>
-        <nb-tab tabTitle="Current Action / Controls">
-          <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Controls<font color="red">*</font>
-            </label>
-            <div class="col-lg-2">
-              <button class="btn btn-success with-margins" (click)="showCtr()">Add New</button>
-
-            </div>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-          </div>
-          <div class="col-sm-auto">
-            <div class="form-group">
-              <ng2-smart-table [settings]="controlset" [source]="controlSrc" (deleteConfirm)="deleteControl($event)" (editConfirm)="saveControl($event)">
-              </ng2-smart-table>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Operation<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <select [ngClass]="dataInput.currentAction.operation==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                name="risk_impact" [(ngModel)]="dataInput.currentAction.operation" (change)="findOverallControl()">
-                <option *ngFor="let data of getListRiskIndicator('OPR')" value="{{data.indicatorId}}">{{data.description}}</option>
-              </select>
-            </div>
-            <label class="col-sm-1 col-form-label">Preventive</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-2">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.currentAction.Preventive" readonly="true">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Appropriateness</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.appropriateness.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.currentAction.appropriateness.description" readonly="true">
-            </div>
-            <label class="col-sm-1 col-form-label">Detective</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-2">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.currentAction.Detective" readonly="true">
-            </div>
-          </div>
+        </div>
 
 
-          <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Control</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.overallControl.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.currentAction.overallControl.description" readonly="true">
-            </div>
-            <label class="col-sm-1 col-form-label">Corrective</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-2">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.currentAction.Preventive+dataInput.currentAction.Detective+dataInput.currentAction.Corrective==0&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.currentAction.Corrective" readonly="true">
-            </div>
-          </div>
-
-        </nb-tab>
-        <nb-tab tabTitle="Residual Risk">
-          <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Notes</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.residualRisk.notes"></textarea>
-            </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Department KPI</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success with-margins" (click)="showDept()">LOV</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
           <div class="col-sm-12">
-          <nb-card>
-            <nb-card-body>
-              <div class="form-group row ">
-                <label class="col-sm-2 col-form-label">Financial&nbsp;Impact</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-5">
-                  <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.financialImpact.category" (change)="findFinancialImpactRiskRd()"
-                    disabled="true">
-                    <option *ngFor="let data of financialImpact" value="{{data.data}}">{{data.desc}}</option>
-                  </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Amount</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-2">
-                  <input [ngClass]="dataInput.residualRisk.financialImpact.amount>dataInput.inherentRisk.financialImpact.amount?'form-control form-control-danger':'form-control'"
-                    currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.residualRisk.financialImpact.amount"
-                    (keyup)="findFinancialImpactRiskRd()">
-                </div>
-              </div>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.departmentKpi.description"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Business Process</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-12">
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.divisionDepartment.businessProcess"></textarea>
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Risk Description">
+        <div class="form-group row mt-3">
+          <label class="col-sm-2 col-form-label">Loss Event</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-12">
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.riskDescription.lossEvent"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Caused</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-12">
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.riskDescription.caused"></textarea>
+          </div>
+        </div>
+        <div class="form-group row ">
+          <label class="col-sm-2 col-form-label">Risk Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact">
+              <option *ngFor="let data of getListRiskIndicator('RTP')" value="{{data.indicatorId}}">{{data.description}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Risk Level</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_level" ngModel required>
+              <option *ngFor="let data of getListRiskIndicator('LVL')" value="{{data.indicatorId}}">{{data.description}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Accident</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success with-margins" (click)="showAccident()">LOV</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+        </div>
+        <div class="col-sm-auto">
+          <div class="form-group">
+            <ng2-smart-table [settings]="accidentset" [source]="accidentSrc" (deleteConfirm)="deleteAccident($event)">
+            </ng2-smart-table>
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Inherent Risk">
+        <div class="form-group row mt-3">
+          <label class="col-sm-2 col-form-label">Notes</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-12">
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.inherentRisk.notes"></textarea>
+          </div>
+        </div>
+        <div class="form-group row ">
+          <label class="col-sm-2 col-form-label">Financial Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.financialImpact.category" (change)="findFinancialImpactRisk()">
+              <option *ngFor="let data of financialImpact" value="{{data.data}}">{{data.desc}}</option>
+            </select>
+          </div>
+          <label class="col-sm-1 col-form-label">Amount</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.inherentRisk.financialImpact.amount"
+              (keyup)="findFinancialImpactRisk()">
+          </div>
+        </div>
 
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Operational&nbsp;Impact</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-5">
-                  <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.operationalImpact.category" (change)="findOperationalImpactRiskRd()"
-                    disabled="true">
-                    <option *ngFor="let data of operationalImpact" value="{{data.data}}">{{data.desc}}</option>
-                  </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Loss</label>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-2">
-                  <input [ngClass]="dataInput.residualRisk.operationalImpact.loss>dataInput.inherentRisk.operationalImpact.loss?'form-control form-control-danger':'form-control'"
-                    currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision:'0'}" class="form-control"
-                    [(ngModel)]="dataInput.residualRisk.operationalImpact.loss" (keyup)="findOperationalImpactRiskRd()">
-                </div>
-              </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Operational Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.operationalImpact.category" (change)="findOperationalImpactRisk()">
+              <option *ngFor="let data of operationalImpact" value="{{data.data}}">{{data.desc}}</option>
+            </select>
+          </div>
+          <label class="col-sm-1 col-form-label">Loss</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision:'0'}" class="form-control" [(ngModel)]="dataInput.inherentRisk.operationalImpact.loss"
+              (keyup)="findOperationalImpactRisk()">
+          </div>
+        </div>
 
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Qualitative&nbsp;Impact</label>
-                <div class="col-lg-1">
-                  <button class="btn btn-success btn-icon" (click)="showQLRD()">
-                    <i class="nb-list"></i>
-                  </button>
-                </div>
-                <nb-actions size="small">
-                  <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-                </nb-actions>
-                <div class="col-sm-5">
-                  <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.qualitativeRD.desc">
-                </div>
-                <div class="col-lg-1">
-                  <button class="btn btn-success with-margins" (click)="clearRD()">Clear</button>
-                </div>
-              </div>
-            </nb-card-body>
-          </nb-card>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Qualitative Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success with-margins" (click)="showQLIR()">LOV</button>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Impact</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.residualRisk.overallImpact.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                readonly="true" [(ngModel)]="dataInput.residualRisk.overallImpact.description">
-            </div>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
-          <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
-            </label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <select [ngClass]="dataInput.residualRisk.likelihood==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                name="risk_impact" [(ngModel)]="dataInput.residualRisk.likelihood" (change)="findOverallRiskRd()">
-                <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
-              </select>
-            </div>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.qualitativeIR.desc">
           </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Residual&nbsp;Risk</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.residualRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                readonly="true" [(ngModel)]="dataInput.residualRisk.overallRisk.description">
-            </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Overall Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
-        </nb-tab>
-        <nb-tab tabTitle="Expected Risk">
-          <div class="form-group row">
-            <nb-checkbox status="success" class="col-sm-4" (change)="treatmentPlanSwitch()" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"
-              [disabled]="dataInput.expectedRisk.disabled||dataInput.expectedRisk.treatmentPlanArr.length!=0">Do&nbsp;you&nbsp;have&nbsp;any&nbsp;treatment&nbsp;plan?</nb-checkbox>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.overallImpact.description">
           </div>
-          <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Treatment&nbsp;Plan<font color="red">*</font>
-            </label>
-            <div class="col-lg-2">
-              <button class="btn btn-success with-margins" [disabled]="dataInput.expectedRisk.treatmentPlanSwitch" (click)="showTrt()">Add New</button>
+        </div>
+        <div class="form-group row ">
+          <label class="col-sm-2 col-form-label">Likelihood</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.likelihood" (change)="findOverallRisk()">
+              <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Overall Risk</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.overallRisk.description">
+          </div>
+        </div>
+        <span> </span>
+      </nb-tab>
+      <nb-tab tabTitle="Current Action / Controls">
+        <div class="form-group row mt-3">
+          <label class="col-sm-2 col-form-label">Controls</label>
+          <div class="col-lg-6">
+            <button class="btn btn-success with-margins" (click)="showCtr()">Add New</button>
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+        </div>
+        <div class="col-sm-auto">
+          <div class="form-group">
+            <ng2-smart-table [settings]="controlset" [source]="controlSrc" (deleteConfirm)="deleteControl($event)">
+            </ng2-smart-table>
+          </div>
+        </div>
 
-            </div>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Operation</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
-          <div class="col-sm-auto">
-            <div class="form-group">
-              <ng2-smart-table [settings]="treatmentset" [source]="treatmentSrc" (deleteConfirm)="deleteTreatment($event)" (editConfirm)="saveTreatment($event)">
-              </ng2-smart-table>
-            </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.currentAction.operation" (change)="findOverallControl()">
+              <option *ngFor="let data of getListRiskIndicator('OPR')" value="{{data.indicatorId}}">{{data.description}}</option>
+            </select>
           </div>
-          <!-- <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Treatment Plan</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-12">
-              <textarea rows="3" type="text" [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.treatmentPlan==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.expectedRisk.treatmentPlan" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}"></textarea>
-            </div>
-          </div> -->
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Impact</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.impact==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.expectedRisk.impact" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
-                <option *ngFor="let data of getListRiskIndicator('IMP')" value="{{data.indicatorId}}">{{data.description}}</option>
-              </select>
-            </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Appropriateness</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Likelihood</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.likelihood==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.expectedRisk.likelihood" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
-
-                <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
-
-              </select>
-            </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.appropriateness.description" disabled="true">
           </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.risk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.expectedRisk.risk.description" readonly="true" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
-            </div>
+          <label class="col-sm-2 col-form-label">Overall Control</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
           </div>
-          <!-- <div class="form-group row">
-            <label class="col-sm-2 col-form-label">PIC</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-5">
-              <input type="text" [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.PIC==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.expectedRisk.PIC" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
-            </div>
-          </div> -->
-          <!-- <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Schedule</label>
-            <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</nb-action>
-            </nb-actions>
-            <div class="col-sm-2">
-              <input type="text" [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.schedule==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
-                [(ngModel)]="dataInput.expectedRisk.schedule" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
-            </div>
-          </div> -->
-        </nb-tab>
-      </nb-tabset>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" [(ngModel)]="dataInput.currentAction.overallControl.description" disabled="true">
+          </div>
+        </div>
+
+        <div class="form-group row ">
+          <label class="col-sm-1 col-form-label">Preventive</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ngModel name="preventive">
+          </div>
+          <label class="col-sm-1 col-form-label">Detective</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ngModel name="detective">
+          </div>
+          <label class="col-sm-1 col-form-label">Corrective</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ngModel name="corrective">
+          </div>
+        </div>
+
+      </nb-tab>
+      <nb-tab tabTitle="Residual Risk">
+        <div class="form-group row mt-3">
+          <label class="col-sm-2 col-form-label">Notes</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-12">
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.residualRisk.notes"></textarea>
+          </div>
+        </div>
+        <div class="form-group row ">
+          <label class="col-sm-2 col-form-label">Financial Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.financialImpact.category" (change)="findFinancialImpactRiskRd()"
+              disabled="true">
+              <option *ngFor="let data of financialImpact" value="{{data.data}}">{{data.desc}}</option>
+            </select>
+          </div>
+          <label class="col-sm-1 col-form-label">Amount</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.residualRisk.financialImpact.amount"
+              (keyup)="findFinancialImpactRiskRd()">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Operational Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.inherentRisk.operationalImpact.category" (change)="findOperationalImpactRiskRd()"
+              disabled="true">
+              <option *ngFor="let data of operationalImpact" value="{{data.data}}">{{data.desc}}</option>
+            </select>
+          </div>
+          <label class="col-sm-1 col-form-label">Loss</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision:'0'}" class="form-control"
+              [(ngModel)]="dataInput.residualRisk.operationalImpact.loss" (keyup)="findOperationalImpactRiskRd()">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Qualitative Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success with-margins" (click)="showQLRD()">LOV</button>
+          </div>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.qualitativeRD.desc">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Overall Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.overallImpact.description">
+          </div>
+        </div>
+        <div class="form-group row ">
+          <label class="col-sm-2 col-form-label">Likelihood</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" name="risk_impact" [(ngModel)]="dataInput.residualRisk.likelihood" (change)="findOverallRiskRd()">
+              <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Overall Risk</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.residualRisk.overallRisk.description">
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Expected Risk">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Treatment Plan</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-12">
+            <textarea rows="3" type="text" class="form-control" ngModel name="treatment_plan"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" ngModel required>
+              <option *ngFor="let data of getListRiskIndicator('IMP')" value="{{data.indicatorId}}">{{data.description}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Likelihood</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" ngModel required>
+
+              <option *ngFor="let data of getListRiskIndicator('LKL')" value="{{data.indicatorId}}">{{data.description}}</option>
+
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Impact</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ngModel name="overall_risk_ex">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">PIC</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ngModel name="pic">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Schedule</label>
+          <div class="col-lg-1">
+            <button class="btn btn-success btn-round with-margins" nbPopover="Master untuk memasukkan data tahunan financial TAM">?</button>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ngModel name="schedule">
+          </div>
+        </div>
+      </nb-tab>
+    </nb-tabset>
 
 
 
-    </div>
+    <form #myForm="ngForm" (ngSubmit)="submit()">
+    </form>
   </nb-card-body>
 </nb-card>

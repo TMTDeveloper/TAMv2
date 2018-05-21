@@ -21,7 +21,6 @@ export class RiskIndicatorModalComponent {
     DatetimeCreated: string;
     UserUpdate: string;
     DatetimeUpdate: string;
-    scoreDisable: boolean;
     status: string;
   };
 
