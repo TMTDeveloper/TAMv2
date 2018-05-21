@@ -6,8 +6,10 @@ import * as moment from "moment";
 import { BackendService } from "../../@core/data/backend.service";
 import { DashboardModalComponent } from "./modal/dashboard.modal.component";
 import { Router } from "@angular/router";
-import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { Angular5Csv } from 'angular5-csv/Angular5-csv';
+import { Angular2Csv } from "angular2-csv/Angular2-csv";
+import { Angular5Csv } from "angular5-csv/Angular5-csv";
+import * as XLSX from "xlsx";
+
 @Component({
   selector: "ngx-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -106,7 +108,7 @@ export class DashboardComponent {
     this.buttonDisable = false;
     this.loadData();
     this.loadApprove();
-    this.riskstat ='Not Yet Submitted'    
+    this.riskstat = "Not Yet Submitted";
   }
   loadData() {
     this.service.getreq("Riskreports").subscribe(response => {
@@ -232,10 +234,10 @@ export class DashboardComponent {
     }
     switch (this.dataapprove.stat) {
       case "submit":
-        this.riskstat='Submit'
-      break;
+        this.riskstat = "Submit";
+        break;
       default:
-      this.riskstat='Not Yet Submitted'
+        this.riskstat = "Not Yet Submitted";
     }
   }
   submit(event?) {
@@ -302,19 +304,18 @@ export class DashboardComponent {
     });
   }
 
-  saveCSV()
-  {
+  saveCSV() {
     console.log(this.tabledata);
-    var options = { 
-      fieldSeparator: ',',
+    var options = {
+      fieldSeparator: ",",
       quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true, 
-      showTitle: false/*,
+      decimalseparator: ".",
+      showLabels: true,
+      showTitle: false /*,
       headers: ['Year', 'No', 'Risk No',]*/
     };
 
-    new Angular2Csv(this.tabledata, 'My Report',options);
+    new Angular2Csv(this.tabledata, "My Report", options);
   }
   goToPage(riskno) {
     this.service.getreq("Draftrisks").subscribe(response => {
@@ -337,4 +338,32 @@ export class DashboardComponent {
       // };
     });
   }
+
+  public exportAsExcelFile(excelFileName: string): void {
+    let element = <HTMLScriptElement>document.getElementById("print_table");
+    const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ["data"]
+    };
+    XLSX.writeFile(workbook, `Report-${Date.now()}.xlsx`);
+  }
 }
+//   private saveAsExcelFile(buffer: any, fileName: string): void {
+//     const data: Blob = new Blob([buffer], {
+//       type: EXCEL_TYPE
+//     });
+//     var today = new Date();
+//     var date =
+//       today.getFullYear() +
+//       "" +
+//       (today.getMonth() + 1) +
+//       "" +
+//       today.getDate() +
+//       "_";
+//     var time =
+//       today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
+//     var name = fileName + date + time;
+//     FileSaver.saveAs(data, name + EXCEL_EXTENSION);
+//   }
+// }

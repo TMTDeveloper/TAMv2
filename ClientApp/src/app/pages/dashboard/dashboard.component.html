@@ -31,13 +31,13 @@
         </div>
 
       </div>
-      <button class="btn btn-success" (click)="saveCSV()">Save</button>
+      <button class="btn btn-success" (click)="exportAsExcelFile('tam.xlsx')">Save</button>
     </div>
 
     <nb-tabset>
       <nb-tab tabTitle="Detail">
         <div class="form-group ">
-          <table class="table table-condensed mt-3">
+          <table id="print_table" class="table table-condensed mt-3">
             <font size="1">
               <thead>
                 <tr>
@@ -126,8 +126,8 @@
                       <td>{{ item.lossEvent }}</td>
                       <td>
                         <div class="row">
-                          <button type="button" class="btn btn-success  mr-1" (click)="showModal(item)">View</button>
-                          <button type="button" class="btn btn-success" (click)="goToPage(item.riskNo)">Edit</button>
+                          <button type="button" id="heat" class="btn btn-success  mr-1" (click)="showModal(item)">View</button>
+                          <button type="button" id="heat" class="btn btn-success" (click)="goToPage(item.riskNo)">Edit</button>
                         </div>
                       </td>
                     </tr>
