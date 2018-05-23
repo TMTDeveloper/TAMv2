@@ -408,7 +408,7 @@ export class ChartjsComponent {
       var height = canvas.height;
       var imgData = canvas.toDataURL("image/png");
       var doc = new jsPDF({
-        orientation: id == "print_tab1" ? "portrait" : "landscape",
+        orientation: "landscape",
         unit: "mm",
         format: [Math.floor(width * 0.264583), Math.floor(height * 0.264583)]
       });

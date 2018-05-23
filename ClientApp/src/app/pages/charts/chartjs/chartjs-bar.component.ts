@@ -156,6 +156,10 @@ export class ChartjsBarComponent implements OnDestroy {
           };
     
           this.options = {
+            title: {
+              display: true,
+              text: 'Risk Movement'
+          },
             maintainAspectRatio: false,
             responsive: true,
             legend: {
