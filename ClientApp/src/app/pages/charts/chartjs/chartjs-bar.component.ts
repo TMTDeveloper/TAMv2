@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService, NbColorHelper } from '@nebular/theme';
 import { BackendService } from "../../../@core/data/backend.service";
-
+import 'chartjs-plugin-datalabels';
 @Component({
   selector: 'ngx-chartjs-bar',
   template: `
@@ -156,6 +156,24 @@ export class ChartjsBarComponent implements OnDestroy {
           };
     
           this.options = {
+            plugins: {
+              datalabels: {
+                anchor: 'end',
+                align: 'top',
+                formatter: Math.round,
+                font: {
+                  weight: 'bold'
+                },
+                color: function(context) {
+                  var index = context.dataIndex;
+                  var value = context.dataset.data[index];
+                  return value < 1 ? 'transparent' : chartjs.textColor
+              }
+              }
+            },
+            tooltips:{
+              enabled:true
+            },
             title: {
               display: true,
               text: 'Risk Movement'

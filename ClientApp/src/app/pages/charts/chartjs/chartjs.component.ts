@@ -183,7 +183,18 @@ export class ChartjsComponent {
       desc: ""
     }
   };
-
+  division: any[] = [
+    {
+      data: "ISTD",
+      desc: "Information system and technical division"
+    }
+  ];
+  department: any[] = [
+    {
+      data: "IS",
+      desc: "Information system"
+    }
+  ];
   tabledata: any[] = [];
   effectivedata: any[] = [];
   moderatedata: any[] = [];
@@ -201,20 +212,11 @@ export class ChartjsComponent {
     public service: BackendService
   ) {
     this.loadData();
+    this.dataInput.department=this.department[0];
+    this.dataInput.division=this.division[0];
   }
 
-  division: any[] = [
-    {
-      data: "ISTD",
-      desc: "Information system and technical division"
-    }
-  ];
-  department: any[] = [
-    {
-      data: "IS",
-      desc: "Information system"
-    }
-  ];
+
 
   loadApprove() {
     this.service.getreq("TbRApproves").subscribe(response => {
@@ -394,6 +396,7 @@ export class ChartjsComponent {
   //   (window as any).print();
   // }
   print(id) {
+    console.log(this.dataInput)
     let element = <HTMLScriptElement>document.getElementById(id);
 
     var divHeight = element.offsetHeight;

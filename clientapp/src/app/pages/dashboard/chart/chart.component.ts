@@ -76,17 +76,13 @@ export class ChartComponent implements OnInit {
             let RD =
               this.getData("rddata") != null ? this.getData("rddata") : "";
             return (
-              "<span style='color:yellow'>" +
+              "<span style='color:yellow; font-size:40px;'>" +
               IR +
               "</span>" +
               "<br/>" +
-              "<span style='color:blue'>" +
+              "<span style='color:blue; font-size:40px;'>" +
               RD +
               "</span>"
-            );
-          } else {
-            return (
-              "<span style='font-size:20px'>" + namesList[this.heat] + "</span>"
             );
           }
         });

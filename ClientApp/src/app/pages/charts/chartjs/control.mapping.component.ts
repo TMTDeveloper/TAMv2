@@ -140,6 +140,24 @@ export class ControlMappingComponent implements OnDestroy {
           };
 
           this.options = {
+            plugins: {
+              datalabels: {
+                anchor: 'end',
+                align: 'bottom',
+                formatter: Math.round,
+                font: {
+                  weight: 'bold'
+                },
+                color: function(context) {
+                  var index = context.dataIndex;
+                  var value = context.dataset.data[index];
+                  return value < 1 ? 'transparent' : chartjs.textColor
+              }
+              }
+            },
+            tooltips:{
+              enabled:true
+            },
             title: {
               display: true,
               text: "Control Mapping"

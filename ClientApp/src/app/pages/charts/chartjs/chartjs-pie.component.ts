@@ -1,12 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
+import { Component, OnDestroy } from "@angular/core";
+import { NbThemeService } from "@nebular/theme";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
 @Component({
-  selector: 'ngx-chartjs-pie',
+  selector: "ngx-chartjs-pie",
   template: `
     <chart type="pie" [data]="data" [options]="options"></chart>
-  `,
+  `
 })
 export class ChartjsPieComponent implements OnDestroy {
   data: any;
@@ -15,25 +15,24 @@ export class ChartjsPieComponent implements OnDestroy {
 
   tabledata: any[] = [
     {
-      ctrEff:0,
-      ctrMod:0,
-      ctrIff:0,
-      ctrWeak:0
+      ctrEff: 0,
+      ctrMod: 0,
+      ctrIff: 0,
+      ctrWeak: 0
     }
   ];
 
-  chartdata: any=[
+  chartdata: any = [
     {
-      ctrEff:5,
-      ctrMod:2,
-      ctrIff:1,
-      ctrWeak:0
+      ctrEff: 5,
+      ctrMod: 2,
+      ctrIff: 1,
+      ctrWeak: 0
     }
-  ]
+  ];
 
-  constructor(private theme: NbThemeService,
-    public service: BackendService) {
-      this.loadData();
+  constructor(private theme: NbThemeService, public service: BackendService) {
+    this.loadData();
     /* this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
       const colors: any = config.variables;
@@ -84,44 +83,78 @@ export class ChartjsPieComponent implements OnDestroy {
           this.tabledata = data;
         });
         this.reload();
-       // console.log(this.chartdata[0]);
+        // console.log(this.chartdata[0]);
 
         this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
           const colors: any = config.variables;
           const chartjs: any = config.variables.chartjs;
-    
+
           //console.log("tes");
-    
-    
+
           this.data = {
-            datasets: [{
-              data: [this.chartdata.ctrEff, this.chartdata.ctrMod, this.chartdata.ctrIff,this.chartdata.ctrWeak],
-              backgroundColor: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight],
-            }],
+            datasets: [
+              {
+                data: [
+                  this.chartdata.ctrEff,
+                  this.chartdata.ctrMod,
+                  this.chartdata.ctrIff,
+                  this.chartdata.ctrWeak
+                ],
+                backgroundColor: [
+                  colors.primaryLight,
+                  colors.infoLight,
+                  colors.successLight,
+                  colors.warningLight
+                ]
+              }
+            ],
+            labels: ["Effective", "Moderate", "Ineffective", "Weak"]
           };
-    
+
           this.options = {
+            plugins: {
+              datalabels: {
+                anchor: 'center',
+                align: 'center',
+                formatter: Math.round,
+                font: {
+                  weight: 'bold'
+                },
+                color: function(context) {
+                  var index = context.dataIndex;
+                  var value = context.dataset.data[index];
+                  return value < 1 ? 'transparent' : chartjs.textColor
+              }
+              }
+            },
+            legend: {
+              position: "top",
+              display: true,
+              labels: {
+                fontColor: chartjs.textColor
+              }
+            },
+            tooltips: {
+              enabled: true
+            },
             title: {
               display: true,
               text: "Control Effectiveness"
             },
             maintainAspectRatio: false,
-            showTooltips: false,
             responsive: true,
             scales: {
               xAxes: [
                 {
-                  display: false,
-                },
+                  display: false
+                }
               ],
               yAxes: [
                 {
-                  display: false,
-                },
-              ],
-            },
-            
+                  display: false
+                }
+              ]
+            }
           };
         });
       }
@@ -136,16 +169,15 @@ export class ChartjsPieComponent implements OnDestroy {
     if (arr[0] != null) {
       console.log("masuksini");
       this.chartdata = arr[0];
-      //console.log(this.chartdata);
+      console.log(this.chartdata);
     } else {
       this.chartdata = {
-      ctrEff:0,
-      ctrMod:0,
-      ctrIff:0,
-      ctrWeak:0
+        ctrEff: 0,
+        ctrMod: 0,
+        ctrIff: 0,
+        ctrWeak: 0
       };
     }
-    
   }
 
   ngOnDestroy(): void {
