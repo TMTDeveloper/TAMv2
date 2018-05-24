@@ -159,7 +159,7 @@ export class ChartjsBarComponent implements OnDestroy {
             plugins: {
               datalabels: {
                 anchor: 'end',
-                align: 'top',
+                align: 'bottom',
                 formatter: Math.round,
                 font: {
                   weight: 'bold'
