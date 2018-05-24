@@ -107,7 +107,7 @@ namespace tam_risk_project.Controllers
         }
 
         // DELETE: api/TbRAccidentDetails/5
-        [HttpPost]
+        [HttpPost("deletecontrol")]
         public async Task<IActionResult> DeleteTbRAccidentDetail([FromBody] TbRAccidentDetail controlDelete)
         {
             if (!ModelState.IsValid)

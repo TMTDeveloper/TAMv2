@@ -2,3 +2,7 @@ td .btn{
     font-size:0.8em !important;
     padding:1px !important;
 }
+.row {
+    margin-left: auto;
+    margin-right: auto;
+  }

@@ -127,6 +127,27 @@ namespace tam_risk_project.Controllers
             return Ok(tbMDeptInput);
         }
 
+        [HttpPost("deletecontrol")]
+        public async Task<IActionResult> DeleteTbMDeptInput([FromBody] TbMDeptInput controlDelete)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var tbMDeptInput = await
+            _context.TbMDeptInput.SingleOrDefaultAsync(e => e.YearActive == controlDelete.YearActive && e.DeptInpId == controlDelete.DeptInpId);
+            if (tbMDeptInput == null)
+            {
+                return NotFound();
+            }
+
+            _context.TbMDeptInput.Remove(tbMDeptInput);
+            await _context.SaveChangesAsync();
+
+            return Ok(tbMDeptInput);
+        }
+
         private bool TbMDeptInputExists(short id)
         {
             return _context.TbMDeptInput.Any(e => e.YearActive == id);

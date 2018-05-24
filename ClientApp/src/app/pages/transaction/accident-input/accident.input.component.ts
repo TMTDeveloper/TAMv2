@@ -46,7 +46,7 @@ export class AccidentInputComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
+      vCounterNo: {
         title: "No",
         type: "number",
         filter: false,
@@ -94,8 +94,7 @@ export class AccidentInputComponent {
         filter: false,
         editable: true,
         width: "15%"
-      }
-      ,
+      },
       nextAction: {
         title: "Next Action",
         type: "string",
@@ -107,38 +106,55 @@ export class AccidentInputComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
     }
   ];
   condition: any[] = [
-
     {
       data: "DEP",
       desc: "Department KPI"
@@ -169,7 +185,7 @@ export class AccidentInputComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
-    this.buttonDisable= false;
+    this.buttonDisable = false;
     this.loadData();
   }
   loadData() {
@@ -177,12 +193,16 @@ export class AccidentInputComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
+        let vCounter = 0;
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
-          this.tabledata = data;
-          this.source.load(this.tabledata);
+          vCounter = vCounter + 1;
+          data[ind].vCounterNo = vCounter;
+     
         });
+        this.tabledata = data;
+        this.source.load(this.tabledata);
       }
       // error => {
       //   console.log(error);
@@ -196,8 +216,8 @@ export class AccidentInputComponent {
         this.myForm.setValue({
           condition: "DEP",
           yearPeriode: moment().format("YYYY"),
-          division:"ISTD",
-          departement:"IS"
+          division: "ISTD",
+          departement: "IS"
         });
       })
       .then(resp => {
@@ -217,11 +237,24 @@ export class AccidentInputComponent {
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].division == this.myForm.value.division  &&
+        this.tabledata[data].division == this.myForm.value.division &&
         this.tabledata[data].department == this.myForm.value.departement
       ) {
         lastIndex <= this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
+          : null;
+      }
+    }
+
+    let vLastIndex = 0;
+    for (let data in this.tabledata) {
+      if (
+        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
+        this.tabledata[data].division == this.myForm.value.division &&
+        this.tabledata[data].department == this.myForm.value.departement
+      ) {
+        vLastIndex <= this.tabledata[data].vCounterNo
+          ? (vLastIndex = this.tabledata[data].vCounterNo)
           : null;
       }
     }
@@ -231,10 +264,11 @@ export class AccidentInputComponent {
     this.activeModal.componentInstance.formData = {
       yearActive: this.myForm.value.yearPeriode,
       counterNo: lastIndex + 1,
+      vCounterNo: vLastIndex + 1,
       division: this.myForm.value.division,
       department: this.myForm.value.departement,
       accidentId: accidentId,
-      dateAccident:"",
+      dateAccident: "",
       description: "",
       relatedParties: "",
       financialImpact: "",
@@ -264,13 +298,28 @@ export class AccidentInputComponent {
   comGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
       case 3:
-        return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
+        return (
+          this.myForm.value.division +
+          "-" +
+          this.myForm.value.departement +
+          lastIndex.toString()
+        );
 
       case 2:
-      return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
+        return (
+          this.myForm.value.division +
+          "-" +
+          this.myForm.value.departement +
+          lastIndex.toString()
+        );
 
       case 1:
-      return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
+        return (
+          this.myForm.value.division +
+          "-" +
+          this.myForm.value.departement +
+          lastIndex.toString()
+        );
     }
   }
 
@@ -308,7 +357,7 @@ export class AccidentInputComponent {
         perPage: 30
       },
       columns: {
-        counterNo: {
+        vCounterNo: {
           title: "No",
           type: "number",
           filter: false,
@@ -356,8 +405,7 @@ export class AccidentInputComponent {
           filter: false,
           editable: true,
           width: "15%"
-        }
-        ,
+        },
         nextAction: {
           title: "Next Action",
           type: "string",
@@ -376,11 +424,11 @@ export class AccidentInputComponent {
       true
     );
     switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
         break;
       default:
-      this.buttonDisable =true;
+        this.buttonDisable = true;
     }
   }
   submit(event?) {
@@ -415,32 +463,22 @@ export class AccidentInputComponent {
   }
 
   deleteControl(event) {
-    this.tabledata.forEach((element, ind) => {
-      element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
-    });
     const savedData = {
-      draftKey: event.data.draftKey,
-      draftJson: event.data.draftJson,
-      division: event.data.division,
-      department: event.data.department,
-      type: "RISK",
-      year: moment().format("YYYY"),
-      userUpdated: "Admin",
-      dateUpdated: moment().format(),
-      userCreated: event.data.userCreated,
-      dateCreated: event.data.dateCreated
+      yearActive: event.data.yearActive,
+
+      accidentId: event.data.accidentId
     };
-    this.service.putreq("TbMRiskReminders", savedData).subscribe(
+    this.service.postreq("TbMAccidentDetails/deletecontrol", savedData).subscribe(
       response => {
         console.log(response);
-        this.toastr.success("Draft Deleted!");
+        this.loadData();
+        this.toastr.success("Data Deleted!");
         event.confirm.resolve();
       },
       error => {
         console.log(error);
-        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
       }
     );
   }
-
 }

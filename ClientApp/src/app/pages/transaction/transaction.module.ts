@@ -5,6 +5,7 @@ import {
   TransactionRouterModule,
   routedComponents
 } from "./transaction.router.module";
+import { RiskRegisterGuardComponent } from "./risk.register.guard.component";
 import { ThemeModule } from "../../@theme/theme.module";
 import { RiskRegisterModalComponent } from "./risk-register/modal/risk.register.modal.component";
 import { RiskRegisterDeptComponent } from "./risk-register/modal/risk.register.dept.component";
@@ -17,8 +18,7 @@ import { DeptInputModalComponent } from "./dept-input/modal/dept.input.modal.com
 import { ToastrModule } from "ngx-toastr";
 import { BackendService } from "../../@core/data/backend.service";
 import { CurrencyMaskModule } from "ng2-currency-mask";
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-
+import { MultiselectDropdownModule } from "angular-2-dropdown-multiselect";
 
 @NgModule({
   imports: [
@@ -40,6 +40,6 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
     RiskRegisterCtrComponent,
     RiskRegisterTrtComponent
   ],
-  providers: [BackendService]
+  providers: [BackendService, RiskRegisterGuardComponent]
 })
 export class TransactionModule {}

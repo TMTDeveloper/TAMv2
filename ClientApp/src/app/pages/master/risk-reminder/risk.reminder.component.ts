@@ -14,7 +14,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 export class RiskReminderComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
-  yearPeriode: any = moment().format("YYYY");  
+  yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -47,7 +47,7 @@ export class RiskReminderComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
+      vCounter: {
         title: "No",
         type: "number",
         filter: false,
@@ -66,7 +66,7 @@ export class RiskReminderComponent {
         type: "date",
         filter: false,
         editable: true,
-          width: "40%"
+        width: "40%"
       },
       period: {
         title: "Periode",
@@ -90,31 +90,49 @@ export class RiskReminderComponent {
   ];
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
@@ -122,7 +140,7 @@ export class RiskReminderComponent {
   ];
   tabledata: any[] = [];
 
-  senddata: any[]= [];
+  senddata: any[] = [];
 
   subscription: any;
   activeModal: any;
@@ -141,12 +159,15 @@ export class RiskReminderComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
+        let counter = 0;
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
-          this.tabledata = data;
-          this.source.load(this.tabledata);
+          data[ind].vCounter = counter;
+          counter = counter + 1;
         });
+        this.tabledata = data;
+        this.source.load(this.tabledata);
       }
       // error => {
       //   console.log(error);
@@ -205,18 +226,29 @@ export class RiskReminderComponent {
       }
     }
 
-    
+    let vLastIndex = 0;
+    for (let data in this.tabledata) {
+      if (
+        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
+        this.tabledata[data].typeReminder == this.myForm.value.condition
+      ) {
+        vLastIndex < this.tabledata[data].vCounter
+          ? (vLastIndex = this.tabledata[data].vCounter)
+          : null;
+      }
+    }
 
-    const indicator = this.indicatorGenerate(lastIndex+1);
+    const indicator = this.indicatorGenerate(lastIndex + 1);
 
     this.activeModal.componentInstance.formData = {
       counterNo: lastIndex + 1,
+      vCounter: vLastIndex + 1,
       yearActive: this.myForm.value.yearPeriode,
       typeReminder: this.myForm.value.condition,
       startDate: "",
       endDate: "",
       //indicatorId: indicator,
-      period:"",
+      period: "",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -242,25 +274,21 @@ export class RiskReminderComponent {
     });
     let lastIndex = 0;
     for (let data in this.senddata) {
-      if (
-        this.tabledata[data].yearActive == this.myForm.value.yearPeriode
-      ) {
+      if (this.tabledata[data].yearActive == this.myForm.value.yearPeriode) {
         lastIndex < this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
           : null;
       }
     }
 
-    
-
-    const indicator = this.indicatorGenerate(lastIndex+1);
+    const indicator = this.indicatorGenerate(lastIndex + 1);
 
     this.activeModal.componentInstance.formData = {
       counter: lastIndex + 1,
       yearActive: this.myForm.value.yearPeriode,
       typeSend: "Manual",
       //indicatorId: indicator,
-      body:"",
+      body: "",
       usersend: "admin",
       dateSend: moment().format(),
       status: "1"
@@ -288,7 +316,6 @@ export class RiskReminderComponent {
         return this.myForm.value.condition + "00" + lastIndex.toString();
     }
   }
-
 
   reload() {
     this.yearPeriode = this.myForm.value.yearPeriode;
@@ -324,7 +351,7 @@ export class RiskReminderComponent {
         perPage: 30
       },
       columns: {
-        counterNo: {
+        vCounter: {
           title: "No",
           type: "number",
           filter: false,
@@ -343,7 +370,7 @@ export class RiskReminderComponent {
           type: "date",
           filter: false,
           editable: true,
-            width: "40%"
+          width: "40%"
         },
         period: {
           title: "Periode",
@@ -362,11 +389,11 @@ export class RiskReminderComponent {
       true
     );
     switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
         break;
       default:
-      this.buttonDisable =true;
+        this.buttonDisable = true;
     }
   }
   submit(event?) {
@@ -401,25 +428,23 @@ export class RiskReminderComponent {
   }
 
   deleteControl(event) {
-    this.tabledata.forEach((element, ind) => {
-      element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
-    });
     const savedData = {
-      draftKey: event.data.draftKey,
-      draftJson: event.data.draftJson,
-      division: event.data.division,
-      department: event.data.department,
-      type: "RISK",
-      year: moment().format("YYYY"),
-      userUpdated: "Admin",
-      dateUpdated: moment().format(),
+      yearActive: event.data.yearActive,
+      typeReminder: event.data.typeReminder,
+      counterNo: event.data.counterNo,
+      startDate: event.data.startDate,
+      endDate: event.data.endDate,
+      period: event.data.period,
       userCreated: event.data.userCreated,
-      dateCreated: event.data.dateCreated
+      datetimeCreate: event.data.datetimeCreate,
+      userUpdated: event.data.userUpdated,
+      datetimeUpdated: event.data.datetimeUpdated
     };
-    this.service.putreq("TbMRiskReminders", savedData).subscribe(
+    this.service.postreq("TbMRiskReminders/deletecontrol", savedData).subscribe(
       response => {
         console.log(response);
-        this.toastr.success("Draft Deleted!");
+        this.loadData();
+        this.toastr.success("Data Deleted!");
         event.confirm.resolve();
       },
       error => {

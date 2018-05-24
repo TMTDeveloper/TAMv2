@@ -63,6 +63,14 @@ export class ChartComponent implements OnInit {
   dataSetChanged$ = this.dataSetChangeSource.asObservable();
 
   constructor() {
+    anychart.theme({
+      defaultFontSettings: {
+        fontSize: 20,
+        fontWeight: 100,
+        fontColor: "#0000CD",
+        fontFamily: "Courier"
+      }
+    });
     this.subscription = this.dataSetChanged$.subscribe(dataSet => {
       console.log(this.data);
       this.chart.data(null);
@@ -72,7 +80,7 @@ export class ChartComponent implements OnInit {
         .labels()
         .useHtml(true)
         .enabled(true)
-        .minFontSize(4)
+        .minFontSize(10000)
         .format(function() {
           if (
             this.getData("irdata") != null ||
@@ -83,17 +91,17 @@ export class ChartComponent implements OnInit {
             let RD =
               this.getData("rddata") != null ? this.getData("rddata") : "";
             return (
-              "<span style='color:yellow; font-size:40px;'>" +
+              "<span style='color:yellow; font-size:20px;'>" +
               IR +
               "</span>" +
               "<br/>" +
-              "<span style='color:blue; font-size:40px;'>" +
+              "<span style='color:blue; font-size:20px;'>" +
               RD +
               "</span>"
             );
-          } 
+          }
         });
-      this.svg.emit(this.chart.toSvg(300, 400));
+      this.svg.emit(this.chart.toSvg(600, 850));
     });
   }
 
@@ -116,7 +124,7 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
     // Default data set mapping, hardcoded here.
-
+   
     this.chart.xAxis().orientation("bottom");
     this.chart.yAxis().orientation("left");
     this.chart.xScale().inverted(false);

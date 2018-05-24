@@ -107,15 +107,15 @@ namespace tam_risk_project.Controllers
         }
 
         // DELETE: api/TbMRiskReminders/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTbMRiskReminder([FromRoute] short id)
+        [HttpPost("deletecontrol")]
+        public async Task<IActionResult> DeleteTbMRiskReminder([FromBody] TbMRiskReminder controlDelete)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tbMRiskReminder = await _context.TbMRiskReminder.SingleOrDefaultAsync(m => m.YearActive == id);
+            var tbMRiskReminder = await _context.TbMRiskReminder.SingleOrDefaultAsync(e => e.YearActive == controlDelete.YearActive && e.TypeReminder == controlDelete.TypeReminder && e.CounterNo == controlDelete.CounterNo);
             if (tbMRiskReminder == null)
             {
                 return NotFound();

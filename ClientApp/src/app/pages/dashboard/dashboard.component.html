@@ -108,7 +108,7 @@
 
         <div class="form-group row">
           <div class="form-group ">
-            <label>'   '</label>
+      
               <table class="table table-bordered">
                 <font size="1">
                   <thead>
@@ -124,9 +124,9 @@
                       <td>{{ item.no}}</td>
                       <td width="80">{{ item.riskNo}}</td>
                       <td width="400">{{ item.lossEvent }}</td>
-                      <td>
+                      <td width="100px">
                         <div class="row">
-                          <button type="button" id="heat" class="btn btn-success  mr-1" (click)="showModal(item)">View</button>
+                          <button type="button" id="heat" class="btn btn-success mr-1" (click)="showModal(item)">View</button>
                           <button type="button" id="heat" class="btn btn-success" (click)="goToPage(item.riskNo)">Edit</button>
                         </div>
                       </td>

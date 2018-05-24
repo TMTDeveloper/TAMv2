@@ -12,7 +12,8 @@ import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectOption } from "angular-2-dropdown-multiselect";
+
 @Component({
   selector: "ngx-risk-register",
   templateUrl: "./risk.register.component.html",
@@ -265,7 +266,8 @@ export class RiskRegisterComponent {
       caused: "",
       accidentObj: [],
       riskImpact: [],
-      riskLevel: ""
+      riskLevel: "",
+      optionsModel: []
     },
     inherentRisk: {
       overallRisk: {
@@ -470,22 +472,32 @@ export class RiskRegisterComponent {
     public router: Router,
     private route: ActivatedRoute
   ) {
+    this.route.url.subscribe(url => {
+      console.log("activatedroute");
+      console.log(url);
+    });
     this.loadData();
     this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
     this.controlSrc.load(this.dataInput.currentAction.controls);
     this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
-
-
   }
 
   getListRiskIndicator(value) {
     let yearPeriode = this.yearPeriode;
     let arr = this.riskIndicatorData.filter(function(item) {
-      return item.condition == value && item.yearActive == yearPeriode && item.flagActive == 'Y';
+      return (
+        item.condition == value &&
+        item.yearActive == yearPeriode &&
+        item.flagActive == "Y"
+      );
     });
     if (arr[0] != null) {
       return this.riskIndicatorData.filter(function(item) {
-        return item.condition == value && item.yearActive == yearPeriode && item.flagActive == 'Y';
+        return (
+          item.condition == value &&
+          item.yearActive == yearPeriode &&
+          item.flagActive == "Y"
+        );
       });
     }
   }
@@ -503,21 +515,41 @@ export class RiskRegisterComponent {
           this.riskIndicatorData = data;
         });
         let yearPeriode = this.yearPeriode;
-    let arr = this.riskIndicatorData.filter(function(item) {
-      return item.condition =='RTP' && item.yearActive == yearPeriode && item.flagActive == 'Y';
-    });
-    if (arr[0] != null) {
-      this.multiSelect= this.riskIndicatorData.filter(function(item) {
-        return item.condition == 'RTP' && item.yearActive == yearPeriode && item.flagActive == 'Y';
-      });
-    }
+        let arr = this.riskIndicatorData.filter(function(item) {
+          return (
+            item.condition == "RTP" &&
+            item.yearActive == yearPeriode &&
+            item.flagActive == "Y"
+          );
+        });
+        if (arr[0] != null) {
+          this.multiSelect = this.riskIndicatorData.filter(function(item) {
+            return (
+              item.condition == "RTP" &&
+              item.yearActive == yearPeriode &&
+              item.flagActive == "Y"
+            );
+          });
+        }
 
-    this.myOptions = [
-      { id: this.multiSelect[0].description , name: this.multiSelect[0].description},
-      { id: this.multiSelect[1].description , name: this.multiSelect[1].description},
-      { id: this.multiSelect[2].description , name: this.multiSelect[2].description},
-      { id: this.multiSelect[3].description , name: this.multiSelect[3].description}
-  ];
+        this.myOptions = [
+          {
+            id: this.multiSelect[0].description,
+            name: this.multiSelect[0].description
+          },
+          {
+            id: this.multiSelect[1].description,
+            name: this.multiSelect[1].description
+          },
+          {
+            id: this.multiSelect[2].description,
+            name: this.multiSelect[2].description
+          },
+          {
+            id: this.multiSelect[3].description,
+            name: this.multiSelect[3].description
+          }
+        ];
 
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
           if (response != null) {
@@ -526,7 +558,6 @@ export class RiskRegisterComponent {
         });
       }
     });
-
   }
 
   ngOnInit() {
@@ -538,7 +569,6 @@ export class RiskRegisterComponent {
         this.controlSrc.load(this.dataInput.currentAction.controls);
         this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
       }
-
     });
   }
 
@@ -1631,7 +1661,7 @@ export class RiskRegisterComponent {
     }
   }
 
- public loopRiskImpact() {
+  public loopRiskImpact() {
     let data = "";
 
     for (let i = 0; i < this.dataInput.riskDescription.riskImpact.length; i++) {
@@ -1951,6 +1981,41 @@ export class RiskRegisterComponent {
     }
   };
 
+  canDeactivate() {
+    if (
+      this.dataInput.divisionDepartment.companyKpi.description == "" ||
+      this.dataInput.divisionDepartment.departmentKpi.description == "" ||
+      this.dataInput.divisionDepartment.businessProcess == "" ||
+      this.dataInput.riskDescription.lossEvent == "" ||
+      this.dataInput.riskDescription.caused == "" ||
+      this.dataInput.riskDescription.riskLevel == "" ||
+      this.dataInput.inherentRisk.overallImpact.description == "" ||
+      this.dataInput.inherentRisk.likelihood == "" ||
+      this.dataInput.inherentRisk.overallRisk.description == "" ||
+      this.dataInput.currentAction.operation == "" ||
+      this.dataInput.currentAction.appropriateness.description == "" ||
+      this.dataInput.currentAction.overallControl.description == "" ||
+      this.dataInput.currentAction.Preventive +
+        this.dataInput.currentAction.Detective +
+        this.dataInput.currentAction.Corrective ==
+        0 ||
+      this.dataInput.residualRisk.financialImpact.amount >
+        this.dataInput.inherentRisk.financialImpact.amount ||
+      this.dataInput.residualRisk.operationalImpact.loss >
+        this.dataInput.inherentRisk.operationalImpact.loss ||
+      this.dataInput.residualRisk.overallImpact.description == "" ||
+      this.dataInput.residualRisk.likelihood == "" ||
+      this.dataInput.residualRisk.overallRisk.description == "" ||
+      this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
+      this.dataInput.expectedRisk.impact == "" ||
+      this.dataInput.expectedRisk.likelihood == ""
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   deleteTreatment(event) {
     event.confirm.resolve();
     this.dataInput.expectedRisk.treatmentPlanArr = this.dataInput.expectedRisk.treatmentPlanArr.filter(
@@ -2023,5 +2088,9 @@ export class RiskRegisterComponent {
       },
       error => {}
     );
+  }
+
+  onChange() {
+    console.log(this.dataInput.riskDescription.riskImpact);
   }
 }

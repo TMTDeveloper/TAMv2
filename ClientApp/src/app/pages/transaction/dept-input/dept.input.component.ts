@@ -6,10 +6,10 @@ import { DeptInputModalComponent } from "./modal/dept.input.modal.component"; //
 import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
-import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+import { IMultiSelectOption } from "angular-2-dropdown-multiselect";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+import { Angular2Csv } from "angular2-csv/Angular2-csv";
 @Component({
   selector: "ngx-dept-input",
   templateUrl: "./dept.input.component.html"
@@ -18,12 +18,9 @@ export class DeptInputComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
   yearPeriode: any = moment().format("YYYY");
-  
 
   optionsModel: number[];
   myOptions: IMultiSelectOption[];
-
- 
 
   settings: any = {
     add: {
@@ -78,38 +75,55 @@ export class DeptInputComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
     }
   ];
   condition: any[] = [
-
     {
       data: "DEP",
       desc: "Department KPI"
@@ -140,21 +154,23 @@ export class DeptInputComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
-    this.buttonDisable= false;
+    this.buttonDisable = false;
     this.loadData();
-    
   }
   loadData() {
     this.service.getreq("TbMDeptInputs").subscribe(response => {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
+        let vCounter = 0;
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
-          this.tabledata = data;
-          this.source.load(this.tabledata);
+          vCounter = vCounter + 1;
+          data[ind].vCounterNo = vCounter;
         });
+        this.tabledata = data;
+        this.source.load(this.tabledata);
       }
       // error => {
       //   console.log(error);
@@ -167,14 +183,13 @@ export class DeptInputComponent {
       .then(resp => {
         this.myForm.setValue({
           yearPeriode: moment().format("YYYY"),
-          division:"ISTD",
-          departement:"IS"
+          division: "ISTD",
+          departement: "IS"
         });
       })
       .then(resp => {
         this.reload();
       });
-
   }
 
   showModal() {
@@ -187,7 +202,7 @@ export class DeptInputComponent {
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].division == this.myForm.value.division  &&
+        this.tabledata[data].division == this.myForm.value.division &&
         this.tabledata[data].departement == this.myForm.value.departement
       ) {
         lastIndex <= this.tabledata[data].counterNo
@@ -196,11 +211,25 @@ export class DeptInputComponent {
       }
     }
 
+    let vLastIndex = 0;
+    for (let data in this.tabledata) {
+      if (
+        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
+        this.tabledata[data].division == this.myForm.value.division &&
+        this.tabledata[data].departement == this.myForm.value.departement
+      ) {
+        vLastIndex <= this.tabledata[data].vCounterNo
+          ? (vLastIndex = this.tabledata[data].vCounterNo)
+          : null;
+      }
+    }
+
     const deptInpId = this.comGenerate(lastIndex + 1);
     this.activeModal.componentInstance.formData = {
       yearActive: this.myForm.value.yearPeriode,
-      condition: 'DEP',
+      condition: "DEP",
       counterNo: lastIndex + 1,
+      vCounterNo: vLastIndex + 1,
       division: this.myForm.value.division,
       departement: this.myForm.value.departement,
       deptInpId: deptInpId,
@@ -228,13 +257,28 @@ export class DeptInputComponent {
   comGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
       case 3:
-        return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
+        return (
+          this.myForm.value.division +
+          "-" +
+          this.myForm.value.departement +
+          lastIndex.toString()
+        );
 
       case 2:
-      return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
+        return (
+          this.myForm.value.division +
+          "-" +
+          this.myForm.value.departement +
+          lastIndex.toString()
+        );
 
       case 1:
-      return this.myForm.value.division+"-"+this.myForm.value.departement + lastIndex.toString();
+        return (
+          this.myForm.value.division +
+          "-" +
+          this.myForm.value.departement +
+          lastIndex.toString()
+        );
     }
   }
 
@@ -300,11 +344,11 @@ export class DeptInputComponent {
       true
     );
     switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
         break;
       default:
-      this.buttonDisable =true;
+        this.buttonDisable = true;
     }
   }
   submit(event?) {
@@ -339,35 +383,25 @@ export class DeptInputComponent {
   }
 
   deleteControl(event) {
-    this.tabledata.forEach((element, ind) => {
-      element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
-    });
     const savedData = {
-      draftKey: event.data.draftKey,
-      draftJson: event.data.draftJson,
-      division: event.data.division,
-      department: event.data.department,
-      type: "RISK",
-      year: moment().format("YYYY"),
-      userUpdated: "Admin",
-      dateUpdated: moment().format(),
-      userCreated: event.data.userCreated,
-      dateCreated: event.data.dateCreated
+      yearActive: event.data.yearActive,
+
+      deptInpId: event.data.deptInpId
     };
     this.toastr.success("Data Deleted!");
     event.confirm.resolve();
-   /* this.service.putreq("TbMRiskReminders", savedData).subscribe(
+    this.service.postreq("TbMdeptinputs/deletecontrol", savedData).subscribe(
       response => {
         console.log(response);
-        this.toastr.success("Draft Deleted!");
+        this.loadData();
+        this.toastr.success("Data Deleted!");
         event.confirm.resolve();
       },
       error => {
         console.log(error);
-        //this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
-       event.confirm.resolve();
-        
+        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        event.confirm.resolve();
       }
-    );*/
+    );
   }
 }

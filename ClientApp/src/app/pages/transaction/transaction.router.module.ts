@@ -16,6 +16,9 @@ import { RiskRegisterQlComponent } from "./risk-register/modal/risk.register.ql.
 import { RiskRegisterCtrComponent } from "./risk-register/modal/risk.register.ctr.component";
 import { ViewDraftComponent } from "./view-draft/view.draft.component";
 import { RiskRegisterTrtComponent } from "./risk-register/modal/risk.register.trt.component";
+import {RiskRegisterGuardComponent} from './risk.register.guard.component'
+
+
 const routes: Routes = [
   {
     path: "",
@@ -23,7 +26,8 @@ const routes: Routes = [
     children: [
       {
         path: "risk-register",
-        component: RiskRegisterComponent
+        component: RiskRegisterComponent,
+        canDeactivate: [RiskRegisterGuardComponent]
       },
       {
         path: "dept-input",
@@ -73,3 +77,5 @@ export const routedComponents = [
   TransactionComponent,
   ViewDraftComponent
 ];
+
+
