@@ -52,7 +52,7 @@ export class CompanyInputComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "80%",
+        width: "75%",
         editor: {
           type: "textarea"
         }
@@ -257,7 +257,7 @@ export class CompanyInputComponent {
           type: "string",
           filter: false,
           editable: true,
-          width: "80%",
+          width: "75%",
           editor: {
             type: "textarea"
           }

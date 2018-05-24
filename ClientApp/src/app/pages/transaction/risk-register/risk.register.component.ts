@@ -1922,7 +1922,6 @@ export class RiskRegisterComponent {
       this.dataInput.divisionDepartment.businessProcess == "" ||
       this.dataInput.riskDescription.lossEvent == "" ||
       this.dataInput.riskDescription.caused == "" ||
-      this.dataInput.riskDescription.riskImpact[0] == null ||
       this.dataInput.riskDescription.riskLevel == "" ||
       this.dataInput.inherentRisk.overallImpact.description == "" ||
       this.dataInput.inherentRisk.likelihood == "" ||

@@ -70,7 +70,7 @@ export class OperationalIndicatorRiskComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "50%",
+        width: "45%",
         valuePrepareFunction: value => {
           if (isNaN(value)) {
             return 0;
@@ -86,7 +86,7 @@ export class OperationalIndicatorRiskComponent {
         type: "string",
         filter: false,
         editable: false,
-        width: "20%",
+        width: "25%",
         valuePrepareFunction: value => {
           switch (this.myForm.value.condition) {
             case "SAL":
@@ -274,14 +274,14 @@ export class OperationalIndicatorRiskComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "30%"
+          width: "40%"
         },
         numberValue: {
           title: "Number",
           type: "string",
           filter: false,
           editable: true,
-          width: "60%",
+          width: "45%",
           valuePrepareFunction: value => {
             if (isNaN(value)) {
               return 0;
@@ -297,7 +297,7 @@ export class OperationalIndicatorRiskComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "20%",
+          width: "25%",
           valuePrepareFunction: value => {
             switch (this.myForm.value.condition) {
               case "SAL":

@@ -52,7 +52,7 @@ export class RiskIndicatorComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "80%"
+        width: "60%"
       },
       score: {
         title: "Score ",
@@ -291,7 +291,7 @@ export class RiskIndicatorComponent {
           type: "string",
           filter: false,
           editable: true,
-          width: "80%"
+          width: "60%"
         },
         score: {
           title: "Score ",

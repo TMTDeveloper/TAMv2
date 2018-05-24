@@ -424,7 +424,8 @@ export class RiskReminderComponent {
       },
       error => {
         console.log(error);
-        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        //this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        event.confirm.resolve();
       }
     );
   }

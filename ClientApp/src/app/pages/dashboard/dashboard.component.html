@@ -108,14 +108,14 @@
 
         <div class="form-group row">
           <div class="form-group ">
-            <div class="col-md-4">
-              <table class="table table-condensed mt-3">
+            <label>'   '</label>
+              <table class="table table-bordered">
                 <font size="1">
                   <thead>
                     <tr>
                       <th>No</th>
                       <th width="30%">Risk&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th>Loss Event</th>
+                      <th width="400" >Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -123,7 +123,7 @@
                     <tr *ngFor="let item of tabledata">
                       <td>{{ item.no}}</td>
                       <td width="80">{{ item.riskNo}}</td>
-                      <td>{{ item.lossEvent }}</td>
+                      <td width="400">{{ item.lossEvent }}</td>
                       <td>
                         <div class="row">
                           <button type="button" id="heat" class="btn btn-success  mr-1" (click)="showModal(item)">View</button>
@@ -134,7 +134,7 @@
                   </tbody>
                 </font>
               </table>
-            </div>
+            
           </div>
           <app-chart [heat]="tabledata"></app-chart>
         </div>

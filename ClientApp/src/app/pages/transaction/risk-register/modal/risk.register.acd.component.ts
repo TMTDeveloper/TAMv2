@@ -35,49 +35,49 @@ export class RiskRegisterAcdComponent {
         type: "number",
         filter: false,
         editable: false,
-        width: "5%"
+        width: "50px"
       },
       dateAccident: {
         title: "Date",
         type: "date",
         filter: false,
         editable: false,
-        width: "5%"
+        width: "100px"
       },
       description: {
         title: "Description",
         type: "string",
         filter: false,
         editable: true,
-        width: "15%"
+        width: "500px"
       },
       relatedParties: {
         title: "Related Parties",
         type: "string",
         filter: false,
         editable: true,
-        width: "15%"
+        width: "500px"
       },
       financialImpact: {
         title: "Financial Impact",
         type: "string",
         filter: false,
         editable: true,
-        width: "15%"
+        width: "500px"
       },
       otherImpact: {
         title: "Other Impact",
         type: "string",
         filter: false,
         editable: true,
-        width: "15%"
+        width: "500px"
       },
       currentAction: {
         title: "Current Action",
         type: "string",
         filter: false,
         editable: true,
-        width: "15%"
+        width: "500px"
       }
       ,
       nextAction: {
@@ -85,7 +85,7 @@ export class RiskRegisterAcdComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "15%"
+        width: "500px"
       }
     }
   };

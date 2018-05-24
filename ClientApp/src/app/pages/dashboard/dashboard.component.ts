@@ -338,6 +338,7 @@ export class DashboardComponent {
       // };
     });
   }
+  
 
   public exportAsExcelFile(excelFileName: string): void {
     let element = <HTMLScriptElement>document.getElementById("print_table");

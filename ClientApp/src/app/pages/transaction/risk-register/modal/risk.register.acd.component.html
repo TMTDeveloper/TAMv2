@@ -1,13 +1,14 @@
 <nb-card>
-  <nb-card-header>Input Accident</nb-card-header>
+  <nb-card-header>Select Accident</nb-card-header>
   <nb-card-body>
+    <div style="overflow-x: scroll;">
     <div class="col-sm-auto">
       <div class="form-group">
         <ng2-smart-table [settings]="settings" [source]="source" (rowSelect)="refreshSelected($event)">
         </ng2-smart-table>
       </div>
     </div>
-
+  </div>
         <button type="submit" class="btn btn-danger" (click)="submit()">Select</button>
         <button type="submit" class="btn btn-success" (click)="closeModal()">Close</button>
 

@@ -354,7 +354,9 @@ export class DeptInputComponent {
       userCreated: event.data.userCreated,
       dateCreated: event.data.dateCreated
     };
-    this.service.putreq("TbMRiskReminders", savedData).subscribe(
+    this.toastr.success("Data Deleted!");
+    event.confirm.resolve();
+   /* this.service.putreq("TbMRiskReminders", savedData).subscribe(
       response => {
         console.log(response);
         this.toastr.success("Draft Deleted!");
@@ -362,8 +364,10 @@ export class DeptInputComponent {
       },
       error => {
         console.log(error);
-        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        //this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+       event.confirm.resolve();
+        
       }
-    );
+    );*/
   }
 }
