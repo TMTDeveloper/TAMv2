@@ -287,7 +287,7 @@ export class FinancialIndicatorRiskComponent {
   }
 
   onSaveConfirm(event) {
-    if (event.newData.percentageValue<101) {
+    if (event.newData.percentageValue<9999) {
       event.confirm.resolve(event.newData);
       this.submit(event);
     } else {

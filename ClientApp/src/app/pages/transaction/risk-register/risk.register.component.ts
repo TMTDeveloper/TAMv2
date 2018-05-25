@@ -488,7 +488,7 @@ export class RiskRegisterComponent {
       return (
         item.condition == value &&
         item.yearActive == yearPeriode &&
-        item.flagActive == "Y"
+        item.flagActive == "Aktif"
       );
     });
     if (arr[0] != null) {
@@ -496,7 +496,7 @@ export class RiskRegisterComponent {
         return (
           item.condition == value &&
           item.yearActive == yearPeriode &&
-          item.flagActive == "Y"
+          item.flagActive == "Aktif"
         );
       });
     }
@@ -519,7 +519,7 @@ export class RiskRegisterComponent {
           return (
             item.condition == "RTP" &&
             item.yearActive == yearPeriode &&
-            item.flagActive == "Y"
+            item.flagActive == "Aktif"
           );
         });
         if (arr[0] != null) {
@@ -527,7 +527,7 @@ export class RiskRegisterComponent {
             return (
               item.condition == "RTP" &&
               item.yearActive == yearPeriode &&
-              item.flagActive == "Y"
+              item.flagActive == "Aktif"
             );
           });
         }

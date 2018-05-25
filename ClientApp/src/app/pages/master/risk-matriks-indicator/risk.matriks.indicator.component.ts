@@ -55,7 +55,7 @@ export class RiskMatriksIndicatorComponent {
   };
   conditionA: any = {
     data: "EFF",
-    desc: "Overal Control"
+    desc: "Overall Control"
   };
   conditionB: any = {
     data: "OPR",
