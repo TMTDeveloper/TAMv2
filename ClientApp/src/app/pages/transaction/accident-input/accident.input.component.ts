@@ -462,6 +462,17 @@ export class AccidentInputComponent {
     this.toastr.success("Data Saved!");
   }
 
+  onSaveConfirm(event) {
+    if (event.newData.dateAccident!=''&&event.newData.description!=''&&
+    event.newData.relatedParties!=''&&(event.newData.financialImpact!=''||
+    event.newData.otherImpact!='')&&event.newData.currentAction!=''&&event.newData.nextAction!='') {
+      event.confirm.resolve(event.newData);
+      this.submit(event);
+    } else {
+      event.confirm.reject();
+    }
+  }
+
   deleteControl(event) {
     const savedData = {
       yearActive: event.data.yearActive,
