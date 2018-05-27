@@ -30,7 +30,7 @@
         </div>
       </div>
 
-          <button type="submit" class="btn btn-danger">Submit</button>
+          <button type="submit" [disabled]="formData.description==''||formData.type==''||formData.pic==''||formData.dueDate==''" class="btn btn-danger">Submit</button>
           <button type="submit" class="btn btn-success" (click)="closeModal()">Close</button>
     </form>
   </nb-card-body>

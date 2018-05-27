@@ -382,6 +382,15 @@ export class DeptInputComponent {
     this.toastr.success("Data Saved!");
   }
 
+  onSaveConfirm(event) {
+    if (event.newData.description!='') {
+      event.confirm.resolve(event.newData);
+      this.submit(event);
+    } else {
+      event.confirm.reject();
+    }
+  }
+
   deleteControl(event) {
     const savedData = {
       yearActive: event.data.yearActive,
