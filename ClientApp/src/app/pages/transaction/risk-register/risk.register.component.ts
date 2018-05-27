@@ -112,10 +112,10 @@ export class RiskRegisterComponent {
     hideSubHeader: true,
     actions: {
       add: false,
-      edit: false,
+      edit: true,
       delete: true,
       position: "right",
-      columnTitle: "Modify",
+      columnTitle: "Action",
       width: "10%"
     },
     pager: {
@@ -198,7 +198,7 @@ export class RiskRegisterComponent {
       edit: true,
       delete: true,
       position: "right",
-      columnTitle: "Modify",
+      columnTitle: "Action",
       width: "10%"
     },
     pager: {
@@ -765,13 +765,16 @@ export class RiskRegisterComponent {
     this.countPDC();
   }
   saveControl(event) {
+    if (event.newData.description!='') {
     event.confirm.resolve(event.newData);
     this.dataInput.currentAction.controls.forEach((element, ind) => {
       element.no == event.newData.no
         ? (element.type = event.newData.type)
         : null;
     });
-    this.countPDC();
+    this.countPDC();} else {
+      event.confirm.reject();
+    }
   }
   showCtr() {
     this.activeModal = this.modalService.open(RiskRegisterCtrComponent, {
@@ -2031,12 +2034,15 @@ export class RiskRegisterComponent {
     console.log(this.dataInput.expectedRisk.treatmentPlanArr);
   }
   saveTreatment(event) {
+    if (event.newData.description!=''&&event.newData.pic!=''&&event.newData.dueDate!='') {
     event.confirm.resolve(event.newData);
     this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
       element.no == event.newData.no
         ? (element.type = event.newData.type)
         : null;
-    });
+    });} else {
+      event.confirm.reject();
+    }
   }
 
   showTrt() {

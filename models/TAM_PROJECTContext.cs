@@ -124,7 +124,7 @@ namespace tam_risk_project.Models
                  e.DraftKey
              });
              entity.Property(e => e.DraftKey).HasColumnName("DRAFT_KEY");
-             entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON");
+             entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON").HasMaxLength(8000);
              entity.Property(e => e.Division).HasColumnName("DIVISION");
              entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
              entity.Property(e => e.Type).HasColumnName("TYPE");
