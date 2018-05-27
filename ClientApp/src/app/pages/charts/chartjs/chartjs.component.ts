@@ -175,8 +175,8 @@ export class ChartjsComponent {
 
   dataInput = {
     division: {
-        data: "",
-        desc: ""
+      data: "",
+      desc: ""
     },
     department: {
       data: "",
@@ -196,6 +196,83 @@ export class ChartjsComponent {
     }
   ];
   tabledata: any[] = [];
+  riskArr: Array<any> = [
+    {
+      no: 1,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 2,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 3,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 4,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 5,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 6,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 7,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 8,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 9,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 10,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 11,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 12,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 13,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 14,
+      riskNo: "",
+      lossEvent: ""
+    },
+    {
+      no: 15,
+      riskNo: "",
+      lossEvent: ""
+    }
+  ];
   effectivedata: any[] = [];
   moderatedata: any[] = [];
   ineffectivedata: any[] = [];
@@ -212,11 +289,9 @@ export class ChartjsComponent {
     public service: BackendService
   ) {
     this.loadData();
-    this.dataInput.department=this.department[0];
-    this.dataInput.division=this.division[0];
+    this.dataInput.department = this.department[0];
+    this.dataInput.division = this.division[0];
   }
-
-
 
   loadApprove() {
     this.service.getreq("TbRApproves").subscribe(response => {
@@ -259,7 +334,6 @@ export class ChartjsComponent {
       console.log(this.approvedata);
     }
   }
-
 
   showModal() {
     this.activeModal = this.modalService.open(ReportApproveModalComponent, {
@@ -344,6 +418,12 @@ export class ChartjsComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
+        for (let i = 0; i < 15; i++) {
+          data[i] != null
+            ? (this.riskArr[i] = data[i])
+            : null;
+        }
+        console.log(this.riskArr);
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
@@ -396,7 +476,7 @@ export class ChartjsComponent {
   //   (window as any).print();
   // }
   print(id) {
-    console.log(this.dataInput)
+    console.log(this.dataInput);
     let element = <HTMLScriptElement>document.getElementById(id);
 
     var divHeight = element.offsetHeight;

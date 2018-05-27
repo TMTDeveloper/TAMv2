@@ -7,7 +7,7 @@ import { CompanyInputModalComponent } from "./company-input/modal/company.input.
 import { RiskIndicatorModalComponent } from "./risk-indicator/modal/risk.indicator.modal.component";
 import { RiskReminderModalComponent } from "./risk-reminder/modal/risk.reminder.modal.component";
 import { RiskReminderManualComponent } from "./risk-reminder/modal/risk.reminder.manual.component";
-import { ToastrModule } from "ngx-toastr";
+
 import { RiskMatriksIndicatorModalComponent } from "./risk-matriks-indicator/modal/risk.matriks.indicator.modal.component";
 import { FinancialIndicatorRiskModalComponent } from "./financial-indicator-risk/modal/financial.indicator.risk.modal.component";
 import { OperationalIndicatorRiskModalComponent } from "./operational-indicator-risk/modal/operational.indicator.risk.modal.component";
@@ -21,7 +21,6 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     Ng2SmartTableModule,
     MasterRouterModule,
     CurrencyMaskModule,
-    ToastrModule.forRoot()
   ],
   declarations: [...routedComponents],
   entryComponents: [

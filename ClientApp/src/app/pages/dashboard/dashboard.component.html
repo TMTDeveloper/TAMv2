@@ -19,14 +19,14 @@
         <label class="col-md-2 mt-3">Division</label>
         <div class="col-md-4">
           <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
-          <select class="form-control" name="division" ngModel required (change)="reload()">
-            <option *ngFor="let data of division" value="{{data.data}}">{{data.desc}}</option>
+          <select class="form-control" name="division" [(ngModel)]="division" (change)="reload()">
+            <option *ngFor="let data of divisionData" value="data">{{data.description}}</option>
           </select>
         </div>
         <label class="col-md-2 mt-3">Department</label>
         <div class="col-md-4">
-          <select class="form-control" name="department" ngModel required (change)="reload()">
-            <option *ngFor="let data of department" value="{{data.data}}">{{data.desc}}</option>
+          <select class="form-control" name="department" [(ngModel)]="department" (change)="reload()">
+            <option *ngFor="let data of departmentFilter" value="data">{{data.department}}</option>
           </select>
         </div>
 
@@ -108,33 +108,36 @@
 
         <div class="form-group row">
           <div class="form-group ">
-      
-              <table class="table table-bordered">
-                <font size="1">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th width="30%">Risk&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th width="400" >Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of tabledata">
-                      <td>{{ item.no}}</td>
-                      <td width="80">{{ item.riskNo}}</td>
-                      <td width="400">{{ item.lossEvent }}</td>
-                      <td width="100px">
-                        <div class="row">
-                          <button type="button" id="heat" class="btn btn-success mr-1" (click)="showModal(item)">View</button>
-                          <button type="button" id="heat" class="btn btn-success" (click)="goToPage(item.riskNo)">Edit</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </font>
-              </table>
-            
+
+            <table class="table table-bordered">
+              <font size="1">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th width="30%">Risk&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th width="400">Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of tabledata">
+                    <td>{{ item.no}}</td>
+                    <td width="80">{{ item.riskNo}}</td>
+                    <td width="400">{{ item.lossEvent }}</td>
+                    <td width="160px">
+                      <div class="row">
+                        <button type="button" id="heat" class="btn btn-success mr-1" (click)="showModal(item)">View</button>
+                        <button type="button" id="heat" class="btn btn-success mr-1" (click)="goToPage(item.riskNo)">Edit</button>
+                        <button type="button" id="heat" class="btn btn-success" (click)="deleteControl(item)">Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </font>
+            </table>
+            <div class="form-group ">
+              <button class="btn btn-success" (click)="addNewRisk()">Add</button>
+            </div>
           </div>
           <app-chart [heat]="tabledata"></app-chart>
         </div>

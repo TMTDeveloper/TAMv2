@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
-import { ToastrModule } from "ngx-toastr";
+
 import { BackendService } from "../../@core/data/backend.service";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import {Nl2BrPipeModule} from 'nl2br-pipe';
@@ -58,7 +58,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule,Nl2BrPipeModule, ChartModule,ToastrModule.forRoot()],
+  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule,Nl2BrPipeModule, ChartModule],
   declarations: [...routedComponents, ...components],
   entryComponents: [ReportApproveModalComponent],  
   providers: [BackendService]

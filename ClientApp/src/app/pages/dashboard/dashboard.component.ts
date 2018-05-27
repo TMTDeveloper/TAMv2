@@ -9,7 +9,8 @@ import { Router } from "@angular/router";
 import { Angular2Csv } from "angular2-csv/Angular2-csv";
 import { Angular5Csv } from "angular5-csv/Angular5-csv";
 import * as XLSX from "xlsx";
-
+import { ToastrService } from "ngx-toastr";
+import { filter } from "rxjs/operator/filter";
 @Component({
   selector: "ngx-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -79,19 +80,13 @@ export class DashboardComponent {
     }
   };
 
-  division: any[] = [
-    {
-      data: "ISTD",
-      desc: "Information system and technical division"
-    }
-  ];
-  department: any[] = [
-    {
-      data: "IS",
-      desc: "Information system"
-    }
-  ];
+  division: any;
+  department: any;
 
+  divisionData: any[] = [];
+  departmentData: any[] = [];
+
+  departmentFilter: any[] = [];
   source: LocalDataSource = new LocalDataSource();
 
   tabledata: any[] = [];
@@ -103,7 +98,8 @@ export class DashboardComponent {
   constructor(
     private modalService: NgbModal,
     public service: BackendService,
-    public router: Router
+    public router: Router,
+    private toastr: ToastrService
   ) {
     this.buttonDisable = false;
     this.loadData();
@@ -117,6 +113,29 @@ export class DashboardComponent {
         console.log(JSON.stringify(response));
         this.tabledata = data;
         this.source.load(this.tabledata);
+        this.service.getreq("tbmlibraries").subscribe(response => {
+          if (response != null) {
+            let arr = response.filter(item => {
+              return item.condition == "DIV";
+            });
+
+            this.divisionData = arr;
+            this.division = this.divisionData[0];
+
+            this.service.getreq("tbmdivdepts").subscribe(response => {
+              if (response != null) {
+                this.departmentData = response;
+                this.filterDepartment()
+              }
+              // error => {
+              //   console.log(error);
+              // };
+            });
+          }
+          // error => {
+          //   console.log(error);
+          // };
+        });
       }
       // error => {
       //   console.log(error);
@@ -166,6 +185,7 @@ export class DashboardComponent {
   }
 
   reload() {
+    this.filterDepartment();
     this.yearPeriode = this.myForm.value.yearPeriode;
     this.settings = {
       add: {
@@ -239,7 +259,21 @@ export class DashboardComponent {
       default:
         this.riskstat = "Not Yet Submitted";
     }
+   
   }
+
+  filterDepartment() {
+    let arr = this.departmentData.filter(item => {
+      return item.kodeDivisi == this.division.charId;
+    });
+
+    if (arr != null) {
+      this.departmentFilter = arr;
+    } else {
+      this.departmentFilter = [];
+    }
+  }
+
   submit(event?) {
     event
       ? this.service
@@ -322,23 +356,29 @@ export class DashboardComponent {
       if (response != null) {
         const data = response;
         console.log(data);
+        let datafound = false;
         response.forEach(element => {
-          element.draftKey == riskno
-            ? this.router.navigate(["/pages/transaction/risk-register"], {
-                queryParams: {
-                  draftKey: element.draftKey,
-                  draftJson: element.draftJson
-                }
-              })
-            : null;
+          if (element.draftKey == riskno) {
+            this.router.navigate(["/pages/transaction/risk-register"], {
+              queryParams: {
+                draftKey: element.draftKey,
+                draftJson: element.draftJson
+              }
+            });
+            datafound = true;
+          }
         });
+        this.toastr.error("Draft doesn't exist!");
       }
       // error => {
       //   console.log(error);
       // };
     });
   }
-  
+
+  public addNewRisk() {
+    this.router.navigate(["/pages/transaction/risk-register"]);
+  }
 
   public exportAsExcelFile(excelFileName: string): void {
     let element = <HTMLScriptElement>document.getElementById("print_table");
@@ -348,6 +388,29 @@ export class DashboardComponent {
       SheetNames: ["data"]
     };
     XLSX.writeFile(workbook, `Report-${Date.now()}.xlsx`);
+  }
+
+  deleteControl(event) {
+    const savedData = {
+      yearActive: event.yearActive,
+
+      riskNo: event.riskNo
+    };
+    console.log(event);
+    console.log(savedData);
+    this.service
+      .postreq("TbRRiskAssessments/deletecontrol", savedData)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.loadData();
+          this.toastr.success("Data Deleted!");
+        },
+        error => {
+          console.log(error);
+          this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
+        }
+      );
   }
 }
 //   private saveAsExcelFile(buffer: any, fileName: string): void {

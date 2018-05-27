@@ -28,6 +28,10 @@ namespace tam_risk_project.Models
         public virtual DbSet<Qllov> Qllov { get; set; }
         public virtual DbSet<DraftRisk> DraftRisk { get; set; }
         public virtual DbSet<TbRApprove> TbRApprove { get; set; }
+
+        public virtual DbSet<TbMDivDept> TbMDivDept { get; set; }
+        public virtual DbSet<TbMLibrary> TbMLibrary { get; set; }
+
         public virtual DbSet<TbRTreatmentDetail> TbRTreatmentDetail { get; set; }
         public TAM_PROJECTContext(DbContextOptions<TAM_PROJECTContext> options)
               : base(options)
@@ -36,6 +40,95 @@ namespace tam_risk_project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<TbMLibrary>(entity =>
+                                              {
+                                                  entity.HasKey(e => new { e.Condition, e.CharId });
+
+                                                  entity.ToTable("TB_M_LIBRARY");
+
+                                                  entity.Property(e => e.Condition).HasColumnName("CONDITION");
+
+                                                  entity.Property(e => e.CharId)
+                                                                      .HasColumnName("CHAR_ID");
+
+                                                  entity.Property(e => e.Description).HasColumnName("DESCRIPTION");
+
+                                                  entity.Property(e => e.FlagActive).HasColumnName("FLAG_ACTIVE");
+
+
+
+                                                  entity.Property(e => e.DatetimeCreated)
+                                                                      .HasColumnName("DATETIME_CREATED")
+                                                                      .HasColumnType("datetime");
+
+                                                  entity.Property(e => e.DatetimeUpdate)
+                                                                      .HasColumnName("DATETIME_UPDATE")
+                                                                      .HasColumnType("datetime");
+
+
+
+                                                  entity.Property(e => e.UserCreated)
+                                                                      .HasColumnName("USER_CREATED")
+                                                                      .HasMaxLength(45)
+                                                                      .IsUnicode(false);
+
+                                                  entity.Property(e => e.UserUpdated)
+                                                                      .HasColumnName("USER_UPDATED")
+                                                                      .HasMaxLength(45)
+                                                                      .IsUnicode(false);
+
+
+                                              });
+
+
+
+
+
+
+            modelBuilder.Entity<TbMDivDept>(entity =>
+                                  {
+                                      entity.HasKey(e => new { e.KodeDivisi, e.KodeDepartment });
+
+                                      entity.ToTable("TB_M_DIV_DEPT");
+
+                                      entity.Property(e => e.KodeDivisi).HasColumnName("KODE_DIVISI");
+
+                                      entity.Property(e => e.KodeDepartment)
+                                                          .HasColumnName("KODE_DEPARTMENT");
+
+                                      entity.Property(e => e.Kombinasi).HasColumnName("KOMBINASI");
+
+                                      entity.Property(e => e.Divisi).HasColumnName("DIVISI");
+
+                                      entity.Property(e => e.Department)
+                                                          .HasColumnName("DEPARTMENT");
+
+
+                                      entity.Property(e => e.DatetimeCreated)
+                                                          .HasColumnName("DATETIME_CREATED")
+                                                          .HasColumnType("datetime");
+
+                                      entity.Property(e => e.DatetimeUpdated)
+                                                          .HasColumnName("DATETIME_UPDATED")
+                                                          .HasColumnType("datetime");
+
+
+
+                                      entity.Property(e => e.UserCreated)
+                                                          .HasColumnName("USER_CREATED")
+                                                          .HasMaxLength(45)
+                                                          .IsUnicode(false);
+
+                                      entity.Property(e => e.UserUpdated)
+                                                          .HasColumnName("USER_UPDATED")
+                                                          .HasMaxLength(45)
+                                                          .IsUnicode(false);
+
+
+                                  });
+
+
             modelBuilder.Entity<TbRTreatmentDetail>(entity =>
                        {
                            entity.HasKey(e => new { e.YearActive, e.RiskNo, e.No });

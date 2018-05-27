@@ -70,7 +70,7 @@ namespace tam_risk_project.Controllers
                 // }
                 // else
                 // {
-                    throw;
+                throw;
                 // }
             }
 
@@ -107,15 +107,19 @@ namespace tam_risk_project.Controllers
         }
 
         // DELETE: api/TbRRiskAssessments/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTbRRiskAssessment([FromRoute] short id)
+
+
+
+        [HttpPost("deletecontrol")]
+        public async Task<IActionResult> DeleteTbRRiskAssessment([FromBody] TbRRiskAssessment controlDelete)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tbRRiskAssessment = await _context.TbRRiskAssessment.SingleOrDefaultAsync(m => m.YearActive == id);
+            var tbRRiskAssessment = await
+            _context.TbRRiskAssessment.SingleOrDefaultAsync(e => e.YearActive == controlDelete.YearActive && e.RiskNo == controlDelete.RiskNo);
             if (tbRRiskAssessment == null)
             {
                 return NotFound();

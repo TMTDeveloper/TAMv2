@@ -15,7 +15,7 @@ import { RiskRegisterCtrComponent } from "./risk-register/modal/risk.register.ct
 import { RiskRegisterTrtComponent } from "./risk-register/modal/risk.register.trt.component";
 import { AccidentInputModalComponent } from "./accident-input/modal/accident.input.modal.component";
 import { DeptInputModalComponent } from "./dept-input/modal/dept.input.modal.component";
-import { ToastrModule } from "ngx-toastr";
+
 import { BackendService } from "../../@core/data/backend.service";
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { MultiselectDropdownModule } from "angular-2-dropdown-multiselect";
@@ -26,8 +26,7 @@ import { MultiselectDropdownModule } from "angular-2-dropdown-multiselect";
     Ng2SmartTableModule,
     TransactionRouterModule,
     MultiselectDropdownModule,
-    CurrencyMaskModule,
-    ToastrModule.forRoot()
+    CurrencyMaskModule
   ],
   declarations: [...routedComponents],
   entryComponents: [
