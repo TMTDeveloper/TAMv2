@@ -163,7 +163,7 @@ export class DeptInputComponent {
         });
         this.tabledata = data;
         this.source.load(this.tabledata);
-        
+
         this.service.getreq("tbmlibraries").subscribe(response => {
           if (response != null) {
             let arr = response.filter(item => {
@@ -171,11 +171,16 @@ export class DeptInputComponent {
             });
             console.log(arr);
             this.divisionData = arr;
-            this.division = this.divisionData[0];
+            this.division = this.divisionData[0].charId;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
+                this.departmentFilter = this.departmentData.filter(item => {
+                  return item.kodeDivisi == this.division;
+                });
+                this.yearPeriode= moment().format("YYYY");
+                this.refreshReload();
               }
               // error => {
               //   console.log(error);
@@ -201,6 +206,7 @@ export class DeptInputComponent {
           division: "ISTD",
           departement: "IS"
         });
+        this.yearPeriode = moment().format("YYYY");
       })
       .then(resp => {
         this.reload();
@@ -216,9 +222,9 @@ export class DeptInputComponent {
     let lastIndex = 0;
     for (let data in this.tabledata) {
       if (
-        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].division == this.myForm.value.division &&
-        this.tabledata[data].departement == this.myForm.value.departement
+        this.tabledata[data].yearActive == this.yearPeriode &&
+        this.tabledata[data].division == this.division &&
+        this.tabledata[data].departement == this.department
       ) {
         lastIndex <= this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
@@ -229,9 +235,9 @@ export class DeptInputComponent {
     let vLastIndex = 0;
     for (let data in this.tabledata) {
       if (
-        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].division == this.myForm.value.division &&
-        this.tabledata[data].departement == this.myForm.value.departement
+        this.tabledata[data].yearActive == this.yearPeriode &&
+        this.tabledata[data].division == this.division &&
+        this.tabledata[data].departement == this.department
       ) {
         vLastIndex <= this.tabledata[data].vCounterNo
           ? (vLastIndex = this.tabledata[data].vCounterNo)
@@ -241,12 +247,12 @@ export class DeptInputComponent {
 
     const deptInpId = this.comGenerate(lastIndex + 1);
     this.activeModal.componentInstance.formData = {
-      yearActive: this.myForm.value.yearPeriode,
+      yearActive: this.yearPeriode,
       condition: "DEP",
       counterNo: lastIndex + 1,
       vCounterNo: vLastIndex + 1,
-      division: this.myForm.value.division,
-      departement: this.myForm.value.departement,
+      division: this.division,
+      departement: this.department,
       deptInpId: deptInpId,
       description: "",
       flagActive: "Y",
@@ -261,7 +267,7 @@ export class DeptInputComponent {
       async response => {
         if (response != false) {
           this.tabledata.push(response);
-          this.reload();
+          this.refreshReload();
           this.submit();
         }
       },
@@ -272,33 +278,19 @@ export class DeptInputComponent {
   comGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
       case 3:
-        return (
-          this.myForm.value.division +
-          "-" +
-          this.myForm.value.departement +
-          lastIndex.toString()
-        );
+        return this.division + "-" + this.department + lastIndex.toString();
 
       case 2:
-        return (
-          this.myForm.value.division +
-          "-" +
-          this.myForm.value.departement +
-          lastIndex.toString()
-        );
+        return this.division + "-" + this.department + lastIndex.toString();
 
       case 1:
-        return (
-          this.myForm.value.division +
-          "-" +
-          this.myForm.value.departement +
-          lastIndex.toString()
-        );
+        return this.division + "-" + this.department + lastIndex.toString();
     }
   }
 
   reload() {
-    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.filterDepartment();
+
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -352,19 +344,81 @@ export class DeptInputComponent {
     };
     this.source.setFilter(
       [
-        { field: "yearActive", search: this.myForm.value.yearPeriode },
-        { field: "division", search: this.myForm.value.division },
-        { field: "departement", search: this.myForm.value.departement }
+        { field: "yearActive", search: this.yearPeriode },
+        { field: "division", search: this.division },
+        { field: "departement", search: this.department }
       ],
       true
     );
-    switch (this.myForm.value.yearPeriode) {
+    switch (this.yearPeriode) {
       case moment().format("YYYY"):
         this.buttonDisable = false;
         break;
       default:
         this.buttonDisable = true;
     }
+  }
+
+  refreshReload() {
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: true,
+        position: "right",
+        columnTitle: "Action",
+        width: "5%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        counterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        description: {
+          title: "Description",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "80%",
+          editor: {
+            type: "textarea"
+          }
+        }
+      }
+    };
+    this.source.setFilter(
+      [
+        { field: "yearActive", search: this.yearPeriode },
+        { field: "division", search: this.division },
+        { field: "departement", search: this.department }
+      ],
+      true
+    );
   }
 
   filterDepartment() {
@@ -381,8 +435,6 @@ export class DeptInputComponent {
       this.departmentFilter = [];
     }
   }
-
-
 
   submit(event?) {
     event
@@ -416,7 +468,7 @@ export class DeptInputComponent {
   }
 
   onSaveConfirm(event) {
-    if (event.newData.description!='') {
+    if (event.newData.description != "") {
       event.confirm.resolve(event.newData);
       this.submit(event);
     } else {
@@ -430,19 +482,19 @@ export class DeptInputComponent {
 
       deptInpId: event.data.deptInpId
     };
-    this.toastr.success("Data Deleted!");
-    event.confirm.resolve();
+
+    
     this.service.postreq("TbMdeptinputs/deletecontrol", savedData).subscribe(
       response => {
         console.log(response);
-        this.loadData();
+        this.refreshReload();
         this.toastr.success("Data Deleted!");
         event.confirm.resolve();
       },
       error => {
         console.log(error);
         this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
-        event.confirm.resolve();
+        event.confirm.reject();
       }
     );
   }

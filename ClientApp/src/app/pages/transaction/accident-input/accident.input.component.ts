@@ -203,11 +203,15 @@ export class AccidentInputComponent {
             });
             console.log(arr);
             this.divisionData = arr;
-            this.division = this.divisionData[0];
+            this.division = this.divisionData[0].charId;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
+                this.departmentFilter = this.departmentData.filter(item => {
+                  return item.kodeDivisi == this.division;
+                });
+                this.refreshReload();
               }
               // error => {
               //   console.log(error);
@@ -251,7 +255,7 @@ export class AccidentInputComponent {
     let lastIndex = 0;
     for (let data in this.tabledata) {
       if (
-        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
+        this.tabledata[data].yearActive == this.yearPeriode &&
         this.tabledata[data].division == this.division &&
         this.tabledata[data].department == this.department
       ) {
@@ -264,7 +268,7 @@ export class AccidentInputComponent {
     let vLastIndex = 0;
     for (let data in this.tabledata) {
       if (
-        this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
+        this.tabledata[data].yearActive == this.yearPeriode &&
         this.tabledata[data].division == this.division &&
         this.tabledata[data].department == this.department
       ) {
@@ -277,7 +281,7 @@ export class AccidentInputComponent {
     const accidentId = this.comGenerate(lastIndex + 1);
     this.activeModal.componentInstance.condition = this.condition;
     this.activeModal.componentInstance.formData = {
-      yearActive: this.myForm.value.yearPeriode,
+      yearActive: this.yearPeriode,
       counterNo: lastIndex + 1,
       vCounterNo: vLastIndex + 1,
       division: this.division,
@@ -319,7 +323,7 @@ export class AccidentInputComponent {
         return (
           this.division +
           "-" +
-          this.myForm.value.departement +
+          this.department +
           lastIndex.toString()
         );
 
@@ -330,7 +334,6 @@ export class AccidentInputComponent {
 
   reload() {
     this.filterDepartment();
-    this.yearPeriode = this.myForm.value.yearPeriode;
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -423,13 +426,13 @@ export class AccidentInputComponent {
     };
     this.source.setFilter(
       [
-        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "yearActive", search: this.yearPeriode },
         { field: "division", search: this.division },
         { field: "department", search: this.department }
       ],
       true
     );
-    switch (this.myForm.value.yearPeriode) {
+    switch (this.yearPeriode) {
       case moment().format("YYYY"):
         this.buttonDisable = false;
         break;
@@ -438,7 +441,6 @@ export class AccidentInputComponent {
     }
   }
   refreshReload() {
-    this.yearPeriode = this.myForm.value.yearPeriode;
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -531,7 +533,7 @@ export class AccidentInputComponent {
     };
     this.source.setFilter(
       [
-        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "yearActive", search: this.yearPeriode },
         { field: "division", search: this.division },
         { field: "department", search: this.department }
       ],

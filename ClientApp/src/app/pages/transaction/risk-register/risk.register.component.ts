@@ -749,6 +749,10 @@ export class RiskRegisterComponent {
           this.dataInput.inherentRisk.qualitativeIR.desc = response.impact;
           this.dataInput.inherentRisk.qualitativeIR.score = response.score;
           this.findOverallImp();
+        } else {
+          this.dataInput.inherentRisk.qualitativeIR.id = "";
+          this.dataInput.inherentRisk.qualitativeIR.desc = "";
+          this.dataInput.inherentRisk.qualitativeIR.score = 0;
         }
       },
       error => {}
@@ -770,6 +774,10 @@ export class RiskRegisterComponent {
           this.dataInput.residualRisk.qualitativeRD.desc = response.impact;
           this.dataInput.residualRisk.qualitativeRD.score = response.score;
           this.findOverallImpRd();
+        } else {
+          this.dataInput.residualRisk.qualitativeRD.id = "";
+          this.dataInput.residualRisk.qualitativeRD.desc = "";
+          this.dataInput.residualRisk.qualitativeRD.score = 0;
         }
       },
       error => {}

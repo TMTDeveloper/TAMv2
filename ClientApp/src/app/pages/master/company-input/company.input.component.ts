@@ -317,6 +317,7 @@ export class CompanyInputComponent {
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
+        console.log(this.tabledata[index])
         this.service
           .postreq("TbMComInputs", this.tabledata[index])
           .subscribe(response => {

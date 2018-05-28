@@ -151,6 +151,6 @@ export class RiskRegisterQlComponent {
   }
 
   closeModal() {
-    this.activeModal.close(false);
+    this.activeModal.close();
   }
 }
