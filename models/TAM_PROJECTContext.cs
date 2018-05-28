@@ -217,7 +217,7 @@ namespace tam_risk_project.Models
                  e.DraftKey
              });
              entity.Property(e => e.DraftKey).HasColumnName("DRAFT_KEY");
-             entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON").HasMaxLength(8000);
+             entity.Property(e => e.DraftJson).HasColumnName("DRAFT_JSON").HasMaxLength(2000000000);
              entity.Property(e => e.Division).HasColumnName("DIVISION");
              entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
              entity.Property(e => e.Type).HasColumnName("TYPE");
@@ -252,16 +252,30 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
                 entity.Property(e => e.No).HasColumnName("NO");
                 entity.Property(e => e.RiskNo).HasColumnName("RISK_NO");
+                entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
+                entity.Property(e => e.Division).HasColumnName("DIVISION");
+                entity.Property(e => e.CompanyKpi).HasColumnName("COMPANY_KPI");
                 entity.Property(e => e.DepartmentKpi).HasColumnName("DEPARTMENT_KPI");
+                entity.Property(e => e.BusinessProcess).HasColumnName("BUSINESS_PROCESS");
                 entity.Property(e => e.LossEvent).HasColumnName("LOSS_EVENT");
-                entity.Property(e => e.Control).HasColumnName("Control");
+                entity.Property(e => e.Caused).HasColumnName("CAUSED");
+                entity.Property(e => e.RiskLevel).HasColumnName("RISK_LEVEL");
+                entity.Property(e => e.NotesIr).HasColumnName("NOTES_IR");
+                entity.Property(e => e.NotesRd).HasColumnName("NOTES_RD");
+                entity.Property(e => e.OperationCt).HasColumnName("OPERATION_CT");
+                entity.Property(e => e.AppropriatenessCt).HasColumnName("APPROPRIATENESS_CT");
+                entity.Property(e => e.Control).HasColumnName("CONTROL");
+                entity.Property(e => e.TreatmentPlan).HasColumnName("TREATMENT_PLAN");
+                entity.Property(e => e.ExPic).HasColumnName("EX_PIC");
+                entity.Property(e => e.ExDueDate).HasColumnName("EX_DUE_DATE");
+                entity.Property(e => e.Accident).HasColumnName("ACCIDENT");
                 entity.Property(e => e.RiskImpact).HasColumnName("RISK_IMPACT");
-                entity.Property(e => e.FinImpactIr).HasColumnName("FIN_IMPACT_IR");
                 entity.Property(e => e.FinImpactCategory).HasColumnName("FIN_IMPACT_CATEGORY");
+                entity.Property(e => e.FinImpactIr).HasColumnName("FIN_IMPACT_IR");
                 entity.Property(e => e.FinAmountIr).HasColumnName("FIN_AMOUNT_IR");
                 entity.Property(e => e.OpImpactIr).HasColumnName("OP_IMPACT_IR");
-                entity.Property(e => e.OpAmountIr).HasColumnName("OP_AMOUNT_IR");
                 entity.Property(e => e.OpImpactCategory).HasColumnName("OP_IMPACT_CATEGORY");
+                entity.Property(e => e.OpAmountIr).HasColumnName("OP_AMOUNT_IR");
                 entity.Property(e => e.FinImpactRd).HasColumnName("FIN_IMPACT_RD");
                 entity.Property(e => e.FinAmountRd).HasColumnName("FIN_AMOUNT_RD");
                 entity.Property(e => e.OpImpactRd).HasColumnName("OP_IMPACT_RD");
@@ -275,9 +289,9 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.RdLikelihood).HasColumnName("RD_LIKELIHOOD");
                 entity.Property(e => e.ExLikelihood).HasColumnName("EX_LIKELIHOOD");
                 entity.Property(e => e.IrOverall).HasColumnName("IR_OVERALL");
+                entity.Property(e => e.IrScore).HasColumnName("IR_SCORE");
                 entity.Property(e => e.RdOverall).HasColumnName("RD_OVERALL");
                 entity.Property(e => e.ExOverall).HasColumnName("EX_OVERALL");
-                entity.Property(e => e.TreatmentPlan).HasColumnName("TREATMENT_PLAN");
                 entity.Property(e => e.EfOverall).HasColumnName("EF_OVERALL");
             });
 
@@ -816,7 +830,7 @@ namespace tam_risk_project.Models
 
                 entity.Property(e => e.FlagActive)
                                     .HasColumnName("FLAG_ACTIVE")
-                                    .HasMaxLength(1)
+                                    .HasMaxLength(15)
                                     .IsUnicode(false);
 
                 entity.Property(e => e.Score).HasColumnName("SCORE");

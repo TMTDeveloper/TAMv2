@@ -244,12 +244,10 @@ export class RiskRegisterComponent {
     riskNo: "",
     divisionDepartment: {
       division: {
-        id: "ISTD",
-        desc: "Information System and Technical Design"
+        charId: ""
       },
       department: {
-        id: "IS",
-        desc: "Information System"
+        kodeDepartment: ""
       },
       companyKpi: {
         comInpId: "",
@@ -459,6 +457,9 @@ export class RiskRegisterComponent {
       desc: "Days of operation disruption"
     }
   ];
+  divisionData: any[] = [];
+  departmentData: any[] = [];
+  departmentFilter: any[] = [];
   draftData: any;
   subscription: any;
   activeModal: any;
@@ -512,45 +513,70 @@ export class RiskRegisterComponent {
           data[ind].score == null
             ? (data[ind].score = 0)
             : data[ind].score.toString();
-          this.riskIndicatorData = data;
         });
-        let yearPeriode = this.yearPeriode;
-        let arr = this.riskIndicatorData.filter(function(item) {
+        this.riskIndicatorData = data;
+        let arr = this.riskIndicatorData.filter(item => {
           return (
             item.condition == "RTP" &&
-            item.yearActive == yearPeriode &&
+            item.yearActive == this.yearPeriode &&
             item.flagActive == "Aktif"
           );
         });
+        console.log("myoptionsss");
+        console.log(arr);
+
         if (arr[0] != null) {
-          this.multiSelect = this.riskIndicatorData.filter(function(item) {
-            return (
-              item.condition == "RTP" &&
-              item.yearActive == yearPeriode &&
-              item.flagActive == "Aktif"
-            );
-          });
+          this.multiSelect = arr;
+          this.myOptions = [
+            {
+              id: this.multiSelect[0].description,
+              name: this.multiSelect[0].description
+            },
+            {
+              id: this.multiSelect[1].description,
+              name: this.multiSelect[1].description
+            },
+            {
+              id: this.multiSelect[2].description,
+              name: this.multiSelect[2].description
+            },
+            {
+              id: this.multiSelect[3].description,
+              name: this.multiSelect[3].description
+            }
+          ];
         }
 
-        this.myOptions = [
-          {
-            id: this.multiSelect[0].description,
-            name: this.multiSelect[0].description
-          },
-          {
-            id: this.multiSelect[1].description,
-            name: this.multiSelect[1].description
-          },
-          {
-            id: this.multiSelect[2].description,
-            name: this.multiSelect[2].description
-          },
-          {
-            id: this.multiSelect[3].description,
-            name: this.multiSelect[3].description
-          }
-        ];
+        let yearPeriode = this.yearPeriode;
 
+        this.service.getreq("tbmlibraries").subscribe(response => {
+          if (response != null) {
+            let arr = response.filter(item => {
+              return item.condition == "DIV";
+            });
+            console.log(arr);
+            this.divisionData = arr;
+
+            this.service.getreq("tbmdivdepts").subscribe(response => {
+              if (response != null) {
+                this.departmentData = response;
+                let arr = this.departmentData.filter(item => {
+                  return (
+                    item.kodeDivisi ==
+                    this.dataInput.divisionDepartment.division.charId
+                  );
+                });
+                arr[0] != null ? (this.departmentFilter = arr) : null;
+              }
+              // error => {
+              //   console.log(error);
+              // };
+            });
+          }
+          // error => {
+          //   console.log(error);
+          // };
+        });
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
           if (response != null) {
             this.riskAssessmentData = response;
@@ -765,14 +791,15 @@ export class RiskRegisterComponent {
     this.countPDC();
   }
   saveControl(event) {
-    if (event.newData.description!='') {
-    event.confirm.resolve(event.newData);
-    this.dataInput.currentAction.controls.forEach((element, ind) => {
-      element.no == event.newData.no
-        ? (element.type = event.newData.type)
-        : null;
-    });
-    this.countPDC();} else {
+    if (event.newData.description != "") {
+      event.confirm.resolve(event.newData);
+      this.dataInput.currentAction.controls.forEach((element, ind) => {
+        element.no == event.newData.no
+          ? (element.type = event.newData.type)
+          : null;
+      });
+      this.countPDC();
+    } else {
       event.confirm.reject();
     }
   }
@@ -1461,8 +1488,9 @@ export class RiskRegisterComponent {
         const savedData = {
           draftKey: this.dataInput.riskNo,
           draftJson: JSON.stringify(this.dataInput),
-          division: this.dataInput.divisionDepartment.division.id,
-          department: this.dataInput.divisionDepartment.department.id,
+          division: this.dataInput.divisionDepartment.division.charId,
+          department: this.dataInput.divisionDepartment.department
+            .kodeDepartment,
           type: "RISK",
           year: moment().format("YYYY"),
           userUpdated: "Admin",
@@ -1493,9 +1521,9 @@ export class RiskRegisterComponent {
       const savedData = {
         yearActive: this.yearPeriode,
         riskNo: this.dataInput.riskNo,
-        division: this.dataInput.divisionDepartment.division.id,
+        division: this.dataInput.divisionDepartment.division.charId,
         companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
-        department: this.dataInput.divisionDepartment.department.id,
+        department: this.dataInput.divisionDepartment.department.kodeDepartment,
         counterNo: lastIndex + 1,
         departmentKpi: this.dataInput.divisionDepartment.departmentKpi
           .deptInpId,
@@ -1551,8 +1579,9 @@ export class RiskRegisterComponent {
           const savedDataRisk = {
             draftKey: this.dataInput.riskNo,
             draftJson: JSON.stringify(this.dataInput),
-            division: this.dataInput.divisionDepartment.division.id,
-            department: this.dataInput.divisionDepartment.department.id,
+            division: this.dataInput.divisionDepartment.division.charId,
+            department: this.dataInput.divisionDepartment.department
+              .kodeDepartment,
             type: "RISK",
             year: moment().format("YYYY"),
             userUpdated: "Admin",
@@ -1579,9 +1608,9 @@ export class RiskRegisterComponent {
       const savedData = {
         yearActive: this.yearPeriode,
         riskNo: this.dataInput.riskNo,
-        division: this.dataInput.divisionDepartment.division.id,
+        division: this.dataInput.divisionDepartment.division.charId,
         companyKpi: this.dataInput.divisionDepartment.companyKpi.comInpId,
-        department: this.dataInput.divisionDepartment.department.id,
+        department: this.dataInput.divisionDepartment.department.kodeDepartment,
         counterNo: this.dataInput.counterNo,
         departmentKpi: this.dataInput.divisionDepartment.departmentKpi
           .deptInpId,
@@ -1637,8 +1666,9 @@ export class RiskRegisterComponent {
           const savedDataRisk = {
             draftKey: this.dataInput.riskNo,
             draftJson: JSON.stringify(this.dataInput),
-            division: this.dataInput.divisionDepartment.division.id,
-            department: this.dataInput.divisionDepartment.department.id,
+            division: this.dataInput.divisionDepartment.division.charId,
+            department: this.dataInput.divisionDepartment.department
+              .kodeDepartment,
             type: "RISK",
             year: moment().format("YYYY"),
             userUpdated: "Admin",
@@ -1683,9 +1713,9 @@ export class RiskRegisterComponent {
       if (
         this.riskAssessmentData[data].yearActive == this.yearPeriode &&
         this.riskAssessmentData[data].division ==
-          this.dataInput.divisionDepartment.division.id &&
+          this.dataInput.divisionDepartment.division.charId &&
         this.riskAssessmentData[data].department ==
-          this.dataInput.divisionDepartment.department.id
+          this.dataInput.divisionDepartment.department.kodeDepartment
       ) {
         lastIndex <= this.riskAssessmentData[data].counterNo
           ? (lastIndex = this.riskAssessmentData[data].counterNo)
@@ -1699,18 +1729,18 @@ export class RiskRegisterComponent {
     switch (lastIndex.toString().length) {
       case 2:
         return (
-          this.dataInput.divisionDepartment.division.id +
+          this.dataInput.divisionDepartment.division.charId +
           "/" +
-          this.dataInput.divisionDepartment.department.id +
+          this.dataInput.divisionDepartment.department.kodeDepartment +
           "-" +
           lastIndex.toString()
         );
 
       case 1:
         return (
-          this.dataInput.divisionDepartment.division.id +
+          this.dataInput.divisionDepartment.division.charId +
           "/" +
-          this.dataInput.divisionDepartment.department.id +
+          this.dataInput.divisionDepartment.department.kodeDepartment +
           "-" +
           "0" +
           lastIndex.toString()
@@ -1897,13 +1927,13 @@ export class RiskRegisterComponent {
       const savedData = {
         draftKey: this.dataInput.riskNo,
         draftJson: JSON.stringify(this.dataInput),
-        division: this.dataInput.divisionDepartment.division.id,
-        department: this.dataInput.divisionDepartment.department.id,
+        division: this.dataInput.divisionDepartment.division.charId,
+        department: this.dataInput.divisionDepartment.department.kodeDepartment,
         type: "DRAFT",
         year: moment().format("YYYY"),
         userUpdated: "Admin",
         dateUpdated: moment().format(),
-        userCreated: this.draftData.dateCreated,
+        userCreated: this.draftData.userCreated,
         dateCreated: this.draftData.dateCreated
       };
       this.service.putreq("draftrisks", savedData).subscribe(
@@ -1922,8 +1952,8 @@ export class RiskRegisterComponent {
       const savedData = {
         draftKey: draftKey,
         draftJson: JSON.stringify(this.dataInput),
-        division: this.dataInput.divisionDepartment.division.id,
-        department: this.dataInput.divisionDepartment.department.id,
+        division: this.dataInput.divisionDepartment.division.charId,
+        department: this.dataInput.divisionDepartment.department.kodeDepartment,
         type: "DRAFT",
         year: moment().format("YYYY"),
         userUpdated: "Admin",
@@ -2034,13 +2064,18 @@ export class RiskRegisterComponent {
     console.log(this.dataInput.expectedRisk.treatmentPlanArr);
   }
   saveTreatment(event) {
-    if (event.newData.description!=''&&event.newData.pic!=''&&event.newData.dueDate!='') {
-    event.confirm.resolve(event.newData);
-    this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
-      element.no == event.newData.no
-        ? (element.type = event.newData.type)
-        : null;
-    });} else {
+    if (
+      event.newData.description != "" &&
+      event.newData.pic != "" &&
+      event.newData.dueDate != ""
+    ) {
+      event.confirm.resolve(event.newData);
+      this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
+        element.no == event.newData.no
+          ? (element.type = event.newData.type)
+          : null;
+      });
+    } else {
       event.confirm.reject();
     }
   }
@@ -2098,5 +2133,25 @@ export class RiskRegisterComponent {
 
   onChange() {
     console.log(this.dataInput.riskDescription.riskImpact);
+  }
+
+  public filterDepartment() {
+    let arr = this.departmentData.filter(item => {
+      return (
+        item.kodeDivisi == this.dataInput.divisionDepartment.division.charId
+      );
+    });
+    console.log(arr);
+    if (arr[0] != null) {
+      this.departmentFilter = arr;
+      this.dataInput.divisionDepartment.department.kodeDepartment =
+        arr[0].kodeDepartment;
+    } else {
+      console.log(arr);
+      this.departmentFilter = [];
+    }
+  }
+  seedepart() {
+    console.log(this.dataInput.divisionDepartment);
   }
 }

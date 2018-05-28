@@ -19,7 +19,8 @@ import { DeptInputModalComponent } from "./dept-input/modal/dept.input.modal.com
 import { BackendService } from "../../@core/data/backend.service";
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { MultiselectDropdownModule } from "angular-2-dropdown-multiselect";
-
+import {AccidentInputComponent} from "./accident-input/accident.input.component"
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 @NgModule({
   imports: [
     ThemeModule,
@@ -37,8 +38,9 @@ import { MultiselectDropdownModule } from "angular-2-dropdown-multiselect";
     RiskRegisterAcdComponent,
     RiskRegisterQlComponent,
     RiskRegisterCtrComponent,
-    RiskRegisterTrtComponent
+    RiskRegisterTrtComponent,
+    AccidentInputComponent
   ],
-  providers: [BackendService, RiskRegisterGuardComponent]
+  providers: [BackendService, RiskRegisterGuardComponent,NgbActiveModal]
 })
 export class TransactionModule {}

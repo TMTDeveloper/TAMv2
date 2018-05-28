@@ -22,23 +22,35 @@
 
     <div class="col-sm-auto">
       <nb-tabset>
-        <nb-tab tabTitle="Division/Department" [badgeText]="dataInput.divisionDepartment.companyKpi.description==''&&dataInput.activateValidation &&dataInput.divisionDepartment.departmentKpi.description==''&&dataInput.divisionDepartment.businessProcess==''?'Not Complete':''"
-          [badgeStatus]="dataInput.divisionDepartment.companyKpi.description==''&&dataInput.activateValidation &&dataInput.divisionDepartment.departmentKpi.description==''&&dataInput.divisionDepartment.businessProcess==''?'danger':''">
+        <nb-tab tabTitle="Division/Department" [badgeText]="dataInput.activateValidation &&  (this.dataInput.divisionDepartment.companyKpi.description == '' ||
+        this.dataInput.divisionDepartment.departmentKpi.description == '' ||
+        this.dataInput.divisionDepartment.businessProcess == '')?'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&  (this.dataInput.divisionDepartment.companyKpi.description == '' ||
+        this.dataInput.divisionDepartment.departmentKpi.description == '' ||
+        this.dataInput.divisionDepartment.businessProcess == '')?'danger':''">
           <div class="form-group row">
             <label for="division" class="col-sm-2 col-form-label">Division</label>
             <div class="col-sm-6">
-              <input style="background-color:gainsboro;" type="text" class="form-control" id="division" [(ngModel)]="dataInput.divisionDepartment.division.desc">
+
+              <select class="form-control" name="division" [(ngModel)]="dataInput.divisionDepartment.division.charId" (change)="filterDepartment()">
+                <option *ngFor="let data of divisionData" [ngValue]="data.charId">{{data.description}}</option>
+              </select>
+
             </div>
           </div>
           <div class="form-group row">
             <label for="department" class="col-sm-2 col-form-label">Department</label>
             <div class="col-sm-6">
-              <input style="background-color:gainsboro;" type="text" class="form-control" id="department" [(ngModel)]="dataInput.divisionDepartment.department.desc">
+
+              <select class="form-control" name="department" [(ngModel)]="dataInput.divisionDepartment.department.kodeDepartment" (change)="seedepart()">
+                <option *ngFor="let data of departmentFilter" [ngValue]="data.kodeDepartment">{{data.department}}</option>
+              </select>
+
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" placeholder="Please Select">Company&nbsp;KPI<font color="red">*</font>
+            <label class="col-sm-2 col-form-label" placeholder="Please Select">Company&nbsp;KPI
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="nb-list" (click)="showModal()"></nb-action>
@@ -54,7 +66,8 @@
 
 
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" placeholder="Please Select">Department&nbsp;KPI<font color="red">*</font>
+            <label class="col-sm-2 col-form-label" placeholder="Please Select">Department&nbsp;KPI
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="nb-list" (click)="showDept()"></nb-action>
@@ -69,7 +82,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" placeholder="Please Input">Business&nbsp;Process<font color="red">*</font>
+            <label class="col-sm-2 col-form-label" placeholder="Please Input">Business&nbsp;Process
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Critical Activities">?</nb-action>
@@ -80,10 +94,15 @@
             </div>
           </div>
         </nb-tab>
-        <nb-tab tabTitle="Risk Description">
+        <nb-tab tabTitle="Risk Description" [badgeText]="dataInput.activateValidation &&(this.dataInput.riskDescription.lossEvent == '' ||
+        this.dataInput.riskDescription.caused == '' ||
+        this.dataInput.riskDescription.riskLevel == '')? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.riskDescription.lossEvent == '' ||
+        this.dataInput.riskDescription.caused == '' ||
+        this.dataInput.riskDescription.riskLevel == '')?'danger':''">
           <div class="form-group row mt-3">
-            <label class="col-sm-1 col-form-label" placeholder="Please Input">Loss&nbsp;Event<font color="red">*</font>
-              
+            <label class="col-sm-1 col-form-label" placeholder="Please Input">Loss&nbsp;Event
+              <font color="red">*</font>
+
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Kemungkinan resiko yang ada di dalam critical process ">?</nb-action>
@@ -94,7 +113,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-1 col-form-label" placeholder="Please Input">Caused<font color="red">*</font>
+            <label class="col-sm-1 col-form-label" placeholder="Please Input">Caused
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Sesuatu yang dapat menyebabkan resiko terjadi">?</nb-action>
@@ -105,7 +125,8 @@
             </div>
           </div>
           <div class="form-group row ">
-            <label class="col-sm-1 col-form-label">Risk&nbsp;Impact<font color="red">*</font>
+            <label class="col-sm-1 col-form-label">Risk&nbsp;Impact
+              <font color="red">*</font>
             </label>
             <div class="col-lg-1">
               <nb-actions size="small">
@@ -136,7 +157,8 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-1 col-form-label">Risk&nbsp;Level<font color="red">*</font>
+            <label class="col-sm-1 col-form-label">Risk&nbsp;Level
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Risk level menggambarkan dampak thd perusahaan. Jika inherent risk adalah high, atau impact adalah major maka maka masuk ke level corporate.              ">?</nb-action>
@@ -164,7 +186,11 @@
             </div>
           </div>
         </nb-tab>
-        <nb-tab tabTitle="Inherent Risk">
+        <nb-tab tabTitle="Inherent Risk" [badgeText]="dataInput.activateValidation &&( this.dataInput.inherentRisk.overallImpact.description == '' ||
+        this.dataInput.inherentRisk.likelihood == '' ||
+        this.dataInput.inherentRisk.overallRisk.description == '' )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.inherentRisk.overallImpact.description == '' ||
+        this.dataInput.inherentRisk.likelihood == '' ||
+        this.dataInput.inherentRisk.overallRisk.description == '')?'danger':''">
           <div class="form-group row mt-3">
             <label class="col-sm-1 col-form-label" placeholder="Please Input">Notes</label>
             <nb-actions size="small">
@@ -249,7 +275,8 @@
             </div>
           </div>
           <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Likelihood
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Penilaian yang menggambarkan probability kemungkinan / frekuensi terjadinya risk sebelum adanya control">?</nb-action>
@@ -273,9 +300,22 @@
           </div>
           <span> </span>
         </nb-tab>
-        <nb-tab tabTitle="Current Action / Controls">
+        <nb-tab tabTitle="Current Action / Controls" [badgeText]="dataInput.activateValidation &&( this.dataInput.currentAction.operation == '' ||
+        this.dataInput.currentAction.appropriateness.description == '' ||
+        this.dataInput.currentAction.overallControl.description == '' ||
+        this.dataInput.currentAction.Preventive +
+          this.dataInput.currentAction.Detective +
+          this.dataInput.currentAction.Corrective ==
+          0  )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&( this.dataInput.currentAction.operation == '' ||
+          this.dataInput.currentAction.appropriateness.description == '' ||
+          this.dataInput.currentAction.overallControl.description == '' ||
+          this.dataInput.currentAction.Preventive +
+            this.dataInput.currentAction.Detective +
+            this.dataInput.currentAction.Corrective ==
+            0  )?'danger':''">
           <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Controls<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Controls
+              <font color="red">*</font>
             </label>
             <div class="col-lg-2">
               <button class="btn btn-hero-primary with-margins" (click)="showCtr()">Add New</button>
@@ -293,7 +333,8 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Operation<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Operation
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Penilaian dari sisi control, apakah control dijalankan secara konsisten = always; tidak konsisten maupun tidak dijalankan sama sekali">?</nb-action>
@@ -353,7 +394,19 @@
           </div>
 
         </nb-tab>
-        <nb-tab tabTitle="Residual Risk">
+        <nb-tab tabTitle="Residual Risk" [badgeText]="dataInput.activateValidation &&( this.dataInput.residualRisk.financialImpact.amount >
+            this.dataInput.inherentRisk.financialImpact.amount ||
+          this.dataInput.residualRisk.operationalImpact.loss >
+            this.dataInput.inherentRisk.operationalImpact.loss ||
+          this.dataInput.residualRisk.overallImpact.description == '' ||
+          this.dataInput.residualRisk.likelihood == '' ||
+          this.dataInput.residualRisk.overallRisk.description == '' )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&( this.dataInput.residualRisk.financialImpact.amount >
+          this.dataInput.inherentRisk.financialImpact.amount ||
+        this.dataInput.residualRisk.operationalImpact.loss >
+          this.dataInput.inherentRisk.operationalImpact.loss ||
+        this.dataInput.residualRisk.overallImpact.description == '' ||
+        this.dataInput.residualRisk.likelihood == '' ||
+        this.dataInput.residualRisk.overallRisk.description == '' )?'danger':''">
           <div class="form-group row mt-3">
             <label class="col-sm-2 col-form-label" placeholder="Please Input">Notes</label>
             <nb-actions size="small">
@@ -439,7 +492,8 @@
             </div>
           </div>
           <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Likelihood
+              <font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Penilaian yang menggambarkan frekuensi terjadinya resiko setelah adanya control">?</nb-action>
@@ -462,13 +516,18 @@
             </div>
           </div>
         </nb-tab>
-        <nb-tab tabTitle="Expected Risk">
+        <nb-tab tabTitle="Expected Risk" [badgeText]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
+        this.dataInput.expectedRisk.impact == '' ||
+        this.dataInput.expectedRisk.likelihood == '')? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
+        this.dataInput.expectedRisk.impact == '' ||
+        this.dataInput.expectedRisk.likelihood == '')?'danger':''">
           <div class="form-group row">
             <nb-checkbox status="success" class="col-sm-4" (change)="treatmentPlanSwitch()" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"
               [disabled]="dataInput.expectedRisk.disabled||dataInput.expectedRisk.treatmentPlanArr.length!=0">Do&nbsp;you&nbsp;have&nbsp;any&nbsp;treatment&nbsp;plan?</nb-checkbox>
           </div>
           <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Treatment&nbsp;Plan<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Treatment&nbsp;Plan
+              <font color="red">*</font>
             </label>
             <div class="col-lg-2">
               <button class="btn btn-hero-primary with-margins" [disabled]="dataInput.expectedRisk.treatmentPlanSwitch" (click)="showTrt()">Add New</button>

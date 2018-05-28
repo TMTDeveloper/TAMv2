@@ -79,7 +79,56 @@ export class DashboardComponent {
       }
     }
   };
-
+  year: any[] = [
+    {
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment().format("YYYY")
+    }
+  ];
   division: any;
   department: any;
 
@@ -111,21 +160,21 @@ export class DashboardComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
+    
         this.tabledata = data;
-        this.source.load(this.tabledata);
+
         this.service.getreq("tbmlibraries").subscribe(response => {
           if (response != null) {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-
+            console.log(arr);
             this.divisionData = arr;
             this.division = this.divisionData[0];
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
-                this.filterDepartment()
               }
               // error => {
               //   console.log(error);
@@ -186,72 +235,7 @@ export class DashboardComponent {
 
   reload() {
     this.filterDepartment();
-    this.yearPeriode = this.myForm.value.yearPeriode;
-    this.settings = {
-      add: {
-        addButtonContent: '<i class="nb-plus"></i>',
-        createButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>'
-      },
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmSave: true
-      },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true
-      },
-      mode: "inline",
-      sort: true,
-      hideSubHeader: true,
-      actions: {
-        add: false,
-        edit: this.yearPeriode == moment().format("YYYY"),
-        delete: false,
-        position: "right",
-        columnTitle: "Modify",
-        width: "10%"
-      },
-      pager: {
-        display: true,
-        perPage: 30
-      },
-      columns: {
-        counterNo: {
-          title: "No",
-          type: "number",
-          filter: false,
-          editable: false,
-          width: "5%"
-        },
-        description: {
-          title: "Description",
-          type: "string",
-          filter: false,
-          editable: true,
-          width: "80%",
-          editor: {
-            type: "textarea"
-          }
-        }
-      }
-    };
-    this.source.setFilter(
-      [
-        { field: "condition", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode }
-      ],
-      true
-    );
-    switch (this.myForm.value.yearPeriode) {
-      case moment().format("YYYY"):
-        this.buttonDisable = false;
-        break;
-      default:
-        this.buttonDisable = true;
-    }
+    console.log(this.department);
     switch (this.dataapprove.stat) {
       case "submit":
         this.riskstat = "Submit";
@@ -259,19 +243,25 @@ export class DashboardComponent {
       default:
         this.riskstat = "Not Yet Submitted";
     }
-   
   }
 
   filterDepartment() {
+    console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
-      return item.kodeDivisi == this.division.charId;
+      return item.kodeDivisi == this.division;
     });
-
-    if (arr != null) {
+    console.log(arr);
+    if (arr[0] != null) {
       this.departmentFilter = arr;
+      this.department = arr[0].kodeDepartment;
     } else {
+      console.log(arr);
       this.departmentFilter = [];
     }
+  }
+
+  letssee() {
+    console.log(this.department);
   }
 
   submit(event?) {

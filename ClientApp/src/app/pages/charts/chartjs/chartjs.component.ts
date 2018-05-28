@@ -172,7 +172,56 @@ export class ChartjsComponent {
       }
     }
   };
-
+  year: any[] = [
+    {
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
+    },
+    {
+      data: moment().format("YYYY")
+    }
+  ];
   dataInput = {
     division: {
       data: "",
@@ -195,6 +244,9 @@ export class ChartjsComponent {
       desc: "Information system"
     }
   ];
+  divisionData: any[] = [];
+  departmentData: any[] = [];
+  departmentFilter: any[] = [];
   tabledata: any[] = [];
   riskArr: Array<any> = [
     {
@@ -323,6 +375,7 @@ export class ChartjsComponent {
   }
 
   reload() {
+    this.filterDepartment();
     let year = moment().format("YYYY");
     let arr = this.tableapprove.filter(item => {
       return item.division == "ISTD";
@@ -419,9 +472,7 @@ export class ChartjsComponent {
         const data = response;
         console.log(JSON.stringify(response));
         for (let i = 0; i < 15; i++) {
-          data[i] != null
-            ? (this.riskArr[i] = data[i])
-            : null;
+          data[i] != null ? (this.riskArr[i] = data[i]) : null;
         }
         console.log(this.riskArr);
         data.forEach((element, ind) => {
@@ -446,11 +497,49 @@ export class ChartjsComponent {
           });
           this.weakdata = arr4;
         });
+
+        this.service.getreq("tbmlibraries").subscribe(response => {
+          if (response != null) {
+            let arr = response.filter(item => {
+              return item.condition == "DIV";
+            });
+            console.log(arr);
+            this.divisionData = arr;
+            this.division = this.divisionData[0];
+
+            this.service.getreq("tbmdivdepts").subscribe(response => {
+              if (response != null) {
+                this.departmentData = response;
+              }
+              // error => {
+              //   console.log(error);
+              // };
+            });
+          }
+          // error => {
+          //   console.log(error);
+          // };
+        });
       }
       // error => {
       //   console.log(error);
       // };
     });
+  }
+
+  filterDepartment() {
+    console.log(JSON.stringify(this.division));
+    let arr = this.departmentData.filter(item => {
+      return item.kodeDivisi == this.division;
+    });
+    console.log(arr);
+    if (arr[0] != null) {
+      this.departmentFilter = arr;
+      this.department = arr[0].kodeDepartment;
+    } else {
+      console.log(arr);
+      this.departmentFilter = [];
+    }
   }
   // print(): void {
   //   let printContents, popupWin;

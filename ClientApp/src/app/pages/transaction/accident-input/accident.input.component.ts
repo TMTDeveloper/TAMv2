@@ -161,29 +161,22 @@ export class AccidentInputComponent {
     }
   ];
 
-  division: any[] = [
-    {
-      data: "ISTD",
-      desc: "Information system and technical division"
-    }
-  ];
-  departement: any[] = [
-    {
-      data: "IS",
-      desc: "Information system"
-    }
-  ];
+  division: any;
+  department: any;
 
   source: LocalDataSource = new LocalDataSource();
-
+  divisionData: any[] = [];
+  departmentData: any[] = [];
+  departmentFilter: any[] = [];
   tabledata: any[] = [];
-
+  childModalMode: boolean = false;
   subscription: any;
   activeModal: any;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
-    public service: BackendService
+    public service: BackendService,
+    public childModal: NgbActiveModal
   ) {
     this.buttonDisable = false;
     this.loadData();
@@ -199,10 +192,32 @@ export class AccidentInputComponent {
           data[ind].status = "0";
           vCounter = vCounter + 1;
           data[ind].vCounterNo = vCounter;
-     
         });
         this.tabledata = data;
         this.source.load(this.tabledata);
+
+        this.service.getreq("tbmlibraries").subscribe(response => {
+          if (response != null) {
+            let arr = response.filter(item => {
+              return item.condition == "DIV";
+            });
+            console.log(arr);
+            this.divisionData = arr;
+            this.division = this.divisionData[0];
+
+            this.service.getreq("tbmdivdepts").subscribe(response => {
+              if (response != null) {
+                this.departmentData = response;
+              }
+              // error => {
+              //   console.log(error);
+              // };
+            });
+          }
+          // error => {
+          //   console.log(error);
+          // };
+        });
       }
       // error => {
       //   console.log(error);
@@ -237,8 +252,8 @@ export class AccidentInputComponent {
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].division == this.myForm.value.division &&
-        this.tabledata[data].department == this.myForm.value.departement
+        this.tabledata[data].division == this.division &&
+        this.tabledata[data].department == this.department
       ) {
         lastIndex <= this.tabledata[data].counterNo
           ? (lastIndex = this.tabledata[data].counterNo)
@@ -250,8 +265,8 @@ export class AccidentInputComponent {
     for (let data in this.tabledata) {
       if (
         this.tabledata[data].yearActive == this.myForm.value.yearPeriode &&
-        this.tabledata[data].division == this.myForm.value.division &&
-        this.tabledata[data].department == this.myForm.value.departement
+        this.tabledata[data].division == this.division &&
+        this.tabledata[data].department == this.department
       ) {
         vLastIndex <= this.tabledata[data].vCounterNo
           ? (vLastIndex = this.tabledata[data].vCounterNo)
@@ -265,8 +280,8 @@ export class AccidentInputComponent {
       yearActive: this.myForm.value.yearPeriode,
       counterNo: lastIndex + 1,
       vCounterNo: vLastIndex + 1,
-      division: this.myForm.value.division,
-      department: this.myForm.value.departement,
+      division: this.division,
+      department: this.department,
       accidentId: accidentId,
       dateAccident: "",
       description: "",
@@ -287,7 +302,7 @@ export class AccidentInputComponent {
       async response => {
         if (response != false) {
           this.tabledata.push(response);
-          this.reload();
+          this.refreshReload();
           this.submit();
         }
       },
@@ -298,32 +313,23 @@ export class AccidentInputComponent {
   comGenerate(lastIndex) {
     switch (lastIndex.toString().length) {
       case 3:
-        return (
-          this.myForm.value.division +
-          "-" +
-          this.myForm.value.departement +
-          lastIndex.toString()
-        );
+        return this.division + "-" + this.department + lastIndex.toString();
 
       case 2:
         return (
-          this.myForm.value.division +
+          this.division +
           "-" +
           this.myForm.value.departement +
           lastIndex.toString()
         );
 
       case 1:
-        return (
-          this.myForm.value.division +
-          "-" +
-          this.myForm.value.departement +
-          lastIndex.toString()
-        );
+        return this.division + "-" + this.department + lastIndex.toString();
     }
   }
 
   reload() {
+    this.filterDepartment();
     this.yearPeriode = this.myForm.value.yearPeriode;
     this.settings = {
       add: {
@@ -418,8 +424,8 @@ export class AccidentInputComponent {
     this.source.setFilter(
       [
         { field: "yearActive", search: this.myForm.value.yearPeriode },
-        { field: "division", search: this.myForm.value.division },
-        { field: "department", search: this.myForm.value.departement }
+        { field: "division", search: this.division },
+        { field: "department", search: this.department }
       ],
       true
     );
@@ -429,6 +435,121 @@ export class AccidentInputComponent {
         break;
       default:
         this.buttonDisable = true;
+    }
+  }
+  refreshReload() {
+    this.yearPeriode = this.myForm.value.yearPeriode;
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>'
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true
+      },
+      mode: "inline",
+      sort: true,
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        edit: this.yearPeriode == moment().format("YYYY"),
+        delete: true,
+        position: "right",
+        columnTitle: "Action",
+        width: "5%"
+      },
+      pager: {
+        display: true,
+        perPage: 30
+      },
+      columns: {
+        vCounterNo: {
+          title: "No",
+          type: "number",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        dateAccident: {
+          title: "Date",
+          type: "date",
+          filter: false,
+          editable: false,
+          width: "5%"
+        },
+        description: {
+          title: "Description",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        relatedParties: {
+          title: "Related Parties",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        financialImpact: {
+          title: "Financial Impact",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        otherImpact: {
+          title: "Other Impact",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        currentAction: {
+          title: "Current Action",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        },
+        nextAction: {
+          title: "Next Action",
+          type: "string",
+          filter: false,
+          editable: true,
+          width: "15%"
+        }
+      }
+    };
+    this.source.setFilter(
+      [
+        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "division", search: this.division },
+        { field: "department", search: this.department }
+      ],
+      true
+    );
+  }
+  filterDepartment() {
+    console.log(JSON.stringify(this.division));
+    let arr = this.departmentData.filter(item => {
+      return item.kodeDivisi == this.division;
+    });
+    console.log(arr);
+    if (arr[0] != null) {
+      this.departmentFilter = arr;
+      this.department = arr[0].kodeDepartment;
+    } else {
+      console.log(arr);
+      this.departmentFilter = [];
     }
   }
   submit(event?) {
@@ -463,9 +584,15 @@ export class AccidentInputComponent {
   }
 
   onSaveConfirm(event) {
-    if (event.newData.dateAccident!=''&&event.newData.description!=''&&
-    event.newData.relatedParties!=''&&(event.newData.financialImpact!=''||
-    event.newData.otherImpact!='')&&event.newData.currentAction!=''&&event.newData.nextAction!='') {
+    if (
+      event.newData.dateAccident != "" &&
+      event.newData.description != "" &&
+      event.newData.relatedParties != "" &&
+      (event.newData.financialImpact != "" ||
+        event.newData.otherImpact != "") &&
+      event.newData.currentAction != "" &&
+      event.newData.nextAction != ""
+    ) {
       event.confirm.resolve(event.newData);
       this.submit(event);
     } else {
@@ -479,17 +606,23 @@ export class AccidentInputComponent {
 
       accidentId: event.data.accidentId
     };
-    this.service.postreq("TbMAccidentDetails/deletecontrol", savedData).subscribe(
-      response => {
-        console.log(response);
-        this.loadData();
-        this.toastr.success("Data Deleted!");
-        event.confirm.resolve();
-      },
-      error => {
-        console.log(error);
-        this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
-      }
-    );
+    this.service
+      .postreq("TbMAccidentDetails/deletecontrol", savedData)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.loadData();
+          this.toastr.success("Data Deleted!");
+          event.confirm.resolve();
+        },
+        error => {
+          console.log(error);
+          this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
+        }
+      );
+  }
+
+  public closeModal() {
+    this.childModal.close();
   }
 }

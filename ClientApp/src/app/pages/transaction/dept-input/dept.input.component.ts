@@ -130,21 +130,13 @@ export class DeptInputComponent {
     }
   ];
 
-  division: any[] = [
-    {
-      data: "ISTD",
-      desc: "Information system and technical division"
-    }
-  ];
-  departement: any[] = [
-    {
-      data: "IS",
-      desc: "Information system"
-    }
-  ];
+  division: any;
+  department: any;
 
   source: LocalDataSource = new LocalDataSource();
-
+  divisionData: any[] = [];
+  departmentData: any[] = [];
+  departmentFilter: any[] = [];
   tabledata: any[] = [];
 
   subscription: any;
@@ -171,6 +163,29 @@ export class DeptInputComponent {
         });
         this.tabledata = data;
         this.source.load(this.tabledata);
+        
+        this.service.getreq("tbmlibraries").subscribe(response => {
+          if (response != null) {
+            let arr = response.filter(item => {
+              return item.condition == "DIV";
+            });
+            console.log(arr);
+            this.divisionData = arr;
+            this.division = this.divisionData[0];
+
+            this.service.getreq("tbmdivdepts").subscribe(response => {
+              if (response != null) {
+                this.departmentData = response;
+              }
+              // error => {
+              //   console.log(error);
+              // };
+            });
+          }
+          // error => {
+          //   console.log(error);
+          // };
+        });
       }
       // error => {
       //   console.log(error);
@@ -351,6 +366,24 @@ export class DeptInputComponent {
         this.buttonDisable = true;
     }
   }
+
+  filterDepartment() {
+    console.log(JSON.stringify(this.division));
+    let arr = this.departmentData.filter(item => {
+      return item.kodeDivisi == this.division;
+    });
+    console.log(arr);
+    if (arr[0] != null) {
+      this.departmentFilter = arr;
+      this.department = arr[0].kodeDepartment;
+    } else {
+      console.log(arr);
+      this.departmentFilter = [];
+    }
+  }
+
+
+
   submit(event?) {
     event
       ? this.service

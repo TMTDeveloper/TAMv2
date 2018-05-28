@@ -4,6 +4,7 @@ import * as moment from "moment";
 import { NgForm } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BackendService } from "../../../../@core/data/backend.service";
+import { AccidentInputComponent } from "../../accident-input/accident.input.component";
 @Component({
   selector: "ngx-risk-register-acd",
   templateUrl: "./risk.register.acd.component.html"
@@ -30,7 +31,7 @@ export class RiskRegisterAcdComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
+      vCounterNo: {
         title: "No",
         type: "number",
         filter: false,
@@ -78,8 +79,7 @@ export class RiskRegisterAcdComponent {
         filter: false,
         editable: true,
         width: "500px"
-      }
-      ,
+      },
       nextAction: {
         title: "Next Action",
         type: "string",
@@ -89,8 +89,11 @@ export class RiskRegisterAcdComponent {
       }
     }
   };
+
+  childModal: any;
   source: LocalDataSource = new LocalDataSource();
   constructor(
+    private modalService: NgbModal,
     private activeModal: NgbActiveModal,
     public service: BackendService
   ) {
@@ -104,22 +107,37 @@ export class RiskRegisterAcdComponent {
         console.log(
           data.filter(function(item) {
             console.log(this);
-            return (
-              item.yearActive == this.year
-            );
+            return item.yearActive == this.year;
           }, this.filterData)
         );
+        let vCounter = 0;
+        data.forEach((element, ind) => {
+          data[ind].yearActive = data[ind].yearActive.toString();
+          data[ind].status = "0";
+          vCounter = vCounter + 1;
+          data[ind].vCounterNo = vCounter;
+        });
         this.source.load(
           data.filter(function(item) {
-            return (
-              item.yearActive == this.year 
-            );
+            return item.yearActive == this.year;
           }, this.filterData)
         );
       }
       // error => {
       //   console.log(error);
       // };
+    });
+  }
+
+  showModal() {
+    this.childModal = this.modalService.open(AccidentInputComponent, {
+      windowClass: "xlModal",
+      container: "nb-layout",
+      backdrop: "static"
+    });
+    this.childModal.componentInstance.childModalMode = true;
+    this.childModal.result.then(async response => {
+      this.loadData();
     });
   }
 

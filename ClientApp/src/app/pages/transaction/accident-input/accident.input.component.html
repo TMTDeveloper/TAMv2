@@ -3,36 +3,34 @@
   <nb-card-body>
     <form #myForm="ngForm" (ngSubmit)="submit()">
       <div class="form-group row">
-          <label class="col-sm-2 col-form-label" >Periode</label>
+        <label class="col-sm-2 col-form-label">Periode</label>
         <div class="col-sm-2">
           <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
-          <select class="form-control" name="yearPeriode" ngModel required (change)="reload()">
+          <select class="form-control" name="yearPeriode" ngModel required (change)="refreshReload()">
             <option *ngFor="let data of year" value="{{data.data}}">{{data.data}}</option>
           </select>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label" >Division</label>
-      <div class="col-sm-5">
-        <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
-        <select class="form-control" name="division" ngModel required (change)="reload()">
-          <option *ngFor="let data of division" value="{{data.data}}">{{data.desc}}</option>
-        </select>
+        <label class="col-md-2 mt-3">Division</label>
+        <div class="col-md-4">
+          <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
+          <select class="form-control" name="division" [(ngModel)]="division" (change)="reload()">
+            <option *ngFor="let data of divisionData" value="{{data.charId}}">{{data.description}}</option>
+          </select>
+        </div>
+        <label class="col-md-2 mt-3">Department</label>
+        <div class="col-md-4">
+          <select class="form-control" name="department" [(ngModel)]="department" (change)="refreshReload()">
+            <option *ngFor="let data of departmentFilter" value="{{data.kodeDepartment}}">{{data.department}}</option>
+          </select>
+        </div>
+
       </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Department</label>
-      <div class="col-sm-5">
-        <select class="form-control" name="departement" ngModel required (change)="reload()">
-          <option *ngFor="let data of departement" value="{{data.data}}">{{data.desc}}</option>
-        </select>
-      </div>
-  
-  </div>
 
       <div class="col-sm-auto">
         <div class="form-group">
-          <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="deleteControl($event)"> 
+          <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="deleteControl($event)">
           </ng2-smart-table>
         </div>
       </div>
@@ -45,6 +43,11 @@
         <div class="col-sm-auto">
           <div class="form-group">
             <button type="button" class="btn btn-success " [disabled]="buttonDisable" (click)="showModal()">Add New</button>
+          </div>
+        </div>
+        <div *ngIf="childModalMode" class="col-sm-auto">
+          <div class="form-group">
+            <button type="button" class="btn btn-success " (click)="closeModal()">Save</button>
           </div>
         </div>
       </div>
