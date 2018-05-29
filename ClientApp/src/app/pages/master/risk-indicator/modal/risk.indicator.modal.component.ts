@@ -17,6 +17,7 @@ export class RiskIndicatorModalComponent {
     condition: string;
     indictatorId: string;
     score: string;
+    flagActive: string;
     UserCreated: string;
     DatetimeCreated: string;
     UserUpdate: string;

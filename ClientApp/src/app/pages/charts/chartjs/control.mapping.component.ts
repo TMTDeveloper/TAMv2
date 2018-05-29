@@ -188,7 +188,10 @@ export class ControlMappingComponent implements OnDestroy {
                     color: chartjs.axisLineColor
                   },
                   ticks: {
-                    fontColor: chartjs.textColor
+                    fontColor: chartjs.textColor,
+                    min: 0,
+                    max: 15,
+                    stepSize: 3
                   }
                 }
               ]

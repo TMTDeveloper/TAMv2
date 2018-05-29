@@ -217,6 +217,7 @@ export class RiskIndicatorComponent {
       condition: this.myForm.value.condition,
       indicatorId: indicator,
       score: "",
+      flagActive: "Aktif",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -327,6 +328,9 @@ export class RiskIndicatorComponent {
         this.scoreDisable =false;
         break;
         case 'LKL':
+        this.scoreDisable =false;
+        break;
+        case 'OVR':
         this.scoreDisable =false;
         break;
       default:

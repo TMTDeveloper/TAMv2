@@ -335,7 +335,7 @@ export class RiskMatriksIndicatorComponent {
       indicatorIdA: "",
       indicatorIdB: "",
       resultIdC: "",
-      flagActive:"Y",
+      flagActive:"Aktif",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",

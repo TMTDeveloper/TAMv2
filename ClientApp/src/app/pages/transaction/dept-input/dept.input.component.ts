@@ -411,6 +411,13 @@ export class DeptInputComponent {
         }
       }
     };
+    switch (this.yearPeriode) {
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
+        break;
+      default:
+        this.buttonDisable = true;
+    }
     this.source.setFilter(
       [
         { field: "yearActive", search: this.yearPeriode },
