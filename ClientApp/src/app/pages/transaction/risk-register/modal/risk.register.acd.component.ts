@@ -10,8 +10,10 @@ import { AccidentInputComponent } from "../../accident-input/accident.input.comp
   templateUrl: "./risk.register.acd.component.html"
 })
 export class RiskRegisterAcdComponent {
-  filterData = {
-    year: ""
+  filterData: {
+    year: string
+    division: string;
+    department: string;
   };
   selectedData: any;
   settings: any = {
@@ -117,10 +119,15 @@ export class RiskRegisterAcdComponent {
           vCounter = vCounter + 1;
           data[ind].vCounterNo = vCounter;
         });
+        console.log(this.filterData);
         this.source.load(
-          data.filter(function(item) {
-            return item.yearActive == this.year;
-          }, this.filterData)
+          data.filter(item => {
+            return (
+              item.yearActive == this.filterData.year &&
+              item.division == this.filterData.division &&
+              item.department == this.filterData.department
+            );
+          })
         );
       }
       // error => {

@@ -622,13 +622,23 @@ export class RiskRegisterComponent {
     );
   }
   showDept() {
+    console.log(this.dataInput.divisionDepartment.division.charId);
+
     this.activeModal = this.modalService.open(RiskRegisterDeptComponent, {
       windowClass: "xlModal",
       container: "nb-layout",
       backdrop: "static"
     });
-    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
-    this.activeModal.componentInstance.filterData.condition = "DEP";
+    this.activeModal.componentInstance.filterData = {
+      year: this.yearPeriode,
+      condition: "DEP",
+      division: this.dataInput.divisionDepartment.division.charId,
+      department: this.dataInput.divisionDepartment.department.kodeDepartment
+    };
+    // this.activeModal.componentInstance.filterData.year =
+    // this.activeModal.componentInstance.filterData.condition = "DEP";
+    // this.activeModal.componenInstance.filterData.division = this.dataInput.divisionDepartment.division.charId;
+    // this.activeModal.componentInstance.filterData.department = this.dataInput.divisionDepartment.department.kodeDepartment;
     this.activeModal.result.then(
       async response => {
         console.log(response);
@@ -663,7 +673,11 @@ export class RiskRegisterComponent {
       container: "nb-layout",
       backdrop: "static"
     });
-    this.activeModal.componentInstance.filterData.year = this.yearPeriode;
+    this.activeModal.componentInstance.filterData = {
+      year: this.yearPeriode,
+      division: this.dataInput.divisionDepartment.division.charId,
+      department: this.dataInput.divisionDepartment.department.kodeDepartment
+    };
     this.activeModal.result.then(
       async response => {
         console.log(response);

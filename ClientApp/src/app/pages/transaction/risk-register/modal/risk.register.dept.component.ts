@@ -9,10 +9,7 @@ import { BackendService } from "../../../../@core/data/backend.service";
   templateUrl: "./risk.register.dept.component.html"
 })
 export class RiskRegisterDeptComponent {
-  filterData = {
-    year: "",
-    condition: ""
-  };
+
   selectedData: any;
   settings: any = {
     mode: "inline",
@@ -47,6 +44,12 @@ export class RiskRegisterDeptComponent {
       }
     }
   };
+  filterData : {
+    year: string;
+    condition:string;
+    division: string;
+    department: string;
+  };
   source: LocalDataSource = new LocalDataSource();
   constructor(
     private activeModal: NgbActiveModal,
@@ -55,6 +58,7 @@ export class RiskRegisterDeptComponent {
     this.loadData();
   }
   loadData() {
+    console.log(this.filterData)
     this.service.getreq("TbMDeptInputs").subscribe(response => {
       if (response != null) {
         const data = response;
@@ -63,14 +67,20 @@ export class RiskRegisterDeptComponent {
           data.filter(function(item) {
             console.log(this);
             return (
-              item.yearActive == this.year && item.condition == this.condition
+              item.yearActive == this.year &&
+              item.condition == this.condition &&
+              item.division == this.division &&
+              item.departement == this.department
             );
           }, this.filterData)
         );
         this.source.load(
           data.filter(function(item) {
             return (
-              item.yearActive == this.year && item.condition == this.condition
+              item.yearActive == this.year &&
+              item.condition == this.condition &&
+              item.division == this.division &&
+              item.departement == this.department
             );
           }, this.filterData)
         );
