@@ -13,6 +13,7 @@ import { BackendService } from "../../../@core/data/backend.service";
 export class FinancialIndicatorRiskComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
+  numberTitle: string;
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -208,6 +209,18 @@ export class FinancialIndicatorRiskComponent {
 
   reload() {
     this.yearPeriode = this.myForm.value.yearPeriode;
+    switch (this.myForm.value.condition) {
+      case "COF":
+        this.numberTitle="Increase amount IDR in million";
+        break;
+      
+      case "OEX":
+        this.numberTitle="Increase amount IDR in million";
+        break;
+
+      default:
+      this.numberTitle="Loss amount IDR in million";
+    }
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -262,7 +275,7 @@ export class FinancialIndicatorRiskComponent {
           width: "30%"
         },
         numberValue: {
-          title: "Amount IDR",
+          title: this.numberTitle,
           type: "numeric",
           filter: false,
           editable: false,
