@@ -260,9 +260,6 @@ export class DashboardComponent {
     }
   }
 
-  letssee() {
-    console.log(this.department);
-  }
 
   submit(event?) {
     event

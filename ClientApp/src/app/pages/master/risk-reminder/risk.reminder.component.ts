@@ -165,6 +165,8 @@ export class RiskReminderComponent {
           data[ind].status = "0";
           data[ind].vCounter = counter;
           counter = counter + 1;
+          element.startDate = moment(element.startDate).format("DD/MM/YYYY");
+          element.endDate = moment(element.endDate).format("DD/MM/YYYY");
         });
         this.tabledata = data;
         this.source.load(this.tabledata);
@@ -258,6 +260,9 @@ export class RiskReminderComponent {
 
     this.activeModal.result.then(async response => {
       if (response != false) {
+        let data = response;
+        data.startDate = moment(data.startDate).format("DD/MM/YYYY");
+        data.endDate = moment(data.endData).format("DD/MM/YYYY");
         this.tabledata.push(response);
         console.log(this.tabledata);
         this.submit();
@@ -397,34 +402,56 @@ export class RiskReminderComponent {
     }
   }
   submit(event?) {
-    event
-      ? this.service
-          .putreq("TbMRiskReminders", JSON.stringify(event.newData))
-          .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
-            event.confirm.resolve(event.newData);
-            error => {
-              console.log(error);
-            };
-          })
-      : null;
+    if (event) {
+      let dataToBeUpdated = event.newData;
+
+      dataToBeUpdated.startDate = moment(
+        dataToBeUpdated.startDate,
+        "DD/MM/YYYY"
+      ).format();
+      dataToBeUpdated.endDate = moment(
+        dataToBeUpdated.endDate,
+        "DD/MM/YYYY"
+      ).format();
+      console.log(JSON.stringify(dataToBeUpdated));
+      this.service.putreq("TbMRiskReminders", dataToBeUpdated).subscribe(
+        response => {
+          console.log(JSON.stringify(dataToBeUpdated));
+          event.confirm.resolve();
+          this.toastr.success("Data Saved!");
+        },
+        error => {
+          event.confirm.reject(event.newData);
+          this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
+        }
+      );
+    }
     console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
-        this.service
-          .postreq("TbMRiskReminders", this.tabledata[index])
-          .subscribe(response => {
+        let dataToBeSaved = this.tabledata[index];
+        dataToBeSaved.startDate = moment(
+          dataToBeSaved.startDate,
+          "DD/MM/YYYY"
+        ).format();
+        dataToBeSaved.endDate = moment(
+          dataToBeSaved.endDate,
+          "DD/MM/YYYY"
+        ).format();
+        this.service.postreq("TbMRiskReminders", dataToBeSaved).subscribe(
+          response => {
             console.log(response);
             this.tabledata[index].status = "0";
-            error => {
-              console.log(error);
-            };
-          });
+            this.toastr.success("Data Saved!");
+            this.loadData();
+          },
+          error => {
+            this.toastr.error("Data Save Failed! Reason: " + error.statusText);
+          }
+        );
       }
     });
-
-    this.toastr.success("Data Saved!");
   }
 
   deleteControl(event) {
@@ -449,7 +476,7 @@ export class RiskReminderComponent {
       },
       error => {
         console.log(error);
-        //this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
         event.confirm.resolve();
       }
     );

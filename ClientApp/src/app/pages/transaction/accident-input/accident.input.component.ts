@@ -53,7 +53,7 @@ export class AccidentInputComponent {
         editable: false,
         width: "5%"
       },
-      dateAccident: {
+      datemask: {
         title: "Date",
         type: "date",
         filter: false,
@@ -192,8 +192,11 @@ export class AccidentInputComponent {
           data[ind].status = "0";
           vCounter = vCounter + 1;
           data[ind].vCounterNo = vCounter;
+          data[ind].datemask = moment(data.dateAccident).format("DD/MM/YYYY");
         });
+
         this.tabledata = data;
+        console.log(this.tabledata);
         this.source.load(this.tabledata);
 
         this.service.getreq("tbmlibraries").subscribe(response => {
@@ -305,7 +308,9 @@ export class AccidentInputComponent {
     this.activeModal.result.then(
       async response => {
         if (response != false) {
-          this.tabledata.push(response);
+          let data = response;
+          data.datemask = moment(data.dateAccident).format("DD/MM/YYYY");
+          this.tabledata.push(data);
           this.refreshReload();
           this.submit();
         }
@@ -320,12 +325,7 @@ export class AccidentInputComponent {
         return this.division + "-" + this.department + lastIndex.toString();
 
       case 2:
-        return (
-          this.division +
-          "-" +
-          this.department +
-          lastIndex.toString()
-        );
+        return this.division + "-" + this.department + lastIndex.toString();
 
       case 1:
         return this.division + "-" + this.department + lastIndex.toString();
@@ -373,7 +373,7 @@ export class AccidentInputComponent {
           editable: false,
           width: "5%"
         },
-        dateAccident: {
+        datemask: {
           title: "Date",
           type: "date",
           filter: false,
@@ -441,6 +441,13 @@ export class AccidentInputComponent {
     }
   }
   refreshReload() {
+    switch (this.yearPeriode) {
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
+        break;
+      default:
+        this.buttonDisable = true;
+    }
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -480,7 +487,7 @@ export class AccidentInputComponent {
           editable: false,
           width: "5%"
         },
-        dateAccident: {
+        datemask: {
           title: "Date",
           type: "date",
           filter: false,

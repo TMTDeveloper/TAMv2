@@ -13,7 +13,7 @@ import { isNullOrUndefined } from "util";
 })
 export class RiskMatriksIndicatorComponent {
   source: LocalDataSource = new LocalDataSource();
-  buttonDisable:boolean;
+  buttonDisable: boolean;
   yearPeriode: any = moment().format("YYYY");
   tabledata: any[] = [];
   riskIndicatorData: any = [];
@@ -63,31 +63,49 @@ export class RiskMatriksIndicatorComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
@@ -113,7 +131,7 @@ export class RiskMatriksIndicatorComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
-    this.buttonDisable=false;
+    this.buttonDisable = false;
     this.loadData();
   }
 
@@ -270,7 +288,23 @@ export class RiskMatriksIndicatorComponent {
                         list: this.item.data3
                       }
                     }
-                    
+                  },
+
+                  flagActive: {
+                    title: "Status",
+                    type: "html",
+                    filter: false,
+                    editable: true,
+                    width: "30%",
+                    editor: {
+                      type: "list",
+                      config: {
+                        list: [
+                          { value: "Aktif", title: "Aktif" },
+                          { value: "Tidak Aktif", title: "Tidak Aktif" }
+                        ]
+                      }
+                    }
                   }
                 }
               };
@@ -335,7 +369,7 @@ export class RiskMatriksIndicatorComponent {
       indicatorIdA: "",
       indicatorIdB: "",
       resultIdC: "",
-      flagActive:"Aktif",
+      flagActive: "Aktif",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -482,16 +516,32 @@ export class RiskMatriksIndicatorComponent {
               list: this.item.data3
             }
           }
+        },
+        flagActive: {
+          title: "Status",
+          type: "html",
+          filter: false,
+          editable: true,
+          width: "30%",
+          editor: {
+            type: "list",
+            config: {
+              list: [
+                { value: "Aktif", title: "Aktif" },
+                { value: "Tidak Aktif", title: "Tidak Aktif" }
+              ]
+            }
+          }
         }
       }
     };
     console.log(this.myForm.value.condition);
     switch (this.myForm.value.yearPeriode) {
-      case moment().format('YYYY'):
-        this.buttonDisable =false;
+      case moment().format("YYYY"):
+        this.buttonDisable = false;
         break;
       default:
-      this.buttonDisable =true;
+        this.buttonDisable = true;
     }
     switch (this.myForm.value.condition) {
       case "OVR":
@@ -658,6 +708,22 @@ export class RiskMatriksIndicatorComponent {
               type: "list",
               config: {
                 list: this.item.data3
+              }
+            }
+          },
+          flagActive: {
+            title: "Status",
+            type: "html",
+            filter: false,
+            editable: true,
+            width: "30%",
+            editor: {
+              type: "list",
+              config: {
+                list: [
+                  { value: "Aktif", title: "Aktif" },
+                  { value: "Tidak Aktif", title: "Tidak Aktif" }
+                ]
               }
             }
           }

@@ -102,58 +102,55 @@ export class OperationalIndicatorRiskComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
     }
   ];
-  condition: any[] = [
-    {
-      data: "MAS",
-      desc: "M/S"
-    },
-    {
-      data: "SAL",
-      desc: "Service Share"
-    },
-    {
-      data: "CSA",
-      desc: "CS Score"
-    },
-    {
-      data: "CAS",
-      desc: "Employee Satisfaction"
-    },
-    {
-      data: "DOD",
-      desc: "Days of operation disruption"
-    }
-  ];
+  condition: any[] = [];
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
@@ -162,7 +159,7 @@ export class OperationalIndicatorRiskComponent {
     public service: BackendService
   ) {
     this.loadData();
-    this.percentageCheck= false;
+    this.percentageCheck = false;
   }
   loadData() {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
@@ -193,6 +190,24 @@ export class OperationalIndicatorRiskComponent {
               this.tabledata = data;
               this.source.load(this.tabledata);
             });
+            this.service.getreq("TbMLibraries").subscribe(response => {
+              if (response != null) {
+                let arr = response.filter(item => {
+                  return item.condition == "OP";
+                });
+                console.log(arr);
+                this.condition = arr;
+                this.myForm.setValue({
+                  yearPeriode: moment().format("YYYY"),
+                  condition:"MAS"
+                });
+                this.reload();
+              }
+
+              // error => {
+              //   console.log(error);
+              // };
+            });
           }
 
           // error => {
@@ -207,7 +222,6 @@ export class OperationalIndicatorRiskComponent {
       .load(this.tabledata)
       .then(resp => {
         this.myForm.setValue({
-          condition: "MAS",
           yearPeriode: moment().format("YYYY")
         });
       })
@@ -222,14 +236,14 @@ export class OperationalIndicatorRiskComponent {
     this.yearPeriode = this.myForm.value.yearPeriode;
     switch (this.myForm.value.condition) {
       case "SAL":
-       this.percentageCheck=false;
-       break;
+        this.percentageCheck = false;
+        break;
       case "DOD":
-     this.percentageCheck=false;
-     break;
+        this.percentageCheck = false;
+        break;
       default:
-      this.percentageCheck=true;
-    };
+        this.percentageCheck = true;
+    }
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -318,11 +332,10 @@ export class OperationalIndicatorRiskComponent {
       ],
       true
     );
-    
   }
 
   onSaveConfirm(event) {
-    if (event.newData.numberValue>100&&this.percentageCheck) {
+    if (event.newData.numberValue > 100 && this.percentageCheck) {
       event.confirm.reject();
     } else {
       event.confirm.resolve(event.newData);

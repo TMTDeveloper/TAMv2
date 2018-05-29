@@ -15,7 +15,7 @@
           <label class="col-sm-1 col-form-label">Input</label>
         <div class="col-sm-5">
           <select class="form-control" name="condition" ngModel required (change)="reload()">
-            <option *ngFor="let data of condition" value="{{data.data}}">{{data.desc}}</option>
+            <option *ngFor="let data of condition" value="{{data.charId}}">{{data.description}}</option>
           </select>
         </div>
 

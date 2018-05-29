@@ -78,7 +78,15 @@ export class FinancialIndicatorRiskComponent {
           if (isNaN(value)) {
             return 0;
           } else {
-            return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            return value
+              .toString()
+              .replace(/(\d)(?=(?:\d{3})+(?:\.|$))|(\.\d\d?)\d*$/g, function(
+                m,
+                s1,
+                s2
+              ) {
+                return s2 || s1 + ",";
+              });
           }
         }
       }
@@ -87,31 +95,49 @@ export class FinancialIndicatorRiskComponent {
 
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
@@ -151,7 +177,7 @@ export class FinancialIndicatorRiskComponent {
     private toastr: ToastrService,
     public service: BackendService
   ) {
-    this.buttonDisable=false;
+    this.buttonDisable = false;
     this.loadData();
   }
 
@@ -211,15 +237,15 @@ export class FinancialIndicatorRiskComponent {
     this.yearPeriode = this.myForm.value.yearPeriode;
     switch (this.myForm.value.condition) {
       case "COF":
-        this.numberTitle="Increase amount IDR in million";
+        this.numberTitle = "Increase amount IDR in million";
         break;
-      
+
       case "OEX":
-        this.numberTitle="Increase amount IDR in million";
+        this.numberTitle = "Increase amount IDR in million";
         break;
 
       default:
-      this.numberTitle="Loss amount IDR in million";
+        this.numberTitle = "Loss amount IDR in million";
     }
     this.settings = {
       add: {
@@ -284,7 +310,15 @@ export class FinancialIndicatorRiskComponent {
             if (isNaN(value)) {
               return 0;
             } else {
-              return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+              return value
+                .toString()
+                .replace(/(\d)(?=(?:\d{3})+(?:\.|$))|(\.\d\d?)\d*$/g, function(
+                  m,
+                  s1,
+                  s2
+                ) {
+                  return s2 || s1 + ",";
+                });
             }
           }
         }
@@ -300,7 +334,7 @@ export class FinancialIndicatorRiskComponent {
   }
 
   onSaveConfirm(event) {
-    if (event.newData.percentageValue<9999) {
+    if (event.newData.percentageValue < 9999) {
       event.confirm.resolve(event.newData);
       this.submit(event);
     } else {

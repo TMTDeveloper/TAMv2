@@ -75,7 +75,7 @@ export class RiskRegisterComponent {
         width: "5%"
       },
       accidentId: {
-        title: "Loss Event Id",
+        title: "Accident Id",
         type: "string",
         filter: false,
         editable: true,
@@ -270,14 +270,12 @@ export class RiskRegisterComponent {
     inherentRisk: {
       overallRisk: {
         indicatorId: "",
-        description: "",
-        score:0
+        description: ""
       },
       likelihood: "",
       overallImpact: {
         indicatorId: "",
-        description: "",
-        score:0
+        description: ""
       },
       operationalImpact: {
         category: "",
@@ -326,14 +324,12 @@ export class RiskRegisterComponent {
       notes: "",
       overallRisk: {
         indicatorId: "",
-        description: "",
-        score:0
+        description: ""
       },
       likelihood: "",
       overallImpact: {
         indicatorId: "",
-        description: "",
-        score:0
+        description: ""
       },
       operationalImpact: {
         category: "",
@@ -400,8 +396,7 @@ export class RiskRegisterComponent {
       likelihood: "",
       risk: {
         indicatorId: "",
-        description: "",
-        score:0
+        description: ""
       },
       PIC: "",
       schedule: "",
@@ -686,7 +681,7 @@ export class RiskRegisterComponent {
     this.activeModal.result.then(
       async response => {
         console.log(response);
-        if (response != false) {
+        if (response != null) {
           // this.dataInput.divisionDepartment.companyKpi.comInpId =
           //   response.comInpId;
           // this.dataInput.divisionDepartment.companyKpi.description =
@@ -724,17 +719,33 @@ export class RiskRegisterComponent {
     );
   }
   clearIR() {
+    this.dataInput.inherentRisk.qualitativeIR.desc = "";
     this.dataInput.inherentRisk.qualitativeIR.id = "";
-          this.dataInput.inherentRisk.qualitativeIR.desc = "";
-          this.dataInput.inherentRisk.qualitativeIR.score = 0;
-          this.findOverallImp();
+    this.dataInput.inherentRisk.qualitativeIR.score = 0;
+    this.dataInput.inherentRisk.financialImpact.amount = 0;
+    this.dataInput.inherentRisk.financialImpact.score = 0;
+    this.dataInput.inherentRisk.financialImpact.financialObj.financialId = "";
+    this.dataInput.inherentRisk.operationalImpact.loss = 0;
+    this.dataInput.inherentRisk.operationalImpact.score = 0;
+    this.dataInput.inherentRisk.operationalImpact.operationalObj.operationalId =
+      "";
+    this.dataInput.inherentRisk.overallImpact.description = "";
+    this.dataInput.inherentRisk.overallImpact.indicatorId = "";
   }
 
   clearRD() {
+    this.dataInput.residualRisk.qualitativeRD.desc = "";
     this.dataInput.residualRisk.qualitativeRD.id = "";
-          this.dataInput.residualRisk.qualitativeRD.desc = "";
-          this.dataInput.residualRisk.qualitativeRD.score = 0;
-          this.findOverallImpRd();
+    this.dataInput.residualRisk.qualitativeRD.score = 0;
+    this.dataInput.residualRisk.financialImpact.amount = 0;
+    this.dataInput.residualRisk.financialImpact.score = 0;
+    this.dataInput.residualRisk.financialImpact.financialObj.financialId = "";
+    this.dataInput.residualRisk.operationalImpact.loss = 0;
+    this.dataInput.residualRisk.operationalImpact.score = 0;
+    this.dataInput.residualRisk.operationalImpact.operationalObj.operationalId =
+      "";
+    this.dataInput.residualRisk.overallImpact.description = "";
+    this.dataInput.residualRisk.overallImpact.indicatorId = "";
   }
 
   showQLIR() {
@@ -747,7 +758,7 @@ export class RiskRegisterComponent {
     this.activeModal.result.then(
       async response => {
         console.log(response);
-        if (response != false) {
+        if (response != null) {
           this.dataInput.inherentRisk.qualitativeIR.id = response.indicatorId;
           this.dataInput.inherentRisk.qualitativeIR.desc = response.impact;
           this.dataInput.inherentRisk.qualitativeIR.score = response.score;
@@ -772,7 +783,7 @@ export class RiskRegisterComponent {
     this.activeModal.result.then(
       async response => {
         console.log(response);
-        if (response != false) {
+        if (response != null) {
           this.dataInput.residualRisk.qualitativeRD.id = response.indicatorId;
           this.dataInput.residualRisk.qualitativeRD.desc = response.impact;
           this.dataInput.residualRisk.qualitativeRD.score = response.score;
@@ -850,7 +861,7 @@ export class RiskRegisterComponent {
 
     this.activeModal.result.then(
       async response => {
-        if (response != false) {
+        if (response != null) {
           // this.tabledata.push(response);
           // console.log(this.tabledata);
           // this.reload();
@@ -1131,9 +1142,6 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.inherentRisk.overallRisk.description =
               arrIndicator[0].description;
-              this.dataInput.inherentRisk.overallRisk.score =
-              arrIndicator[0].score;
-              console.log(this.dataInput.inherentRisk.overallRisk.score)
             this.findOverallControl();
           }
         }
@@ -1382,8 +1390,6 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.residualRisk.overallRisk.description =
               arrIndicator[0].description;
-              this.dataInput.residualRisk.overallRisk.score =
-              arrIndicator[0].score;
             this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
             this.dataInput.residualRisk.likelihood == ""
               ? (this.dataInput.expectedRisk.disabled = true)
@@ -1490,8 +1496,6 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.expectedRisk.risk.description =
               arrIndicator[0].description;
-              this.dataInput.expectedRisk.risk.score =
-              arrIndicator[0].score;
           }
         }
       }
@@ -2136,7 +2140,7 @@ export class RiskRegisterComponent {
 
     this.activeModal.result.then(
       async response => {
-        if (response != false) {
+        if (response != null) {
           // this.tabledata.push(response);
           // console.log(this.tabledata);
           // this.reload();

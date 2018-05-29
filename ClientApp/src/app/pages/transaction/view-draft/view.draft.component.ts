@@ -69,6 +69,9 @@ export class ViewDraftComponent {
       }
     }
   };
+  divisionData: any[] = [];
+  departmentData: any[] = [];
+  departmentFilter: any[] = [];
   selectedData: any;
   division: any[] = [
     {
@@ -103,8 +106,36 @@ export class ViewDraftComponent {
       if (response != null) {
         const data = response;
         console.log(data);
+        data.forEach(item => {
+          item.dateCreated = moment(item.dateCreated).format("DD/MM/YYYY");
+          item.dateUpdated = moment(item.dateUpdated).format("DD/MM/YYYY");
+        });
         this.tabledata = data;
         this.source.load(this.tabledata);
+
+        this.service.getreq("tbmlibraries").subscribe(response => {
+          if (response != null) {
+            let arr = response.filter(item => {
+              return item.condition == "DIV";
+            });
+            console.log(arr);
+            this.divisionData = arr;
+            this.division = this.divisionData[0];
+
+            this.service.getreq("tbmdivdepts").subscribe(response => {
+              if (response != null) {
+                this.departmentData = response;
+                this.filterDepartment();
+              }
+              // error => {
+              //   console.log(error);
+              // };
+            });
+          }
+          // error => {
+          //   console.log(error);
+          // };
+        });
       }
       // error => {
       //   console.log(error);
@@ -113,16 +144,44 @@ export class ViewDraftComponent {
     this.source = this.source.setFilter(
       [
         { field: "type", search: "DRAFT" },
-        { field: "year", search: moment().format("YYYY") }
+        { field: "year", search: moment().format("YYYY") },
+        { field: "division", search: this.division },
+        { field: "department", search: this.department }
       ],
       true
     );
+  }
+  filterDepartment() {
+    console.log(JSON.stringify(this.division));
+    let arr = this.departmentData.filter(item => {
+      return item.kodeDivisi == this.division;
+    });
+    console.log(arr);
+    if (arr[0] != null) {
+      this.departmentFilter = arr;
+      this.department = arr[0].kodeDepartment;
+      this.reload();
+    } else {
+      console.log(arr);
+      this.departmentFilter = [];
+      this.reload();
+    }
   }
   ngAfterViewInit() {
     this.source.load(this.tabledata);
   }
 
-  reload() {}
+  reload() {
+    this.source = this.source.setFilter(
+      [
+        { field: "type", search: "DRAFT" },
+        { field: "year", search: moment().format("YYYY") },
+        { field: "division", search: this.division },
+        { field: "department", search: this.department }
+      ],
+      true
+    );
+  }
   submit(event?) {
     this.goToPage();
   }
