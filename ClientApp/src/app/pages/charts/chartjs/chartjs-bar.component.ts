@@ -15,41 +15,41 @@ export class ChartjsBarComponent implements OnDestroy {
 
   tabledata: any[] = [
     {
-      irRiskExtreme:0,
-      irRiskHigh:0,
-      irRiskMedium:0,
-      irRiskLow:0,
-      rdRiskExtreme:0,
-      rdRiskHigh:0,
-      rdRiskMedium:0,
-      rdRiskLow:0,
-      exRiskExtreme:0,
-      exRiskHigh:0,
-      exRiskMedium:0,
-      exRiskLow:0
+      irRiskExtreme: 0,
+      irRiskHigh: 0,
+      irRiskMedium: 0,
+      irRiskLow: 0,
+      rdRiskExtreme: 0,
+      rdRiskHigh: 0,
+      rdRiskMedium: 0,
+      rdRiskLow: 0,
+      exRiskExtreme: 0,
+      exRiskHigh: 0,
+      exRiskMedium: 0,
+      exRiskLow: 0
     }
   ];
 
-  chartdata: any=[
+  chartdata: any = [
     {
-      irRiskExtreme:0,
-      irRiskHigh:0,
-      irRiskMedium:0,
-      irRiskLow:0,
-      rdRiskExtreme:0,
-      rdRiskHigh:0,
-      rdRiskMedium:0,
-      rdRiskLow:0,
-      exRiskExtreme:0,
-      exRiskHigh:0,
-      exRiskMedium:0,
-      exRiskLow:0
+      irRiskExtreme: 0,
+      irRiskHigh: 0,
+      irRiskMedium: 0,
+      irRiskLow: 0,
+      rdRiskExtreme: 0,
+      rdRiskHigh: 0,
+      rdRiskMedium: 0,
+      rdRiskLow: 0,
+      exRiskExtreme: 0,
+      exRiskHigh: 0,
+      exRiskMedium: 0,
+      exRiskLow: 0
     }
   ]
 
   constructor(private theme: NbThemeService,
     public service: BackendService) {
-      this.loadData();
+    this.loadData();
 
     /*this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
@@ -129,32 +129,32 @@ export class ChartjsBarComponent implements OnDestroy {
 
           const colors: any = config.variables;
           const chartjs: any = config.variables.chartjs;
-    
+
           console.log(this.chartdata);
-    
+
           this.data = {
             labels: ['Inherent', 'Residual', 'Expected'],
             datasets: [{
-              data: [this.chartdata.irRiskExtreme,this.chartdata.rdRiskExtreme,this.chartdata.exRiskExtreme],
+              data: [this.chartdata.irRiskExtreme, this.chartdata.rdRiskExtreme, this.chartdata.exRiskExtreme],
               label: 'Extreme',
               backgroundColor: NbColorHelper.hexToRgbA(colors.primaryLight, 0.8),
             }, {
-              data: [this.chartdata.irRiskHigh,this.chartdata.rdRiskHigh,this.chartdata.exRiskHigh],
+              data: [this.chartdata.irRiskHigh, this.chartdata.rdRiskHigh, this.chartdata.exRiskHigh],
               label: 'High',
               backgroundColor: NbColorHelper.hexToRgbA(colors.infoLight, 0.8),
             },
             {
-              data: [this.chartdata.irRiskMedium,this.chartdata.rdRiskMedium,this.chartdata.exRiskMedium],
+              data: [this.chartdata.irRiskMedium, this.chartdata.rdRiskMedium, this.chartdata.exRiskMedium],
               label: 'Medium',
               backgroundColor: NbColorHelper.hexToRgbA(colors.warningLight, 0.8),
             },
             {
-              data: [this.chartdata.irRiskLow,this.chartdata.rdRiskLow,this.chartdata.exRiskLow],
+              data: [this.chartdata.irRiskLow, this.chartdata.rdRiskLow, this.chartdata.exRiskLow],
               label: 'Low',
               backgroundColor: NbColorHelper.hexToRgbA(colors.dangerLight, 0.8),
             }],
           };
-    
+
           this.options = {
             plugins: {
               datalabels: {
@@ -164,20 +164,20 @@ export class ChartjsBarComponent implements OnDestroy {
                 font: {
                   weight: 'bold'
                 },
-                color: function(context) {
+                color: function (context) {
                   var index = context.dataIndex;
                   var value = context.dataset.data[index];
                   return value < 1 ? 'transparent' : chartjs.textColor
-              }
+                }
               }
             },
-            tooltips:{
-              enabled:true
+            tooltips: {
+              enabled: true
             },
             title: {
               display: true,
               text: 'Risk Movement'
-          },
+            },
             maintainAspectRatio: false,
             responsive: true,
             legend: {
@@ -205,6 +205,9 @@ export class ChartjsBarComponent implements OnDestroy {
                   },
                   ticks: {
                     fontColor: chartjs.textColor,
+                    min: 0,
+                    max: 15,
+                    stepSize: 3
                   },
                 },
               ],
@@ -214,7 +217,7 @@ export class ChartjsBarComponent implements OnDestroy {
       }
     });
 
-   
+
   }
 
   reload() {
@@ -225,27 +228,27 @@ export class ChartjsBarComponent implements OnDestroy {
     if (arr[0] != null) {
       //console.log("masuksini");
       this.chartdata = arr[0];
-     // console.log(this.chartdata);
+      // console.log(this.chartdata);
     } else {
       this.chartdata = {
-        irRiskExtreme:0,
-        irRiskHigh:0,
-        irRiskMedium:0,
-        irRiskLow:0,
-        rdRiskExtreme:0,
-        rdRiskHigh:0,
-        rdRiskMedium:0,
-        rdRiskLow:0,
-        exRiskExtreme:0,
-        exRiskHigh:0,
-        exRiskMedium:0,
-        exRiskLow:0
+        irRiskExtreme: 0,
+        irRiskHigh: 0,
+        irRiskMedium: 0,
+        irRiskLow: 0,
+        rdRiskExtreme: 0,
+        rdRiskHigh: 0,
+        rdRiskMedium: 0,
+        rdRiskLow: 0,
+        exRiskExtreme: 0,
+        exRiskHigh: 0,
+        exRiskMedium: 0,
+        exRiskLow: 0
       };
     }
-    
+
   }
 
-  
+
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
