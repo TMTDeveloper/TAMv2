@@ -30,13 +30,13 @@
         <label class="col-md-2 mt-3">Division</label>
         <div class="col-md-4">
           <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
-          <select class="form-control" name="division" [(ngModel)]="division" (change)="reload()">
+          <select class="form-control" name="division" [(ngModel)]="division" (change)="filterDepartment()">
             <option *ngFor="let data of divisionData" value="{{data.charId}}">{{data.description}}</option>
           </select>
         </div>
         <label class="col-md-2 mt-3">Department</label>
         <div class="col-md-4">
-          <select class="form-control" name="department" [(ngModel)]="department" (change)="letssee()">
+          <select class="form-control" name="department" [(ngModel)]="department" (change)="reload()">
             <option *ngFor="let data of departmentFilter" value="{{data.kodeDepartment}}">{{data.department}}</option>
           </select>
         </div>
@@ -93,21 +93,41 @@
               <tbody>
                 <tr *ngFor="let item of tabledata">
                   <td>{{ item.riskNo }}</td>
+                  <td>{{ item.descDivision }}</td>
+                  <td>{{ item.companyKpi }}</td>
+                  <td>{{ item.departmentKpi }}</td>
+                  <td>{{ item.descDepartment }}</td>
+                  <td>{{ item.businessProcess }}</td>
+                  <td>{{ item.lossEvent }}</td>
+                  <td>{{ item.caused }}</td>
+                  <td>{{ item.riskImpact }}</td>
+                  <td>{{ item.riskLevel }}</td>
+                  <td>{{ item.notesIr }}</td>
                   <td>{{ item.finImpactCategory }}</td>
-                  <td>{{ item.opImpactCategory }}</td>
                   <td>{{ item.finAmountIr }}</td>
+                  <td>{{ item.opImpactCategory }}</td>
                   <td>{{ item.opAmountIr }}</td>
-                  <td>{{ item.qlImpactIr }}</td>
+                   <td>{{ item.qlImpactIr }}</td>
+                  <td>{{ item.irImpact }}</td>
                   <td>{{ item.irLikelihood }}</td>
                   <td>{{ item.irOverall }}</td>
+                  <td>{{ item.control }}</td>
+                  <td>{{ item.operationCt }}</td>
+                  <td>{{ item.appropriatenessCt }}</td>
+                  <td>{{ item.efOverall }}</td>
+                  <td>{{ item.notesRd }}</td>
                   <td>{{ item.finAmountRd }}</td>
                   <td>{{ item.opAmountRd }}</td>
                   <td>{{ item.qlImpactRd }}</td>
+                  <td>{{ item.rdImpact }}</td>
                   <td>{{ item.rdLikelihood }}</td>
                   <td>{{ item.rdOverall }}</td>
+                  <td>{{ item.treatmentPlan }}</td>
                   <td>{{ item.exImpact }}</td>
                   <td>{{ item.exLikelihood }}</td>
                   <td>{{ item.exOverall }}</td>
+                  <td>{{ item.exPic }}</td>
+                  <td>{{ item.exDueDate }}</td>
                 </tr>
               </tbody>
             </font>

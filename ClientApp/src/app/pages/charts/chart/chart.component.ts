@@ -158,7 +158,9 @@ export class ChartComponent implements OnInit {
         { text: "Low", iconFill: "#4bf442" },
         { text: "Medium", iconFill: "#90caf9" },
         { text: "High", iconFill: "#ffb74d" },
-        { text: "Extreme", iconFill: "#d84315" }
+        { text: "Extreme", iconFill: "#d84315" },
+        { text: "Residual Risk", iconFill: "blue" },
+        { text: "Inherent Risk", iconFill: "yellow" }
       ];
     });
     legend.position("bottom");

@@ -141,6 +141,7 @@ export class DashboardComponent {
   tabledata: any[] = [];
   tableapprove: any[] = [];
   dataapprove: any;
+  fullData: any[] = [];
 
   subscription: any;
   activeModal: any;
@@ -160,8 +161,6 @@ export class DashboardComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
-    
-        this.tabledata = data;
 
         this.service.getreq("tbmlibraries").subscribe(response => {
           if (response != null) {
@@ -175,6 +174,8 @@ export class DashboardComponent {
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
+                this.fullData = data;
+                this.reload();
               }
               // error => {
               //   console.log(error);
@@ -234,7 +235,6 @@ export class DashboardComponent {
   }
 
   reload() {
-    this.filterDepartment();
     console.log(this.department);
     switch (this.dataapprove.stat) {
       case "submit":
@@ -243,6 +243,11 @@ export class DashboardComponent {
       default:
         this.riskstat = "Not Yet Submitted";
     }
+    this.tabledata = this.fullData.filter(item => {
+      return (
+        item.division == this.division && item.department == this.department
+      );
+    });
   }
 
   filterDepartment() {
@@ -254,12 +259,13 @@ export class DashboardComponent {
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
+      this.reload();
     } else {
       console.log(arr);
       this.departmentFilter = [];
+      this.reload();
     }
   }
-
 
   submit(event?) {
     event

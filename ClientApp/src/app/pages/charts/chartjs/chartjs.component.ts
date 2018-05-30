@@ -248,6 +248,7 @@ export class ChartjsComponent {
   departmentData: any[] = [];
   departmentFilter: any[] = [];
   tabledata: any[] = [];
+  fullData: any[] = [];
   riskArr: Array<any> = [
     {
       no: 1,
@@ -375,17 +376,12 @@ export class ChartjsComponent {
   }
 
   reload() {
-    this.filterDepartment();
-    let year = moment().format("YYYY");
-    let arr = this.tableapprove.filter(item => {
-      return item.division == "ISTD";
+    this.tabledata = this.fullData.filter(item => {
+      return (
+        item.division == this.division && item.department == this.department
+      );
     });
-    // console.log(arr[0] != null);
-    if (arr[0] != null) {
-      console.log("masukapprove");
-      this.approvedata = arr[0];
-      console.log(this.approvedata);
-    }
+    this.processData(this.tabledata);
   }
 
   showModal() {
@@ -470,34 +466,7 @@ export class ChartjsComponent {
     this.service.getreq("Riskreports").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
-        for (let i = 0; i < 15; i++) {
-          data[i] != null ? (this.riskArr[i] = data[i]) : null;
-        }
-        console.log(this.riskArr);
-        data.forEach((element, ind) => {
-          data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].status = "0";
-          this.tabledata = data;
-          console.log(this.tabledata);
-          let arr1 = this.tabledata.filter(item => {
-            return item.efOverall === "Effective";
-          });
-          this.effectivedata = arr1;
-          let arr2 = this.tabledata.filter(item => {
-            return item.efOverall === "Moderate";
-          });
-          this.moderatedata = arr2;
-          let arr3 = this.tabledata.filter(item => {
-            return item.efOverall === "Ineffective";
-          });
-          this.ineffectivedata = arr3;
-          let arr4 = this.tabledata.filter(item => {
-            return item.efOverall === "Weak";
-          });
-          this.weakdata = arr4;
-        });
-
+        this.fullData = data;
         this.service.getreq("tbmlibraries").subscribe(response => {
           if (response != null) {
             let arr = response.filter(item => {
@@ -510,6 +479,7 @@ export class ChartjsComponent {
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
+                this.reload();
               }
               // error => {
               //   console.log(error);
@@ -527,6 +497,35 @@ export class ChartjsComponent {
     });
   }
 
+  processData(data) {
+    for (let i = 0; i < 15; i++) {
+      data[i] != null ? (this.riskArr[i] = data[i]) : null;
+    }
+    console.log(this.riskArr);
+    data.forEach((element, ind) => {
+      data[ind].yearActive = data[ind].yearActive.toString();
+      data[ind].status = "0";
+      this.tabledata = data;
+      console.log(this.tabledata);
+      let arr1 = this.tabledata.filter(item => {
+        return item.efOverall === "Effective";
+      });
+      this.effectivedata = arr1;
+      let arr2 = this.tabledata.filter(item => {
+        return item.efOverall === "Moderate";
+      });
+      this.moderatedata = arr2;
+      let arr3 = this.tabledata.filter(item => {
+        return item.efOverall === "Ineffective";
+      });
+      this.ineffectivedata = arr3;
+      let arr4 = this.tabledata.filter(item => {
+        return item.efOverall === "Weak";
+      });
+      this.weakdata = arr4;
+    });
+  }
+
   filterDepartment() {
     console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
@@ -536,6 +535,7 @@ export class ChartjsComponent {
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
+      this.reload();
     } else {
       console.log(arr);
       this.departmentFilter = [];

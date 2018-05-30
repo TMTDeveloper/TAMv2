@@ -252,6 +252,8 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
                 entity.Property(e => e.No).HasColumnName("NO");
                 entity.Property(e => e.RiskNo).HasColumnName("RISK_NO");
+                entity.Property(e => e.DescDepartment).HasColumnName("desc_department");
+                entity.Property(e => e.DescDivision).HasColumnName("desc_division");
                 entity.Property(e => e.Department).HasColumnName("DEPARTMENT");
                 entity.Property(e => e.Division).HasColumnName("DIVISION");
                 entity.Property(e => e.CompanyKpi).HasColumnName("COMPANY_KPI");
