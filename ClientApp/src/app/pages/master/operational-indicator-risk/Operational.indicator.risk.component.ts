@@ -199,7 +199,7 @@ export class OperationalIndicatorRiskComponent {
                 this.condition = arr;
                 this.myForm.setValue({
                   yearPeriode: moment().format("YYYY"),
-                  condition:"MAS"
+                  condition: this.condition[0].charId
                 });
                 this.reload();
               }
@@ -222,6 +222,7 @@ export class OperationalIndicatorRiskComponent {
       .load(this.tabledata)
       .then(resp => {
         this.myForm.setValue({
+          condition: this.condition[0].charId,
           yearPeriode: moment().format("YYYY")
         });
       })

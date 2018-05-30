@@ -76,58 +76,55 @@ export class QualitativeIndicatorComponent {
   };
   year: any[] = [
     {
-      data: moment().subtract(9,'years').format("YYYY")
+      data: moment()
+        .subtract(9, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(8,'years').format("YYYY")
+      data: moment()
+        .subtract(8, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(7,'years').format("YYYY")
+      data: moment()
+        .subtract(7, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(6,'years').format("YYYY")
+      data: moment()
+        .subtract(6, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(5,'years').format("YYYY")
+      data: moment()
+        .subtract(5, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(4,'years').format("YYYY")
+      data: moment()
+        .subtract(4, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(3,'years').format("YYYY")
+      data: moment()
+        .subtract(3, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(2,'years').format("YYYY")
+      data: moment()
+        .subtract(2, "years")
+        .format("YYYY")
     },
     {
-      data: moment().subtract(1,'years').format("YYYY")
+      data: moment()
+        .subtract(1, "years")
+        .format("YYYY")
     },
     {
       data: moment().format("YYYY")
     }
   ];
-  condition: any[] = [
-    {
-      data: "EWD",
-      desc: "Entity Wide"
-    },
-    {
-      data: "OUT",
-      desc: "Output"
-    },
-    {
-      data: "HRS",
-      desc: "Human Resources"
-    },
-    {
-      data: "LAR",
-      desc: "Legal and Regulatory"
-    },
-    {
-      data: "FIN",
-      desc: "Financial"
-    }
-  ];
+  condition: any[] = [];
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
@@ -168,6 +165,25 @@ export class QualitativeIndicatorComponent {
               this.tabledata = data;
               this.source.load(this.tabledata);
             });
+            this.service.getreq("TbMLibraries").subscribe(response => {
+              if (response != null) {
+                let arr = response.filter(item => {
+                  return item.condition == "QL";
+                });
+                console.log(arr);
+                this.condition = arr;
+                console.log(this.condition)
+                this.myForm.setValue({
+                  yearPeriode: moment().format("YYYY"),
+                  condition: this.condition[0].charId
+                });
+                this.reload();
+              }
+
+              // error => {
+              //   console.log(error);
+              // };
+            });
           }
           // error => {
           //   console.log(error);
@@ -181,7 +197,7 @@ export class QualitativeIndicatorComponent {
       .load(this.tabledata)
       .then(resp => {
         this.myForm.setValue({
-          condition: "EWD",
+          condition:this.condition[0].charId,
           yearPeriode: moment().format("YYYY")
         });
       })
@@ -247,7 +263,7 @@ export class QualitativeIndicatorComponent {
           editable: true,
           width: "60%",
           editor: {
-            type: "textarea",
+            type: "textarea"
           }
         }
       }
@@ -262,7 +278,7 @@ export class QualitativeIndicatorComponent {
   }
 
   onSaveConfirm(event) {
-    if (event.newData.description!='') {
+    if (event.newData.description != "") {
       event.confirm.resolve(event.newData);
       this.submit(event);
     } else {
