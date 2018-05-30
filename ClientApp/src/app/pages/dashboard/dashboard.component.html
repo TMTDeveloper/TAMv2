@@ -42,52 +42,101 @@
         </div>
 
       </div>
-      <button class="btn btn-success" (click)="exportAsExcelFile('tam.xlsx')">Save</button>
+      <button class="btn btn-success" (click)="exportAsExcelFile('tam.xlsx')">Download</button>
     </div>
 
     <nb-tabset>
       <nb-tab tabTitle="Detail">
         <div class="form-group ">
-          <table id="print_table" class="table table-condensed mt-3">
+          <table id="print_table" class="table table-bordered mt-3">
             <font size="1">
               <thead>
                 <tr>
-                  <th bgcolor="yellow"> </th>
-                  <th bgcolor="#FF0000"> </th>
-                  <th bgcolor="#FF0000"> </th>
-                  <th bgcolor="#FF0000"> </th>
-                  <th bgcolor="#FF0000">Inherent&nbsp;Risk </th>
-                  <th bgcolor="#FF0000"> </th>
-                  <th bgcolor="#FF0000"> </th>
-                  <th bgcolor="#FF0000"> </th>
-                  <th bgcolor="#0000FF"> </th>
-                  <th bgcolor="#0000FF"> </th>
-                  <th bgcolor="#0000FF">Residual&nbsp;Risk</th>
-                  <th bgcolor="#0000FF"> </th>
-                  <th bgcolor="#0000FF"> </th>
-                  <th bgcolor="#00FF00"> </th>
-                  <th bgcolor="#00FF00">Expected&nbsp;Risk</th>
-                  <th bgcolor="#00FF00"> </th>
+                    <th bgcolor="cyan"> </th>
+                    <th bgcolor="cyan"> </th>
+                    <th bgcolor="cyan"> </th>
+                    <th bgcolor="cyan">Division/Dept</th>
+                    <th bgcolor="cyan"> </th>
+                    <th bgcolor="cyan"> </th>
+                    <th bgcolor="purple"></th>
+                    <th bgcolor="purple"></th>
+                    <th bgcolor="purple">
+                      <font color="white">Risk&nbsp;Description</font>
+                    </th>
+                    <th bgcolor="purple"></th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue">
+                      <font color="white">Inherent&nbsp;Risk</font>
+                    </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="light blue"> </th>
+                    <th bgcolor="orange"> </th>
+                    <th bgcolor="orange"> </th>
+                    <th bgcolor="orange">
+                      <font color="white">Control</font>
+                    </th>
+                    <th bgcolor="orange"> </th>
+                    <th bgcolor="orange"> </th>
+                    <th bgcolor="yellow"> </th>
+                    <th bgcolor="yellow"> </th>
+                    <th bgcolor="yellow"> </th>
+                    <th bgcolor="yellow">Residual&nbsp;Risk</th>
+                    <th bgcolor="yellow"> </th>
+                    <th bgcolor="yellow"> </th>
+                    <th bgcolor="green"> </th>
+                    <th bgcolor="green"> </th>
+                    <th bgcolor="green"> </th>
+                    <th bgcolor="green">
+                      <font color="white">Expected&nbsp;Risk</font>
+                    </th>
+                    <th bgcolor="green"> </th>
+                    <th bgcolor="green"> </th>
+                    
                 </tr>
               </thead>
               <thead>
                 <tr>
-                  <th>RiskNo</th>
-                  <th>Fin&nbsp;Category</th>
-                  <th>Op&nbsp;Category</th>
-                  <th>Financial</th>
-                  <th>Operational</th>
-                  <th>Qualitative</th>
+                  <th>Risk No</th>
+                  <th>Division</th>
+                  <th>Company KPI</th>
+                  <th>Dept KPI</th>
+                  <th>Department</th>
+                  <th>Business&nbsp;Process</th>
+                  <th>Loss&nbsp;Event</th>
+                  <th>Caused</th>
+                  <th>Risk&nbsp;Impact</th>
+                  <th>Risk&nbsp;Level</th>
+                  <th>Notes</th>
+                  <th>Financial&nbsp;Category</th>
+                  <th>Financial&nbsp;Amount</th>
+                  <th>Operational&nbsp;Category</th>
+                  <th>Operational&nbsp;Loss</th>
+                  <th>Qualitative&nbsp;Impact</th>
+                  <th>Impact</th>
                   <th>Likelihood</th>
-                  <th>Overall</th>
-                  <th>Financial</th>
-                  <th>Operational</th>
-                  <th>Qualitative</th>
+                  <th>Overall&nbsp;Risk</th>
+                  <th>Control</th>
+                  <th>Operation</th>
+                  <th>Appropriateness</th>
+                  <th>Overall&nbsp;Control</th>
+                  <th>Notes</th>
+                  <th>Financial&nbsp;Amount</th>
+                  <th>Operational&nbsp;Loss</th>
+                  <th>Qualitative&nbsp;Impact</th>
+                  <th>Impact</th>
                   <th>Likelihood</th>
-                  <th>Overall</th>
+                  <th>Overall&nbsp;Risk</th>
+                  <th>Treatment&nbsp;Plan</th>
                   <th>Impact</th>
                   <th>Likelihood</th>
                   <th>Overall</th>
+                  <th>PIC</th>
+                  <th>Schedule</th>
                 </tr>
               </thead>
               <tbody>
@@ -99,7 +148,12 @@
                   <td>{{ item.descDepartment }}</td>
                   <td>{{ item.businessProcess }}</td>
                   <td>{{ item.lossEvent }}</td>
-                  <td>{{ item.caused }}</td>
+                  <td>
+                      <div *ngFor="let data of insertSpace2(item.caused)">
+                        {{data}}
+                        <br>
+                      </div>
+                    </td>
                   <td>{{ item.riskImpact }}</td>
                   <td>{{ item.riskLevel }}</td>
                   <td>{{ item.notesIr }}</td>
@@ -111,7 +165,12 @@
                   <td>{{ item.irImpact }}</td>
                   <td>{{ item.irLikelihood }}</td>
                   <td>{{ item.irOverall }}</td>
-                  <td>{{ item.control }}</td>
+                  <td>
+                      <div *ngFor="let data of insertSpace(item.control)">
+                        {{data}}
+                        <br>
+                      </div>
+                    </td>
                   <td>{{ item.operationCt }}</td>
                   <td>{{ item.appropriatenessCt }}</td>
                   <td>{{ item.efOverall }}</td>
@@ -122,12 +181,27 @@
                   <td>{{ item.rdImpact }}</td>
                   <td>{{ item.rdLikelihood }}</td>
                   <td>{{ item.rdOverall }}</td>
-                  <td>{{ item.treatmentPlan }}</td>
+                  <td>
+                      <div *ngFor="let data of insertSpace(item.treatmentPlan)">
+                        {{data}}
+                        <br>
+                      </div>
+                    </td>
                   <td>{{ item.exImpact }}</td>
                   <td>{{ item.exLikelihood }}</td>
                   <td>{{ item.exOverall }}</td>
-                  <td>{{ item.exPic }}</td>
-                  <td>{{ item.exDueDate }}</td>
+                  <td>
+                      <div *ngFor="let data of insertSpace(item.exPic)">
+                        {{data}}
+                        <br>
+                      </div>
+                    </td>
+                    <td>
+                        <div *ngFor="let data of insertSpace(item.exDueDate)">
+                          {{data}}
+                          <br>
+                        </div>
+                      </td>
                 </tr>
               </tbody>
             </font>

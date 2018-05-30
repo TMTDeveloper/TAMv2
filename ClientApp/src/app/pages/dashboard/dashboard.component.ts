@@ -405,6 +405,38 @@ export class DashboardComponent {
         }
       );
   }
+
+  insertSpace(data: string) {
+    let arrString = [];
+    let lastPosition = 0;
+    for (let i = 0; i <= data.length; i++) {
+      if (data.slice(i - 1, i) == ",") {
+        arrString.push(data.slice(lastPosition, i));
+        lastPosition = i;
+      }
+      if (i == data.length) {
+        arrString.push(data.slice(lastPosition, i));
+      }
+    }
+
+    return arrString;
+  }
+
+  insertSpace2(data: string) {
+    let arrString = [];
+    let lastPosition = 0;
+    for (let i = 0; i <= data.length; i++) {
+      if (data.slice(i - 1, i) == "\n") {
+        arrString.push(data.slice(lastPosition, i));
+        lastPosition = i;
+      }
+      if (i == data.length) {
+        arrString.push(data.slice(lastPosition, i));
+      }
+    }
+
+    return arrString;
+  }
 }
 //   private saveAsExcelFile(buffer: any, fileName: string): void {
 //     const data: Blob = new Blob([buffer], {
