@@ -54,7 +54,7 @@ export class DeptInputComponent {
       perPage: 30
     },
     columns: {
-      counterNo: {
+      vCounterNo: {
         title: "No",
         type: "number",
         filter: false,
@@ -156,10 +156,19 @@ export class DeptInputComponent {
         console.log(JSON.stringify(response));
         let vCounter = 0;
         data.forEach((element, ind) => {
-          data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].status = "0";
-          vCounter = vCounter + 1;
-          data[ind].vCounterNo = vCounter;
+          let vLastIndex = 0;
+          for (let vdata in data) {
+            if (
+              data[vdata].yearActive == element.yearActive &&
+              data[vdata].division == element.division &&
+              data[vdata].departement == element.departement
+            ) {
+              vLastIndex <= data[vdata].vCounterNo
+                ? (vLastIndex = data[vdata].vCounterNo)
+                : null;
+            }
+          }
+          data[ind].vCounterNo = vLastIndex + 1;
         });
         this.tabledata = data;
         this.source.load(this.tabledata);
@@ -171,16 +180,14 @@ export class DeptInputComponent {
             });
             console.log(arr);
             this.divisionData = arr;
-            this.division = this.divisionData[0].charId;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
-                this.departmentFilter = this.departmentData.filter(item => {
-                  return item.kodeDivisi == this.division;
-                });
-                this.yearPeriode= moment().format("YYYY");
-                this.refreshReload();
+                this.division != null ? null : (this.division = arr[0].charId);
+                console.log(this.divisionData);
+
+                this.filterDepartment();
               }
               // error => {
               //   console.log(error);
@@ -197,21 +204,7 @@ export class DeptInputComponent {
       // };
     });
   }
-  ngAfterViewInit() {
-    this.source
-      .load(this.tabledata)
-      .then(resp => {
-        this.myForm.setValue({
-          yearPeriode: moment().format("YYYY"),
-          division: "ISTD",
-          departement: "IS"
-        });
-        this.yearPeriode = moment().format("YYYY");
-      })
-      .then(resp => {
-        this.reload();
-      });
-  }
+  ngAfterViewInit() {}
 
   showModal() {
     this.activeModal = this.modalService.open(DeptInputModalComponent, {
@@ -289,8 +282,15 @@ export class DeptInputComponent {
   }
 
   reload() {
-    this.filterDepartment();
-
+    console.log(this.division);
+    this.source.setFilter(
+      [
+        { field: "yearActive", search: this.yearPeriode },
+        { field: "division", search: this.division },
+        { field: "departement", search: this.department }
+      ],
+      true
+    );
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -323,7 +323,7 @@ export class DeptInputComponent {
         perPage: 30
       },
       columns: {
-        counterNo: {
+        vCounterNo: {
           title: "No",
           type: "number",
           filter: false,
@@ -342,14 +342,6 @@ export class DeptInputComponent {
         }
       }
     };
-    this.source.setFilter(
-      [
-        { field: "yearActive", search: this.yearPeriode },
-        { field: "division", search: this.division },
-        { field: "departement", search: this.department }
-      ],
-      true
-    );
     switch (this.yearPeriode) {
       case moment().format("YYYY"):
         this.buttonDisable = false;
@@ -392,7 +384,7 @@ export class DeptInputComponent {
         perPage: 30
       },
       columns: {
-        counterNo: {
+        vCounterNo: {
           title: "No",
           type: "number",
           filter: false,
@@ -418,14 +410,6 @@ export class DeptInputComponent {
       default:
         this.buttonDisable = true;
     }
-    this.source.setFilter(
-      [
-        { field: "yearActive", search: this.yearPeriode },
-        { field: "division", search: this.division },
-        { field: "departement", search: this.department }
-      ],
-      true
-    );
   }
 
   filterDepartment() {
@@ -437,6 +421,7 @@ export class DeptInputComponent {
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
+      this.reload();
     } else {
       console.log(arr);
       this.departmentFilter = [];
@@ -490,11 +475,10 @@ export class DeptInputComponent {
       deptInpId: event.data.deptInpId
     };
 
-    
     this.service.postreq("TbMdeptinputs/deletecontrol", savedData).subscribe(
       response => {
         console.log(response);
-        this.refreshReload();
+        this.loadData();
         this.toastr.success("Data Deleted!");
         event.confirm.resolve();
       },
