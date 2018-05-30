@@ -5,13 +5,13 @@
 
       <div class="col-sm-12">
         <div class="form-group">
-          <label>Treatment Plan</label>
+          <label>Treatment Plan</label><font color="red">*</font>
           <input type="text" class="form-control" name="description" placeholder="Description" [(ngModel)]="formData.description">
         </div>
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-            <label>Type</label>
+            <label>Type</label><font color="red">*</font>
           <select class="form-control" name="type" [(ngModel)]="formData.type">
             <option *ngFor="let data of ctrType" value="{{data.desc}}">{{data.desc}}</option>
           </select>
@@ -19,13 +19,13 @@
       </div>
       <div class="col-sm-6">
         <div class="form-group">
-          <label>PIC</label>
+          <label>PIC</label><font color="red">*</font>
           <input type="text" class="form-control" name="description" placeholder="PIC" [(ngModel)]="formData.pic">
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group">
-          <label>Due Date</label>
+          <label>Due Date</label><font color="red">*</font>
           <input type="text" class="form-control" name="description" placeholder="Due Date" [(ngModel)]="formData.dueDate">
         </div>
       </div>

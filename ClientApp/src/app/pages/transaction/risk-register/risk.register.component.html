@@ -49,8 +49,7 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" placeholder="Please Select">Company&nbsp;KPI
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label" placeholder="Please Select">Company&nbsp;KPI<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="nb-list" (click)="showModal()"></nb-action>
@@ -66,8 +65,7 @@
 
 
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" placeholder="Please Select">Department&nbsp;KPI
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label" placeholder="Please Select">Department&nbsp;KPI<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="nb-list" (click)="showDept()"></nb-action>
@@ -82,8 +80,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" placeholder="Please Input">Business&nbsp;Process
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label" placeholder="Please Input">Business&nbsp;Process<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Critical Activities">?</nb-action>
@@ -100,8 +97,7 @@
         this.dataInput.riskDescription.caused == '' ||
         this.dataInput.riskDescription.riskLevel == '')?'danger':''">
           <div class="form-group row mt-3">
-            <label class="col-sm-1 col-form-label" placeholder="Please Input">Loss&nbsp;Event
-              <font color="red">*</font>
+            <label class="col-sm-1 col-form-label" placeholder="Please Input">Loss&nbsp;Event<font color="red">*</font>
 
             </label>
             <nb-actions size="small">
@@ -113,8 +109,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-1 col-form-label" placeholder="Please Input">Caused
-              <font color="red">*</font>
+            <label class="col-sm-1 col-form-label" placeholder="Please Input">Caused<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Sesuatu yang dapat menyebabkan resiko terjadi">?</nb-action>
@@ -135,8 +130,7 @@
             </nb-card>
           </ng-template>
           <div class="form-group row ">
-            <label class="col-sm-1 col-form-label">Risk&nbsp;Impact
-              <font color="red">*</font>
+            <label class="col-sm-1 col-form-label">Risk&nbsp;Impact<font color="red">*</font>
             </label>
             <div class="col-lg-1">
               <nb-actions size="small">
@@ -164,8 +158,7 @@
             </nb-card>
           </ng-template>
           <div class="form-group row">
-            <label class="col-sm-1 col-form-label">Risk&nbsp;Level
-              <font color="red">*</font>
+            <label class="col-sm-1 col-form-label">Risk&nbsp;Level<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" [nbPopover]="cardRiskLevel">?</nb-action>
@@ -239,6 +232,7 @@
                   <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.inherentRisk.financialImpact.amount"
                     (keyup)="findFinancialImpactRisk()">
                 </div>
+                <label class="col-sm-2 col-form-label">Input In Million IDR</label>
               </div>
              
                 <div class="form-group row">
@@ -293,8 +287,7 @@
             </div>
           </div>
           <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Likelihood
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Penilaian yang menggambarkan probability kemungkinan / frekuensi terjadinya risk sebelum adanya control">?</nb-action>
@@ -332,8 +325,7 @@
             this.dataInput.currentAction.Corrective ==
             0  )?'danger':''">
           <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Controls
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Controls<font color="red">*</font>
             </label>
             <div class="col-lg-2">
               <button class="btn btn-hero-primary with-margins" (click)="showCtr()">Add New</button>
@@ -357,8 +349,7 @@
               </nb-card>
             </ng-template>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Operation
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Operation<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" [nbPopover]="cardOperation">?</nb-action>
@@ -493,6 +484,7 @@
                     currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.residualRisk.financialImpact.amount"
                     (keyup)="findFinancialImpactRiskRd()">
                 </div>
+                <label class="col-sm-2 col-form-label">Input In Million IDR</label>
               </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Operational&nbsp;Category</label>
@@ -547,8 +539,7 @@
             </div>
           </div>
           <div class="form-group row ">
-            <label class="col-sm-2 col-form-label">Likelihood
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
             </label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Penilaian yang menggambarkan frekuensi terjadinya resiko setelah adanya control">?</nb-action>
@@ -581,8 +572,7 @@
               [disabled]="dataInput.expectedRisk.disabled||dataInput.expectedRisk.treatmentPlanArr.length!=0">Do&nbsp;you&nbsp;have&nbsp;any&nbsp;treatment&nbsp;plan?</nb-checkbox>
           </div>
           <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Treatment&nbsp;Plan
-              <font color="red">*</font>
+            <label class="col-sm-2 col-form-label">Treatment&nbsp;Plan<font color="red">*</font>
             </label>
             <div class="col-lg-2">
               <button class="btn btn-hero-primary with-margins" [disabled]="dataInput.expectedRisk.treatmentPlanSwitch" (click)="showTrt()">Add New</button>
