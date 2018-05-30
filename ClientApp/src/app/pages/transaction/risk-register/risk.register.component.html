@@ -147,7 +147,7 @@
               <textarea rows="3" type="text" class="form-control" readonly="true">{{loopRiskImpact()}}</textarea>
             </div>-->
             <div class="col-sm-10">
-              <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="dataInput.riskDescription.riskImpact" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>
+              <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="dataInput.riskDescription.riskImpact" (ngModelChange)="onChange()"></ss-multiselect-dropdown>
             </div>
           </div>
           <ng-template #cardRiskLevel>
