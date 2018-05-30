@@ -190,8 +190,19 @@ export class AccidentInputComponent {
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
-          vCounter = vCounter + 1;
-          data[ind].vCounterNo = vCounter;
+          let vLastIndex = 0;
+          for (let vdata in data) {
+            if (
+              data[vdata].yearActive == element.yearActive &&
+              data[vdata].division == element.division &&
+              data[vdata].department == element.department
+            ) {
+              vLastIndex <= data[vdata].vCounterNo
+                ? (vLastIndex = data[vdata].vCounterNo)
+                : null;
+            }
+          }
+          data[ind].vCounterNo = vLastIndex + 1;
           data[ind].datemask = moment(data.dateAccident).format("DD/MM/YYYY");
         });
 
@@ -206,15 +217,12 @@ export class AccidentInputComponent {
             });
             console.log(arr);
             this.divisionData = arr;
-            this.division = this.divisionData[0].charId;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
-                this.departmentFilter = this.departmentData.filter(item => {
-                  return item.kodeDivisi == this.division;
-                });
-                this.refreshReload();
+                this.division != null ? null : (this.division = arr[0].charId);
+                this.filterDepartment();
               }
               // error => {
               //   console.log(error);
@@ -311,7 +319,7 @@ export class AccidentInputComponent {
           let data = response;
           data.datemask = moment(data.dateAccident).format("DD/MM/YYYY");
           this.tabledata.push(data);
-          this.refreshReload();
+          this.reload();
           this.submit();
         }
       },
@@ -333,7 +341,6 @@ export class AccidentInputComponent {
   }
 
   reload() {
-    this.filterDepartment();
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -556,6 +563,7 @@ export class AccidentInputComponent {
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
+      this.reload();
     } else {
       console.log(arr);
       this.departmentFilter = [];
