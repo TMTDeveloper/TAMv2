@@ -72,36 +72,7 @@ export class ChartComponent implements OnInit {
       }
     });
     this.subscription = this.dataSetChanged$.subscribe(dataSet => {
-      console.log(this.data);
-      this.chart.data(null);
-      this.chart.data(this.data);
-      let namesList = ["Low", "Medium", "High", "Extreme"];
-      this.chart
-        .labels()
-        .useHtml(true)
-        .enabled(true)
-        .minFontSize(10000)
-        .format(function() {
-          if (
-            this.getData("irdata") != null ||
-            this.getData("rddata") != null
-          ) {
-            let IR =
-              this.getData("irdata") != null ? this.getData("irdata") : "";
-            let RD =
-              this.getData("rddata") != null ? this.getData("rddata") : "";
-            return (
-              "<span style='color:yellow; font-size:20px;'>" +
-              IR +
-              "</span>" +
-              "<br/>" +
-              "<span style='color:blue; font-size:20px;'>" +
-              RD +
-              "</span>"
-            );
-          }
-        });
-      this.svg.emit(this.chart.toSvg(600, 850));
+
     });
   }
 
@@ -134,6 +105,76 @@ export class ChartComponent implements OnInit {
     this.chart.minHeight(600);
     this.chart.autoRedraw(true);
   }
+
+  changeGraph(data){
+    if (this.heatData[0] != null) {
+
+    let namesList = ["Low", "Medium", "High", "Extreme"];
+    this.chart
+      .labels()
+      .useHtml(true)
+      .enabled(true)
+      .minFontSize(10000)
+      .format(function() {
+        if (
+          this.getData("irdata") != null ||
+          this.getData("rddata") != null
+        ) {
+          let IR =
+            this.getData("irdata") != null ? this.getData("irdata") : "";
+          let RD =
+            this.getData("rddata") != null ? this.getData("rddata") : "";
+          return (
+            "<span style='color:yellow; font-size:20px;'>" +
+            IR +
+            "</span>" +
+            "<br/>" +
+            "<span style='color:blue; font-size:20px;'>" +
+            RD +
+            "</span>"
+          );
+        }
+      });
+      console.log(this.data);
+      this.chart.data(null);
+      this.chart.data(data);
+    this.svg.emit(this.chart.toSvg(600, 850));
+     } else{
+      console.log(this.data);
+  
+      let namesList = ["Low", "Medium", "High", "Extreme"];
+      this.chart
+        .labels()
+        .useHtml(true)
+        .enabled(true)
+        .minFontSize(10000)
+        .format(function() {
+          if (
+            this.getData("irdata") != null ||
+            this.getData("rddata") != null
+          ) {
+            let IR =
+              this.getData("irdata") != null ? this.getData("irdata") : "";
+            let RD =
+              this.getData("rddata") != null ? this.getData("rddata") : "";
+            return (
+              "<span style='color:yellow; font-size:20px;'>" +
+              IR +
+              "</span>" +
+              "<br/>" +
+              "<span style='color:blue; font-size:20px;'>" +
+              RD +
+              "</span>"
+            );
+          }
+        });
+        this.chart.data(null);
+        this.chart.data(data);
+      this.svg.emit(this.chart.toSvg(600, 850));
+     }
+
+  }
+
 
   // enable HTML for labels
   // chart.labels().useHtml(true);
@@ -200,21 +241,61 @@ export class ChartComponent implements OnInit {
   }
 
   heatMapProcess() {
+    let data = [
+      { x: "Rare", y: "Insignificant", heat: 0, fill: "#4bf442", id: 1 },
+      { x: "Rare", y: "Minor", heat: 0, fill: "#4bf442", id: 2 },
+      { x: "Rare", y: "Moderate", heat: 1, fill: "#90caf9", id: 3 },
+      { x: "Rare", y: "Major", heat: 1, fill: "#90caf9", id: 4 },
+      { x: "Rare", y: "Catasthropic", heat: 2, fill: "#ffb74d", id: 5 },
+      { x: "Unlikely", y: "Insignificant", heat: 0, fill: "#4bf442", id: 6 },
+      { x: "Unlikely", y: "Minor", heat: 0, fill: "#4bf442", id: 7 },
+      { x: "Unlikely", y: "Moderate", heat: 1, fill: "#90caf9", id: 8 },
+      { x: "Unlikely", y: "Major", heat: 2, fill: "#ffb74d", id: 9 },
+      { x: "Unlikely", y: "Catasthropic", heat: 2, fill: "#ffb74d", id: 10 },
+      { x: "Possible", y: "Insignificant", heat: 0, fill: "#4bf442", id: 11 },
+      { x: "Possible", y: "Minor", heat: 1, fill: "#90caf9", id: 12 },
+      { x: "Possible", y: "Moderate", heat: 2, fill: "#ffb74d", id: 13 },
+      { x: "Possible", y: "Major", heat: 2, fill: "#ffb74d", id: 14 },
+      { x: "Possible", y: "Catasthropic", heat: 2, fill: "#ffb74d", id: 15 },
+      { x: "Likely", y: "Insignificant", heat: 1, fill: "#90caf9", id: 16 },
+      { x: "Likely", y: "Minor", heat: 1, fill: "#90caf9", id: 17 },
+      { x: "Likely", y: "Moderate", heat: 2, fill: "#ffb74d", id: 18 },
+      { x: "Likely", y: "Major", heat: 3, fill: "#d84315", id: 19 },
+      { x: "Likely", y: "Catasthropic", heat: 3, fill: "#d84315", id: 20 },
+      {
+        x: "Almost Certain",
+        y: "Insignificant",
+        heat: 2,
+        fill: "#90caf9",
+        id: 21
+      },
+      { x: "Almost Certain", y: "Minor", heat: 2, fill: "#ffb74d", id: 22 },
+      { x: "Almost Certain", y: "Moderate", heat: 2, fill: "#ffb74d", id: 23 },
+      { x: "Almost Certain", y: "Major", heat: 3, fill: "#d84315", id: 24 },
+      {
+        x: "Almost Certain",
+        y: "Catasthropic",
+        heat: 3,
+        fill: "#d84315",
+        id: 25
+      }
+    ];
     this.heatData.forEach((element, ind) => {
-      let irId = this.data.filter(item => {
+      let irId = data.filter(item => {
         return item.x == element.irLikelihood && item.y == element.irImpact;
       });
       if (irId[0] != null) {
-        this.findAndReplaceIr(this.data, irId[0].id, element.no);
+        this.findAndReplaceIr(data, irId[0].id, element.no);
       }
-      let rdId = this.data.filter(item => {
+      let rdId = data.filter(item => {
         return item.x == element.rdLikelihood && item.y == element.rdImpact;
       });
       if (rdId[0] != null) {
-        this.findAndReplaceRd(this.data, rdId[0].id, element.no);
-        console.log(this.data);
+        this.findAndReplaceRd(data, rdId[0].id, element.no);
+     
       }
     });
+    this.changeGraph(data)
   }
   changebbl() {
     console.log(this.data);

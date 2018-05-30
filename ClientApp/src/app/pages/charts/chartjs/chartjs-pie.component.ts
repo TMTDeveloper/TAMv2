@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild, Input } from "@angular/core";
 import { NbThemeService } from "@nebular/theme";
 import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
@@ -12,7 +12,14 @@ export class ChartjsPieComponent implements OnDestroy {
   data: any;
   options: any;
   themeSubscription: any;
+  @ViewChild("chartContainer") container;
+  private heatData: any = [];
 
+  @Input()
+  set dataset(value: any) {
+    console.log(value);
+    this.loadData(value);
+  }
   tabledata: any[] = [
     {
       ctrEff: 0,
@@ -22,68 +29,28 @@ export class ChartjsPieComponent implements OnDestroy {
     }
   ];
 
-  chartdata: any = [
-    {
-      ctrEff: 5,
-      ctrMod: 2,
-      ctrIff: 1,
-      ctrWeak: 0
-    }
-  ];
+  chartdata: any;
+  constructor(private theme: NbThemeService, public service: BackendService) {}
 
-  constructor(private theme: NbThemeService, public service: BackendService) {
-    this.loadData();
-    /* this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
-      const colors: any = config.variables;
-      const chartjs: any = config.variables.chartjs;
-
-      console.log("tes");
-
-
-      this.data = {
-        labels: ['Effective', 'Moderate', 'Ineffective','Weak'],
-        datasets: [{
-          data: [this.chartdata[0].ctrEff, this.chartdata.ctrMod, this.chartdata.ctrIff,this.chartdata.ctrWeak],
-          backgroundColor: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight],
-        }],
-      };
-
-      this.options = {
-        maintainAspectRatio: false,
-        responsive: true,
-        scales: {
-          xAxes: [
-            {
-              display: false,
-            },
-          ],
-          yAxes: [
-            {
-              display: false,
-            },
-          ],
-        },
-        legend: {
-          labels: {
-            fontColor: chartjs.textColor,
-          },
-        },
-      };
-    });*/
-  }
-
-  loadData() {
+  loadData(data) {
     this.service.getreq("ControlEffectivenesses").subscribe(response => {
       if (response != null) {
-        const data = response;
-        //console.log(JSON.stringify(response));
-        data.forEach((element, ind) => {
-          data[ind].status = "0";
-          this.tabledata = data;
+        let arr = response.filter(item => {
+          return (
+            item.division == data.division && item.department == data.department
+          );
         });
-        this.reload();
-        // console.log(this.chartdata[0]);
+
+        arr[0] != null
+          ? (this.chartdata= arr[0])
+          : (this.chartdata = 
+              {
+                ctrEff: 0,
+                ctrMod: 0,
+                ctrIff: 0,
+                ctrWeak: 0
+              }
+            );
 
         this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
           const colors: any = config.variables;
@@ -114,17 +81,17 @@ export class ChartjsPieComponent implements OnDestroy {
           this.options = {
             plugins: {
               datalabels: {
-                anchor: 'center',
-                align: 'center',
+                anchor: "center",
+                align: "center",
                 formatter: Math.round,
                 font: {
-                  weight: 'bold'
+                  weight: "bold"
                 },
                 color: function(context) {
                   var index = context.dataIndex;
                   var value = context.dataset.data[index];
-                  return value < 1 ? 'transparent' : chartjs.textColor
-              }
+                  return value < 1 ? "transparent" : chartjs.textColor;
+                }
               }
             },
             legend: {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild, Input } from "@angular/core";
 import { NbThemeService, NbColorHelper } from "@nebular/theme";
 import { BackendService } from "../../../@core/data/backend.service";
 
@@ -21,91 +21,39 @@ export class ControlMappingComponent implements OnDestroy {
     }
   ];
 
-  chartdata: any = [
-    {
-      preventive: 0,
-      detective: 0,
-      corrective: 0
-    }
-  ];
+  chartdata: any = {
+    preventive: 0,
+    detective: 0,
+    corrective: 0
+  };
 
-  constructor(private theme: NbThemeService, public service: BackendService) {
-    this.loadData();
+  @ViewChild("chartContainer") container;
+  private heatData: any = [];
 
-    /*this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
-      const colors: any = config.variables;
-      const chartjs: any = config.variables.chartjs;
-
-      this.data = {
-        labels: ['Inherent', 'Residual', 'Expected'],
-        datasets: [{
-          data: [this.chartdata.irRiskExtreme,this.chartdata.rdRiskExtreme,this.chartdata.exRiskExtreme],
-          label: 'Extreme',
-          backgroundColor: NbColorHelper.hexToRgbA(colors.primaryLight, 0.8),
-        }, {
-          data: [this.chartdata.irRiskHigh,this.chartdata.rdRiskHigh,this.chartdata.exRiskHigh],
-          label: 'High',
-          backgroundColor: NbColorHelper.hexToRgbA(colors.infoLight, 0.8),
-        },
-        {
-          data: [this.chartdata.irRiskMedium,this.chartdata.rdRiskMedium,this.chartdata.exRiskMedium],
-          label: 'Medium',
-          backgroundColor: NbColorHelper.hexToRgbA(colors.warningLight, 0.8),
-        },
-        {
-          data: [this.chartdata.irRiskLow,this.chartdata.rdRiskLow,this.chartdata.exRiskLow],
-          label: 'Low',
-          backgroundColor: NbColorHelper.hexToRgbA(colors.dangerLight, 0.8),
-        }],
-      };
-
-      this.options = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-          labels: {
-            fontColor: chartjs.textColor,
-          },
-        },
-        scales: {
-          xAxes: [
-            {
-              gridLines: {
-                display: false,
-                color: chartjs.axisLineColor,
-              },
-              ticks: {
-                fontColor: chartjs.textColor,
-              },
-            },
-          ],
-          yAxes: [
-            {
-              gridLines: {
-                display: true,
-                color: chartjs.axisLineColor,
-              },
-              ticks: {
-                fontColor: chartjs.textColor,
-              },
-            },
-          ],
-        },
-      };
-    });*/
+  @Input()
+  set dataset(value: any) {
+    console.log(value);
+    this.loadData(value);
   }
+  constructor(private theme: NbThemeService, public service: BackendService) {}
 
-  loadData() {
+  loadData(data) {
     this.service.getreq("ControlMappings").subscribe(response => {
       if (response != null) {
-        const data = response;
-        //console.log(JSON.stringify(response));
-        data.forEach((element, ind) => {
-          data[ind].status = "0";
-          this.tabledata = data;
+        let arr = response.filter(item => {
+          return (
+            item.division == data.division && item.department == data.department
+          );
         });
-        this.reload();
+
+        arr[0] != null
+          ? (this.chartdata = arr[0])
+          : (this.chartdata = {
+              preventive: 0,
+              detective: 0,
+              corrective: 0
+            });
+
         this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
           const colors: any = config.variables;
           const chartjs: any = config.variables.chartjs;
@@ -142,21 +90,21 @@ export class ControlMappingComponent implements OnDestroy {
           this.options = {
             plugins: {
               datalabels: {
-                anchor: 'end',
-                align: 'bottom',
+                anchor: "end",
+                align: "bottom",
                 formatter: Math.round,
                 font: {
-                  weight: 'bold'
+                  weight: "bold"
                 },
                 color: function(context) {
                   var index = context.dataIndex;
                   var value = context.dataset.data[index];
-                  return value < 1 ? 'transparent' : chartjs.textColor
-              }
+                  return value < 1 ? "transparent" : chartjs.textColor;
+                }
               }
             },
-            tooltips:{
-              enabled:true
+            tooltips: {
+              enabled: true
             },
             title: {
               display: true,

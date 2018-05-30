@@ -232,18 +232,12 @@ export class ChartjsComponent {
       desc: ""
     }
   };
-  division: any[] = [
-    {
-      data: "ISTD",
-      desc: "Information system and technical division"
-    }
-  ];
-  department: any[] = [
-    {
-      data: "IS",
-      desc: "Information system"
-    }
-  ];
+  division: any;
+  department: any;
+  chartDivDept: any = {
+    division: "",
+    department: ""
+  };
   divisionData: any[] = [];
   departmentData: any[] = [];
   departmentFilter: any[] = [];
@@ -342,8 +336,6 @@ export class ChartjsComponent {
     public service: BackendService
   ) {
     this.loadData();
-    this.dataInput.department = this.department[0];
-    this.dataInput.division = this.division[0];
   }
 
   loadApprove() {
@@ -376,6 +368,10 @@ export class ChartjsComponent {
   }
 
   reload() {
+    this.chartDivDept = {
+      division: this.division,
+      department: this.department
+    };
     this.tabledata = this.fullData.filter(item => {
       return (
         item.division == this.division && item.department == this.department
@@ -579,8 +575,9 @@ export class ChartjsComponent {
       var width = canvas.width;
       var height = canvas.height;
       var imgData = canvas.toDataURL("image/png");
+     let orientation= element.id == "print_tab1" ? "portrait":"landscape"
       var doc = new jsPDF({
-        orientation: "landscape",
+        orientation: orientation,
         unit: "mm",
         format: [Math.floor(width * 0.264583), Math.floor(height * 0.264583)]
       });
