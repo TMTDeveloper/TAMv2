@@ -325,7 +325,7 @@
             this.dataInput.currentAction.Corrective ==
             0  )?'danger':''">
           <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">Controls<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">List of Controls<font color="red">*</font>
             </label>
             <div class="col-lg-2">
               <button class="btn btn-hero-primary with-margins" (click)="showCtr()">Add New</button>
@@ -440,6 +440,7 @@
             this.dataInput.inherentRisk.financialImpact.amount ||
           this.dataInput.residualRisk.operationalImpact.loss >
             this.dataInput.inherentRisk.operationalImpact.loss ||
+            (this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
           this.dataInput.residualRisk.overallImpact.description == '' ||
           this.dataInput.residualRisk.likelihood == '' ||
           this.dataInput.residualRisk.overallRisk.description == '' )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&( this.dataInput.residualRisk.financialImpact.amount >
@@ -447,6 +448,7 @@
         this.dataInput.residualRisk.operationalImpact.loss >
           this.dataInput.inherentRisk.operationalImpact.loss ||
         this.dataInput.residualRisk.overallImpact.description == '' ||
+        (this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
         this.dataInput.residualRisk.likelihood == '' ||
         this.dataInput.residualRisk.overallRisk.description == '' )?'danger':''">
           <div class="form-group row mt-3">
@@ -563,8 +565,10 @@
           </div>
         </nb-tab>
         <nb-tab tabTitle="Expected Risk" [badgeText]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
+        (this.dataInput.expectedRisk.risk.score>this.dataInput.residualRisk.overallRisk.score)||
         this.dataInput.expectedRisk.impact == '' ||
         this.dataInput.expectedRisk.likelihood == '')? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
+        (this.dataInput.expectedRisk.risk.score>this.dataInput.residualRisk.overallRisk.score)||
         this.dataInput.expectedRisk.impact == '' ||
         this.dataInput.expectedRisk.likelihood == '')?'danger':''">
           <div class="form-group row">
@@ -625,12 +629,12 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
+            <label  class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input type="text" [ngClass]="(dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.risk.description==''&&dataInput.activateValidation)||(dataInput.expectedRisk.risk.score>dataInput.residualRisk.overallRisk.score)?'form-control form-control-danger':'form-control'"
+              <input style="background-color:gainsboro;" type="text" [ngClass]="(dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.risk.description==''&&dataInput.activateValidation)||(dataInput.expectedRisk.risk.score>dataInput.residualRisk.overallRisk.score)?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.expectedRisk.risk.description" readonly="true" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
             </div>
           </div>

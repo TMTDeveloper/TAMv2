@@ -24,7 +24,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: "/pages/transaction/dept-input"
       },
       {
-        title: "Accident Input",
+        title: "Input Loss Event Database",
         link: "/pages/transaction/accident-input"
       }
     ]

@@ -30,7 +30,7 @@ export class RiskRegisterAcdComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       vCounterNo: {
