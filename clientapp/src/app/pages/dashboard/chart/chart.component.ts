@@ -322,11 +322,11 @@ export class ChartComponent implements OnInit {
         y: "Insignificant",
         heat: 2,
         fill: "#90caf9",
-        id: 22
+        id: 21
       },
-      { x: "Almost Certain", y: "Minor", heat: 2, fill: "#ffb74d", id: 23 },
-      { x: "Almost Certain", y: "Moderate", heat: 2, fill: "#ffb74d", id: 24 },
-      { x: "Almost Certain", y: "Major", heat: 3, fill: "#d84315" },
+      { x: "Almost Certain", y: "Minor", heat: 2, fill: "#ffb74d", id: 22 },
+      { x: "Almost Certain", y: "Moderate", heat: 2, fill: "#ffb74d", id: 23 },
+      { x: "Almost Certain", y: "Major", heat: 3, fill: "#d84315", id: 24 },
       {
         x: "Almost Certain",
         y: "Catasthropic",
