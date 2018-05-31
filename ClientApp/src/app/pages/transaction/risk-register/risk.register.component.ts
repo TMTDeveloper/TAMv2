@@ -1577,6 +1577,7 @@ export class RiskRegisterComponent {
       console.log("masuksini");
 
       const lastIndex = this.generateCounter();
+      this.dataInput.counterNo = lastIndex + 1;
       let riskNo = this.riskNoGenerate(lastIndex + 1);
       this.dataInput.riskNo = riskNo;
       this.dataInput.draftDisabled = true;
@@ -2066,8 +2067,10 @@ export class RiskRegisterComponent {
         this.dataInput.inherentRisk.operationalImpact.loss ||
       this.dataInput.residualRisk.overallImpact.description == "" ||
       this.dataInput.residualRisk.likelihood == "" ||
-      (this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
-      (this.dataInput.expectedRisk.risk.score>this.dataInput.residualRisk.overallRisk.score)||
+      this.dataInput.residualRisk.overallRisk.score >
+        this.dataInput.inherentRisk.overallRisk.score ||
+      this.dataInput.expectedRisk.risk.score >
+        this.dataInput.residualRisk.overallRisk.score ||
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
       this.dataInput.expectedRisk.impact == "" ||
