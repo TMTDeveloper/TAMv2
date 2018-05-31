@@ -386,6 +386,10 @@ export class ChartjsComponent {
       this.moderatedata = [];
       this.ineffectivedata = [];
       this.weakdata = [];
+      this.riskArr.forEach(item => {
+        item.riskNo = "";
+        item.lossEvent = "";
+      });
     }
   }
 

@@ -248,6 +248,7 @@ namespace tam_risk_project.Models
             {
 
                 entity.ToTable("RISKREPORT");
+                entity.HasKey(e => new { e.RiskNo, e.YearActive });
                 entity.Property(e => e.YearActive).HasColumnName("YEAR_ACTIVE");
                 entity.Property(e => e.No).HasColumnName("NO");
                 entity.Property(e => e.RiskNo).HasColumnName("RISK_NO");
