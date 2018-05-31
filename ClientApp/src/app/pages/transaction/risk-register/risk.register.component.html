@@ -312,7 +312,10 @@
               <nb-action icon="ion-help" nbPopover="Penilaian Overall Inherent Risk atau natural risk akan otomatis muncul berdasarkan nilai dari impact dan likelihood">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="dataInput.inherentRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
+              <input [ngStyle]="{'background-color': dataInput.inherentRisk.overallRisk.description=='Extreme'?'red':
+              dataInput.inherentRisk.overallRisk.description=='High'?'#FF69B4':
+              dataInput.inherentRisk.overallRisk.description=='Medium'?'yellow':
+              dataInput.inherentRisk.overallRisk.description=='low'?'#87CEFA': 'gainsboro'}" type="text" [ngClass]="dataInput.inherentRisk.overallRisk.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.inherentRisk.overallRisk.description">
             </div>
           </div>
@@ -332,7 +335,8 @@
             this.dataInput.currentAction.Corrective ==
             0  )?'danger':''">
           <div class="form-group row mt-3">
-            <label class="col-sm-2 col-form-label">List of Controls<font color="red">*</font>
+            <label class="col-sm-2 col-form-label">List of Controls
+              <font color="red">*</font>
             </label>
             <div class="col-lg-2">
               <button class="btn btn-hero-primary with-margins" (click)="showCtr()">Add New</button>
@@ -570,7 +574,10 @@
               <nb-action icon="ion-help" nbPopover="Penilaian resiko setelah adanya control yang dilakukan">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="(dataInput.residualRisk.overallRisk.description==''&&dataInput.activateValidation)||(dataInput.residualRisk.overallRisk.score>dataInput.inherentRisk.overallRisk.score)?'form-control form-control-danger':'form-control'"
+              <input [ngStyle]="{'background-color': dataInput.residualRisk.overallRisk.description=='Extreme'?'red':
+              dataInput.residualRisk.overallRisk.description=='High'?'#FF69B4':
+              dataInput.residualRisk.overallRisk.description=='Medium'?'yellow':
+              dataInput.residualRisk.overallRisk.description=='low'?'#87CEFA': 'gainsboro'}" type="text" [ngClass]="(dataInput.residualRisk.overallRisk.description==''&&dataInput.activateValidation)||(dataInput.residualRisk.overallRisk.score>dataInput.inherentRisk.overallRisk.score)?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.residualRisk.overallRisk.description">
             </div>
           </div>
@@ -597,7 +604,8 @@
                 <span class="custom-control-description">Yes</span>
               </label>
               <label class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" [value]="false" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"checked>
+                <input type="radio" class="custom-control-input" [value]="false" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"
+                  checked>
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">No</span>
               </label>
@@ -659,12 +667,15 @@
             </div>
           </div>
           <div class="form-group row">
-            <label  class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
+            <label class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopover="Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <input style="background-color:gainsboro;" type="text" [ngClass]="(dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.risk.description==''&&dataInput.activateValidation)||(dataInput.expectedRisk.risk.score>dataInput.residualRisk.overallRisk.score)?'form-control form-control-danger':'form-control'"
+              <input [ngStyle]="{'background-color': dataInput.expectedRisk.risk.description=='Extreme'?'red':
+              dataInput.expectedRisk.risk.description=='High'?'#FF69B4':
+              dataInput.expectedRisk.risk.description=='Medium'?'yellow':
+              dataInput.expectedRisk.risk.description=='low'?'#87CEFA': 'gainsboro'}" type="text" [ngClass]="(dataInput.expectedRisk.treatmentPlanSwitch?'form-control':dataInput.expectedRisk.risk.description==''&&dataInput.activateValidation)||(dataInput.expectedRisk.risk.score>dataInput.residualRisk.overallRisk.score)?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.expectedRisk.risk.description" readonly="true" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
             </div>
           </div>

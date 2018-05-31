@@ -2223,4 +2223,6 @@ export class RiskRegisterComponent {
   seedepart() {
     console.log(this.dataInput.divisionDepartment);
   }
+
+
 }
