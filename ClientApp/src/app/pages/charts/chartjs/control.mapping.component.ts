@@ -66,23 +66,17 @@ export class ControlMappingComponent implements OnDestroy {
               {
                 data: [this.chartdata.preventive],
                 label: "Prevent",
-                backgroundColor: NbColorHelper.hexToRgbA(
-                  colors.primaryLight,
-                  0.8
-                )
+                backgroundColor: "#d84315"
               },
               {
                 data: [this.chartdata.detective],
                 label: "Detect",
-                backgroundColor: NbColorHelper.hexToRgbA(colors.infoLight, 0.8)
+                backgroundColor: "#ffb74d"
               },
               {
                 data: [this.chartdata.corrective],
                 label: "Correct",
-                backgroundColor: NbColorHelper.hexToRgbA(
-                  colors.warningLight,
-                  0.8
-                )
+                backgroundColor: "#90caf9"
               }
             ]
           };
@@ -113,6 +107,7 @@ export class ControlMappingComponent implements OnDestroy {
             maintainAspectRatio: false,
             responsive: true,
             legend: {
+              position: "bottom",
               labels: {
                 fontColor: chartjs.textColor
               }

@@ -42,15 +42,13 @@ export class ChartjsPieComponent implements OnDestroy {
         });
 
         arr[0] != null
-          ? (this.chartdata= arr[0])
-          : (this.chartdata = 
-              {
-                ctrEff: 0,
-                ctrMod: 0,
-                ctrIff: 0,
-                ctrWeak: 0
-              }
-            );
+          ? (this.chartdata = arr[0])
+          : (this.chartdata = {
+              ctrEff: 0,
+              ctrMod: 0,
+              ctrIff: 0,
+              ctrWeak: 0
+            });
 
         this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
           const colors: any = config.variables;
@@ -67,12 +65,8 @@ export class ChartjsPieComponent implements OnDestroy {
                   this.chartdata.ctrIff,
                   this.chartdata.ctrWeak
                 ],
-                backgroundColor: [
-                  colors.primaryLight,
-                  colors.infoLight,
-                  colors.successLight,
-                  colors.warningLight
-                ]
+
+                backgroundColor: ["#d84315", "#ffb74d", "#90caf9", "#4bf442"]
               }
             ],
             labels: ["Effective", "Moderate", "Ineffective", "Weak"]
@@ -95,7 +89,7 @@ export class ChartjsPieComponent implements OnDestroy {
               }
             },
             legend: {
-              position: "top",
+              position: "bottom",
               display: true,
               labels: {
                 fontColor: chartjs.textColor

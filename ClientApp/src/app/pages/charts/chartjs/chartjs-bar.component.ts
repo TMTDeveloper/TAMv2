@@ -125,7 +125,7 @@ export class ChartjsBarComponent implements OnDestroy {
                 this.chartdata.exRiskExtreme
               ],
               label: "Extreme",
-              backgroundColor: NbColorHelper.hexToRgbA(colors.primaryLight, 0.8)
+              backgroundColor: "#d84315"
             },
             {
               data: [
@@ -134,7 +134,7 @@ export class ChartjsBarComponent implements OnDestroy {
                 this.chartdata.exRiskHigh
               ],
               label: "High",
-              backgroundColor: NbColorHelper.hexToRgbA(colors.infoLight, 0.8)
+              backgroundColor: "#ffb74d"
             },
             {
               data: [
@@ -143,7 +143,7 @@ export class ChartjsBarComponent implements OnDestroy {
                 this.chartdata.exRiskMedium
               ],
               label: "Medium",
-              backgroundColor: NbColorHelper.hexToRgbA(colors.warningLight, 0.8)
+              backgroundColor: "#90caf9"
             },
             {
               data: [
@@ -152,7 +152,7 @@ export class ChartjsBarComponent implements OnDestroy {
                 this.chartdata.exRiskLow
               ],
               label: "Low",
-              backgroundColor: NbColorHelper.hexToRgbA(colors.dangerLight, 0.8)
+              backgroundColor: "#4bf442"
             }
           ]
         };
@@ -183,6 +183,7 @@ export class ChartjsBarComponent implements OnDestroy {
           maintainAspectRatio: false,
           responsive: true,
           legend: {
+            position: "bottom",
             labels: {
               fontColor: chartjs.textColor
             }
