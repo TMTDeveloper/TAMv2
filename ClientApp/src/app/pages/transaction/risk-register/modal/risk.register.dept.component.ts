@@ -9,7 +9,6 @@ import { BackendService } from "../../../../@core/data/backend.service";
   templateUrl: "./risk.register.dept.component.html"
 })
 export class RiskRegisterDeptComponent {
-
   selectedData: any;
   settings: any = {
     mode: "inline",
@@ -28,7 +27,7 @@ export class RiskRegisterDeptComponent {
       perPage: 5
     },
     columns: {
-      counterNo: {
+      vCounterNo: {
         title: "No",
         type: "number",
         filter: false,
@@ -44,9 +43,9 @@ export class RiskRegisterDeptComponent {
       }
     }
   };
-  filterData : {
+  filterData: {
     year: string;
-    condition:string;
+    condition: string;
     division: string;
     department: string;
   };
@@ -58,7 +57,7 @@ export class RiskRegisterDeptComponent {
     this.loadData();
   }
   loadData() {
-    console.log(this.filterData)
+    console.log(this.filterData);
     this.service.getreq("TbMDeptInputs").subscribe(response => {
       if (response != null) {
         const data = response;
@@ -74,16 +73,22 @@ export class RiskRegisterDeptComponent {
             );
           }, this.filterData)
         );
-        this.source.load(
-          data.filter(function(item) {
-            return (
-              item.yearActive == this.year &&
-              item.condition == this.condition &&
-              item.division == this.division &&
-              item.departement == this.department
-            );
-          }, this.filterData)
-        );
+        let arr = data.filter(function(item) {
+          return (
+            item.yearActive == this.year &&
+            item.condition == this.condition &&
+            item.division == this.division &&
+            item.departement == this.department
+          );
+        }, this.filterData);
+        let vCounterNo = 0;
+        arr.forEach(element => {
+          element.vCounterNo = vCounterNo + 1;
+          vCounterNo++;
+        });
+        
+
+        this.source.load(arr);
       }
       // error => {
       //   console.log(error);

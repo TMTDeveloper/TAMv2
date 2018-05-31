@@ -123,7 +123,6 @@ export class RiskRegisterAcdComponent {
         this.source.load(
           data.filter(item => {
             return (
-              item.yearActive == this.filterData.year &&
               item.division == this.filterData.division &&
               item.department == this.filterData.department
             );

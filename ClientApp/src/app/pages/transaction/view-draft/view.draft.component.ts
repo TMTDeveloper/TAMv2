@@ -214,8 +214,9 @@ export class ViewDraftComponent {
       userUpdated: "Admin",
       dateUpdated: moment().format(),
       userCreated: event.data.userCreated,
-      dateCreated: event.data.dateCreated
+      dateCreated: moment().format()
     };
+    console.log(savedData);
     this.service.putreq("draftrisks", savedData).subscribe(
       response => {
         console.log(response);

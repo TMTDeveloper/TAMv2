@@ -272,7 +272,7 @@ export class RiskRegisterComponent {
       overallRisk: {
         indicatorId: "",
         description: "",
-        score:0
+        score: 0
       },
       likelihood: "",
       overallImpact: {
@@ -327,7 +327,7 @@ export class RiskRegisterComponent {
       overallRisk: {
         indicatorId: "",
         description: "",
-        score:0
+        score: 0
       },
       likelihood: "",
       overallImpact: {
@@ -400,7 +400,7 @@ export class RiskRegisterComponent {
       risk: {
         indicatorId: "",
         description: "",
-        score:0
+        score: 0
       },
       PIC: "",
       schedule: "",
@@ -894,6 +894,10 @@ export class RiskRegisterComponent {
   }
 
   findOperationalImpactRisk() {
+    if (this.dataInput.inherentRisk.operationalImpact.category == "") {
+      this.dataInput.inherentRisk.operationalImpact.loss = 0;
+      this.dataInput.inherentRisk.operationalImpact.score = 0;
+    }
     let yearPeriode = this.yearPeriode;
     let operationalImpact;
     this.service.getreq("TbMOperationalImpacts").subscribe(response => {
@@ -935,6 +939,8 @@ export class RiskRegisterComponent {
             )[0].score;
             this.findOverallImp();
             console.log(this.dataInput);
+          } else {
+            this.findOverallImp();
           }
         } else {
           console.log("masuksini");
@@ -971,7 +977,11 @@ export class RiskRegisterComponent {
               )[0].score;
               this.findOverallImp();
               console.log(JSON.stringify(this.dataInput));
+            } else {
+              this.findOverallImp();
             }
+          } else {
+            this.findOverallImp();
           }
         }
       }
@@ -979,6 +989,10 @@ export class RiskRegisterComponent {
   }
 
   findFinancialImpactRisk() {
+    if (this.dataInput.inherentRisk.financialImpact.category == "") {
+      this.dataInput.inherentRisk.financialImpact.amount = 0;
+      this.dataInput.inherentRisk.financialImpact.score = 0;
+    }
     let yearPeriode = this.yearPeriode;
     let financialImpact;
     this.service.getreq("TbMFinancialImpacts").subscribe(response => {
@@ -1018,6 +1032,8 @@ export class RiskRegisterComponent {
             )[0].score;
             this.findOverallImp();
             console.log(this.dataInput);
+          } else {
+            this.findOverallImp();
           }
         } else {
           console.log("masuksini");
@@ -1027,6 +1043,7 @@ export class RiskRegisterComponent {
               item.category == this.inherentRisk.financialImpact.category
             );
           }, this.dataInput);
+          console.log(arrImp);
           if (arrImp[0] != null) {
             this.dataInput.inherentRisk.financialImpact.financialObj = this.hasmax(
               arrImp,
@@ -1039,6 +1056,7 @@ export class RiskRegisterComponent {
                   this.inherentRisk.financialImpact.financialObj.riskIndicatorId
               );
             }, this.dataInput);
+            console.log(arrScore);
             if (arrScore[0] != null) {
               this.dataInput.inherentRisk.financialImpact.score = this.riskIndicatorData.filter(
                 function(item) {
@@ -1053,7 +1071,11 @@ export class RiskRegisterComponent {
               )[0].score;
               this.findOverallImp();
               console.log(this.dataInput);
+            } else {
+              this.findOverallImp();
             }
+          } else {
+            this.findOverallImp();
           }
         }
       }
@@ -1061,6 +1083,7 @@ export class RiskRegisterComponent {
   }
 
   findOverallImp() {
+    console.log(this.dataInput.inherentRisk.financialImpact);
     let arr = this.riskIndicatorData.filter(item => {
       return (
         item.yearActive == this.yearPeriode &&
@@ -1130,7 +1153,7 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.inherentRisk.overallRisk.description =
               arrIndicator[0].description;
-              this.dataInput.inherentRisk.overallRisk.score =
+            this.dataInput.inherentRisk.overallRisk.score =
               arrIndicator[0].score;
             this.findOverallControl();
           }
@@ -1142,6 +1165,10 @@ export class RiskRegisterComponent {
   // residualrisk -----------------------
 
   findOperationalImpactRiskRd() {
+    if (this.dataInput.inherentRisk.operationalImpact.category == "") {
+      this.dataInput.residualRisk.operationalImpact.loss = 0;
+      this.dataInput.residualRisk.operationalImpact.score = 0;
+    }
     let yearPeriode = this.yearPeriode;
     let operationalImpact;
     this.service.getreq("TbMOperationalImpacts").subscribe(response => {
@@ -1183,6 +1210,8 @@ export class RiskRegisterComponent {
             )[0].score;
             this.findOverallImpRd();
             console.log(this.dataInput);
+          } else {
+            this.findOverallImpRd();
           }
         } else {
           console.log("masuksini");
@@ -1219,7 +1248,11 @@ export class RiskRegisterComponent {
               )[0].score;
               this.findOverallImpRd();
               console.log(this.dataInput);
+            } else {
+              this.findOverallImpRd();
             }
+          } else {
+            this.findOverallImpRd();
           }
         }
       }
@@ -1227,6 +1260,10 @@ export class RiskRegisterComponent {
   }
 
   findFinancialImpactRiskRd() {
+    if (this.dataInput.inherentRisk.financialImpact.category == "") {
+      this.dataInput.residualRisk.financialImpact.amount = 0;
+      this.dataInput.residualRisk.financialImpact.score = 0;
+    }
     let yearPeriode = this.yearPeriode;
     let financialImpact;
     this.service.getreq("TbMFinancialImpacts").subscribe(response => {
@@ -1266,6 +1303,8 @@ export class RiskRegisterComponent {
             )[0].score;
             this.findOverallImpRd();
             console.log(this.dataInput);
+          } else {
+            this.findOverallImpRd();
           }
         } else {
           console.log("masuksini");
@@ -1301,7 +1340,11 @@ export class RiskRegisterComponent {
               )[0].score;
               this.findOverallImpRd();
               console.log(this.dataInput);
+            } else {
+              this.findOverallImpRd();
             }
+          } else {
+            this.findOverallImpRd();
           }
         }
       }
@@ -1380,7 +1423,7 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.residualRisk.overallRisk.description =
               arrIndicator[0].description;
-              this.dataInput.residualRisk.overallRisk.score =
+            this.dataInput.residualRisk.overallRisk.score =
               arrIndicator[0].score;
             this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
             this.dataInput.residualRisk.likelihood == ""
@@ -1423,6 +1466,11 @@ export class RiskRegisterComponent {
               arrIndicator[0].description;
             this.findAppropriateness();
           }
+        } else {
+          this.dataInput.currentAction.overallControl.indicatorId = "";
+          this.dataInput.currentAction.overallControl.description = "";
+          this.dataInput.currentAction.appropriateness.indicatorId = "";
+          this.dataInput.currentAction.appropriateness.description = "";
         }
       }
     });
@@ -1488,8 +1536,7 @@ export class RiskRegisterComponent {
               arrIndicator[0].indicatorId;
             this.dataInput.expectedRisk.risk.description =
               arrIndicator[0].description;
-              this.dataInput.expectedRisk.risk.score =
-              arrIndicator[0].score;
+            this.dataInput.expectedRisk.risk.score = arrIndicator[0].score;
           }
         }
       }
@@ -1902,6 +1949,7 @@ export class RiskRegisterComponent {
   //   schedule: ""
   // }
   treatmentPlanSwitch() {
+    console.log(this.dataInput.expectedRisk);
     if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
       this.dataInput.expectedRisk.impact = this.dataInput.residualRisk.overallImpact.indicatorId;
       this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood;

@@ -63,17 +63,7 @@ export class ChartComponent implements OnInit {
   dataSetChanged$ = this.dataSetChangeSource.asObservable();
 
   constructor() {
-    anychart.theme({
-      defaultFontSettings: {
-        fontSize: 20,
-        fontWeight: 100,
-        fontColor: "#0000CD",
-        fontFamily: "Courier"
-      }
-    });
-    this.subscription = this.dataSetChanged$.subscribe(dataSet => {
-
-    });
+    this.subscription = this.dataSetChanged$.subscribe(dataSet => {});
   }
 
   @ViewChild("chartContainer") container;
@@ -95,7 +85,7 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
     // Default data set mapping, hardcoded here.
-   
+
     this.chart.xAxis().orientation("bottom");
     this.chart.yAxis().orientation("left");
     this.chart.xScale().inverted(false);
@@ -106,42 +96,8 @@ export class ChartComponent implements OnInit {
     this.chart.autoRedraw(true);
   }
 
-  changeGraph(data){
+  changeGraph(data) {
     if (this.heatData[0] != null) {
-
-    let namesList = ["Low", "Medium", "High", "Extreme"];
-    this.chart
-      .labels()
-      .useHtml(true)
-      .enabled(true)
-      .minFontSize(10000)
-      .format(function() {
-        if (
-          this.getData("irdata") != null ||
-          this.getData("rddata") != null
-        ) {
-          let IR =
-            this.getData("irdata") != null ? this.getData("irdata") : "";
-          let RD =
-            this.getData("rddata") != null ? this.getData("rddata") : "";
-          return (
-            "<span style='color:yellow; font-size:20px;'>" +
-            IR +
-            "</span>" +
-            "<br/>" +
-            "<span style='color:blue; font-size:20px;'>" +
-            RD +
-            "</span>"
-          );
-        }
-      });
-      console.log(this.data);
-      this.chart.data(null);
-      this.chart.data(data);
-    this.svg.emit(this.chart.toSvg(600, 850));
-     } else{
-      console.log(this.data);
-  
       let namesList = ["Low", "Medium", "High", "Extreme"];
       this.chart
         .labels()
@@ -168,13 +124,44 @@ export class ChartComponent implements OnInit {
             );
           }
         });
-        this.chart.data(null);
-        this.chart.data(data);
+      console.log(this.data);
+      this.chart.data(null);
+      this.chart.data(data);
       this.svg.emit(this.chart.toSvg(600, 850));
-     }
+    } else {
+      console.log(this.data);
 
+      let namesList = ["Low", "Medium", "High", "Extreme"];
+      this.chart
+        .labels()
+        .useHtml(true)
+        .enabled(true)
+        .minFontSize(10000)
+        .format(function() {
+          if (
+            this.getData("irdata") != null ||
+            this.getData("rddata") != null
+          ) {
+            let IR =
+              this.getData("irdata") != null ? this.getData("irdata") : "";
+            let RD =
+              this.getData("rddata") != null ? this.getData("rddata") : "";
+            return (
+              "<span style='color:yellow; font-size:20px;'>" +
+              IR +
+              "</span>" +
+              "<br/>" +
+              "<span style='color:blue; font-size:20px;'>" +
+              RD +
+              "</span>"
+            );
+          }
+        });
+      this.chart.data(null);
+      this.chart.data(data);
+      this.svg.emit(this.chart.toSvg(600, 850));
+    }
   }
-
 
   // enable HTML for labels
   // chart.labels().useHtml(true);
@@ -292,10 +279,9 @@ export class ChartComponent implements OnInit {
       });
       if (rdId[0] != null) {
         this.findAndReplaceRd(data, rdId[0].id, element.no);
-     
       }
     });
-    this.changeGraph(data)
+    this.changeGraph(data);
   }
   changebbl() {
     console.log(this.data);
