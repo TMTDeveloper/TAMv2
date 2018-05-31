@@ -372,12 +372,21 @@ export class ChartjsComponent {
       division: this.division,
       department: this.department
     };
+    console.log(this.tabledata);
     this.tabledata = this.fullData.filter(item => {
       return (
         item.division == this.division && item.department == this.department
       );
     });
-    this.processData(this.tabledata);
+    console.log(this.fullData);
+    if (this.tabledata[0] != null) {
+      this.processData(this.tabledata);
+    } else {
+      this.effectivedata = [];
+      this.moderatedata = [];
+      this.ineffectivedata = [];
+      this.weakdata = [];
+    }
   }
 
   showModal() {
@@ -495,7 +504,10 @@ export class ChartjsComponent {
 
   processData(data) {
     for (let i = 0; i < 15; i++) {
-      data[i] != null ? (this.riskArr[i] = data[i]) : null;
+      if (data[i] != null) {
+        this.riskArr[i].riskNo = data[i].riskNo;
+        this.riskArr[i].lossEvent = data[i].lossEvent;
+      }
     }
     console.log(this.riskArr);
     data.forEach((element, ind) => {
@@ -575,7 +587,7 @@ export class ChartjsComponent {
       var width = canvas.width;
       var height = canvas.height;
       var imgData = canvas.toDataURL("image/png");
-     let orientation= element.id == "print_tab1" ? "portrait":"landscape"
+      let orientation = element.id == "print_tab1" ? "portrait" : "landscape";
       var doc = new jsPDF({
         orientation: orientation,
         unit: "mm",

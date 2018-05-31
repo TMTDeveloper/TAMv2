@@ -52,51 +52,33 @@
             <font size="1">
               <thead>
                 <tr>
-                    <th bgcolor="cyan"> </th>
-                    <th bgcolor="cyan"> </th>
-                    <th bgcolor="cyan"> </th>
-                    <th bgcolor="cyan">Division/Dept</th>
-                    <th bgcolor="cyan"> </th>
-                    <th bgcolor="cyan"> </th>
-                    <th bgcolor="purple"></th>
-                    <th bgcolor="purple"></th>
-                    <th bgcolor="purple">
-                      <font color="white">Risk&nbsp;Description</font>
-                    </th>
-                    <th bgcolor="purple"></th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue">
-                      <font color="white">Inherent&nbsp;Risk</font>
-                    </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="light blue"> </th>
-                    <th bgcolor="orange"> </th>
-                    <th bgcolor="orange"> </th>
-                    <th bgcolor="orange">
-                      <font color="white">Control</font>
-                    </th>
-                    <th bgcolor="orange"> </th>
-                    <th bgcolor="orange"> </th>
-                    <th bgcolor="yellow"> </th>
-                    <th bgcolor="yellow"> </th>
-                    <th bgcolor="yellow"> </th>
-                    <th bgcolor="yellow">Residual&nbsp;Risk</th>
-                    <th bgcolor="yellow"> </th>
-                    <th bgcolor="yellow"> </th>
-                    <th bgcolor="green"> </th>
-                    <th bgcolor="green"> </th>
-                    <th bgcolor="green"> </th>
-                    <th bgcolor="green">
-                      <font color="white">Expected&nbsp;Risk</font>
-                    </th>
-                    <th bgcolor="green"> </th>
-                    <th bgcolor="green"> </th>
-                    
+
+                  <th bgcolor="cyan" style="text-align:center" colspan="6">Division/Dept</th>
+
+
+                  <th bgcolor="purple" style="text-align:center" colspan="4">
+                    <font color="white"> Risk&nbsp;Description</font>
+                  </th>
+
+
+                  <th bgcolor="light blue" style="text-align:center" colspan="9">
+                    <font color="white">Inherent&nbsp;Risk</font>
+                  </th>
+
+                
+                  <th bgcolor="orange"style="text-align:center" colspan="5">
+                    <font color="white">Control</font>
+                  </th>
+               
+                
+                  <th bgcolor="yellow" style="text-align:center" colspan="6">Residual&nbsp;Risk</th>
+               
+         
+                  <th bgcolor="green" style="text-align:center" colspan="6">
+                    <font color="white">Expected&nbsp;Risk</font>
+                  </th>
+       
+
                 </tr>
               </thead>
               <thead>
@@ -149,11 +131,11 @@
                   <td>{{ item.businessProcess }}</td>
                   <td>{{ item.lossEvent }}</td>
                   <td>
-                      <div *ngFor="let data of insertSpace2(item.caused)">
-                        {{data}}
-                        <br>
-                      </div>
-                    </td>
+                    <div *ngFor="let data of insertSpace2(item.caused)">
+                      {{data}}
+                      <br>
+                    </div>
+                  </td>
                   <td>{{ item.riskImpact }}</td>
                   <td>{{ item.riskLevel }}</td>
                   <td>{{ item.notesIr }}</td>
@@ -161,16 +143,16 @@
                   <td>{{ item.finAmountIr }}</td>
                   <td>{{ item.opImpactCategory }}</td>
                   <td>{{ item.opAmountIr }}</td>
-                   <td>{{ item.qlImpactIr }}</td>
+                  <td>{{ item.qlImpactIr }}</td>
                   <td>{{ item.irImpact }}</td>
                   <td>{{ item.irLikelihood }}</td>
                   <td>{{ item.irOverall }}</td>
                   <td>
-                      <div *ngFor="let data of insertSpace(item.control)">
-                        {{data}}
-                        <br>
-                      </div>
-                    </td>
+                    <div *ngFor="let data of insertSpace(item.control)">
+                      {{data}}
+                      <br>
+                    </div>
+                  </td>
                   <td>{{ item.operationCt }}</td>
                   <td>{{ item.appropriatenessCt }}</td>
                   <td>{{ item.efOverall }}</td>
@@ -182,29 +164,29 @@
                   <td>{{ item.rdLikelihood }}</td>
                   <td>{{ item.rdOverall }}</td>
                   <td>
-                      <div *ngFor="let data of insertSpace(item.treatmentPlan)">
-                        {{data}}
-                        <br>
-                      </div>
-                    </td>
+                    <div *ngFor="let data of insertSpace(item.treatmentPlan)">
+                      {{data}}
+                      <br>
+                    </div>
+                  </td>
                   <td>{{ item.exImpact }}</td>
                   <td>{{ item.exLikelihood }}</td>
                   <td>{{ item.exOverall }}</td>
                   <td>
-                      <div *ngFor="let data of insertSpace(item.exPic)">
-                        {{data}}
-                        <br>
-                      </div>
-                    </td>
-                    <td>
-                        <div *ngFor="let data of insertSpace(item.exDueDate)">
-                          {{data}}
-                          <br>
-                        </div>
-                      </td>
+                    <div *ngFor="let data of insertSpace(item.exPic)">
+                      {{data}}
+                      <br>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let data of insertSpace(item.exDueDate)">
+                      {{data}}
+                      <br>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
-            </font>
+              </font>
           </table>
         </div>
 
