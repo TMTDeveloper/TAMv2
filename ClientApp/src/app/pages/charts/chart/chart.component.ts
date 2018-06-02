@@ -72,7 +72,7 @@ export class ChartComponent implements OnInit {
   @Input()
   set heat(value: any) {
     this.heatData = value;
-    console.log(this.heatData);
+    //console.log(this.heatData);
     this.heatMapProcess();
     this.setCurrentDataSet(this.data);
   }
@@ -124,12 +124,12 @@ export class ChartComponent implements OnInit {
             );
           }
         });
-      console.log(this.data);
+      //console.log(this.data);
       this.chart.data(null);
       this.chart.data(data);
       this.svg.emit(this.chart.toSvg(600, 850));
     } else {
-      console.log(this.data);
+      //console.log(this.data);
 
       let namesList = ["Low", "Medium", "High", "Extreme"];
       this.chart
@@ -192,7 +192,7 @@ export class ChartComponent implements OnInit {
       ];
     });
     legend.position("bottom");
-    console.log();
+    //console.log();
     let namesList = ["Low", "Medium", "High", "Extreme"];
     this.chart.legend(true);
     this.chart.credits().enabled(false);
@@ -284,7 +284,7 @@ export class ChartComponent implements OnInit {
     this.changeGraph(data);
   }
   changebbl() {
-    console.log(this.data);
+    //console.log(this.data);
     this.chart.data(this.data);
     this.chart
       .labels()

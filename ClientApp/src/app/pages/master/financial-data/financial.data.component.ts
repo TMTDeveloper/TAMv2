@@ -127,7 +127,7 @@ export class FinancialDataComponent {
     this.service.getreq("TbMFinancialDatas").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].year = data[ind].year.toString();
           data[ind].status = "0";
@@ -143,9 +143,9 @@ export class FinancialDataComponent {
     let arr = this.tabledata.filter(item => {
       return item.year === year;
     });
-    console.log(arr[0] != null);
+    //console.log(arr[0] != null);
     if (arr[0] != null) {
-      console.log("masuksini");
+      //console.log("masuksini");
       this.data = arr[0];
       // this.data = {
       //   year: data.year,
@@ -171,7 +171,7 @@ export class FinancialDataComponent {
       //   datetimeUpdate: moment().format(),
       //   status: "0"
       // };
-      console.log(this.data);
+      //console.log(this.data);
     } else {
       this.data = {
         year: this.yearPeriode,
@@ -208,16 +208,16 @@ export class FinancialDataComponent {
   }
 
   submit() {
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
 
     if (this.data.status == "1") {
       this.service
         .postreq("TbMFinancialDatas", this.data)
         .subscribe(response => {
           this.loadData();
-          console.log(response);
+          //console.log(response);
           error => {
-            console.log(error);
+            //console.log(error);
           };
         });
     } else {
@@ -226,7 +226,7 @@ export class FinancialDataComponent {
         .subscribe(response => {
           this.loadData();
           error => {
-            console.log(error);
+            //console.log(error);
           };
         });
     }

@@ -17,7 +17,7 @@ export class ChartjsPieComponent implements OnDestroy {
 
   @Input()
   set dataset(value: any) {
-    console.log(value);
+    ////console.log(value);
     this.loadData(value);
   }
   tabledata: any[] = [
@@ -54,7 +54,7 @@ export class ChartjsPieComponent implements OnDestroy {
           const colors: any = config.variables;
           const chartjs: any = config.variables.chartjs;
 
-          //console.log("tes");
+          //////console.log("tes");
 
           this.data = {
             datasets: [
@@ -126,11 +126,11 @@ export class ChartjsPieComponent implements OnDestroy {
     let arr = this.tabledata.filter(item => {
       return item.division == "ISTD";
     });
-    console.log(arr[0] != null);
+    ////console.log(arr[0] != null);
     if (arr[0] != null) {
-      console.log("masuksini");
+      ////console.log("masuksini");
       this.chartdata = arr[0];
-      console.log(this.chartdata);
+      ////console.log(this.chartdata);
     } else {
       this.chartdata = {
         ctrEff: 0,

@@ -342,12 +342,12 @@ export class ChartjsComponent {
     this.service.getreq("TbRApproves").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        ////console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
           this.tableapprove = data;
-          console.log(this.tableapprove);
+          ////console.log(this.tableapprove);
         });
         this.reloadApprove();
       }
@@ -359,11 +359,11 @@ export class ChartjsComponent {
     let arr = this.tableapprove.filter(item => {
       return item.division == "ISTD";
     });
-    // console.log(arr[0] != null);
+    // ////console.log(arr[0] != null);
     if (arr[0] != null) {
-      console.log("masukapprove");
+      ////console.log("masukapprove");
       this.approvedata = arr[0];
-      console.log(this.approvedata);
+      ////console.log(this.approvedata);
     }
   }
 
@@ -372,13 +372,13 @@ export class ChartjsComponent {
       division: this.division,
       department: this.department
     };
-    console.log(this.tabledata);
+    ////console.log(this.tabledata);
     this.tabledata = this.fullData.filter(item => {
       return (
         item.division == this.division && item.department == this.department
       );
     });
-    console.log(this.fullData);
+    ////console.log(this.fullData);
     if (this.tabledata[0] != null) {
       this.processData(this.tabledata);
     } else {
@@ -429,7 +429,7 @@ export class ChartjsComponent {
     this.activeModal.result.then(
       async response => {
         if (response != false) {
-          console.log(this.tableapprove);
+          ////console.log(this.tableapprove);
           this.tableapprove.push(response);
           this.submit();
           this.reloadApprove();
@@ -444,24 +444,24 @@ export class ChartjsComponent {
       ? this.service
           .putreq("TbRApproves", JSON.stringify(event.newData))
           .subscribe(response => {
-            //console.log(JSON.stringify(event.newData));
+            //////console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-              // console.log(error);
+              // ////console.log(error);
             };
           })
       : null;
-    //console.log(JSON.stringify(this.tabledata));
+    //////console.log(JSON.stringify(this.tabledata));
     this.tableapprove.forEach((element, ind) => {
       let index = ind;
       if (this.tableapprove[index].status == "1") {
         this.service
           .postreq("TbRApproves", this.tableapprove[index])
           .subscribe(response => {
-            // console.log(response);
+            // ////console.log(response);
             this.tabledata[index].status = "0";
             error => {
-              // console.log(error);
+              // ////console.log(error);
             };
           });
       }
@@ -481,7 +481,7 @@ export class ChartjsComponent {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-            console.log(arr);
+            ////console.log(arr);
             this.divisionData = arr;
             this.division = this.divisionData[0];
 
@@ -491,17 +491,17 @@ export class ChartjsComponent {
                 this.reload();
               }
               // error => {
-              //   console.log(error);
+              //   ////console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   ////console.log(error);
           // };
         });
       }
       // error => {
-      //   console.log(error);
+      //   ////console.log(error);
       // };
     });
   }
@@ -513,12 +513,12 @@ export class ChartjsComponent {
         this.riskArr[i].lossEvent = data[i].lossEvent;
       }
     }
-    console.log(this.riskArr);
+    ////console.log(this.riskArr);
     data.forEach((element, ind) => {
       data[ind].yearActive = data[ind].yearActive.toString();
       data[ind].status = "0";
       this.tabledata = data;
-      console.log(this.tabledata);
+      ////console.log(this.tabledata);
       let arr1 = this.tabledata.filter(item => {
         return item.efOverall === "Effective";
       });
@@ -539,17 +539,17 @@ export class ChartjsComponent {
   }
 
   filterDepartment() {
-    console.log(JSON.stringify(this.division));
+    ////console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
       return item.kodeDivisi == this.division;
     });
-    console.log(arr);
+    ////console.log(arr);
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
       this.reload();
     } else {
-      console.log(arr);
+      ////console.log(arr);
       this.departmentFilter = [];
     }
   }
@@ -577,7 +577,7 @@ export class ChartjsComponent {
   //   (window as any).print();
   // }
   print(id) {
-    console.log(this.dataInput);
+    ////console.log(this.dataInput);
     let element = <HTMLScriptElement>document.getElementById(id);
 
     var divHeight = element.offsetHeight;
@@ -637,12 +637,12 @@ export class ChartjsComponent {
     rasterizeHTML.drawDocument(docs, canvas).then(
       function(result) {},
       function(e) {
-        console.log("demo II error", e);
+        ////console.log("demo II error", e);
       }
     );
   }
   savesvg(event) {
-    console.log(event);
+    ////console.log(event);
     this.svg = event;
     this.heatmapRaster();
   }

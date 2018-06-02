@@ -478,8 +478,8 @@ export class RiskRegisterComponent {
     private route: ActivatedRoute
   ) {
     this.route.url.subscribe(url => {
-      console.log("activatedroute");
-      console.log(url);
+      //console.log("activatedroute");
+      //console.log(url);
     });
     this.loadData();
     this.accidentSrc.load(this.dataInput.riskDescription.accidentObj);
@@ -511,7 +511,7 @@ export class RiskRegisterComponent {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].score == null
@@ -526,8 +526,8 @@ export class RiskRegisterComponent {
             item.flagActive == "Aktif"
           );
         });
-        console.log("myoptionsss");
-        console.log(arr);
+        //console.log("myoptionsss");
+        //console.log(arr);
 
         if (arr[0] != null) {
           this.multiSelect = arr;
@@ -558,7 +558,7 @@ export class RiskRegisterComponent {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-            console.log(arr);
+            //console.log(arr);
             this.divisionData = arr;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
@@ -573,12 +573,12 @@ export class RiskRegisterComponent {
                 arr[0] != null ? (this.departmentFilter = arr) : null;
               }
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
         this.service.getreq("TbRRiskAssessments").subscribe(response => {
@@ -614,7 +614,7 @@ export class RiskRegisterComponent {
     this.activeModal.componentInstance.filterData.condition = "KPI";
     this.activeModal.result.then(
       async response => {
-        console.log(response);
+        //console.log(response);
         if (response != null) {
           this.dataInput.divisionDepartment.companyKpi.comInpId =
             response.comInpId;
@@ -626,7 +626,7 @@ export class RiskRegisterComponent {
     );
   }
   showDept() {
-    console.log(this.dataInput.divisionDepartment.division.charId);
+    //console.log(this.dataInput.divisionDepartment.division.charId);
 
     this.activeModal = this.modalService.open(RiskRegisterDeptComponent, {
       windowClass: "xlModal",
@@ -645,7 +645,7 @@ export class RiskRegisterComponent {
     // this.activeModal.componentInstance.filterData.department = this.dataInput.divisionDepartment.department.kodeDepartment;
     this.activeModal.result.then(
       async response => {
-        console.log(response);
+        //console.log(response);
         if (response != false) {
           this.dataInput.divisionDepartment.departmentKpi.deptInpId =
             response.deptInpId;
@@ -684,7 +684,7 @@ export class RiskRegisterComponent {
     };
     this.activeModal.result.then(
       async response => {
-        console.log(response);
+        //console.log(response);
         if (response != false) {
           // this.dataInput.divisionDepartment.companyKpi.comInpId =
           //   response.comInpId;
@@ -745,7 +745,7 @@ export class RiskRegisterComponent {
     this.activeModal.componentInstance.filterData.year = this.yearPeriode;
     this.activeModal.result.then(
       async response => {
-        console.log(response);
+        //console.log(response);
         if (response != false) {
           this.dataInput.inherentRisk.qualitativeIR.id = response.indicatorId;
           this.dataInput.inherentRisk.qualitativeIR.desc = response.impact;
@@ -770,7 +770,7 @@ export class RiskRegisterComponent {
     this.activeModal.componentInstance.filterData.year = this.yearPeriode;
     this.activeModal.result.then(
       async response => {
-        console.log(response);
+        //console.log(response);
         if (response != false) {
           this.dataInput.residualRisk.qualitativeRD.id = response.indicatorId;
           this.dataInput.residualRisk.qualitativeRD.desc = response.impact;
@@ -851,13 +851,13 @@ export class RiskRegisterComponent {
       async response => {
         if (response != false) {
           // this.tabledata.push(response);
-          // console.log(this.tabledata);
+          // //console.log(this.tabledata);
           // this.reload();
 
           this.dataInput.currentAction.controls.push(response);
           this.controlSrc.load(this.dataInput.currentAction.controls);
           this.countPDC();
-          console.log(this.dataInput.currentAction.controls);
+          //console.log(this.dataInput.currentAction.controls);
         }
       },
       error => {}
@@ -902,7 +902,7 @@ export class RiskRegisterComponent {
     let operationalImpact;
     this.service.getreq("TbMOperationalImpacts").subscribe(response => {
       if (response != null) {
-        console.log(response);
+        //console.log(response);
         operationalImpact = response;
         let arrImp = operationalImpact.filter(function(item) {
           return (
@@ -911,7 +911,7 @@ export class RiskRegisterComponent {
             item.numberValue >= this.inherentRisk.operationalImpact.loss
           );
         }, this.dataInput);
-        console.log(arrImp);
+        //console.log(arrImp);
         if (arrImp[0] != null) {
           this.dataInput.inherentRisk.operationalImpact.operationalObj = this.hasmin(
             arrImp,
@@ -938,12 +938,12 @@ export class RiskRegisterComponent {
               this.dataInput
             )[0].score;
             this.findOverallImp();
-            console.log(this.dataInput);
+            //console.log(this.dataInput);
           } else {
             this.findOverallImp();
           }
         } else {
-          console.log("masuksini");
+          //console.log("masuksini");
           let arrImp = operationalImpact.filter(function(item) {
             return (
               item.yearActive == yearPeriode &&
@@ -976,7 +976,7 @@ export class RiskRegisterComponent {
                 this.dataInput
               )[0].score;
               this.findOverallImp();
-              console.log(JSON.stringify(this.dataInput));
+              //console.log(JSON.stringify(this.dataInput));
             } else {
               this.findOverallImp();
             }
@@ -997,7 +997,7 @@ export class RiskRegisterComponent {
     let financialImpact;
     this.service.getreq("TbMFinancialImpacts").subscribe(response => {
       if (response != null) {
-        console.log(response);
+        //console.log(response);
         financialImpact = response;
         let arrImp = financialImpact.filter(function(item) {
           return (
@@ -1031,19 +1031,19 @@ export class RiskRegisterComponent {
               this.dataInput
             )[0].score;
             this.findOverallImp();
-            console.log(this.dataInput);
+            //console.log(this.dataInput);
           } else {
             this.findOverallImp();
           }
         } else {
-          console.log("masuksini");
+          //console.log("masuksini");
           let arrImp = financialImpact.filter(function(item) {
             return (
               item.yearActive == yearPeriode &&
               item.category == this.inherentRisk.financialImpact.category
             );
           }, this.dataInput);
-          console.log(arrImp);
+          //console.log(arrImp);
           if (arrImp[0] != null) {
             this.dataInput.inherentRisk.financialImpact.financialObj = this.hasmax(
               arrImp,
@@ -1056,7 +1056,7 @@ export class RiskRegisterComponent {
                   this.inherentRisk.financialImpact.financialObj.riskIndicatorId
               );
             }, this.dataInput);
-            console.log(arrScore);
+            //console.log(arrScore);
             if (arrScore[0] != null) {
               this.dataInput.inherentRisk.financialImpact.score = this.riskIndicatorData.filter(
                 function(item) {
@@ -1070,7 +1070,7 @@ export class RiskRegisterComponent {
                 this.dataInput
               )[0].score;
               this.findOverallImp();
-              console.log(this.dataInput);
+              //console.log(this.dataInput);
             } else {
               this.findOverallImp();
             }
@@ -1083,7 +1083,7 @@ export class RiskRegisterComponent {
   }
 
   findOverallImp() {
-    console.log(this.dataInput.inherentRisk.financialImpact);
+    //console.log(this.dataInput.inherentRisk.financialImpact);
     let arr = this.riskIndicatorData.filter(item => {
       return (
         item.yearActive == this.yearPeriode &&
@@ -1112,8 +1112,8 @@ export class RiskRegisterComponent {
       );
     });
     if (arr[0] != null) {
-      console.log("disinihehe");
-      console.log(arr);
+      //console.log("disinihehe");
+      //console.log(arr);
       this.dataInput.inherentRisk.overallImpact.description =
         arr[0].description;
       this.dataInput.inherentRisk.overallImpact.indicatorId =
@@ -1127,9 +1127,9 @@ export class RiskRegisterComponent {
   }
 
   findOverallRisk() {
-    console.log("masuk");
+    //console.log("masuk");
     this.service.getreq("TbMRiskMappings").subscribe(response => {
-      console.log(response);
+      //console.log(response);
       if (response != null) {
         let arr = response.filter(item => {
           return (
@@ -1139,7 +1139,7 @@ export class RiskRegisterComponent {
             item.indicatorIdB == this.dataInput.inherentRisk.likelihood
           );
         });
-        console.log(arr);
+        //console.log(arr);
         if (arr[0] != null) {
           let arrIndicator = this.riskIndicatorData.filter(item => {
             return (
@@ -1147,7 +1147,7 @@ export class RiskRegisterComponent {
               item.indicatorId == arr[0].resultIdC
             );
           });
-          console.log(arrIndicator);
+          //console.log(arrIndicator);
           if (arrIndicator[0] != null) {
             this.dataInput.inherentRisk.overallRisk.indicatorId =
               arrIndicator[0].indicatorId;
@@ -1173,7 +1173,7 @@ export class RiskRegisterComponent {
     let operationalImpact;
     this.service.getreq("TbMOperationalImpacts").subscribe(response => {
       if (response != null) {
-        console.log(response);
+        //console.log(response);
         operationalImpact = response;
         let arrImp = operationalImpact.filter(function(item) {
           return (
@@ -1182,7 +1182,7 @@ export class RiskRegisterComponent {
             item.numberValue >= this.residualRisk.operationalImpact.loss
           );
         }, this.dataInput);
-        console.log(arrImp);
+        //console.log(arrImp);
         if (arrImp[0] != null) {
           this.dataInput.residualRisk.operationalImpact.operationalObj = this.hasmin(
             arrImp,
@@ -1209,12 +1209,12 @@ export class RiskRegisterComponent {
               this.dataInput
             )[0].score;
             this.findOverallImpRd();
-            console.log(this.dataInput);
+            //console.log(this.dataInput);
           } else {
             this.findOverallImpRd();
           }
         } else {
-          console.log("masuksini");
+          //console.log("masuksini");
           let arrImp = operationalImpact.filter(function(item) {
             return (
               item.yearActive == yearPeriode &&
@@ -1247,7 +1247,7 @@ export class RiskRegisterComponent {
                 this.dataInput
               )[0].score;
               this.findOverallImpRd();
-              console.log(this.dataInput);
+              //console.log(this.dataInput);
             } else {
               this.findOverallImpRd();
             }
@@ -1268,7 +1268,7 @@ export class RiskRegisterComponent {
     let financialImpact;
     this.service.getreq("TbMFinancialImpacts").subscribe(response => {
       if (response != null) {
-        console.log(response);
+        //console.log(response);
         financialImpact = response;
         let arrImp = financialImpact.filter(function(item) {
           return (
@@ -1302,12 +1302,12 @@ export class RiskRegisterComponent {
               this.dataInput
             )[0].score;
             this.findOverallImpRd();
-            console.log(this.dataInput);
+            //console.log(this.dataInput);
           } else {
             this.findOverallImpRd();
           }
         } else {
-          console.log("masuksini");
+          //console.log("masuksini");
           let arrImp = financialImpact.filter(function(item) {
             return (
               item.yearActive == yearPeriode &&
@@ -1339,7 +1339,7 @@ export class RiskRegisterComponent {
                 this.dataInput
               )[0].score;
               this.findOverallImpRd();
-              console.log(this.dataInput);
+              //console.log(this.dataInput);
             } else {
               this.findOverallImpRd();
             }
@@ -1381,7 +1381,7 @@ export class RiskRegisterComponent {
     });
 
     if (arr[0] != null) {
-      console.log(arr);
+      //console.log(arr);
       this.dataInput.residualRisk.overallImpact.description =
         arr[0].description;
       this.dataInput.residualRisk.overallImpact.indicatorId =
@@ -1399,7 +1399,7 @@ export class RiskRegisterComponent {
   }
 
   findOverallRiskRd() {
-    console.log("masuk");
+    //console.log("masuk");
     this.service.getreq("TbMRiskMappings").subscribe(response => {
       if (response != null) {
         let arr = response.filter(item => {
@@ -1417,7 +1417,7 @@ export class RiskRegisterComponent {
               item.indicatorId == arr[0].resultIdC
             );
           });
-          console.log(arrIndicator);
+          //console.log(arrIndicator);
           if (arrIndicator[0] != null) {
             this.dataInput.residualRisk.overallRisk.indicatorId =
               arrIndicator[0].indicatorId;
@@ -1449,8 +1449,8 @@ export class RiskRegisterComponent {
               this.dataInput.residualRisk.overallRisk.indicatorId
           );
         });
-        console.log("ketemu");
-        console.log(arr);
+        //console.log("ketemu");
+        //console.log(arr);
         if (arr[0] != null) {
           let arrIndicator = this.riskIndicatorData.filter(item => {
             return (
@@ -1458,7 +1458,7 @@ export class RiskRegisterComponent {
               item.indicatorId == arr[0].resultIdC
             );
           });
-          console.log(arrIndicator);
+          //console.log(arrIndicator);
           if (arrIndicator[0] != null) {
             this.dataInput.currentAction.overallControl.indicatorId =
               arrIndicator[0].indicatorId;
@@ -1487,8 +1487,8 @@ export class RiskRegisterComponent {
             item.indicatorIdB == this.dataInput.currentAction.operation
           );
         });
-        console.log("ketemu");
-        console.log(arr);
+        //console.log("ketemu");
+        //console.log(arr);
         if (arr[0] != null) {
           let arrIndicator = this.riskIndicatorData.filter(item => {
             return (
@@ -1496,7 +1496,7 @@ export class RiskRegisterComponent {
               item.indicatorId == arr[0].resultIdC
             );
           });
-          console.log(arrIndicator);
+          //console.log(arrIndicator);
           if (arrIndicator[0] != null) {
             this.dataInput.currentAction.appropriateness.indicatorId =
               arrIndicator[0].indicatorId;
@@ -1521,8 +1521,8 @@ export class RiskRegisterComponent {
             item.indicatorIdB == this.dataInput.expectedRisk.likelihood
           );
         });
-        console.log("ketemu");
-        console.log(arr);
+        //console.log("ketemu");
+        //console.log(arr);
         if (arr[0] != null) {
           let arrIndicator = this.riskIndicatorData.filter(item => {
             return (
@@ -1530,7 +1530,7 @@ export class RiskRegisterComponent {
               item.indicatorId == arr[0].resultIdC
             );
           });
-          console.log(arrIndicator);
+          //console.log(arrIndicator);
           if (arrIndicator[0] != null) {
             this.dataInput.expectedRisk.risk.indicatorId =
               arrIndicator[0].indicatorId;
@@ -1563,18 +1563,18 @@ export class RiskRegisterComponent {
         };
         this.service.putreq("draftrisks", savedData).subscribe(
           response => {
-            console.log(response);
+            //console.log(response);
             this.toastr.success("Draft Deleted!");
           },
           error => {
-            console.log(error);
+            //console.log(error);
             this.toastr.error(
               "Draft Delete Failed! Reason: " + error.statusText
             );
           }
         );
       }
-      console.log("masuksini");
+      //console.log("masuksini");
 
       const lastIndex = this.generateCounter();
       this.dataInput.counterNo = lastIndex + 1;
@@ -1632,11 +1632,11 @@ export class RiskRegisterComponent {
         userUpdate: "Admin",
         datetimeUpdate: moment().format()
       };
-      console.log(JSON.stringify(savedData));
-      console.log(savedData);
+      //console.log(JSON.stringify(savedData));
+      //console.log(savedData);
       this.service.postreq("TbRRiskAssessments", savedData).subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.saveControlAccident(savedData.riskNo);
           this.saveTreatmentNo(savedData.riskNo);
           this.dataInput.edit = true;
@@ -1655,16 +1655,16 @@ export class RiskRegisterComponent {
           };
           this.service.postreq("draftrisks", savedDataRisk).subscribe(
             response => {
-              console.log(response);
+              //console.log(response);
             },
             error => {
-              console.log(error);
+              //console.log(error);
             }
           );
           this.toastr.success("Data Saved!");
         },
         error => {
-          console.log(error);
+          //console.log(error);
           this.toastr.error("Data Save Failed! Reason: " + error.statusText);
         }
       );
@@ -1719,11 +1719,11 @@ export class RiskRegisterComponent {
         userUpdate: "Admin",
         datetimeUpdate: moment().format()
       };
-      console.log(JSON.stringify(savedData));
-      console.log(savedData);
+      //console.log(JSON.stringify(savedData));
+      //console.log(savedData);
       this.service.putreq("TbRRiskAssessments", savedData).subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.editTransaction(savedData.riskNo);
 
           this.dataInput.edit = true;
@@ -1742,16 +1742,16 @@ export class RiskRegisterComponent {
           };
           this.service.putreq("draftrisks", savedDataRisk).subscribe(
             response => {
-              console.log(response);
+              //console.log(response);
             },
             error => {
-              console.log(error);
+              //console.log(error);
             }
           );
           this.toastr.success("Data Saved!");
         },
         error => {
-          console.log(error);
+          //console.log(error);
           this.toastr.error("Data Save Failed! Reason: " + error.statusText);
         }
       );
@@ -1822,10 +1822,10 @@ export class RiskRegisterComponent {
         )
         .subscribe(
           response => {
-            console.log(response);
+            //console.log(response);
           },
           error => {
-            console.log(error);
+            //console.log(error);
           }
         );
     });
@@ -1839,10 +1839,10 @@ export class RiskRegisterComponent {
         )
         .subscribe(
           response => {
-            console.log(response);
+            //console.log(response);
           },
           error => {
-            console.log(error);
+            //console.log(error);
           }
         );
     });
@@ -1851,41 +1851,41 @@ export class RiskRegisterComponent {
   editTransaction(riskno) {
     this.service.getreq("TbRControlDetails").subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         response.forEach(element => {
           element.yearActive == this.yearPeriode && element.riskNo == riskno
             ? this.service
                 .postreq("TbRControlDetails/deletecontrol", element)
                 .subscribe(
                   response => {
-                    console.log(response);
+                    //console.log(response);
                   },
                   error => {
-                    console.log(error);
+                    //console.log(error);
                   }
                 )
             : null;
         });
         this.service.getreq("TbRTreatmentDetails").subscribe(
           response => {
-            console.log(response);
+            //console.log(response);
             response.forEach(element => {
               element.yearActive == this.yearPeriode && element.riskNo == riskno
                 ? this.service
                     .postreq("TbRTreatmentDetails/deletecontrol", element)
                     .subscribe(
                       response => {
-                        console.log(response);
+                        //console.log(response);
                       },
                       error => {
-                        console.log(error);
+                        //console.log(error);
                       }
                     )
                 : null;
             });
             this.service.getreq("TbRAccidentDetails").subscribe(
               response => {
-                console.log(response);
+                //console.log(response);
                 response.forEach(element => {
                   element.yearActive == this.yearPeriode &&
                   element.riskNo == riskno
@@ -1893,10 +1893,10 @@ export class RiskRegisterComponent {
                         .postreq("TbRAccidentDetails/deletecontrol", element)
                         .subscribe(
                           response => {
-                            console.log(response);
+                            //console.log(response);
                           },
                           error => {
-                            console.log(error);
+                            //console.log(error);
                           }
                         )
                     : null;
@@ -1905,17 +1905,17 @@ export class RiskRegisterComponent {
                 this.saveTreatmentNo(riskno);
               },
               error => {
-                console.log(error);
+                //console.log(error);
               }
             );
           },
           error => {
-            console.log(error);
+            //console.log(error);
           }
         );
       },
       error => {
-        console.log(error);
+        //console.log(error);
       }
     );
   }
@@ -1930,10 +1930,10 @@ export class RiskRegisterComponent {
         )
         .subscribe(
           response => {
-            console.log(response);
+            //console.log(response);
           },
           error => {
-            console.log(error);
+            //console.log(error);
           }
         );
     });
@@ -1950,7 +1950,7 @@ export class RiskRegisterComponent {
   //   schedule: ""
   // }
   treatmentPlanSwitch() {
-    console.log(this.dataInput.expectedRisk);
+    //console.log(this.dataInput.expectedRisk);
     if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
       this.dataInput.expectedRisk.impact = this.dataInput.residualRisk.overallImpact.indicatorId;
       this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood;
@@ -2003,11 +2003,11 @@ export class RiskRegisterComponent {
       };
       this.service.putreq("draftrisks", savedData).subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.toastr.success("Draft Saved!");
         },
         error => {
-          console.log(error);
+          //console.log(error);
           this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
         }
       );
@@ -2028,11 +2028,11 @@ export class RiskRegisterComponent {
       };
       this.service.postreq("draftrisks", savedData).subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.toastr.success("Draft Saved!");
         },
         error => {
-          console.log(error);
+          //console.log(error);
           this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
         }
       );
@@ -2131,7 +2131,7 @@ export class RiskRegisterComponent {
       element.no = ind + 1;
     });
     this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
-    console.log(this.dataInput.expectedRisk.treatmentPlanArr);
+    //console.log(this.dataInput.expectedRisk.treatmentPlanArr);
   }
   saveTreatment(event) {
     if (
@@ -2190,7 +2190,7 @@ export class RiskRegisterComponent {
       async response => {
         if (response != false) {
           // this.tabledata.push(response);
-          // console.log(this.tabledata);
+          // //console.log(this.tabledata);
           // this.reload();
 
           this.dataInput.expectedRisk.treatmentPlanArr.push(response);
@@ -2202,7 +2202,7 @@ export class RiskRegisterComponent {
   }
 
   onChange() {
-    console.log(this.dataInput.riskDescription.riskImpact);
+    //console.log(this.dataInput.riskDescription.riskImpact);
   }
 
   public filterDepartment() {
@@ -2211,18 +2211,18 @@ export class RiskRegisterComponent {
         item.kodeDivisi == this.dataInput.divisionDepartment.division.charId
       );
     });
-    console.log(arr);
+    //console.log(arr);
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.dataInput.divisionDepartment.department.kodeDepartment =
         arr[0].kodeDepartment;
     } else {
-      console.log(arr);
+      //console.log(arr);
       this.departmentFilter = [];
     }
   }
   seedepart() {
-    console.log(this.dataInput.divisionDepartment);
+    //console.log(this.dataInput.divisionDepartment);
   }
 
 

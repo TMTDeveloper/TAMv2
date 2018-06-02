@@ -36,7 +36,7 @@ export class ReportApproveModalComponent {
 
 
   constructor(private activeModal: NgbActiveModal) {
-    console.log(this.formData);
+    //console.log(this.formData);
   }
   
   submit() {

@@ -6,7 +6,7 @@ export class RiskRegisterGuardComponent
   implements CanDeactivate<RiskRegisterComponent> {
   canDeactivate(component: RiskRegisterComponent) {
     let can = component.canDeactivate();
-    console.log("DeactivateGuard#canDeactivate called, can: ", can);
+    //console.log("DeactivateGuard#canDeactivate called, can: ", can);
     if (!can) {
       return window.confirm("Do you really want to cancel?");
     }

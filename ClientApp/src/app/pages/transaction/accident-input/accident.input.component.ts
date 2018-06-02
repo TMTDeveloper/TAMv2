@@ -185,7 +185,7 @@ export class AccidentInputComponent {
     this.service.getreq("TbMAccidentDetails").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         let vCounter = 0;
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
@@ -207,7 +207,7 @@ export class AccidentInputComponent {
         });
 
         this.tabledata = data;
-        console.log(this.tabledata);
+        //console.log(this.tabledata);
         this.source.load(this.tabledata);
 
         this.service.getreq("tbmlibraries").subscribe(response => {
@@ -215,7 +215,7 @@ export class AccidentInputComponent {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-            console.log(arr);
+            //console.log(arr);
             this.divisionData = arr;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
@@ -225,17 +225,17 @@ export class AccidentInputComponent {
                 this.filterDepartment();
               }
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
   }
@@ -254,7 +254,7 @@ export class AccidentInputComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
+    //console.log(this.myForm.value.condition);
   }
 
   showModal() {
@@ -555,17 +555,17 @@ export class AccidentInputComponent {
     );
   }
   filterDepartment() {
-    console.log(JSON.stringify(this.division));
+    //console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
       return item.kodeDivisi == this.division;
     });
-    console.log(arr);
+    //console.log(arr);
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
       this.reload();
     } else {
-      console.log(arr);
+      //console.log(arr);
       this.departmentFilter = [];
     }
   }
@@ -574,24 +574,24 @@ export class AccidentInputComponent {
       ? this.service
           .putreq("TbMAccidentDetails", JSON.stringify(event.newData))
           .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
+            //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-              console.log(error);
+              //console.log(error);
             };
           })
       : null;
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
         this.service
           .postreq("TbMAccidentDetails", this.tabledata[index])
           .subscribe(response => {
-            console.log(response);
+            //console.log(response);
             this.tabledata[index].status = "0";
             error => {
-              console.log(error);
+              //console.log(error);
             };
           });
       }
@@ -627,13 +627,13 @@ export class AccidentInputComponent {
       .postreq("TbMAccidentDetails/deletecontrol", savedData)
       .subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.loadData();
           this.toastr.success("Data Deleted!");
           event.confirm.resolve();
         },
         error => {
-          console.log(error);
+          //console.log(error);
           this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
         }
       );

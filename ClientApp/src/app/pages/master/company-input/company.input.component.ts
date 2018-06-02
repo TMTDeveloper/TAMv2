@@ -129,7 +129,7 @@ export class CompanyInputComponent {
     this.service.getreq("TbMComInputs").subscribe(response => {
       if (response != null) {
         const data = response;
-       // console.log(JSON.stringify(response));
+       // //console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
@@ -138,7 +138,7 @@ export class CompanyInputComponent {
         });
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
   }
@@ -156,7 +156,7 @@ export class CompanyInputComponent {
         this.reload();
       });
 
-   // console.log(this.myForm.value.condition);
+   // //console.log(this.myForm.value.condition);
   }
 
   showModal() {
@@ -289,7 +289,7 @@ export class CompanyInputComponent {
 
   refreshSelected(event) {
     this.selectedData = event.data;
-    console.log(this.selectedData);
+    //console.log(this.selectedData);
   }
 
   onSaveConfirm(event) {
@@ -306,25 +306,25 @@ export class CompanyInputComponent {
       ? this.service
           .putreq("TbMComInputs", JSON.stringify(event.newData))
           .subscribe(response => {
-            //console.log(JSON.stringify(event.newData));
+            ////console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-             // console.log(error);
+             // //console.log(error);
             };
           })
       : null;
-    //console.log(JSON.stringify(this.tabledata));
+    ////console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
-        console.log(this.tabledata[index])
+        //console.log(this.tabledata[index])
         this.service
           .postreq("TbMComInputs", this.tabledata[index])
           .subscribe(response => {
-           // console.log(response);
+           // //console.log(response);
             this.tabledata[index].status = "0";
             error => {
-             // console.log(error);
+             // //console.log(error);
             };
           });
       }

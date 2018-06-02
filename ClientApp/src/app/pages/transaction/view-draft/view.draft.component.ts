@@ -105,7 +105,7 @@ export class ViewDraftComponent {
     this.service.getreq("Draftrisks").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(data);
+        //console.log(data);
         data.forEach(item => {
           item.dateCreated = moment(item.dateCreated).format("DD/MM/YYYY");
           item.dateUpdated = moment(item.dateUpdated).format("DD/MM/YYYY");
@@ -118,7 +118,7 @@ export class ViewDraftComponent {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-            console.log(arr);
+            //console.log(arr);
             this.divisionData = arr;
             this.division = this.divisionData[0];
 
@@ -128,17 +128,17 @@ export class ViewDraftComponent {
                 this.filterDepartment();
               }
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
     this.source = this.source.setFilter(
@@ -152,17 +152,17 @@ export class ViewDraftComponent {
     );
   }
   filterDepartment() {
-    console.log(JSON.stringify(this.division));
+    //console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
       return item.kodeDivisi == this.division;
     });
-    console.log(arr);
+    //console.log(arr);
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
       this.reload();
     } else {
-      console.log(arr);
+      //console.log(arr);
       this.departmentFilter = [];
       this.reload();
     }
@@ -190,7 +190,7 @@ export class ViewDraftComponent {
     this.selectedData = event.data;
   }
   goToPage() {
-    console.log(this.selectedData);
+    //console.log(this.selectedData);
     let selectedData = this.selectedData;
     this.router.navigate(["/pages/transaction/risk-register"], {
       queryParams: {
@@ -216,15 +216,15 @@ export class ViewDraftComponent {
       userCreated: event.data.userCreated,
       dateCreated: moment().format()
     };
-    console.log(savedData);
+    //console.log(savedData);
     this.service.putreq("draftrisks", savedData).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         this.toastr.success("Draft Deleted!");
         event.confirm.resolve();
       },
       error => {
-        console.log(error);
+        //console.log(error);
         this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
       }
     );

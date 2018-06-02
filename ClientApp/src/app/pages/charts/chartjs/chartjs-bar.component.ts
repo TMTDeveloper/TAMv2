@@ -51,7 +51,7 @@ export class ChartjsBarComponent implements OnDestroy {
 
   @Input()
   set dataset(value: any) {
-    console.log(value);
+    ////console.log(value);
     this.processData(value);
   }
 
@@ -63,11 +63,11 @@ export class ChartjsBarComponent implements OnDestroy {
     let arr = this.tabledata.filter(item => {
       return item.division == "ISTD";
     });
-    //console.log(arr[0] != null);
+    //////console.log(arr[0] != null);
     if (arr[0] != null) {
-      //console.log("masuksini");
+      //////console.log("masuksini");
       this.chartdata = arr[0];
-      // console.log(this.chartdata);
+      // ////console.log(this.chartdata);
     } else {
       this.chartdata = {
         irRiskExtreme: 0,

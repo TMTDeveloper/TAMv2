@@ -165,7 +165,7 @@ export class OperationalIndicatorRiskComponent {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].score == null
@@ -177,7 +177,7 @@ export class OperationalIndicatorRiskComponent {
         this.service.getreq("TbMOperationalImpacts").subscribe(response => {
           if (response != null) {
             const data = response;
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
             data.forEach((element, ind) => {
               data[ind].yearActive = data[ind].yearActive.toString();
               data[ind].status = "0";
@@ -195,7 +195,7 @@ export class OperationalIndicatorRiskComponent {
                 let arr = response.filter(item => {
                   return item.condition == "OP";
                 });
-                console.log(arr);
+                //console.log(arr);
                 this.condition = arr;
                 this.myForm.setValue({
                   yearPeriode: moment().format("YYYY"),
@@ -205,13 +205,13 @@ export class OperationalIndicatorRiskComponent {
               }
 
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
 
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
       }
@@ -230,7 +230,7 @@ export class OperationalIndicatorRiskComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
+    //console.log(this.myForm.value.condition);
   }
 
   reload() {
@@ -346,19 +346,19 @@ export class OperationalIndicatorRiskComponent {
   }
 
   submit(event?) {
-    console.log(event);
+    //console.log(event);
     event
       ? this.service
           .putreq("TbMOperationalImpacts", JSON.stringify(event.newData))
           .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
+            //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-              console.log(error);
+              //console.log(error);
             };
           })
       : null;
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
 
     this.toastr.success("Data Saved!");
   }

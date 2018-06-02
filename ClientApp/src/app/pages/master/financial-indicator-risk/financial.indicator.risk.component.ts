@@ -185,7 +185,7 @@ export class FinancialIndicatorRiskComponent {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(response);
+        //console.log(response);
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
 
@@ -197,7 +197,7 @@ export class FinancialIndicatorRiskComponent {
         this.service.getreq("TbMFinancialImpacts").subscribe(response => {
           if (response != null) {
             const data = response;
-            console.log(response);
+            //console.log(response);
             data.forEach((element, ind) => {
               let impact = this.riskIndicatorData.filter(function(item) {
                 return (
@@ -230,7 +230,7 @@ export class FinancialIndicatorRiskComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
+    //console.log(this.myForm.value.condition);
   }
 
   reload() {
@@ -348,15 +348,15 @@ export class FinancialIndicatorRiskComponent {
       ? this.service
           .putreq("TbMFinancialImpacts", JSON.stringify(event.newData))
           .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
+            //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             this.loadData();
             error => {
-              console.log(error);
+              //console.log(error);
             };
           })
       : null;
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
 
     this.toastr.success("Data Saved!");
   }

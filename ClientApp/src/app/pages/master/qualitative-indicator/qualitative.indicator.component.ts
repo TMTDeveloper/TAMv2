@@ -139,7 +139,7 @@ export class QualitativeIndicatorComponent {
     this.service.getreq("TbMRiskIndicators").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].score == null
@@ -152,7 +152,7 @@ export class QualitativeIndicatorComponent {
         this.service.getreq("TbMQualitativeImpacts").subscribe(response => {
           if (response != null) {
             const data = response;
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
             data.forEach((element, ind) => {
               data[ind].yearActive = data[ind].yearActive.toString();
               data[ind].status = "0";
@@ -170,9 +170,9 @@ export class QualitativeIndicatorComponent {
                 let arr = response.filter(item => {
                   return item.condition == "QL";
                 });
-                console.log(arr);
+                //console.log(arr);
                 this.condition = arr;
-                console.log(this.condition)
+                //console.log(this.condition)
                 this.myForm.setValue({
                   yearPeriode: moment().format("YYYY"),
                   condition: this.condition[0].charId
@@ -181,12 +181,12 @@ export class QualitativeIndicatorComponent {
               }
 
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
       }
@@ -205,7 +205,7 @@ export class QualitativeIndicatorComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
+    //console.log(this.myForm.value.condition);
   }
 
   reload() {
@@ -287,19 +287,19 @@ export class QualitativeIndicatorComponent {
   }
 
   submit(event?) {
-    console.log(event);
+    //console.log(event);
     event
       ? this.service
           .putreq("TbMQualitativeImpacts", JSON.stringify(event.newData))
           .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
+            //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-              console.log(error);
+              //console.log(error);
             };
           })
       : null;
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
 
     this.toastr.success("Data Saved!");
   }

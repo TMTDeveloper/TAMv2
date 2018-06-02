@@ -160,14 +160,14 @@ export class DashboardComponent {
     this.service.getreq("Riskreports").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
 
         this.service.getreq("tbmlibraries").subscribe(response => {
           if (response != null) {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-            console.log(arr);
+            //console.log(arr);
             this.divisionData = arr;
             this.division = this.divisionData[0];
 
@@ -178,17 +178,17 @@ export class DashboardComponent {
                 this.reload();
               }
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
   }
@@ -198,20 +198,20 @@ export class DashboardComponent {
       if (response != null) {
         const data = response;
         let find = 0;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";
           this.tableapprove = data;
           find = find + 1;
-          console.log(this.tableapprove);
-          console.log("liatapprove");
+          //console.log(this.tableapprove);
+          //console.log("liatapprove");
         });
         //this.reloadApprove();
 
         this.dataapprove = this.tableapprove[find - 1];
-        console.log("dataapprove");
-        console.log(this.dataapprove);
+        //console.log("dataapprove");
+        //console.log(this.dataapprove);
       }
     });
   }
@@ -235,7 +235,7 @@ export class DashboardComponent {
   }
 
   reload() {
-    console.log(this.department);
+    //console.log(this.department);
     switch (this.dataapprove.stat) {
       case "submit":
         this.riskstat = "Submit";
@@ -251,17 +251,17 @@ export class DashboardComponent {
   }
 
   filterDepartment() {
-    console.log(JSON.stringify(this.division));
+    //console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
       return item.kodeDivisi == this.division;
     });
-    console.log(arr);
+    //console.log(arr);
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
       this.reload();
     } else {
-      console.log(arr);
+      //console.log(arr);
       this.departmentFilter = [];
       this.reload();
     }
@@ -272,24 +272,24 @@ export class DashboardComponent {
       ? this.service
           .putreq("TbMComInputs", JSON.stringify(event.newData))
           .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
+            //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-              console.log(error);
+              //console.log(error);
             };
           })
       : null;
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
         this.service
           .postreq("TbMComInputs", this.tabledata[index])
           .subscribe(response => {
-            console.log(response);
+            //console.log(response);
             this.tabledata[index].status = "0";
             error => {
-              console.log(error);
+              //console.log(error);
             };
           });
       }
@@ -332,7 +332,7 @@ export class DashboardComponent {
   }
 
   saveCSV() {
-    console.log(this.tabledata);
+    //console.log(this.tabledata);
     var options = {
       fieldSeparator: ",",
       quoteStrings: '"',
@@ -348,7 +348,7 @@ export class DashboardComponent {
     this.service.getreq("Draftrisks").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(data);
+        //console.log(data);
         let datafound = false;
         response.forEach(element => {
           if (element.draftKey == riskno) {
@@ -364,7 +364,7 @@ export class DashboardComponent {
         this.toastr.error("Draft doesn't exist!");
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
   }
@@ -390,18 +390,18 @@ export class DashboardComponent {
   
         riskNo: event.riskNo
       };
-      console.log(event);
-      console.log(savedData);
+      ////console.log(event);
+      ////console.log(savedData);
       this.service
         .postreq("TbRRiskAssessments/deletecontrol", savedData)
         .subscribe(
           response => {
-            console.log(response);
+            ////console.log(response);
             this.loadData();
             this.toastr.success("Data Deleted!");
           },
           error => {
-            console.log(error);
+            ////console.log(error);
             this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
           }
         );

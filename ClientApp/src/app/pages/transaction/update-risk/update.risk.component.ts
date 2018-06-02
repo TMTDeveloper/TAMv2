@@ -102,7 +102,7 @@ export class UpdateRiskComponent {
         this.source.load(this.tabledata);
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
     this.source = this.source.setFilter(
@@ -126,7 +126,7 @@ export class UpdateRiskComponent {
     this.selectedData = event.data;
   }
   goToPage() {
-    console.log(this.selectedData);
+    //console.log(this.selectedData);
     let selectedData=this.selectedData;
     this.router.navigate(["/pages/transaction/risk-register"], {
       queryParams: {

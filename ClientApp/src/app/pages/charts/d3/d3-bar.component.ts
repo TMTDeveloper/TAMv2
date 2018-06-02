@@ -55,7 +55,7 @@ export class D3BarComponent implements OnDestroy {
       this.service.getreq("ControlMappings").subscribe(response => {
         if (response != null) {
           const data = response;
-          //console.log(JSON.stringify(response));
+          ////console.log(JSON.stringify(response));
           data.forEach((element, ind) => {
             data[ind].status = "0";
             this.tabledata = data;
@@ -81,11 +81,11 @@ export class D3BarComponent implements OnDestroy {
     let arr = this.tabledata.filter(item => {
       return item.division == "ISTD";
     });
-    //console.log(arr[0] != null);
+    ////console.log(arr[0] != null);
     if (arr[0] != null) {
-      //console.log("masuksini");
+      ////console.log("masuksini");
       this.chartdata = arr[0];
-     // console.log(this.chartdata);
+     // //console.log(this.chartdata);
     } else {
       this.chartdata = {
         preventive:0,

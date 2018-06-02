@@ -32,7 +32,7 @@ export class ControlMappingComponent implements OnDestroy {
 
   @Input()
   set dataset(value: any) {
-    console.log(value);
+    ////console.log(value);
     this.loadData(value);
   }
   constructor(private theme: NbThemeService, public service: BackendService) {}
@@ -58,7 +58,7 @@ export class ControlMappingComponent implements OnDestroy {
           const colors: any = config.variables;
           const chartjs: any = config.variables.chartjs;
 
-          console.log(this.chartdata);
+          ////console.log(this.chartdata);
 
           this.data = {
             labels: ["Control"],
@@ -149,11 +149,11 @@ export class ControlMappingComponent implements OnDestroy {
     let arr = this.tabledata.filter(item => {
       return item.division == "ISTD";
     });
-    //console.log(arr[0] != null);
+    //////console.log(arr[0] != null);
     if (arr[0] != null) {
-      //console.log("masuksini");
+      //////console.log("masuksini");
       this.chartdata = arr[0];
-      // console.log(this.chartdata);
+      // ////console.log(this.chartdata);
     } else {
       this.chartdata = {
         preventive: 0,

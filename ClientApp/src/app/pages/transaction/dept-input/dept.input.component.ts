@@ -153,7 +153,7 @@ export class DeptInputComponent {
     this.service.getreq("TbMDeptInputs").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         let vCounter = 0;
         data.forEach((element, ind) => {
           let vLastIndex = 0;
@@ -178,29 +178,29 @@ export class DeptInputComponent {
             let arr = response.filter(item => {
               return item.condition == "DIV";
             });
-            console.log(arr);
+            //console.log(arr);
             this.divisionData = arr;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
               if (response != null) {
                 this.departmentData = response;
                 this.division != null ? null : (this.division = arr[0].charId);
-                console.log(this.divisionData);
+                //console.log(this.divisionData);
 
                 this.filterDepartment();
               }
               // error => {
-              //   console.log(error);
+              //   //console.log(error);
               // };
             });
           }
           // error => {
-          //   console.log(error);
+          //   //console.log(error);
           // };
         });
       }
       // error => {
-      //   console.log(error);
+      //   //console.log(error);
       // };
     });
   }
@@ -282,7 +282,7 @@ export class DeptInputComponent {
   }
 
   reload() {
-    console.log(this.division);
+    //console.log(this.division);
     this.source.setFilter(
       [
         { field: "yearActive", search: this.yearPeriode },
@@ -413,17 +413,17 @@ export class DeptInputComponent {
   }
 
   filterDepartment() {
-    console.log(JSON.stringify(this.division));
+    //console.log(JSON.stringify(this.division));
     let arr = this.departmentData.filter(item => {
       return item.kodeDivisi == this.division;
     });
-    console.log(arr);
+    //console.log(arr);
     if (arr[0] != null) {
       this.departmentFilter = arr;
       this.department = arr[0].kodeDepartment;
       this.reload();
     } else {
-      console.log(arr);
+      //console.log(arr);
       this.departmentFilter = [];
     }
   }
@@ -433,24 +433,24 @@ export class DeptInputComponent {
       ? this.service
           .putreq("TbMDeptInputs", JSON.stringify(event.newData))
           .subscribe(response => {
-            console.log(JSON.stringify(event.newData));
+            //console.log(JSON.stringify(event.newData));
             event.confirm.resolve(event.newData);
             error => {
-              console.log(error);
+              //console.log(error);
             };
           })
       : null;
-    console.log(JSON.stringify(this.tabledata));
+    //console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
       let index = ind;
       if (this.tabledata[index].status == "1") {
         this.service
           .postreq("TbMDeptInputs", this.tabledata[index])
           .subscribe(response => {
-            console.log(response);
+            //console.log(response);
             this.tabledata[index].status = "0";
             error => {
-              console.log(error);
+              //console.log(error);
             };
           });
       }
@@ -477,13 +477,13 @@ export class DeptInputComponent {
 
     this.service.postreq("TbMdeptinputs/deletecontrol", savedData).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         this.loadData();
         this.toastr.success("Data Deleted!");
         event.confirm.resolve();
       },
       error => {
-        console.log(error);
+        //console.log(error);
         this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
         event.confirm.reject();
       }

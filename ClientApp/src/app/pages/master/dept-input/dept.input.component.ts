@@ -192,7 +192,7 @@ export class DeptInputComponent {
         this.reload();
       });
 
-    console.log(this.myForm.value.condition);
+    //console.log(this.myForm.value.condition);
   }
 
   showModal(no_iku) {

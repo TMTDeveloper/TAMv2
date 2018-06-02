@@ -99,12 +99,12 @@ export class ChartComponent implements OnInit {
   @Input()
   set heat(value: any) {
     this.data = null;
-    console.log("msefert");
-    console.log(this.data);
+    //console.log("msefert");
+    //console.log(this.data);
     this.heatData = value;
     this.data = this.dataDefault;
-    console.log("msefert");
-    console.log(this.heatData);
+    //console.log("msefert");
+    //console.log(this.heatData);
     this.heatMapProcess();
     this.setCurrentDataSet(this.data);
   }
@@ -144,9 +144,9 @@ export class ChartComponent implements OnInit {
       });
       this.chart.data(null);
       this.chart.data(data);
-      console.log("masukchart");
-      console.log(this.heatData);
-      console.log(data);
+      //console.log("masukchart");
+      //console.log(this.heatData);
+      //console.log(data);
 
     } else {
       this.chart
@@ -174,7 +174,7 @@ export class ChartComponent implements OnInit {
           );
         }
       });
-      console.log("masuksini");
+      //console.log("masuksini");
       this.chart.data(null);
     }
   }
@@ -185,9 +185,9 @@ export class ChartComponent implements OnInit {
       if (this.heatData != null) {
         this.chart.data(null);
         this.chart.data(this.data);
-        console.log("masukchart");
-        console.log(this.heatData);
-        console.log(this.data);
+        //console.log("masukchart");
+        //console.log(this.heatData);
+        //console.log(this.data);
         this.chart
           .labels()
           .useHtml(true)
@@ -255,7 +255,7 @@ export class ChartComponent implements OnInit {
       ];
     });
     legend.position("bottom");
-    console.log();
+    //console.log();
 
     this.chart.legend(true);
     this.chart.container(this.container.nativeElement);
@@ -264,13 +264,13 @@ export class ChartComponent implements OnInit {
   }
 
   findAndReplaceIr(object, value, replacevalue) {
-    console.log("4")
+    //console.log("4")
     for (var x in object) {
       if (typeof object[x] == typeof {}) {
         this.findAndReplaceIr(object[x], value, replacevalue);
       }
       if (object[x] == value) {
-        console.log("4")
+        //console.log("4")
         object["irdata"] != null
           ? (object["irdata"] = object["irdata"] + "," + replacevalue)
           : (object["irdata"] = replacevalue);
@@ -279,13 +279,13 @@ export class ChartComponent implements OnInit {
     }
   }
   findAndReplaceRd(object, value, replacevalue) {
-    console.log("3")
+    //console.log("3")
     for (var x in object) {
       if (typeof object[x] == typeof {}) {
         this.findAndReplaceRd(object[x], value, replacevalue);
       }
       if (object[x] == value) {
-        console.log("3")
+        //console.log("3")
         object["rddata"] != null
           ? (object["rddata"] = object["rddata"] + "," + replacevalue)
           : (object["rddata"] = replacevalue);
@@ -295,7 +295,7 @@ export class ChartComponent implements OnInit {
   }
 
   heatMapProcess() {
-    console.log("2")
+    //console.log("2")
     let data = [
       { x: "Rare", y: "Insignificant", heat: 0, fill: "#4bf442", id: 1 },
       { x: "Rare", y: "Minor", heat: 0, fill: "#4bf442", id: 2 },
@@ -347,13 +347,13 @@ export class ChartComponent implements OnInit {
       });
       if (rdId[0] != null) {
         this.findAndReplaceRd(data, rdId[0].id, element.no);
-        console.log(data);
+        //console.log(data);
       }
     });
     this.changeGraph(data)
   }
   changebbl() {
-    console.log(this.data);
+    //console.log(this.data);
     this.chart.data(this.data);
     this.chart
       .labels()
