@@ -44,7 +44,7 @@ export class CompanyInputComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       description: {
@@ -249,7 +249,7 @@ export class CompanyInputComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         description: {

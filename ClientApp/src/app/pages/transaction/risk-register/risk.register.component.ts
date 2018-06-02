@@ -2051,6 +2051,7 @@ export class RiskRegisterComponent {
       this.dataInput.riskDescription.lossEvent == "" ||
       this.dataInput.riskDescription.caused == "" ||
       this.dataInput.riskDescription.riskLevel == "" ||
+      this.loopRiskImpact() == null ||
       this.dataInput.inherentRisk.overallImpact.description == "" ||
       this.dataInput.inherentRisk.likelihood == "" ||
       this.dataInput.inherentRisk.overallRisk.description == "" ||

@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>Input Control</nb-card-header>
+  <nb-card-header>Input Treatment Plan</nb-card-header>
   <nb-card-body>
     <form (ngSubmit)="submit()">
 
@@ -31,7 +31,7 @@
       </div>
 
           <button type="submit" [disabled]="formData.description==''||formData.type==''||formData.pic==''||formData.dueDate==''" class="btn btn-danger">Submit</button>
-          <button type="submit" class="btn btn-success" (click)="closeModal()">Close</button>
+          <button type="submit" class="btn btn-hero-primary" (click)="closeModal()">Close</button>
     </form>
   </nb-card-body>
 </nb-card>

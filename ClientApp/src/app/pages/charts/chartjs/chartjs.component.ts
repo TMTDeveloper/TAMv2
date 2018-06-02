@@ -73,7 +73,7 @@ export class ChartjsComponent {
         width: "5%"
       },
       caused: {
-        title: "Caused",
+        title: "Cause",
         type: "string",
         filter: false,
         editable: true,
@@ -108,7 +108,7 @@ export class ChartjsComponent {
         width: "5%"
       },
       control: {
-        title: "Caused",
+        title: "Cause",
         type: "string",
         filter: false,
         editable: true,

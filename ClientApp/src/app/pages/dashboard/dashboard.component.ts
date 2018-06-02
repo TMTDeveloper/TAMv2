@@ -384,26 +384,31 @@ export class DashboardComponent {
   }
 
   deleteControl(event) {
-    const savedData = {
-      yearActive: event.yearActive,
-
-      riskNo: event.riskNo
-    };
-    console.log(event);
-    console.log(savedData);
-    this.service
-      .postreq("TbRRiskAssessments/deletecontrol", savedData)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.loadData();
-          this.toastr.success("Data Deleted!");
-        },
-        error => {
-          console.log(error);
-          this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
-        }
-      );
+    if (window.confirm('Are you sure you want to delete?')) {
+      const savedData = {
+        yearActive: event.yearActive,
+  
+        riskNo: event.riskNo
+      };
+      console.log(event);
+      console.log(savedData);
+      this.service
+        .postreq("TbRRiskAssessments/deletecontrol", savedData)
+        .subscribe(
+          response => {
+            console.log(response);
+            this.loadData();
+            this.toastr.success("Data Deleted!");
+          },
+          error => {
+            console.log(error);
+            this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
+          }
+        );
+    } else {
+      event.confirm.reject();
+    }
+    
   }
 
   insertSpace(data: string) {

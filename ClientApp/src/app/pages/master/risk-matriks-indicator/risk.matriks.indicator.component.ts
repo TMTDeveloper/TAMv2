@@ -50,7 +50,7 @@ export class RiskMatriksIndicatorComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     }
   };
   conditionA: any = {
@@ -214,7 +214,7 @@ export class RiskMatriksIndicatorComponent {
                 },
                 pager: {
                   display: true,
-                  perPage: 30
+                  perPage: 5
                 },
                 columns: {
                   indicatorIdA: {
@@ -442,7 +442,7 @@ export class RiskMatriksIndicatorComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         indicatorIdA: {
@@ -629,7 +629,7 @@ export class RiskMatriksIndicatorComponent {
         },
         pager: {
           display: true,
-          perPage: 30
+          perPage: 5
         },
         columns: {
           counterNo: {

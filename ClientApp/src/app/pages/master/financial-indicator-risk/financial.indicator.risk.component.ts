@@ -44,7 +44,7 @@ export class FinancialIndicatorRiskComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       counterNo: {
@@ -276,7 +276,7 @@ export class FinancialIndicatorRiskComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         counterNo: {
@@ -327,7 +327,8 @@ export class FinancialIndicatorRiskComponent {
     this.source.setFilter(
       [
         { field: "category", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode }
+        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "flagActive", search: 'Y' }
       ],
       true
     );

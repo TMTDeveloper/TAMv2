@@ -43,7 +43,7 @@ export class ViewDraftComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       draftKey: {

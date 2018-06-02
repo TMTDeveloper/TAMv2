@@ -48,7 +48,7 @@ export class OperationalIndicatorRiskComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       counterNo: {
@@ -274,7 +274,7 @@ export class OperationalIndicatorRiskComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         counterNo: {
@@ -329,7 +329,8 @@ export class OperationalIndicatorRiskComponent {
     this.source.setFilter(
       [
         { field: "category", search: this.myForm.value.condition },
-        { field: "yearActive", search: this.myForm.value.yearPeriode }
+        { field: "yearActive", search: this.myForm.value.yearPeriode },
+        { field: "flagActive", search: 'Y' }
       ],
       true
     );

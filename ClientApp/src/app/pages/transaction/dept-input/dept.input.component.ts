@@ -51,7 +51,7 @@ export class DeptInputComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       vCounterNo: {
@@ -320,7 +320,7 @@ export class DeptInputComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         vCounterNo: {
@@ -381,7 +381,7 @@ export class DeptInputComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         vCounterNo: {

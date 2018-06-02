@@ -39,7 +39,7 @@ export class RiskOverviewComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       no: {
@@ -179,7 +179,7 @@ export class RiskOverviewComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         counterNo: {

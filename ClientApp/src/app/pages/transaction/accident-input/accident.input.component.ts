@@ -43,7 +43,7 @@ export class AccidentInputComponent {
     },
     pager: {
       display: true,
-      perPage: 30
+      perPage: 5
     },
     columns: {
       vCounterNo: {
@@ -362,7 +362,7 @@ export class AccidentInputComponent {
       hideSubHeader: true,
       actions: {
         add: false,
-        edit: this.yearPeriode == moment().format("YYYY"),
+        edit: true,
         delete: true,
         position: "right",
         columnTitle: "Action",
@@ -370,7 +370,7 @@ export class AccidentInputComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         vCounterNo: {
@@ -476,7 +476,7 @@ export class AccidentInputComponent {
       hideSubHeader: true,
       actions: {
         add: false,
-        edit: this.yearPeriode == moment().format("YYYY"),
+        edit: true,
         delete: true,
         position: "right",
         columnTitle: "Action",
@@ -484,7 +484,7 @@ export class AccidentInputComponent {
       },
       pager: {
         display: true,
-        perPage: 30
+        perPage: 5
       },
       columns: {
         vCounterNo: {
