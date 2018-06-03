@@ -1558,8 +1558,8 @@ export class RiskRegisterComponent {
           year: moment().format("YYYY"),
           userUpdated: "Admin",
           dateUpdated: moment().format(),
-          userCreated: this.draftData.dateCreated,
-          dateCreated: this.draftData.dateCreated
+          userCreated: "Admin",
+          dateCreated: moment().format(),
         };
         this.service.putreq("draftrisks", savedData).subscribe(
           response => {
@@ -2220,9 +2220,11 @@ export class RiskRegisterComponent {
       //console.log(arr);
       this.departmentFilter = [];
     }
+    this.changeDept();
   }
-  seedepart() {
-    //console.log(this.dataInput.divisionDepartment);
+  changeDept(){
+    this.dataInput.divisionDepartment.departmentKpi.deptInpId="";
+    this.dataInput.divisionDepartment.departmentKpi.description="";
   }
 
 

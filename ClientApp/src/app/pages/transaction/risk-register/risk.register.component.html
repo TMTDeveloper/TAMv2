@@ -41,7 +41,7 @@
             <label for="department" class="col-sm-2 col-form-label">Department</label>
             <div class="col-sm-6">
 
-              <select class="form-control" name="department" [(ngModel)]="dataInput.divisionDepartment.department.kodeDepartment" (change)="seedepart()">
+              <select class="form-control" name="department" [(ngModel)]="dataInput.divisionDepartment.department.kodeDepartment" (change)="changeDept()">
                 <option *ngFor="let data of departmentFilter" [ngValue]="data.kodeDepartment">{{data.department}}</option>
               </select>
 
