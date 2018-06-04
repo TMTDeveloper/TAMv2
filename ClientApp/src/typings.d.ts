@@ -11,5 +11,5 @@ interface NodeModule {
 }
 
 declare var tinymce: any;
-
+declare var initializePassportSSO:any;
 declare var echarts: any;

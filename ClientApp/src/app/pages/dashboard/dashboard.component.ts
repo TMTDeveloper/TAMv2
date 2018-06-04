@@ -218,7 +218,7 @@ export class DashboardComponent {
 
   ngAfterViewInit() {
     this.source.load(this.tabledata);
-    document.getElementsByClassName("column_name")["0"].style.width = "100px";
+    // document.getElementsByClassName("column_name")["0"].style.width = "100px";
   }
 
   comGenerate(lastIndex) {
@@ -361,6 +361,7 @@ export class DashboardComponent {
             datafound = true;
           }
         });
+      } else {
         this.toastr.error("Draft doesn't exist!");
       }
       // error => {
@@ -384,10 +385,10 @@ export class DashboardComponent {
   }
 
   deleteControl(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm("Are you sure you want to delete?")) {
       const savedData = {
         yearActive: event.yearActive,
-  
+
         riskNo: event.riskNo
       };
       ////console.log(event);
@@ -402,44 +403,47 @@ export class DashboardComponent {
           },
           error => {
             ////console.log(error);
-            this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
+            this.toastr.error(
+              "Data Delete Failed! Reason: " + error.statusText
+            );
           }
         );
     } else {
       event.confirm.reject();
     }
-    
   }
 
   insertSpace(data: string) {
     let arrString = [];
-    let lastPosition = 0;
-    for (let i = 0; i <= data.length; i++) {
-      if (data.slice(i - 1, i) == ",") {
-        arrString.push(data.slice(lastPosition, i));
-        lastPosition = i;
-      }
-      if (i == data.length) {
-        arrString.push(data.slice(lastPosition, i));
+    if (data != null) {
+      let lastPosition = 0;
+      for (let i = 0; i <= data.length; i++) {
+        if (data.slice(i - 1, i) == ",") {
+          arrString.push(data.slice(lastPosition, i));
+          lastPosition = i;
+        }
+        if (i == data.length) {
+          arrString.push(data.slice(lastPosition, i));
+        }
       }
     }
-
     return arrString;
   }
 
   insertSpace2(data: string) {
     let arrString = [];
-    let lastPosition = 0;
-    for (let i = 0; i <= data.length; i++) {
-      if (data.slice(i - 1, i) == "\n") {
-        arrString.push(data.slice(lastPosition, i));
-        lastPosition = i;
-      }
-      if (i == data.length) {
-        arrString.push(data.slice(lastPosition, i));
+    if (data != null) {
+      let lastPosition = 0;
+      for (let i = 0; i <= data.length; i++) {
+        if (data.slice(i - 1, i) == "\n") {
+          arrString.push(data.slice(lastPosition, i));
+          lastPosition = i;
+        }
+        if (i == data.length) {
+          arrString.push(data.slice(lastPosition, i));
+        }
       }
     }
-
     return arrString;
   }
 }

@@ -595,9 +595,9 @@ export class ChartjsComponent {
       var doc = new jsPDF({
         orientation: "landscape",
         unit: "mm",
-        format: [Math.floor(width * 0.264583), Math.floor(height * 0.264583)]
+        format: [Math.floor(width * 0.264583)+5, Math.floor(height * 0.264583)+5]
       });
-      doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 0, 0);
+      doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 2, 2);
       doc.save(`Report-${Date.now()}.pdf`);
     });
   }
@@ -649,22 +649,26 @@ export class ChartjsComponent {
 
   insertSpace(data: string) {
     let arrString = [];
-    let lastPosition = 0;
-    for (let i = 0; i <= data.length; i++) {
-      if (data.slice(i - 1, i) == ",") {
-        arrString.push(data.slice(lastPosition, i));
-        lastPosition = i;
-      }
-      if (i == data.length) {
-        arrString.push(data.slice(lastPosition, i));
+
+    if (data != null) {
+      let lastPosition = 0;
+      for (let i = 0; i <= data.length; i++) {
+        if (data.slice(i - 1, i) == ",") {
+          arrString.push(data.slice(lastPosition, i));
+          lastPosition = i;
+        }
+        if (i == data.length) {
+          arrString.push(data.slice(lastPosition, i));
+        }
       }
     }
-
     return arrString;
   }
 
   insertSpace2(data: string) {
     let arrString = [];
+    
+    if (data != null) {
     let lastPosition = 0;
     for (let i = 0; i <= data.length; i++) {
       if (data.slice(i - 1, i) == "\n") {
@@ -675,7 +679,7 @@ export class ChartjsComponent {
         arrString.push(data.slice(lastPosition, i));
       }
     }
-
+  }
     return arrString;
   }
 }
