@@ -300,7 +300,7 @@ export class ChartComponent implements OnInit {
 
   heatMapProcess() {
     //console.log("2")
-    let data = [
+    let data: any[] = [
       {
         x: "Rare",
         y: "Insignificant",
