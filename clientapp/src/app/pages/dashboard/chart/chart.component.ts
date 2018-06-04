@@ -533,7 +533,9 @@ export class ChartComponent implements OnInit {
         // this.findAndReplaceIr(data, irId[0].id, element.no);
         data.forEach(item => {
           item.x == element.irLikelihood && item.y == element.irImpact
-            ? (item.irdata = item.irdata + "," + element.no)
+            ? item.irdata == ""
+              ? (item.irdata = item.irdata + element.no)
+              : (item.irdata = item.irdata + "," + element.no)
             : null;
         });
       }
@@ -543,7 +545,9 @@ export class ChartComponent implements OnInit {
       if (rdId[0] != null) {
         data.forEach(item => {
           item.x == element.rdLikelihood && item.y == element.rdImpact
-            ? (item.rddata = item.rddata + "," + element.no)
+            ? item.rddata == ""
+              ? (item.rddata = item.rddata + element.no)
+              : (item.rddata = item.rddata + "," + element.no)
             : null;
         });
         // this.findAndReplaceRd(data, rdId[0].id, element.no);
