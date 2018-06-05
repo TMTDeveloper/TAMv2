@@ -639,6 +639,12 @@ export class AccidentInputComponent {
       );
   }
 
+  public accidentFilter(division, department) {
+    this.division = division;
+    this.department = department;
+    this.reload;
+  }
+
   public closeModal() {
     this.childModal.close();
   }

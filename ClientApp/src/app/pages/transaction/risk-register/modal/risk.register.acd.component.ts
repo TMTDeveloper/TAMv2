@@ -105,21 +105,21 @@ export class RiskRegisterAcdComponent {
     this.service.getreq("TbMAccidentDetails").subscribe(response => {
       if (response != null) {
         const data = response;
-
-        let vCounter = 0;
-        data.forEach((element, ind) => {
-          data[ind].yearActive = data[ind].yearActive.toString();
-          data[ind].status = "0";
-          vCounter = vCounter + 1;
-          data[ind].vCounterNo = vCounter;
-        });
-        console.log(this.filterData);
         let arr = data.filter(item => {
           return (
             item.division == this.filterData.division &&
             item.department == this.filterData.department
           );
         });
+        let vCounter = 0;
+        arr.forEach((element, ind) => {
+          arr[ind].yearActive = arr[ind].yearActive.toString();
+          arr[ind].status = "0";
+          vCounter = vCounter + 1;
+          arr[ind].vCounterNo = vCounter;
+        });
+        console.log(this.filterData);
+      
         this.source.load(arr);
       }
       // error => {
@@ -134,6 +134,10 @@ export class RiskRegisterAcdComponent {
       container: "nb-layout",
       backdrop: "static"
     });
+    this.childModal.componentInstance.accidentFilter(
+      this.filterData.division,
+      this.filterData.department
+    );
     this.childModal.componentInstance.childModalMode = true;
     this.childModal.result.then(async response => {
       this.loadData();

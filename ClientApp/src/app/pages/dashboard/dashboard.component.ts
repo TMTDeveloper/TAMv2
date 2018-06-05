@@ -193,6 +193,21 @@ export class DashboardComponent {
     });
   }
 
+  refreshData() {
+    this.service.getreq("Riskreports").subscribe(response => {
+      if (response != null) {
+        const data = response;
+        //console.log(JSON.stringify(response));
+
+        this.fullData = data;
+        this.reload();
+      }
+      // error => {
+      //   //console.log(error);
+      // };
+    });
+  }
+
   loadApprove() {
     this.service.getreq("TbRApproves").subscribe(response => {
       if (response != null) {
@@ -398,7 +413,7 @@ export class DashboardComponent {
         .subscribe(
           response => {
             ////console.log(response);
-            this.loadData();
+            this.refreshData();
             this.toastr.success("Data Deleted!");
           },
           error => {
