@@ -66,7 +66,7 @@ export class ChartjsPieComponent implements OnDestroy {
                   this.chartdata.ctrWeak
                 ],
 
-                backgroundColor: ["#d84315", "#ffb74d", "#90caf9", "#4bf442"]
+                backgroundColor: ["#6BFB13", "#ECFF00", "#F02602", "#9D02F0"]
               }
             ],
             labels: ["Effective", "Moderate", "Ineffective", "Weak"]

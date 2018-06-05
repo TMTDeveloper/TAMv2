@@ -92,82 +92,6 @@ export class RiskRegisterComponent {
     }
   };
 
-  treatmentset: any = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>'
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
-    },
-    mode: "inline",
-    sort: true,
-    hideSubHeader: true,
-    actions: {
-      add: false,
-      edit: true,
-      delete: true,
-      position: "right",
-      columnTitle: "Action",
-      width: "10%"
-    },
-    pager: {
-      display: true,
-      perPage: 5
-    },
-    columns: {
-      no: {
-        title: "No",
-        type: "number",
-        filter: false,
-        editable: false,
-        width: "5%"
-      },
-      description: {
-        title: "Treatment Plan",
-        type: "string",
-        filter: false,
-        editable: true,
-        width: "20%"
-      },
-      type: {
-        title: "Type",
-        type: "string",
-        filter: false,
-        editable: true,
-        width: "20%",
-        editor: {
-          type: "list",
-          config: {
-            list: this.ctrType
-          }
-        }
-      },
-      pic: {
-        title: "PIC",
-        type: "string",
-        filter: false,
-        editable: true,
-        width: "20%"
-      },
-      dueDate: {
-        title: "Due Date",
-        type: "string",
-        filter: false,
-        editable: true,
-        width: "20%"
-      }
-    }
-  };
-
   accidentSrc: LocalDataSource = new LocalDataSource();
   controlSrc: LocalDataSource = new LocalDataSource();
   treatmentSrc: LocalDataSource = new LocalDataSource();
@@ -274,10 +198,15 @@ export class RiskRegisterComponent {
         description: "",
         score: 0
       },
-      likelihood: "",
+      likelihood: {
+        description: "",
+        indicatorId: "",
+        score: 0
+      },
       overallImpact: {
         indicatorId: "",
-        description: ""
+        description: "",
+        score: 0
       },
       operationalImpact: {
         category: "",
@@ -329,10 +258,15 @@ export class RiskRegisterComponent {
         description: "",
         score: 0
       },
-      likelihood: "",
+      likelihood: {
+        description: "",
+        indicatorId: "",
+        score: 0
+      },
       overallImpact: {
         indicatorId: "",
-        description: ""
+        description: "",
+        score: 0
       },
       operationalImpact: {
         category: "",
@@ -407,6 +341,81 @@ export class RiskRegisterComponent {
       treatmentPlanArr: []
     }
   };
+  treatmentset: any = {
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>'
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true
+    },
+    mode: "inline",
+    sort: true,
+    hideSubHeader: true,
+    actions: {
+      add: false,
+      edit: !this.dataInput.expectedRisk.treatmentPlanSwitch,
+      delete: !this.dataInput.expectedRisk.treatmentPlanSwitch,
+      position: "right",
+      columnTitle: "Action",
+      width: "10%"
+    },
+    pager: {
+      display: true,
+      perPage: 5
+    },
+    columns: {
+      no: {
+        title: "No",
+        type: "number",
+        filter: false,
+        editable: false,
+        width: "5%"
+      },
+      description: {
+        title: "Treatment Plan",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      type: {
+        title: "Type",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%",
+        editor: {
+          type: "list",
+          config: {
+            list: this.ctrType
+          }
+        }
+      },
+      pic: {
+        title: "PIC",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
+      },
+      dueDate: {
+        title: "Due Date",
+        type: "string",
+        filter: false,
+        editable: true,
+        width: "20%"
+      }
+    }
+  };
 
   financialImpact = [
     {
@@ -435,32 +444,7 @@ export class RiskRegisterComponent {
     }
   ];
 
-  operationalImpact = [
-    {
-      data: "",
-      desc: ""
-    },
-    {
-      data: "MAS",
-      desc: "M/S"
-    },
-    {
-      data: "SAL",
-      desc: "Service Share"
-    },
-    {
-      data: "CSA",
-      desc: "CS Score"
-    },
-    {
-      data: "CAS",
-      desc: "Employee Satisfaction"
-    },
-    {
-      data: "DOD",
-      desc: "Days of operation disruption"
-    }
-  ];
+  operationalImpact: any[] = [];
   divisionData: any[] = [];
   departmentData: any[] = [];
   departmentFilter: any[] = [];
@@ -559,6 +543,19 @@ export class RiskRegisterComponent {
               return item.condition == "DIV";
             });
             //console.log(arr);
+
+            let arrOp = response.filter(item => {
+              return item.condition == "OP";
+            });
+
+            if (arrOp[0] != null) {
+              arrOp.push({
+                charId: "",
+                description: ""
+              });
+              this.operationalImpact = arrOp;
+            }
+
             this.divisionData = arr;
 
             this.service.getreq("tbmdivdepts").subscribe(response => {
@@ -1113,15 +1110,17 @@ export class RiskRegisterComponent {
     });
     if (arr[0] != null) {
       //console.log("disinihehe");
-      //console.log(arr);
+      console.log(arr);
       this.dataInput.inherentRisk.overallImpact.description =
         arr[0].description;
       this.dataInput.inherentRisk.overallImpact.indicatorId =
         arr[0].indicatorId;
+      this.dataInput.inherentRisk.overallImpact.score = arr[0].score;
       this.findOverallRisk();
     } else {
       this.dataInput.inherentRisk.overallImpact.description = "";
       this.dataInput.inherentRisk.overallImpact.indicatorId = "";
+      this.dataInput.inherentRisk.overallImpact.score = 0;
       this.findOverallRisk();
     }
   }
@@ -1136,7 +1135,8 @@ export class RiskRegisterComponent {
             item.yearActive == this.yearPeriode &&
             item.indicatorIdA ==
               this.dataInput.inherentRisk.overallImpact.indicatorId &&
-            item.indicatorIdB == this.dataInput.inherentRisk.likelihood
+            item.indicatorIdB ==
+              this.dataInput.inherentRisk.likelihood.indicatorId
           );
         });
         //console.log(arr);
@@ -1386,12 +1386,15 @@ export class RiskRegisterComponent {
         arr[0].description;
       this.dataInput.residualRisk.overallImpact.indicatorId =
         arr[0].indicatorId;
+      this.dataInput.residualRisk.overallImpact.score = arr[0].score;
       this.findOverallRiskRd();
     } else {
       this.dataInput.residualRisk.overallImpact.description = "";
       this.dataInput.residualRisk.overallImpact.indicatorId = "";
+      this.dataInput.residualRisk.overallImpact.score = 0;
       this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
-      this.dataInput.residualRisk.likelihood == ""
+      this.dataInput.residualRisk.likelihood.indicatorId == "" &&
+      this.dataInput.residualRisk.overallImpact.score == 0
         ? (this.dataInput.expectedRisk.disabled = true)
         : (this.dataInput.expectedRisk.disabled = false);
       this.findOverallRiskRd();
@@ -1407,7 +1410,8 @@ export class RiskRegisterComponent {
             item.yearActive == this.yearPeriode &&
             item.indicatorIdA ==
               this.dataInput.residualRisk.overallImpact.indicatorId &&
-            item.indicatorIdB == this.dataInput.residualRisk.likelihood
+            item.indicatorIdB ==
+              this.dataInput.residualRisk.likelihood.indicatorId
           );
         });
         if (arr[0] != null) {
@@ -1426,7 +1430,7 @@ export class RiskRegisterComponent {
             this.dataInput.residualRisk.overallRisk.score =
               arrIndicator[0].score;
             this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
-            this.dataInput.residualRisk.likelihood == ""
+            this.dataInput.residualRisk.likelihood.indicatorId == ""
               ? (this.dataInput.expectedRisk.disabled = true)
               : (this.dataInput.expectedRisk.disabled = false);
             this.findOverallControl();
@@ -1559,7 +1563,7 @@ export class RiskRegisterComponent {
           userUpdated: "Admin",
           dateUpdated: moment().format(),
           userCreated: "Admin",
-          dateCreated: moment().format(),
+          dateCreated: moment().format()
         };
         this.service.putreq("draftrisks", savedData).subscribe(
           response => {
@@ -1606,7 +1610,7 @@ export class RiskRegisterComponent {
         opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
         qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
         irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
-        likelihoodIr: this.dataInput.inherentRisk.likelihood,
+        likelihoodIr: this.dataInput.inherentRisk.likelihood.indicatorId,
         overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
         controlList: 0,
         operationCt: this.dataInput.currentAction.operation,
@@ -1617,7 +1621,7 @@ export class RiskRegisterComponent {
         opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
         qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
         rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
-        likelihoodRd: this.dataInput.residualRisk.likelihood,
+        likelihoodRd: this.dataInput.residualRisk.likelihood.indicatorId,
         overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
         overallEf: this.dataInput.currentAction.overallControl.indicatorId,
         treatmentPlan: false,
@@ -1693,7 +1697,7 @@ export class RiskRegisterComponent {
         opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
         qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
         irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
-        likelihoodIr: this.dataInput.inherentRisk.likelihood,
+        likelihoodIr: this.dataInput.inherentRisk.likelihood.indicatorId,
         overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
         controlList: 0,
         operationCt: this.dataInput.currentAction.operation,
@@ -1704,7 +1708,7 @@ export class RiskRegisterComponent {
         opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
         qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
         rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
-        likelihoodRd: this.dataInput.residualRisk.likelihood,
+        likelihoodRd: this.dataInput.residualRisk.likelihood.indicatorId,
         overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
         overallEf: this.dataInput.currentAction.overallControl.indicatorId,
         treatmentPlan: false,
@@ -1953,7 +1957,7 @@ export class RiskRegisterComponent {
     //console.log(this.dataInput.expectedRisk);
     if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
       this.dataInput.expectedRisk.impact = this.dataInput.residualRisk.overallImpact.indicatorId;
-      this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood;
+      this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood.indicatorId;
       this.dataInput.expectedRisk.PIC = "";
       this.dataInput.expectedRisk.schedule = "";
       this.dataInput.expectedRisk.treatmentPlan = "Accept";
@@ -2053,7 +2057,7 @@ export class RiskRegisterComponent {
       this.dataInput.riskDescription.riskLevel == "" ||
       this.loopRiskImpact() == null ||
       this.dataInput.inherentRisk.overallImpact.description == "" ||
-      this.dataInput.inherentRisk.likelihood == "" ||
+      this.dataInput.inherentRisk.likelihood.indicatorId == "" ||
       this.dataInput.inherentRisk.overallRisk.description == "" ||
       this.dataInput.currentAction.operation == "" ||
       this.dataInput.currentAction.appropriateness.description == "" ||
@@ -2067,7 +2071,7 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.operationalImpact.loss >
         this.dataInput.inherentRisk.operationalImpact.loss ||
       this.dataInput.residualRisk.overallImpact.description == "" ||
-      this.dataInput.residualRisk.likelihood == "" ||
+      this.dataInput.residualRisk.likelihood.indicatorId == "" ||
       this.dataInput.residualRisk.overallRisk.score >
         this.dataInput.inherentRisk.overallRisk.score ||
       this.dataInput.expectedRisk.risk.score >
@@ -2075,7 +2079,11 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
       this.dataInput.expectedRisk.impact == "" ||
-      this.dataInput.expectedRisk.likelihood == ""
+      this.dataInput.expectedRisk.likelihood == "" ||
+      this.dataInput.residualRisk.qualitativeRD.score >
+        this.dataInput.inherentRisk.qualitativeIR.score ||
+      this.dataInput.residualRisk.likelihood.score >
+        this.dataInput.inherentRisk.likelihood.score
     ) {
       this.toastr.error("Please Complete The Form!");
       this.dataInput.activateValidation = true;
@@ -2093,7 +2101,7 @@ export class RiskRegisterComponent {
       this.dataInput.riskDescription.caused == "" ||
       this.dataInput.riskDescription.riskLevel == "" ||
       this.dataInput.inherentRisk.overallImpact.description == "" ||
-      this.dataInput.inherentRisk.likelihood == "" ||
+      this.dataInput.inherentRisk.likelihood.indicatorId == "" ||
       this.dataInput.inherentRisk.overallRisk.description == "" ||
       this.dataInput.currentAction.operation == "" ||
       this.dataInput.currentAction.appropriateness.description == "" ||
@@ -2107,11 +2115,15 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.operationalImpact.loss >
         this.dataInput.inherentRisk.operationalImpact.loss ||
       this.dataInput.residualRisk.overallImpact.description == "" ||
-      this.dataInput.residualRisk.likelihood == "" ||
+      this.dataInput.residualRisk.likelihood.indicatorId == "" ||
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
       this.dataInput.expectedRisk.impact == "" ||
-      this.dataInput.expectedRisk.likelihood == ""
+      this.dataInput.expectedRisk.likelihood == "" ||
+      this.dataInput.residualRisk.qualitativeRD.score >
+        this.dataInput.inherentRisk.qualitativeIR.score ||
+      this.dataInput.residualRisk.likelihood.score >
+        this.dataInput.inherentRisk.likelihood.score
     ) {
       return false;
     } else {
@@ -2120,33 +2132,43 @@ export class RiskRegisterComponent {
   }
 
   deleteTreatment(event) {
-    event.confirm.resolve();
-    this.dataInput.expectedRisk.treatmentPlanArr = this.dataInput.expectedRisk.treatmentPlanArr.filter(
-      function(item) {
-        return item.no != this.no;
-      },
-      event.data
-    );
-    this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
-      element.no = ind + 1;
-    });
-    this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
-    //console.log(this.dataInput.expectedRisk.treatmentPlanArr);
-  }
-  saveTreatment(event) {
-    if (
-      event.newData.description != "" &&
-      event.newData.pic != "" &&
-      event.newData.dueDate != ""
-    ) {
-      event.confirm.resolve(event.newData);
+    if (!this.dataInput.expectedRisk.treatmentPlanSwitch) {
+      event.confirm.resolve();
+      this.dataInput.expectedRisk.treatmentPlanArr = this.dataInput.expectedRisk.treatmentPlanArr.filter(
+        function(item) {
+          return item.no != this.no;
+        },
+        event.data
+      );
       this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
-        element.no == event.newData.no
-          ? (element.type = event.newData.type)
-          : null;
+        element.no = ind + 1;
       });
+      this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
+      //console.log(this.dataInput.expectedRisk.treatmentPlanArr);
     } else {
       event.confirm.reject();
+      this.toastr.error("Data cannot be deleted!");
+    }
+  }
+  saveTreatment(event) {
+    if (!this.dataInput.expectedRisk.treatmentPlanSwitch) {
+      if (
+        event.newData.description != "" &&
+        event.newData.pic != "" &&
+        event.newData.dueDate != ""
+      ) {
+        event.confirm.resolve(event.newData);
+        this.dataInput.expectedRisk.treatmentPlanArr.forEach((element, ind) => {
+          element.no == event.newData.no
+            ? (element.type = event.newData.type)
+            : null;
+        });
+      } else {
+        event.confirm.reject();
+      }
+    } else {
+      event.confirm.reject();
+      this.toastr.error("Data cannot be saved!");
     }
   }
 
@@ -2222,10 +2244,8 @@ export class RiskRegisterComponent {
     }
     this.changeDept();
   }
-  changeDept(){
-    this.dataInput.divisionDepartment.departmentKpi.deptInpId="";
-    this.dataInput.divisionDepartment.departmentKpi.description="";
+  changeDept() {
+    this.dataInput.divisionDepartment.departmentKpi.deptInpId = "";
+    this.dataInput.divisionDepartment.departmentKpi.description = "";
   }
-
-
 }

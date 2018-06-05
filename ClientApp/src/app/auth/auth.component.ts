@@ -23,20 +23,38 @@ export class AuthComponent implements AfterViewInit {
         }
       }
     });
-
   }
 
   authSso() {
-    // let ssoUrl = this.passportDomain + "/auth/external/" + this.appId;
-    // let width = 640;
-    // let height = 480;
-    // let left = screen.width / 2 - width / 2;
-    // let top = screen.height / 2 - height / 2;
-    // let origin = "localhost:5000";
-    // let params =
-    //   "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
-    // let popup = window.open(ssoUrl, "tamsso", params);
-    // popup.postMessage("hi", ssoUrl);
+  //   let ssoUrl = this.passportDomain + "/auth/external/" + this.appId;
+  //   let width = 640;
+  //   let height = 480;
+  //   let left = screen.width / 2 - width / 2;
+  //   let top = screen.height / 2 - height / 2;
+  //   let origin = "localhost:5000";
+  //   let params =
+  //     "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
+  //   window.open(ssoUrl, "tamsso", params);
+  //   window.addEventListener('message', function (event) {
+  //     console.log(event);
+  //     if (event.origin === passportDomain) {
+  //         var message = event.data;
+  //         if (message.Type === 'Success') {
+  //             window.GrantSignOn(message.Content);
+  //         }
+  //     }
+  // });
+    // this.eventManager.addGlobalEventListener("window", "message", function(
+    //   event
+    // ) {
+    //   console.log(event);
+    //   if (event.origin === this.passportDomain) {
+    //     var message = event.data;
+    //     if (message.Type === "Success") {
+    //       console.log("success");
+    //     }
+    //   }
+    // });
     this.router.navigate(["/pages/"], {
       queryParams: {}
     });

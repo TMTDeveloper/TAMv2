@@ -228,37 +228,224 @@ export class ChartComponent implements OnInit {
   }
 
   heatMapProcess() {
-    let data = [
-      { x: "Rare", y: "Insignificant", heat: 0, fill: "#4bf442", id: 1 },
-      { x: "Rare", y: "Minor", heat: 0, fill: "#4bf442", id: 2 },
-      { x: "Rare", y: "Moderate", heat: 1, fill: "#90caf9", id: 3 },
-      { x: "Rare", y: "Major", heat: 1, fill: "#90caf9", id: 4 },
-      { x: "Rare", y: "Catasthropic", heat: 2, fill: "#ffb74d", id: 5 },
-      { x: "Unlikely", y: "Insignificant", heat: 0, fill: "#4bf442", id: 6 },
-      { x: "Unlikely", y: "Minor", heat: 0, fill: "#4bf442", id: 7 },
-      { x: "Unlikely", y: "Moderate", heat: 1, fill: "#90caf9", id: 8 },
-      { x: "Unlikely", y: "Major", heat: 2, fill: "#ffb74d", id: 9 },
-      { x: "Unlikely", y: "Catasthropic", heat: 2, fill: "#ffb74d", id: 10 },
-      { x: "Possible", y: "Insignificant", heat: 0, fill: "#4bf442", id: 11 },
-      { x: "Possible", y: "Minor", heat: 1, fill: "#90caf9", id: 12 },
-      { x: "Possible", y: "Moderate", heat: 2, fill: "#ffb74d", id: 13 },
-      { x: "Possible", y: "Major", heat: 2, fill: "#ffb74d", id: 14 },
-      { x: "Possible", y: "Catasthropic", heat: 2, fill: "#ffb74d", id: 15 },
-      { x: "Likely", y: "Insignificant", heat: 1, fill: "#90caf9", id: 16 },
-      { x: "Likely", y: "Minor", heat: 1, fill: "#90caf9", id: 17 },
-      { x: "Likely", y: "Moderate", heat: 2, fill: "#ffb74d", id: 18 },
-      { x: "Likely", y: "Major", heat: 3, fill: "#d84315", id: 19 },
-      { x: "Likely", y: "Catasthropic", heat: 3, fill: "#d84315", id: 20 },
+    //console.log("2")
+    let data: any[] = [
+      {
+        x: "Rare",
+        y: "Insignificant",
+        heat: 0,
+        fill: "#4bf442",
+        id: 1,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Rare",
+        y: "Minor",
+        heat: 0,
+        fill: "#4bf442",
+        id: 2,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Rare",
+        y: "Moderate",
+        heat: 1,
+        fill: "#90caf9",
+        id: 3,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Rare",
+        y: "Major",
+        heat: 1,
+        fill: "#90caf9",
+        id: 4,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Rare",
+        y: "Catasthropic",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 5,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Unlikely",
+        y: "Insignificant",
+        heat: 0,
+        fill: "#4bf442",
+        id: 6,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Unlikely",
+        y: "Minor",
+        heat: 0,
+        fill: "#4bf442",
+        id: 7,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Unlikely",
+        y: "Moderate",
+        heat: 1,
+        fill: "#90caf9",
+        id: 8,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Unlikely",
+        y: "Major",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 9,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Unlikely",
+        y: "Catasthropic",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 10,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Possible",
+        y: "Insignificant",
+        heat: 0,
+        fill: "#4bf442",
+        id: 11,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Possible",
+        y: "Minor",
+        heat: 1,
+        fill: "#90caf9",
+        id: 12,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Possible",
+        y: "Moderate",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 13,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Possible",
+        y: "Major",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 14,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Possible",
+        y: "Catasthropic",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 15,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Likely",
+        y: "Insignificant",
+        heat: 1,
+        fill: "#90caf9",
+        id: 16,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Likely",
+        y: "Minor",
+        heat: 1,
+        fill: "#90caf9",
+        id: 17,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Likely",
+        y: "Moderate",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 18,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Likely",
+        y: "Major",
+        heat: 3,
+        fill: "#d84315",
+        id: 19,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Likely",
+        y: "Catasthropic",
+        heat: 3,
+        fill: "#d84315",
+        id: 20,
+        irdata: "",
+        rddata: ""
+      },
       {
         x: "Almost Certain",
         y: "Insignificant",
         heat: 2,
         fill: "#90caf9",
-        id: 21
+        id: 21,
+        irdata: "",
+        rddata: ""
       },
-      { x: "Almost Certain", y: "Minor", heat: 2, fill: "#ffb74d", id: 22 },
-      { x: "Almost Certain", y: "Moderate", heat: 2, fill: "#ffb74d", id: 23 },
-      { x: "Almost Certain", y: "Major", heat: 3, fill: "#d84315", id: 24 },
+      {
+        x: "Almost Certain",
+        y: "Minor",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 22,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Almost Certain",
+        y: "Moderate",
+        heat: 2,
+        fill: "#ffb74d",
+        id: 23,
+        irdata: "",
+        rddata: ""
+      },
+      {
+        x: "Almost Certain",
+        y: "Major",
+        heat: 3,
+        fill: "#d84315",
+        id: 24,
+        irdata: "",
+        rddata: ""
+      },
       {
         x: "Almost Certain",
         y: "Catasthropic",
@@ -272,13 +459,28 @@ export class ChartComponent implements OnInit {
         return item.x == element.irLikelihood && item.y == element.irImpact;
       });
       if (irId[0] != null) {
-        this.findAndReplaceIr(data, irId[0].id, element.no);
+        // this.findAndReplaceIr(data, irId[0].id, element.no);
+        data.forEach(item => {
+          item.x == element.irLikelihood && item.y == element.irImpact
+            ? item.irdata == ""
+              ? (item.irdata = item.irdata + element.no)
+              : (item.irdata = item.irdata + "," + element.no)
+            : null;
+        });
       }
       let rdId = data.filter(item => {
         return item.x == element.rdLikelihood && item.y == element.rdImpact;
       });
       if (rdId[0] != null) {
-        this.findAndReplaceRd(data, rdId[0].id, element.no);
+        data.forEach(item => {
+          item.x == element.rdLikelihood && item.y == element.rdImpact
+            ? item.rddata == ""
+              ? (item.rddata = item.rddata + element.no)
+              : (item.rddata = item.rddata + "," + element.no)
+            : null;
+        });
+        // this.findAndReplaceRd(data, rdId[0].id, element.no);
+        //console.log(data);
       }
     });
     this.changeGraph(data);

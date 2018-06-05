@@ -11,7 +11,7 @@ import { AccidentInputComponent } from "../../accident-input/accident.input.comp
 })
 export class RiskRegisterAcdComponent {
   filterData: {
-    year: string
+    year: string;
     division: string;
     department: string;
   };
@@ -105,13 +105,7 @@ export class RiskRegisterAcdComponent {
     this.service.getreq("TbMAccidentDetails").subscribe(response => {
       if (response != null) {
         const data = response;
-        console.log(response);
-        console.log(
-          data.filter(function(item) {
-            console.log(this);
-            return item.yearActive == this.year;
-          }, this.filterData)
-        );
+
         let vCounter = 0;
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
@@ -120,14 +114,13 @@ export class RiskRegisterAcdComponent {
           data[ind].vCounterNo = vCounter;
         });
         console.log(this.filterData);
-        this.source.load(
-          data.filter(item => {
-            return (
-              item.division == this.filterData.division &&
-              item.department == this.filterData.department
-            );
-          })
-        );
+        let arr = data.filter(item => {
+          return (
+            item.division == this.filterData.division &&
+            item.department == this.filterData.department
+          );
+        });
+        this.source.load(arr);
       }
       // error => {
       //   console.log(error);

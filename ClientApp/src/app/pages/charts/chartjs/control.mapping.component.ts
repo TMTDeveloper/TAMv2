@@ -66,12 +66,12 @@ export class ControlMappingComponent implements OnDestroy {
               {
                 data: [this.chartdata.preventive],
                 label: "Prevent",
-                backgroundColor: "#d84315"
+                backgroundColor: "#90caf9"
               },
               {
                 data: [this.chartdata.detective],
                 label: "Detect",
-                backgroundColor: "#ffb74d"
+                backgroundColor: "#90caf9"
               },
               {
                 data: [this.chartdata.corrective],
@@ -107,6 +107,7 @@ export class ControlMappingComponent implements OnDestroy {
             maintainAspectRatio: false,
             responsive: true,
             legend: {
+              display: false,
               position: "bottom",
               labels: {
                 fontColor: chartjs.textColor
