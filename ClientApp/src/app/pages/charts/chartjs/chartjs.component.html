@@ -38,7 +38,7 @@
         <button class="btn btn-hero-primary" (click)="print('print_tab2')">Print Report</button>
       </div>
       <div class="form-group">
-        <button class="btn btn-hero-primary" (click)="showModal()">Approval</button>
+        <button class="btn btn-hero-primary" (click)="showModal()" [disabled]="canApprove()">Approval</button>
       </div>
     </div>
 
@@ -155,9 +155,9 @@
 
                   <thead>
                     <tr>
-                      <th bgcolor="FF33A8" width="70px" style="text-align:center" >No</th>
-                      <th bgcolor="FF33A8" width="100px" style="text-align:center" >Risk&nbsp;No</th>
-                      <th bgcolor="FF33A8" style="text-align:center" >Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                      <th bgcolor="FF33A8" width="70px" style="text-align:center">No</th>
+                      <th bgcolor="FF33A8" width="100px" style="text-align:center">Risk&nbsp;No</th>
+                      <th bgcolor="FF33A8" style="text-align:center">Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
                     </tr>
                   </thead>
@@ -303,7 +303,8 @@
               alt="" />
             <p class="ml-2" style="font-family: 'arial black', 'avant garde';font-size: 13pt; color: #ff0000;  ">
               PT TOYOTA ASTRA MOTOR
-              <br><font color="black">Risk Register Report</font>
+              <br>
+              <font color="black">Risk Register Report</font>
             </p>
           </div>
           <div class="row">
@@ -316,7 +317,7 @@
                         <b> Division</b>
                       </td>
                       <td>
-                        {{tabledata[0]!=null?tabledata[0].descDivision:null}}
+                        {{fullDataList[0]!=null?fullDataList[0].descDivision:null}}
                       </td>
                     </tr>
                     <tr>
@@ -324,7 +325,7 @@
                         <b> Department</b>
                       </td>
                       <td>
-                        {{tabledata[0]!=null?tabledata[0].descDepartment:null}}
+                        {{fullDataList[0]!=null?fullDataList[0].descDepartment:null}}
                       </td>
                     </tr>
                   </tbody>
@@ -358,9 +359,9 @@
           </div>
 
           <div class="print_report">
-              <font size="1">
-            <table class="table table-bordered">
-             
+            <font size="1">
+              <table class="table table-bordered">
+
                 <thead>
                   <tr>
                     <th bgcolor="cyan" style="text-align:center" colspan="2">Division/Dept</th>
@@ -389,7 +390,7 @@
                 </thead>
                 <thead>
                   <tr>
-                    <th width="100px" style="text-align:center" >Risk No</th>
+                    <th width="100px" style="text-align:center">Risk No</th>
                     <th width="100px" style="text-align:center">Department KPI</th>
                     <th width="200px" style="text-align:center">Loss Event</th>
                     <th width="200px" style="text-align:center">Cause</th>
@@ -409,7 +410,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of tabledata">
+                  <tr *ngFor="let item of fullDataList">
                     <td>{{ item.riskNo }}</td>
                     <td>{{ item.departmentKpi }}</td>
                     <td>{{ item.lossEvent }}</td>
@@ -449,8 +450,8 @@
                     </td>
                   </tr>
                 </tbody>
-          
-            </table>
+
+              </table>
             </font>
           </div>
         </div>

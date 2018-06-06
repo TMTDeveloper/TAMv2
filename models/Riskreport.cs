@@ -35,11 +35,11 @@ namespace tam_risk_project.Models
         public double? FinAmountIr { get; set; }
         public string OpImpactIr { get; set; }
         public string OpImpactCategory { get; set; }
-        public float? OpAmountIr { get; set; }
+        public double? OpAmountIr { get; set; }
         public string FinImpactRd { get; set; }
         public double? FinAmountRd { get; set; }
         public string OpImpactRd { get; set; }
-        public int? OpAmountRd { get; set; }
+        public double? OpAmountRd { get; set; }
         public string QlImpactIr { get; set; }
         public string QlImpactRd { get; set; }
         public string IrImpact { get; set; }

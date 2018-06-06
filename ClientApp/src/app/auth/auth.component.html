@@ -11,14 +11,18 @@
               <div id="middle_box">
                 <div class="header">
                   <h2 align="center">Risk & Control</h2>
-                 
+
                 </div>
 
                 <div class="body">
 
                   <form method="post" id="FormLogin">
-                    <button type="button" id="tam-sso" (click)="authSso()">
-                      <img src="https://passport.toyota.astra.co.id/tam.png">Login using TAM Passport</button>
+                    <button type="button" id="tam-sso" (click)="authSso('DIV_HEAD')">
+                      <img src="https://passport.toyota.astra.co.id/tam.png">Login as Div Head</button>
+                    <button type="button" id="tam-sso" (click)="authSso('DEPT_HEAD')">
+                      <img src="https://passport.toyota.astra.co.id/tam.png">Login as Dept Head</button>
+                    <button type="button" id="tam-sso" (click)="authSso('RISK_ADMIN')">
+                      <img src="https://passport.toyota.astra.co.id/tam.png">Login as Risk Admin</button>
                     <style>
                       #tam-sso {
                         padding: 6px !important;

@@ -11,6 +11,7 @@ import { Angular5Csv } from "angular5-csv/Angular5-csv";
 import * as XLSX from "xlsx";
 import { ToastrService } from "ngx-toastr";
 import { filter } from "rxjs/operator/filter";
+import { UserCred } from "../../@core/data/usercred";
 @Component({
   selector: "ngx-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -19,7 +20,7 @@ import { filter } from "rxjs/operator/filter";
 export class DashboardComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable: boolean;
-  riskstat: any;
+
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -79,6 +80,9 @@ export class DashboardComponent {
       }
     }
   };
+
+  riskStatus: string = "";
+  popoverStatus: string = "";
   year: any[] = [
     {
       data: moment()
@@ -149,12 +153,13 @@ export class DashboardComponent {
     private modalService: NgbModal,
     public service: BackendService,
     public router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public usercred: UserCred
   ) {
+    console.log(this.usercred.getUser());
     this.buttonDisable = false;
     this.loadData();
     this.loadApprove();
-    this.riskstat = "Not Yet Submitted";
   }
   loadData() {
     this.service.getreq("Riskreports").subscribe(response => {
@@ -176,6 +181,7 @@ export class DashboardComponent {
                 this.departmentData = response;
                 this.fullData = data;
                 this.reload();
+                this.loadStatus();
               }
               // error => {
               //   //console.log(error);
@@ -251,17 +257,22 @@ export class DashboardComponent {
 
   reload() {
     //console.log(this.department);
-    switch (this.dataapprove.stat) {
-      case "submit":
-        this.riskstat = "Submit";
-        break;
-      default:
-        this.riskstat = "Not Yet Submitted";
-    }
+    this.loadStatus();
+    // switch (this.dataapprove.stat) {
+    //   case "submit":
+    //     this.riskstat = "Submit";
+    //     break;
+    //   default:
+    //     this.riskstat = "Not Yet Submitted";
+    // }
     this.tabledata = this.fullData.filter(item => {
       return (
         item.division == this.division && item.department == this.department
       );
+    });
+
+    this.tabledata = this.tabledata.sort(function(a, b) {
+      return a.no - b.no;
     });
   }
 
@@ -460,6 +471,120 @@ export class DashboardComponent {
       }
     }
     return arrString;
+  }
+
+  canSubmit() {
+    return !(
+      this.division == this.usercred.getUser().division &&
+      this.department == this.usercred.getUser().department &&
+      this.usercred.getUser().role == "DEPT_HEAD"
+    );
+  }
+
+  submitRisk() {
+    this.service.getreq("tbrapproves").subscribe(
+      response => {
+        let arr = response.filter(item => {
+          return (
+            item.yearActive == this.yearPeriode &&
+            item.division == this.division &&
+            item.department == this.department
+          );
+        });
+        if (arr[0] != null) {
+          let lastIndex = 0;
+          for (let data in arr) {
+            lastIndex <= arr[data].counterNo
+              ? (lastIndex = arr[data].counterNo)
+              : null;
+          }
+          let saveData = {
+            yearActive: this.yearPeriode,
+            division: this.division,
+            department: this.department,
+            counterNo: lastIndex + 1,
+            stat: "SUBMIT",
+            notes: "",
+            userCreated: "Admin",
+            datetimeCreated: moment().format(),
+            userUpdated: "Admin",
+            datetimeUpdated: moment().format()
+          };
+
+          this.service.postreq("tbrapproves", saveData).subscribe(
+            response => {
+              this.toastr.success("Data Saved!");
+              this.loadStatus();
+            },
+            error => {
+              this.toastr.error(
+                "Data Save Failed! Reason: " + error.statusText
+              );
+            }
+          );
+        } else {
+          let saveData = {
+            yearActive: this.yearPeriode,
+            division: this.division,
+            department: this.department,
+            counterNo: 1,
+            stat: "SUBMIT",
+            notes: "",
+            userCreated: "Admin",
+            datetimeCreated: moment().format(),
+            userUpdated: "Admin",
+            datetimeUpdated: moment().format()
+          };
+
+          this.service.postreq("tbrapproves", saveData).subscribe(
+            response => {
+              this.toastr.success("Data Saved!");
+              this.loadStatus();
+            },
+            error => {
+              this.toastr.error(
+                "Data Save Failed! Reason: " + error.statusText
+              );
+            }
+          );
+        }
+      },
+      error => {
+        this.toastr.error("Data Save Failed! Reason: " + error.statusText);
+      }
+    );
+  }
+
+  loadStatus() {
+    this.service.getreq("tbrapproves").subscribe(
+      response => {
+        let arr = response.filter(item => {
+          return (
+            item.yearActive == this.yearPeriode &&
+            item.division == this.division &&
+            item.department == this.department
+          );
+        });
+        if (arr[0] != null) {
+          let lastIndex = 0;
+          for (let data in arr) {
+            lastIndex <= arr[data].counterNo
+              ? (lastIndex = arr[data].counterNo)
+              : null;
+          }
+          let arrFilter = arr.filter(item => {
+            return item.counterNo == lastIndex;
+          });
+
+          this.riskStatus = arrFilter[0].stat;
+          this.popoverStatus = arrFilter[0].notes;
+        } else {
+          this.riskStatus = "NOT SUBMITTED";
+          this.popoverStatus = "";
+        }
+      },
+      error => {}
+    );
   }
 }
 //   private saveAsExcelFile(buffer: any, fileName: string): void {

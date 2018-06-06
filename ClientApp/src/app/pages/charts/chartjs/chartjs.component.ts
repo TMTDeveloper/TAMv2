@@ -10,7 +10,7 @@ import * as jsPDF from "jspdf";
 import * as html2canvas from "html2canvas";
 import * as rasterizeHTML from "rasterizehtml";
 import { ReportApproveModalComponent } from "./approval/report.approve.modal.component";
-
+import { UserCred } from "../../../@core/data/usercred";
 @Component({
   selector: "ngx-chartjs",
   styleUrls: ["./chartjs.component.scss"],
@@ -243,6 +243,7 @@ export class ChartjsComponent {
   departmentFilter: any[] = [];
   tabledata: any[] = [];
   fullData: any[] = [];
+  fullDataList: any[] = [];
   riskArr: Array<any> = [
     {
       no: 1,
@@ -331,6 +332,7 @@ export class ChartjsComponent {
   subscription: any;
   activeModal: any;
   constructor(
+    public usercred: UserCred,
     private modalService: NgbModal,
     private toastr: ToastrService,
     public service: BackendService
@@ -375,8 +377,22 @@ export class ChartjsComponent {
     ////console.log(this.tabledata);
     this.tabledata = this.fullData.filter(item => {
       return (
+        item.division == this.division &&
+        item.department == this.department &&
+        item.no &&
+        (item.no >= 1 && item.no <= 10)
+      );
+    });
+    this.tabledata = this.tabledata.sort(function(a, b) {
+      return a.no - b.no;
+    });
+    this.fullDataList = this.fullData.filter(item => {
+      return (
         item.division == this.division && item.department == this.department
       );
+    });
+    this.fullDataList = this.fullDataList.sort(function(a, b) {
+      return a.no - b.no;
     });
     ////console.log(this.fullData);
     if (this.tabledata[0] != null) {
@@ -394,48 +410,83 @@ export class ChartjsComponent {
   }
 
   showModal() {
-    this.activeModal = this.modalService.open(ReportApproveModalComponent, {
-      windowClass: "xlModal",
-      container: "nb-layout",
-      backdrop: "static"
-    });
-    let lastIndex = 0;
-    for (let data in this.tableapprove) {
-      if (
-        this.tableapprove[data].yearActive == moment().format("YYYY") &&
-        this.tableapprove[data].division == "ISTD" &&
-        this.tableapprove[data].department == "IS"
-      ) {
-        lastIndex <= this.tableapprove[data].counterNo
-          ? (lastIndex = this.tableapprove[data].counterNo)
-          : null;
-      }
-    }
+    this.service.getreq("tbrapproves").subscribe(
+      response => {
+        let arr = response.filter(item => {
+          return (
+            item.yearActive == moment().format("YYYY") &&
+            item.division == this.division &&
+            item.department == this.department
+          );
+        });
+        if (arr[0] != null) {
+          let lastIndex = 0;
+          for (let data in arr) {
+            lastIndex <= arr[data].counterNo
+              ? (lastIndex = arr[data].counterNo)
+              : null;
+          }
+          let saveData = {
+            yearActive: moment().format("YYYY"),
+            division: this.division,
+            department: this.department,
+            counterNo: lastIndex + 1,
+            stat: "SUBMIT",
+            notes: "",
+            userCreated: "Admin",
+            datetimeCreated: moment().format(),
+            userUpdated: "Admin",
+            datetimeUpdated: moment().format()
+          };
 
-    this.activeModal.componentInstance.formData = {
-      yearActive: moment().format("YYYY"),
-      division: "ISTD",
-      department: "IS",
-      counterNo: lastIndex + 1,
-      stat: "APPROVE",
-      notes: "",
-      userCreated: "Admin",
-      datetimeCreated: moment().format(),
-      userUpdate: "Admin",
-      datetimeUpdate: moment().format(),
-      status: "1"
-    };
+          this.activeModal = this.modalService.open(
+            ReportApproveModalComponent,
+            {
+              windowClass: "xlModal",
+              container: "nb-layout",
+              backdrop: "static"
+            }
+          );
 
-    this.activeModal.result.then(
-      async response => {
-        if (response != false) {
-          ////console.log(this.tableapprove);
-          this.tableapprove.push(response);
-          this.submit();
-          this.reloadApprove();
+          this.activeModal.componentInstance.formData = {
+            yearActive: moment().format("YYYY"),
+            division: this.division,
+            department: this.department,
+            counterNo: lastIndex + 1,
+            stat: "APPROVE",
+            notes: "",
+            userCreated: "Admin",
+            datetimeCreated: moment().format(),
+            userUpdate: "Admin",
+            datetimeUpdate: moment().format(),
+            status: "1"
+          };
+
+          this.activeModal.result.then(
+            async response => {
+              if (response != null) {
+                // console.log(response);
+                this.service.postreq("tbrapproves", response).subscribe(
+                  response => {
+                    this.toastr.success("Data Saved!");
+                  },
+                  error => {
+                    this.toastr.error(
+                      "Data Save Failed! Reason: " + error.statusText
+                    );
+                  }
+                );
+              }
+            },
+            error => {}
+          );
+        } else {
+          this.toastr.error("Data Not Submitted Yet");
         }
       },
-      error => {}
+      error => {
+        // this.toastr.error("Data Save Failed! Reason: " + error.statusText);
+      }
     );
   }
 
@@ -595,7 +646,10 @@ export class ChartjsComponent {
       var doc = new jsPDF({
         orientation: "landscape",
         unit: "mm",
-        format: [Math.floor(width * 0.264583)+5, Math.floor(height * 0.264583)+5]
+        format: [
+          Math.floor(width * 0.264583) + 5,
+          Math.floor(height * 0.264583) + 5
+        ]
       });
       doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 2, 2);
       doc.save(`Report-${Date.now()}.pdf`);
@@ -608,9 +662,9 @@ export class ChartjsComponent {
     doc.text(12, 10, "Report");
 
     // Create your table here (The dynamic table needs to be converted to canvas).
-    let element = <HTMLScriptElement>document.getElementsByClassName(
-      "print_report"
-    )[0];
+    let element = <HTMLScriptElement>(
+      document.getElementsByClassName("print_report")[0]
+    );
     html2canvas(element).then((canvas: any) => {
       doc.addImage(
         canvas.toDataURL("image/jpeg"),
@@ -667,19 +721,27 @@ export class ChartjsComponent {
 
   insertSpace2(data: string) {
     let arrString = [];
-    
+
     if (data != null) {
-    let lastPosition = 0;
-    for (let i = 0; i <= data.length; i++) {
-      if (data.slice(i - 1, i) == "\n") {
-        arrString.push(data.slice(lastPosition, i));
-        lastPosition = i;
-      }
-      if (i == data.length) {
-        arrString.push(data.slice(lastPosition, i));
+      let lastPosition = 0;
+      for (let i = 0; i <= data.length; i++) {
+        if (data.slice(i - 1, i) == "\n") {
+          arrString.push(data.slice(lastPosition, i));
+          lastPosition = i;
+        }
+        if (i == data.length) {
+          arrString.push(data.slice(lastPosition, i));
+        }
       }
     }
-  }
     return arrString;
+  }
+
+  canApprove() {
+    return !(
+      this.division == this.usercred.getUser().division &&
+      this.department == this.usercred.getUser().department &&
+      this.usercred.getUser().role == "DIV_HEAD"
+    );
   }
 }
