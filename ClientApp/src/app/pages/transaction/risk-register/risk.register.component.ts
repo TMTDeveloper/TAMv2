@@ -330,14 +330,14 @@ export class RiskRegisterComponent {
       treatmentPlanSwitch: false,
       treatmentPlan: "",
       impact: {
-        indicatorId:"",
-        description:"",
-        score:0
+        indicatorId: "",
+        description: "",
+        score: 0
       },
       likelihood: {
-        charId: "",
+        indicatorId: "",
         description: "",
-        score:0
+        score: 0
       },
       risk: {
         indicatorId: "",
@@ -1529,8 +1529,10 @@ export class RiskRegisterComponent {
         let arr = response.filter(item => {
           return (
             item.yearActive == this.yearPeriode &&
-            item.indicatorIdA == this.dataInput.expectedRisk.impact.indicatorId &&
-            item.indicatorIdB == this.dataInput.expectedRisk.likelihood.charId
+            item.indicatorIdA ==
+              this.dataInput.expectedRisk.impact.indicatorId &&
+            item.indicatorIdB ==
+              this.dataInput.expectedRisk.likelihood.indicatorId
           );
         });
         //console.log("ketemu");
@@ -1635,7 +1637,7 @@ export class RiskRegisterComponent {
         treatmentPlan: false,
         treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
         impactEx: this.dataInput.expectedRisk.impact.indicatorId,
-        likelihoodEx: this.dataInput.expectedRisk.likelihood.charId,
+        likelihoodEx: this.dataInput.expectedRisk.likelihood.indicatorId,
         overallEx: this.dataInput.expectedRisk.risk.indicatorId,
         pic: this.dataInput.expectedRisk.PIC,
         schedule: this.dataInput.expectedRisk.schedule,
@@ -1722,7 +1724,7 @@ export class RiskRegisterComponent {
         treatmentPlan: false,
         treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
         impactEx: this.dataInput.expectedRisk.impact.indicatorId,
-        likelihoodEx: this.dataInput.expectedRisk.likelihood.charId,
+        likelihoodEx: this.dataInput.expectedRisk.likelihood.indicatorId,
         overallEx: this.dataInput.expectedRisk.risk.indicatorId,
         pic: this.dataInput.expectedRisk.PIC,
         schedule: this.dataInput.expectedRisk.schedule,
@@ -1964,8 +1966,12 @@ export class RiskRegisterComponent {
   treatmentPlanSwitch() {
     //console.log(this.dataInput.expectedRisk);
     if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
+      this.dataInput.expectedRisk.impact.description = this.dataInput.residualRisk.overallImpact.description;
       this.dataInput.expectedRisk.impact.indicatorId = this.dataInput.residualRisk.overallImpact.indicatorId;
-      this.dataInput.expectedRisk.likelihood.charId = this.dataInput.residualRisk.likelihood.indicatorId;
+      this.dataInput.expectedRisk.impact.score = this.dataInput.residualRisk.overallImpact.score;
+      this.dataInput.expectedRisk.likelihood.indicatorId = this.dataInput.residualRisk.likelihood.indicatorId;
+      this.dataInput.expectedRisk.likelihood.description = this.dataInput.residualRisk.likelihood.description;
+      this.dataInput.expectedRisk.likelihood.score = this.dataInput.residualRisk.likelihood.score;
       this.dataInput.expectedRisk.PIC = "";
       this.dataInput.expectedRisk.schedule = "";
       this.dataInput.expectedRisk.treatmentPlan = "Accept";
@@ -1986,8 +1992,16 @@ export class RiskRegisterComponent {
       ];
       this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
     } else {
-      this.dataInput.expectedRisk.impact.indicatorId = "";
-      this.dataInput.expectedRisk.likelihood.charId = "";
+      this.dataInput.expectedRisk.impact = {
+        indicatorId: "",
+        description: "",
+        score: 0
+      };
+      this.dataInput.expectedRisk.likelihood = {
+        indicatorId: "",
+        description: "",
+        score: 0
+      };
       this.dataInput.expectedRisk.PIC = "";
       this.dataInput.expectedRisk.schedule = "";
       this.dataInput.expectedRisk.treatmentPlan = "";
@@ -2087,7 +2101,7 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
       this.dataInput.expectedRisk.impact.indicatorId == "" ||
-      this.dataInput.expectedRisk.likelihood.charId == "" ||
+      this.dataInput.expectedRisk.likelihood.indicatorId == "" ||
       this.dataInput.residualRisk.qualitativeRD.score >
         this.dataInput.inherentRisk.qualitativeIR.score ||
       this.dataInput.residualRisk.likelihood.score >
@@ -2127,7 +2141,7 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
       this.dataInput.expectedRisk.impact.indicatorId == "" ||
-      this.dataInput.expectedRisk.likelihood.charId == "" ||
+      this.dataInput.expectedRisk.likelihood.indicatorId == "" ||
       this.dataInput.residualRisk.qualitativeRD.score >
         this.dataInput.inherentRisk.qualitativeIR.score ||
       this.dataInput.residualRisk.likelihood.score >
@@ -2256,8 +2270,4 @@ export class RiskRegisterComponent {
     this.dataInput.divisionDepartment.departmentKpi.deptInpId = "";
     this.dataInput.divisionDepartment.departmentKpi.description = "";
   }
-
-  
-
-
 }

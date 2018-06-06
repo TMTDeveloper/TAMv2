@@ -636,7 +636,7 @@
                 <span class="custom-control-description">No</span>
               </label>
               <label class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" (change)="treatmentPlanSwitch()"  [value]="false" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"
+                <input type="radio" class="custom-control-input" (change)="treatmentPlanSwitch()" [value]="false" [(ngModel)]="dataInput.expectedRisk.treatmentPlanSwitch"
                   checked>
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Yes</span>
@@ -677,11 +677,14 @@
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
             </nb-actions>
-            <div class="col-sm-5">
+            <div *ngIf="!dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
               <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':(this.dataInput.expectedRisk.impact.score >  this.dataInput.residualRisk.overallImpact.score)?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.expectedRisk.impact" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
                 <option *ngFor="let data of getListRiskIndicator('IMP')" [ngValue]="data">{{data.description}}</option>
               </select>
+            </div>
+            <div *ngIf="dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
+              <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.impact.description" disabled="true">
             </div>
           </div>
           <div class="form-group row">
@@ -689,7 +692,7 @@
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan probabilitas resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
             </nb-actions>
-            <div class="col-sm-5">
+            <div *ngIf="!dataInput.expectedRisk.treatmentPlanSwitch"  class="col-sm-5">
               <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':(dataInput.expectedRisk.likelihood.score > dataInput.residualRisk.likelihood.score)?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.expectedRisk.likelihood" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
 
@@ -697,6 +700,9 @@
 
               </select>
             </div>
+            <div *ngIf="dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
+                <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.likelihood.description" disabled="true">
+              </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
