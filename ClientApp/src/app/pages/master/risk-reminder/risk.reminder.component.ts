@@ -159,7 +159,7 @@ export class RiskReminderComponent {
       if (response != null) {
         const data = response;
         console.log(JSON.stringify(response));
-        let counter = 0;
+        let counter = 1;
         data.forEach((element, ind) => {
           data[ind].yearActive = data[ind].yearActive.toString();
           data[ind].status = "0";

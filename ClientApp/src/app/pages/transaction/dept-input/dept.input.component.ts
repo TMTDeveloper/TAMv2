@@ -204,7 +204,7 @@ export class DeptInputComponent {
       // };
     });
   }
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   showModal() {
     this.activeModal = this.modalService.open(DeptInputModalComponent, {
@@ -264,7 +264,7 @@ export class DeptInputComponent {
           this.submit();
         }
       },
-      error => {}
+      error => { }
     );
   }
 
@@ -431,14 +431,14 @@ export class DeptInputComponent {
   submit(event?) {
     event
       ? this.service
-          .putreq("TbMDeptInputs", JSON.stringify(event.newData))
-          .subscribe(response => {
-            //console.log(JSON.stringify(event.newData));
-            event.confirm.resolve(event.newData);
-            error => {
-              //console.log(error);
-            };
-          })
+        .putreq("TbMDeptInputs", JSON.stringify(event.newData))
+        .subscribe(response => {
+          //console.log(JSON.stringify(event.newData));
+          event.confirm.resolve(event.newData);
+          error => {
+            //console.log(error);
+          };
+        })
       : null;
     //console.log(JSON.stringify(this.tabledata));
     this.tabledata.forEach((element, ind) => {
@@ -469,24 +469,30 @@ export class DeptInputComponent {
   }
 
   deleteControl(event) {
-    const savedData = {
-      yearActive: event.data.yearActive,
+    if (window.confirm("Are you sure you want to delete?")) {
 
-      deptInpId: event.data.deptInpId
-    };
 
-    this.service.postreq("TbMdeptinputs/deletecontrol", savedData).subscribe(
-      response => {
-        //console.log(response);
-        this.loadData();
-        this.toastr.success("Data Deleted!");
-        event.confirm.resolve();
-      },
-      error => {
-        //console.log(error);
-        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
-        event.confirm.reject();
-      }
-    );
+      const savedData = {
+        yearActive: event.data.yearActive,
+
+        deptInpId: event.data.deptInpId
+      };
+
+      this.service.postreq("TbMdeptinputs/deletecontrol", savedData).subscribe(
+        response => {
+          //console.log(response);
+          this.loadData();
+          this.toastr.success("Data Deleted!");
+          event.confirm.resolve();
+        },
+        error => {
+          //console.log(error);
+          this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+          event.confirm.reject();
+        }
+      );
+    } else {
+      event.confirm.reject();
+    }
   }
 }

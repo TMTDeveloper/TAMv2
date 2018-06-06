@@ -1446,6 +1446,18 @@ export class RiskRegisterComponent {
         }
       }
     });
+    if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
+      this.dataInput.expectedRisk.impact.description = this.dataInput.residualRisk.overallImpact.description;
+      this.dataInput.expectedRisk.impact.indicatorId = this.dataInput.residualRisk.overallImpact.indicatorId;
+      this.dataInput.expectedRisk.impact.score = this.dataInput.residualRisk.overallImpact.score;
+      this.dataInput.expectedRisk.likelihood.indicatorId = this.dataInput.residualRisk.likelihood.indicatorId;
+      this.dataInput.expectedRisk.likelihood.description = this.dataInput.residualRisk.likelihood.description;
+      this.dataInput.expectedRisk.likelihood.score = this.dataInput.residualRisk.likelihood.score;
+      
+      this.findExpectedRisk();
+    } 
+  
+
   }
 
   // ----------------------

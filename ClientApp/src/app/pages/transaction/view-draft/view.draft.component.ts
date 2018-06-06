@@ -201,32 +201,36 @@ export class ViewDraftComponent {
   }
 
   deleteControl(event) {
-    this.tabledata.forEach((element, ind) => {
-      element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
-    });
-    const savedData = {
-      draftKey: event.data.draftKey,
-      draftJson: event.data.draftJson,
-      division: event.data.division,
-      department: event.data.department,
-      type: "RISK",
-      year: moment().format("YYYY"),
-      userUpdated: "Admin",
-      dateUpdated: moment().format(),
-      userCreated: event.data.userCreated,
-      dateCreated: moment().format()
-    };
-    //console.log(savedData);
-    this.service.putreq("draftrisks", savedData).subscribe(
-      response => {
-        //console.log(response);
-        this.toastr.success("Draft Deleted!");
-        event.confirm.resolve();
-      },
-      error => {
-        //console.log(error);
-        this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
-      }
-    );
+    if (window.confirm("Are you sure you want to delete?")) {
+      this.tabledata.forEach((element, ind) => {
+        element.draftKey == event.data.draftKey ? (element.type = "RISK") : null;
+      });
+      const savedData = {
+        draftKey: event.data.draftKey,
+        draftJson: event.data.draftJson,
+        division: event.data.division,
+        department: event.data.department,
+        type: "RISK",
+        year: moment().format("YYYY"),
+        userUpdated: "Admin",
+        dateUpdated: moment().format(),
+        userCreated: event.data.userCreated,
+        dateCreated: moment().format()
+      };
+      //console.log(savedData);
+      this.service.putreq("draftrisks", savedData).subscribe(
+        response => {
+          //console.log(response);
+          this.toastr.success("Draft Deleted!");
+          event.confirm.resolve();
+        },
+        error => {
+          //console.log(error);
+          this.toastr.error("Draft Delete Failed! Reason: " + error.statusText);
+        }
+      );
+    } else {
+      event.confirm.reject();
+    }
   }
 }

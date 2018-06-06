@@ -513,7 +513,7 @@ export class DashboardComponent {
 
           this.service.postreq("tbrapproves", saveData).subscribe(
             response => {
-              this.toastr.success("Data Saved!");
+              this.toastr.success("Risk Berhasil disubmit");
               this.loadStatus();
             },
             error => {

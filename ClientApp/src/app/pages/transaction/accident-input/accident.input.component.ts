@@ -618,6 +618,7 @@ export class AccidentInputComponent {
   }
 
   deleteControl(event) {
+    if (window.confirm("Are you sure you want to delete?")) {
     const savedData = {
       yearActive: event.data.yearActive,
 
@@ -637,6 +638,9 @@ export class AccidentInputComponent {
           this.toastr.error("Data Delete Failed! Reason: " + error.statusText);
         }
       );
+    } else {
+      event.confirm.reject();
+    }
   }
 
   public accidentFilter(division, department) {
@@ -648,4 +652,6 @@ export class AccidentInputComponent {
   public closeModal() {
     this.childModal.close();
   }
+  
+
 }
