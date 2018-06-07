@@ -15,13 +15,13 @@
       <label class="col-md-2 mt-3">Division</label>
       <div class="col-md-4">
         <!-- <input type="text" class="form-control" ngModel name="yearPeriode" (change)="reload()"> -->
-        <select class="form-control" name="division" [(ngModel)]="division" (change)="filterDepartment()">
+        <select class="form-control" name="division" [(ngModel)]="division" (change)="filterDepartment()" [disabled]="childModalMode">
           <option *ngFor="let data of divisionData" value="{{data.charId}}">{{data.description}}</option>
         </select>
       </div>
       <label class="col-md-2 mt-3">Department</label>
       <div class="col-md-4">
-        <select class="form-control" name="department" [(ngModel)]="department" (change)="reload()">
+        <select class="form-control" name="department" [(ngModel)]="department" (change)="reload()" [disabled]="childModalMode">
           <option *ngFor="let data of departmentFilter" value="{{data.kodeDepartment}}">{{data.department}}</option>
         </select>
       </div>

@@ -291,10 +291,12 @@ namespace tam_risk_project.Models
                 entity.Property(e => e.RdLikelihood).HasColumnName("RD_LIKELIHOOD");
                 entity.Property(e => e.ExLikelihood).HasColumnName("EX_LIKELIHOOD");
                 entity.Property(e => e.IrOverall).HasColumnName("IR_OVERALL");
-                entity.Property(e => e.IrScore).HasColumnName("IR_SCORE");
+                entity.Property(e => e.IrOverallScore).HasColumnName("IR_OVERALL_SCORE");
                 entity.Property(e => e.RdOverall).HasColumnName("RD_OVERALL");
                 entity.Property(e => e.ExOverall).HasColumnName("EX_OVERALL");
                 entity.Property(e => e.EfOverall).HasColumnName("EF_OVERALL");
+                 entity.Property(e => e.RdOverallScore).HasColumnName("RD_OVERALL_SCORE");
+                  entity.Property(e => e.ExOverallScore).HasColumnName("EX_OVERALL_SCORE");
             });
 
 

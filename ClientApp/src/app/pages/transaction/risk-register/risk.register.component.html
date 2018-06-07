@@ -152,7 +152,7 @@
             <div class="col-sm-4">
               <textarea rows="3" type="text" class="form-control" readonly="true">{{loopRiskImpact()}}</textarea>
             </div>-->
-            <div class="col-sm-10">
+            <div  [ngClass]="dataInput.riskDescription.riskImpact[0]==null&&dataInput.activateValidation?'col-sm-10 form-control form-control-danger':'col-sm-10'" style="padding: 0 0 0 0; height:fit-content">
               <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="dataInput.riskDescription.riskImpact" (ngModelChange)="onChange()"></ss-multiselect-dropdown>
             </div>
           </div>

@@ -49,13 +49,14 @@ namespace tam_risk_project.Models
         public string RdLikelihood { get; set; }
         public string ExLikelihood { get; set; }
         public string IrOverall { get; set; }
-        public Nullable<Int16> IrScore { get; set; }
+        public Nullable<Int16> IrOverallScore { get; set; }
         public string RdOverall { get; set; }
         public string ExOverall { get; set; }
         public string EfOverall { get; set; }
         public string DescDepartment { get; set; }
         public string DescDivision { get; set; }
-
+        public Nullable<Int16> RdOverallScore { get; set; }
+        public Nullable<Int16> ExOverallScore { get; set; }
     }
 }
 

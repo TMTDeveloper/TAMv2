@@ -13,6 +13,7 @@ import { ToastrService } from "ngx-toastr";
 import { BackendService } from "../../../@core/data/backend.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IMultiSelectOption } from "angular-2-dropdown-multiselect";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "ngx-risk-register",
@@ -1702,6 +1703,7 @@ export class RiskRegisterComponent {
           };
           this.service.postreq("draftrisks", savedDataRisk).subscribe(
             response => {
+              this.reloadPage();
               //console.log(response);
             },
             error => {
@@ -1789,6 +1791,7 @@ export class RiskRegisterComponent {
           };
           this.service.putreq("draftrisks", savedDataRisk).subscribe(
             response => {
+              this.reloadPage();
               //console.log(response);
             },
             error => {
@@ -2040,54 +2043,63 @@ export class RiskRegisterComponent {
   }
 
   saveAsDraft() {
-    if (this.dataInput.riskNo.substring(0, 3) == "DRF") {
-      const savedData = {
-        draftKey: this.dataInput.riskNo,
-        draftJson: JSON.stringify(this.dataInput),
-        division: this.dataInput.divisionDepartment.division.charId,
-        department: this.dataInput.divisionDepartment.department.kodeDepartment,
-        type: "DRAFT",
-        year: moment().format("YYYY"),
-        userUpdated: "Admin",
-        dateUpdated: moment().format(),
-        userCreated: "Admin",
-        dateCreated: moment().format()
-      };
-      this.service.putreq("draftrisks", savedData).subscribe(
-        response => {
-          //console.log(response);
-          this.toastr.success("Draft Saved!");
-        },
-        error => {
-          //console.log(error);
-          this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
-        }
-      );
+    if (
+      this.dataInput.divisionDepartment.division.charId == "" ||
+      this.dataInput.divisionDepartment.department.kodeDepartment == ""
+    ) {
+      this.toastr.error("Please Input Division and Department");
     } else {
-      let draftKey = "DRF/" + moment().format("YYYYMMDDHHMMSS");
-      this.dataInput.riskNo = draftKey;
-      const savedData = {
-        draftKey: draftKey,
-        draftJson: JSON.stringify(this.dataInput),
-        division: this.dataInput.divisionDepartment.division.charId,
-        department: this.dataInput.divisionDepartment.department.kodeDepartment,
-        type: "DRAFT",
-        year: moment().format("YYYY"),
-        userUpdated: "Admin",
-        dateUpdated: moment().format(),
-        userCreated: "Admin",
-        dateCreated: moment().format()
-      };
-      this.service.postreq("draftrisks", savedData).subscribe(
-        response => {
-          //console.log(response);
-          this.toastr.success("Draft Saved!");
-        },
-        error => {
-          //console.log(error);
-          this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
-        }
-      );
+      if (this.dataInput.riskNo.substring(0, 3) == "DRF") {
+        const savedData = {
+          draftKey: this.dataInput.riskNo,
+          draftJson: JSON.stringify(this.dataInput),
+          division: this.dataInput.divisionDepartment.division.charId,
+          department: this.dataInput.divisionDepartment.department
+            .kodeDepartment,
+          type: "DRAFT",
+          year: moment().format("YYYY"),
+          userUpdated: "Admin",
+          dateUpdated: moment().format(),
+          userCreated: "Admin",
+          dateCreated: moment().format()
+        };
+        this.service.putreq("draftrisks", savedData).subscribe(
+          response => {
+            //console.log(response);
+            this.toastr.success("Draft Saved!");
+          },
+          error => {
+            //console.log(error);
+            this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
+          }
+        );
+      } else {
+        let draftKey = "DRF/" + moment().format("YYYYMMDDHHMMSS");
+        this.dataInput.riskNo = draftKey;
+        const savedData = {
+          draftKey: draftKey,
+          draftJson: JSON.stringify(this.dataInput),
+          division: this.dataInput.divisionDepartment.division.charId,
+          department: this.dataInput.divisionDepartment.department
+            .kodeDepartment,
+          type: "DRAFT",
+          year: moment().format("YYYY"),
+          userUpdated: "Admin",
+          dateUpdated: moment().format(),
+          userCreated: "Admin",
+          dateCreated: moment().format()
+        };
+        this.service.postreq("draftrisks", savedData).subscribe(
+          response => {
+            //console.log(response);
+            this.toastr.success("Draft Saved!");
+          },
+          error => {
+            //console.log(error);
+            this.toastr.error("Draft Save Failed! Reason: " + error.statusText);
+          }
+        );
+      }
     }
   }
 
@@ -2326,5 +2338,9 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.overallImpact.score
       ? true
       : false;
+  }
+  reloadPage() {
+    this.router.navigateByUrl("/pages/dashboard");
+    // window.location.reload();
   }
 }
