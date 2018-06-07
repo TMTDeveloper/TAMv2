@@ -302,7 +302,7 @@
             <div class="col-sm-5">
               <select [ngClass]="dataInput.inherentRisk.likelihood.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 name="risk_impact" [(ngModel)]="dataInput.inherentRisk.likelihood" (change)="findOverallRisk()">
-                <option *ngFor="let data of getListRiskIndicator('LKL')" [ngValue]="data">{{data.description}}</option>
+                <option *ngFor="let data of getLikelihood()" value="{{data.scoreLikelihood}}">{{data.description}}</option>
               </select>
             </div>
           </div>
@@ -454,7 +454,8 @@
             this.dataInput.inherentRisk.financialImpact.amount ||
           this.dataInput.residualRisk.operationalImpact.loss >
             this.dataInput.inherentRisk.operationalImpact.loss ||
-            (this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
+            (this.dataInput.residualRisk.overallImpact.score >  this.dataInput.inherentRisk.overallImpact.score)||
+            compareScore(dataInput.residualRisk.likelihood, dataInput.inherentRisk.likelihood)||(this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
           this.dataInput.residualRisk.overallImpact.description == '' ||
           this.dataInput.residualRisk.likelihood.description == '' ||
           this.dataInput.residualRisk.overallRisk.description == '' )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&( this.dataInput.residualRisk.financialImpact.amount >
@@ -462,7 +463,8 @@
         this.dataInput.residualRisk.operationalImpact.loss >
           this.dataInput.inherentRisk.operationalImpact.loss ||
         this.dataInput.residualRisk.overallImpact.description == '' ||
-        (this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
+        (this.dataInput.residualRisk.overallImpact.score >  this.dataInput.inherentRisk.overallImpact.score)||
+        compareScore(dataInput.residualRisk.likelihood, dataInput.inherentRisk.likelihood)||(this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
         this.dataInput.residualRisk.likelihood.description == '' ||
         this.dataInput.residualRisk.overallRisk.description == '' )?'danger':''">
           <div class="form-group row mt-3">
@@ -594,9 +596,9 @@
               <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Penilaian yang menggambarkan frekuensi terjadinya resiko setelah adanya control">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
-              <select [ngClass]="(dataInput.residualRisk.likelihood.score > dataInput.inherentRisk.likelihood.score)?'form-control form-control-danger':'form-control'"
+              <select [ngClass]="compareScore(dataInput.residualRisk.likelihood, dataInput.inherentRisk.likelihood)?'form-control form-control-danger':'form-control'"
                 name="risk_impact" [(ngModel)]="dataInput.residualRisk.likelihood" (change)="findOverallRiskRd()">
-                <option *ngFor="let data of getListRiskIndicator('LKL')" [ngValue]="data">{{data.description}}</option>
+                <option *ngFor="let data of getLikelihood()" value="{{data.scoreLikelihood}}">{{data.description}}</option>
               </select>
             </div>
           </div>
@@ -617,8 +619,12 @@
         <nb-tab tabTitle="Expected Risk" [badgeText]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
         (this.dataInput.expectedRisk.risk.score>this.dataInput.residualRisk.overallRisk.score)||
         this.dataInput.expectedRisk.impact == '' ||
-        this.dataInput.expectedRisk.likelihood == '')? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
-        (this.dataInput.expectedRisk.risk.score>this.dataInput.residualRisk.overallRisk.score)||
+        this.dataInput.expectedRisk.likelihood == ''||
+        compareScoreImpact(dataInput.expectedRisk.impact)||
+        compareScore(dataInput.expectedRisk.likelihood, dataInput.residualRisk.likelihood)
+        )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
+        compareScoreImpact(dataInput.expectedRisk.impact)||
+        compareScore(dataInput.expectedRisk.likelihood, dataInput.residualRisk.likelihood)||(this.dataInput.expectedRisk.risk.score>this.dataInput.residualRisk.overallRisk.score)||
         this.dataInput.expectedRisk.impact == '' ||
         this.dataInput.expectedRisk.likelihood == '')?'danger':''">
           <!-- <div class="form-group row">
@@ -677,32 +683,30 @@
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
             </nb-actions>
-            <div *ngIf="!dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
-              <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':(this.dataInput.expectedRisk.impact.score >  this.dataInput.residualRisk.overallImpact.score)?'form-control form-control-danger':'form-control'"
+            <div class="col-sm-5">
+              <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':compareScoreImpact(dataInput.expectedRisk.impact)?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.expectedRisk.impact" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
-                <option *ngFor="let data of getListRiskIndicator('IMP')" [ngValue]="data">{{data.description}}</option>
+                <option *ngFor="let data of getImpact()" value="{{data.scoreImpact}}">{{data.description}}</option>
               </select>
             </div>
-            <div *ngIf="dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
-              <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.impact.description" disabled="true">
-            </div>
+      
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Likelihood</label>
             <nb-actions size="small">
               <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan probabilitas resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
             </nb-actions>
-            <div *ngIf="!dataInput.expectedRisk.treatmentPlanSwitch"  class="col-sm-5">
-              <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':(dataInput.expectedRisk.likelihood.score > dataInput.residualRisk.likelihood.score)?'form-control form-control-danger':'form-control'"
+            <div class="col-sm-5">
+              <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':compareScore(dataInput.expectedRisk.likelihood, dataInput.residualRisk.likelihood)?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.expectedRisk.likelihood" (change)="findExpectedRisk()" disabled="{{dataInput.expectedRisk.treatmentPlanSwitch}}">
 
-                <option *ngFor="let data of getListRiskIndicator('LKL')" [ngValue]="data">{{data.description}}</option>
+                <option *ngFor="let data of getLikelihood()" value="{{data.scoreLikelihood}}">{{data.description}}</option>
 
               </select>
             </div>
-            <div *ngIf="dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
+            <!-- <div *ngIf="dataInput.expectedRisk.treatmentPlanSwitch" class="col-sm-5">
                 <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.likelihood.description" disabled="true">
-              </div>
+              </div> -->
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>

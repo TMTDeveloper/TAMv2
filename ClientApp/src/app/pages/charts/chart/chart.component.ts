@@ -181,23 +181,27 @@ export class ChartComponent implements OnInit {
   ngAfterViewInit() {
     let legend = this.chart.legend();
     legend.enabled(true);
+    legend.useHtml(true);
     legend.itemsFormatter(function() {
       return [
         { text: "Low", iconFill: "#4bf442" },
         { text: "Medium", iconFill: "#90caf9" },
         { text: "High", iconFill: "#ffb74d" },
         { text: "Extreme", iconFill: "#d84315" },
-        { text: "Residual Risk", iconFill: "blue" },
-        { text: "Inherent Risk", iconFill: "yellow" }
+        { text: "<span style='color:blue; font-size:13px;'>#</span>Residual Risk",iconFill:"white"},
+        { text: "<span style='color:yellow; font-size:13px;'>#</span>Inherent Risk", iconFill: "white" }
       ];
     });
     legend.position("bottom");
+    legend.height("10%");
+
+ 
     //console.log();
-    let namesList = ["Low", "Medium", "High", "Extreme"];
+
     this.chart.legend(true);
-    this.chart.credits().enabled(false);
     this.chart.container(this.container.nativeElement);
     this.chart.draw();
+    let namesList = ["Low", "Medium", "High", "Extreme"];
   }
 
   findAndReplaceIr(object, value, replacevalue) {

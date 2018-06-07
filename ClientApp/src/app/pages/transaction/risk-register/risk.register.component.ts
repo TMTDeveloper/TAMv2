@@ -198,11 +198,7 @@ export class RiskRegisterComponent {
         description: "",
         score: 0
       },
-      likelihood: {
-        description: "",
-        indicatorId: "",
-        score: 0
-      },
+      likelihood: "",
       overallImpact: {
         indicatorId: "",
         description: "",
@@ -258,11 +254,7 @@ export class RiskRegisterComponent {
         description: "",
         score: 0
       },
-      likelihood: {
-        description: "",
-        indicatorId: "",
-        score: 0
-      },
+      likelihood: "",
       overallImpact: {
         indicatorId: "",
         description: "",
@@ -329,16 +321,8 @@ export class RiskRegisterComponent {
       disabled: true,
       treatmentPlanSwitch: false,
       treatmentPlan: "",
-      impact: {
-        indicatorId: "",
-        description: "",
-        score: 0
-      },
-      likelihood: {
-        indicatorId: "",
-        description: "",
-        score: 0
-      },
+      impact: "",
+      likelihood: "",
       risk: {
         indicatorId: "",
         description: "",
@@ -496,6 +480,42 @@ export class RiskRegisterComponent {
           item.flagActive == "Aktif"
         );
       });
+    }
+  }
+
+  getLikelihood() {
+    let arr = this.riskIndicatorData.filter(item => {
+      return (
+        item.condition == "LKL" &&
+        item.yearActive == this.yearPeriode &&
+        item.flagActive == "Aktif"
+      );
+    });
+
+    if (arr[0] != null) {
+      arr.forEach(element => {
+        element.scoreLikelihood = element.indicatorId + "_" + element.score;
+      });
+
+      return arr;
+    }
+  }
+
+  getImpact() {
+    let arr = this.riskIndicatorData.filter(item => {
+      return (
+        item.condition == "IMP" &&
+        item.yearActive == this.yearPeriode &&
+        item.flagActive == "Aktif"
+      );
+    });
+
+    if (arr[0] != null) {
+      arr.forEach(element => {
+        element.scoreImpact = element.indicatorId + "_" + element.score;
+      });
+
+      return arr;
     }
   }
 
@@ -1144,7 +1164,7 @@ export class RiskRegisterComponent {
             item.indicatorIdA ==
               this.dataInput.inherentRisk.overallImpact.indicatorId &&
             item.indicatorIdB ==
-              this.dataInput.inherentRisk.likelihood.indicatorId
+              this.dataInput.inherentRisk.likelihood.substring(0, 6)
           );
         });
         //console.log(arr);
@@ -1401,7 +1421,7 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.overallImpact.indicatorId = "";
       this.dataInput.residualRisk.overallImpact.score = 0;
       this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
-      this.dataInput.residualRisk.likelihood.indicatorId == "" &&
+      this.dataInput.residualRisk.likelihood.substring(0, 6) == "" &&
       this.dataInput.residualRisk.overallImpact.score == 0
         ? (this.dataInput.expectedRisk.disabled = true)
         : (this.dataInput.expectedRisk.disabled = false);
@@ -1419,7 +1439,7 @@ export class RiskRegisterComponent {
             item.indicatorIdA ==
               this.dataInput.residualRisk.overallImpact.indicatorId &&
             item.indicatorIdB ==
-              this.dataInput.residualRisk.likelihood.indicatorId
+              this.dataInput.residualRisk.likelihood.substring(0, 6)
           );
         });
         if (arr[0] != null) {
@@ -1438,7 +1458,7 @@ export class RiskRegisterComponent {
             this.dataInput.residualRisk.overallRisk.score =
               arrIndicator[0].score;
             this.dataInput.residualRisk.overallImpact.indicatorId == "" &&
-            this.dataInput.residualRisk.likelihood.indicatorId == ""
+            this.dataInput.residualRisk.likelihood.substring(0, 6) == ""
               ? (this.dataInput.expectedRisk.disabled = true)
               : (this.dataInput.expectedRisk.disabled = false);
             this.findOverallControl();
@@ -1447,17 +1467,18 @@ export class RiskRegisterComponent {
       }
     });
     if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
-      this.dataInput.expectedRisk.impact.description = this.dataInput.residualRisk.overallImpact.description;
-      this.dataInput.expectedRisk.impact.indicatorId = this.dataInput.residualRisk.overallImpact.indicatorId;
-      this.dataInput.expectedRisk.impact.score = this.dataInput.residualRisk.overallImpact.score;
-      this.dataInput.expectedRisk.likelihood.indicatorId = this.dataInput.residualRisk.likelihood.indicatorId;
-      this.dataInput.expectedRisk.likelihood.description = this.dataInput.residualRisk.likelihood.description;
-      this.dataInput.expectedRisk.likelihood.score = this.dataInput.residualRisk.likelihood.score;
-      
-      this.findExpectedRisk();
-    } 
-  
+      this.dataInput.expectedRisk.impact =
+        this.dataInput.residualRisk.overallImpact.indicatorId +
+        "_" +
+        this.dataInput.residualRisk.overallImpact.score;
 
+      this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood.substring(
+        0,
+        6
+      );
+
+      this.findExpectedRisk();
+    }
   }
 
   // ----------------------
@@ -1542,9 +1563,9 @@ export class RiskRegisterComponent {
           return (
             item.yearActive == this.yearPeriode &&
             item.indicatorIdA ==
-              this.dataInput.expectedRisk.impact.indicatorId &&
+              this.dataInput.expectedRisk.impact.substring(0, 6) &&
             item.indicatorIdB ==
-              this.dataInput.expectedRisk.likelihood.indicatorId
+              this.dataInput.expectedRisk.likelihood.substring(0, 6)
           );
         });
         //console.log("ketemu");
@@ -1632,7 +1653,7 @@ export class RiskRegisterComponent {
         opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
         qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
         irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
-        likelihoodIr: this.dataInput.inherentRisk.likelihood.indicatorId,
+        likelihoodIr: this.dataInput.inherentRisk.likelihood.substring(0, 6),
         overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
         controlList: 0,
         operationCt: this.dataInput.currentAction.operation,
@@ -1643,13 +1664,13 @@ export class RiskRegisterComponent {
         opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
         qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
         rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
-        likelihoodRd: this.dataInput.residualRisk.likelihood.indicatorId,
+        likelihoodRd: this.dataInput.residualRisk.likelihood.substring(0, 6),
         overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
         overallEf: this.dataInput.currentAction.overallControl.indicatorId,
         treatmentPlan: false,
         treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
-        impactEx: this.dataInput.expectedRisk.impact.indicatorId,
-        likelihoodEx: this.dataInput.expectedRisk.likelihood.indicatorId,
+        impactEx: this.dataInput.expectedRisk.impact.substring(0, 6),
+        likelihoodEx: this.dataInput.expectedRisk.likelihood.substring(0, 6),
         overallEx: this.dataInput.expectedRisk.risk.indicatorId,
         pic: this.dataInput.expectedRisk.PIC,
         schedule: this.dataInput.expectedRisk.schedule,
@@ -1719,7 +1740,7 @@ export class RiskRegisterComponent {
         opAmountIr: this.dataInput.inherentRisk.operationalImpact.loss,
         qlImpactIr: this.dataInput.inherentRisk.qualitativeIR.id,
         irImpact: this.dataInput.inherentRisk.overallImpact.indicatorId,
-        likelihoodIr: this.dataInput.inherentRisk.likelihood.indicatorId,
+        likelihoodIr: this.dataInput.inherentRisk.likelihood.substring(0, 6),
         overallRiskIr: this.dataInput.inherentRisk.overallRisk.indicatorId,
         controlList: 0,
         operationCt: this.dataInput.currentAction.operation,
@@ -1730,13 +1751,13 @@ export class RiskRegisterComponent {
         opAmountRd: this.dataInput.residualRisk.operationalImpact.loss,
         qlImpactRd: this.dataInput.residualRisk.qualitativeRD.id,
         rdImpact: this.dataInput.residualRisk.overallImpact.indicatorId,
-        likelihoodRd: this.dataInput.residualRisk.likelihood.indicatorId,
+        likelihoodRd: this.dataInput.residualRisk.likelihood.substring(0, 6),
         overallRd: this.dataInput.residualRisk.overallRisk.indicatorId,
         overallEf: this.dataInput.currentAction.overallControl.indicatorId,
         treatmentPlan: false,
         treatmentDescription: this.dataInput.expectedRisk.treatmentPlan,
-        impactEx: this.dataInput.expectedRisk.impact.indicatorId,
-        likelihoodEx: this.dataInput.expectedRisk.likelihood.indicatorId,
+        impactEx: this.dataInput.expectedRisk.impact.substring(0, 6),
+        likelihoodEx: this.dataInput.expectedRisk.likelihood.substring(0, 6),
         overallEx: this.dataInput.expectedRisk.risk.indicatorId,
         pic: this.dataInput.expectedRisk.PIC,
         schedule: this.dataInput.expectedRisk.schedule,
@@ -1978,12 +1999,13 @@ export class RiskRegisterComponent {
   treatmentPlanSwitch() {
     //console.log(this.dataInput.expectedRisk);
     if (this.dataInput.expectedRisk.treatmentPlanSwitch == true) {
-      this.dataInput.expectedRisk.impact.description = this.dataInput.residualRisk.overallImpact.description;
-      this.dataInput.expectedRisk.impact.indicatorId = this.dataInput.residualRisk.overallImpact.indicatorId;
-      this.dataInput.expectedRisk.impact.score = this.dataInput.residualRisk.overallImpact.score;
-      this.dataInput.expectedRisk.likelihood.indicatorId = this.dataInput.residualRisk.likelihood.indicatorId;
-      this.dataInput.expectedRisk.likelihood.description = this.dataInput.residualRisk.likelihood.description;
-      this.dataInput.expectedRisk.likelihood.score = this.dataInput.residualRisk.likelihood.score;
+      this.dataInput.expectedRisk.impact =
+        this.dataInput.residualRisk.overallImpact.indicatorId +
+        "_" +
+        this.dataInput.residualRisk.overallImpact.score;
+
+      this.dataInput.expectedRisk.likelihood = this.dataInput.residualRisk.likelihood;
+
       this.dataInput.expectedRisk.PIC = "";
       this.dataInput.expectedRisk.schedule = "";
       this.dataInput.expectedRisk.treatmentPlan = "Accept";
@@ -2004,16 +2026,8 @@ export class RiskRegisterComponent {
       ];
       this.treatmentSrc.load(this.dataInput.expectedRisk.treatmentPlanArr);
     } else {
-      this.dataInput.expectedRisk.impact = {
-        indicatorId: "",
-        description: "",
-        score: 0
-      };
-      this.dataInput.expectedRisk.likelihood = {
-        indicatorId: "",
-        description: "",
-        score: 0
-      };
+      this.dataInput.expectedRisk.impact = "";
+      this.dataInput.expectedRisk.likelihood = "";
       this.dataInput.expectedRisk.PIC = "";
       this.dataInput.expectedRisk.schedule = "";
       this.dataInput.expectedRisk.treatmentPlan = "";
@@ -2091,7 +2105,7 @@ export class RiskRegisterComponent {
       this.dataInput.riskDescription.riskLevel == "" ||
       this.loopRiskImpact() == null ||
       this.dataInput.inherentRisk.overallImpact.description == "" ||
-      this.dataInput.inherentRisk.likelihood.indicatorId == "" ||
+      this.dataInput.inherentRisk.likelihood.substring(0, 6) == "" ||
       this.dataInput.inherentRisk.overallRisk.description == "" ||
       this.dataInput.currentAction.operation == "" ||
       this.dataInput.currentAction.appropriateness.description == "" ||
@@ -2105,19 +2119,28 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.operationalImpact.loss >
         this.dataInput.inherentRisk.operationalImpact.loss ||
       this.dataInput.residualRisk.overallImpact.description == "" ||
-      this.dataInput.residualRisk.likelihood.indicatorId == "" ||
+      this.dataInput.residualRisk.likelihood.substring(0, 6) == "" ||
       this.dataInput.residualRisk.overallRisk.score >
         this.dataInput.inherentRisk.overallRisk.score ||
       this.dataInput.expectedRisk.risk.score >
         this.dataInput.residualRisk.overallRisk.score ||
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
-      this.dataInput.expectedRisk.impact.indicatorId == "" ||
-      this.dataInput.expectedRisk.likelihood.indicatorId == "" ||
+      this.dataInput.expectedRisk.impact.substring(0, 6) == "" ||
+      this.dataInput.expectedRisk.likelihood.substring(0, 6) == "" ||
       this.dataInput.residualRisk.qualitativeRD.score >
         this.dataInput.inherentRisk.qualitativeIR.score ||
-      this.dataInput.residualRisk.likelihood.score >
-        this.dataInput.inherentRisk.likelihood.score
+      this.dataInput.residualRisk.overallImpact.score >
+        this.dataInput.inherentRisk.overallImpact.score ||
+      this.compareScore(
+        this.dataInput.residualRisk.likelihood,
+        this.dataInput.inherentRisk.likelihood
+      ) ||
+      this.compareScoreImpact(this.dataInput.expectedRisk.impact) ||
+      this.compareScore(
+        this.dataInput.expectedRisk.likelihood,
+        this.dataInput.residualRisk.likelihood
+      )
     ) {
       this.toastr.error("Please Complete The Form!");
       this.dataInput.activateValidation = true;
@@ -2135,7 +2158,7 @@ export class RiskRegisterComponent {
       this.dataInput.riskDescription.caused == "" ||
       this.dataInput.riskDescription.riskLevel == "" ||
       this.dataInput.inherentRisk.overallImpact.description == "" ||
-      this.dataInput.inherentRisk.likelihood.indicatorId == "" ||
+      this.dataInput.inherentRisk.likelihood.substring(0, 6) == "" ||
       this.dataInput.inherentRisk.overallRisk.description == "" ||
       this.dataInput.currentAction.operation == "" ||
       this.dataInput.currentAction.appropriateness.description == "" ||
@@ -2149,15 +2172,24 @@ export class RiskRegisterComponent {
       this.dataInput.residualRisk.operationalImpact.loss >
         this.dataInput.inherentRisk.operationalImpact.loss ||
       this.dataInput.residualRisk.overallImpact.description == "" ||
-      this.dataInput.residualRisk.likelihood.indicatorId == "" ||
+      this.dataInput.residualRisk.likelihood.substring(0, 6) == "" ||
       this.dataInput.residualRisk.overallRisk.description == "" ||
       this.dataInput.expectedRisk.treatmentPlanArr.length == 0 ||
-      this.dataInput.expectedRisk.impact.indicatorId == "" ||
-      this.dataInput.expectedRisk.likelihood.indicatorId == "" ||
+      this.dataInput.expectedRisk.impact.substring(0, 6) == "" ||
+      this.dataInput.expectedRisk.likelihood.substring(0, 6) == "" ||
       this.dataInput.residualRisk.qualitativeRD.score >
         this.dataInput.inherentRisk.qualitativeIR.score ||
-      this.dataInput.residualRisk.likelihood.score >
-        this.dataInput.inherentRisk.likelihood.score
+      this.dataInput.residualRisk.overallImpact.score >
+        this.dataInput.inherentRisk.overallImpact.score ||
+      this.compareScore(
+        this.dataInput.residualRisk.likelihood,
+        this.dataInput.inherentRisk.likelihood
+      ) ||
+      this.compareScoreImpact(this.dataInput.expectedRisk.impact) ||
+      this.compareScore(
+        this.dataInput.expectedRisk.likelihood,
+        this.dataInput.residualRisk.likelihood
+      )
     ) {
       return false;
     } else {
@@ -2281,5 +2313,18 @@ export class RiskRegisterComponent {
   changeDept() {
     this.dataInput.divisionDepartment.departmentKpi.deptInpId = "";
     this.dataInput.divisionDepartment.departmentKpi.description = "";
+  }
+
+  compareScore(a, b) {
+    return Number(a.split("_").pop()) > Number(b.split("_").pop())
+      ? true
+      : false;
+  }
+
+  compareScoreImpact(a) {
+    return Number(a.split("_").pop()) >
+      this.dataInput.residualRisk.overallImpact.score
+      ? true
+      : false;
   }
 }
