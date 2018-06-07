@@ -61,23 +61,13 @@ export class ControlMappingComponent implements OnDestroy {
           ////console.log(this.chartdata);
 
           this.data = {
-            labels: ["Control"],
+            labels: ["Preventive","Detective","Corrective"],
             datasets: [
               {
-                data: [this.chartdata.preventive],
-                label: "Prevent",
+                data: [this.chartdata.preventive,this.chartdata.detective,this.chartdata.corrective],
                 backgroundColor: "#90caf9"
               },
-              {
-                data: [this.chartdata.detective],
-                label: "Detect",
-                backgroundColor: "#90caf9"
-              },
-              {
-                data: [this.chartdata.corrective],
-                label: "Correct",
-                backgroundColor: "#90caf9"
-              }
+             
             ]
           };
 
@@ -101,6 +91,7 @@ export class ControlMappingComponent implements OnDestroy {
               enabled: true
             },
             title: {
+              fontSize:20,
               display: true,
               text: "Control Mapping"
             },

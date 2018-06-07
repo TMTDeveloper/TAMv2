@@ -11,6 +11,7 @@ import * as html2canvas from "html2canvas";
 import * as rasterizeHTML from "rasterizehtml";
 import { ReportApproveModalComponent } from "./approval/report.approve.modal.component";
 import { UserCred } from "../../../@core/data/usercred";
+import { OrderPipe } from "ngx-order-pipe";
 @Component({
   selector: "ngx-chartjs",
   styleUrls: ["./chartjs.component.scss"],
@@ -294,31 +295,6 @@ export class ChartjsComponent {
       no: 10,
       riskNo: "",
       lossEvent: ""
-    },
-    {
-      no: 11,
-      riskNo: "",
-      lossEvent: ""
-    },
-    {
-      no: 12,
-      riskNo: "",
-      lossEvent: ""
-    },
-    {
-      no: 13,
-      riskNo: "",
-      lossEvent: ""
-    },
-    {
-      no: 14,
-      riskNo: "",
-      lossEvent: ""
-    },
-    {
-      no: 15,
-      riskNo: "",
-      lossEvent: ""
     }
   ];
   effectivedata: any[] = [];
@@ -332,6 +308,7 @@ export class ChartjsComponent {
   subscription: any;
   activeModal: any;
   constructor(
+    private orderPipe: OrderPipe,
     public usercred: UserCred,
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -383,9 +360,11 @@ export class ChartjsComponent {
         (item.no >= 1 && item.no <= 10)
       );
     });
-    this.tabledata = this.tabledata.sort(function(a, b) {
-      return a.no - b.no;
-    });
+    this.tabledata = this.orderPipe.transform(this.tabledata, [
+      "rdOverallScore",
+      "irOverallScore",
+      "exOverallScore"
+    ]);
     this.fullDataList = this.fullData.filter(item => {
       return (
         item.division == this.division && item.department == this.department
@@ -558,7 +537,7 @@ export class ChartjsComponent {
   }
 
   processData(data) {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 9; i++) {
       if (data[i] != null) {
         this.riskArr[i].riskNo = data[i].riskNo;
         this.riskArr[i].lossEvent = data[i].lossEvent;

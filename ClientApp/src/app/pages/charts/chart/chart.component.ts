@@ -127,7 +127,7 @@ export class ChartComponent implements OnInit {
       //console.log(this.data);
       this.chart.data(null);
       this.chart.data(data);
-      this.svg.emit(this.chart.toSvg(600, 850));
+      this.svg.emit(this.chart.toSvg(1020, 963));
     } else {
       //console.log(this.data);
 
@@ -159,7 +159,7 @@ export class ChartComponent implements OnInit {
         });
       this.chart.data(null);
       this.chart.data(data);
-      this.svg.emit(this.chart.toSvg(900, 850));
+      this.svg.emit(this.chart.toSvg(1020, 963));
     }
   }
 

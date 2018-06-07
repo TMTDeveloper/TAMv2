@@ -99,6 +99,7 @@ export class ChartjsPieComponent implements OnDestroy {
               enabled: true
             },
             title: {
+              fontSize:20,
               display: true,
               text: "Control Effectiveness"
             },

@@ -177,6 +177,7 @@ export class ChartjsBarComponent implements OnDestroy {
             enabled: true
           },
           title: {
+            fontSize:20,
             display: true,
             text: "Risk Movement"
           },

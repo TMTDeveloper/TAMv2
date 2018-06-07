@@ -31,6 +31,7 @@ import { EchartsAreaStackComponent } from './echarts/echarts-area-stack.componen
 import { EchartsBarAnimationComponent } from './echarts/echarts-bar-animation.component';
 import { EchartsRadarComponent } from './echarts/echarts-radar.component';
 import { ChartComponent } from './chart/chart.component';
+import { OrderModule } from 'ngx-order-pipe';
 
 const components = [
   ChartjsBarComponent,
@@ -58,7 +59,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule,Nl2BrPipeModule, ChartModule],
+  imports: [ThemeModule, ChartsRoutingModule, NgxEchartsModule,Ng2SmartTableModule, NgxChartsModule,Nl2BrPipeModule, ChartModule,OrderModule],
   declarations: [...routedComponents, ...components],
   entryComponents: [ReportApproveModalComponent],  
   providers: [BackendService]
