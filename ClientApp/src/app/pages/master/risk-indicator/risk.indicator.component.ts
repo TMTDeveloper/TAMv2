@@ -14,6 +14,7 @@ export class RiskIndicatorComponent {
   @ViewChild("myForm") private myForm: NgForm;
   buttonDisable:boolean;
   scoreDisable:boolean;
+  addDisable:boolean;
   yearPeriode: any = moment().format("YYYY");
   settings: any = {
     add: {
@@ -58,11 +59,12 @@ export class RiskIndicatorComponent {
         title: "Score ",
         type: "number",
         filter: false,
-        editable: true,
+        editable: this.scoreDisable==false,
         width: "10%"
       },
       flagActive: { title: 'Status', 
-      type: 'html', 
+      type: 'html',
+      editable: this.scoreDisable==true, 
       editor:
        { type: 'list', config: 
        { list: [{ value: 'Aktif', title: 'Aktif' }, 
@@ -148,6 +150,7 @@ export class RiskIndicatorComponent {
   ) {
     this.buttonDisable=false;
     this.scoreDisable=false;
+    this.addDisable=false;
     this.loadData();
   }
 
@@ -255,6 +258,36 @@ export class RiskIndicatorComponent {
 
   reload() {
     this.yearPeriode = this.myForm.value.yearPeriode;
+    switch (this.myForm.value.condition) {
+      case 'IMP':
+        this.scoreDisable =false;
+        break;
+        case 'LKL':
+        this.scoreDisable =false;
+        break;
+        case 'OVR':
+        this.scoreDisable =false;
+        break;
+      default:
+      this.scoreDisable =true;
+    }
+    switch (this.myForm.value.condition) {
+      case 'IMP':
+        this.addDisable =false;
+        break;
+        case 'LKL':
+        this.addDisable =false;
+        break;
+        case 'OVR':
+        this.addDisable =false;
+        break;
+        case 'EFF':
+        this.addDisable =false;
+        break;
+      default:
+      this.addDisable =true;
+    }
+
     this.settings = {
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
@@ -298,11 +331,12 @@ export class RiskIndicatorComponent {
           title: "Score ",
           type: "number",
           filter: false,
-          editable: true,
+          editable: this.scoreDisable==false,
           width: "10%"
         },
         flagActive: { title: 'Status', 
         type: 'html', 
+        editable: this.addDisable==true,
         editor:
          { type: 'list', config: 
          { list: [{ value: 'Aktif', title: 'Aktif' }, 
@@ -323,19 +357,7 @@ export class RiskIndicatorComponent {
       default:
       this.buttonDisable =true;
     }
-    switch (this.myForm.value.condition) {
-      case 'IMP':
-        this.scoreDisable =false;
-        break;
-        case 'LKL':
-        this.scoreDisable =false;
-        break;
-        case 'OVR':
-        this.scoreDisable =false;
-        break;
-      default:
-      this.scoreDisable =true;
-    }
+    
   }
 
   onSaveConfirm(event) {

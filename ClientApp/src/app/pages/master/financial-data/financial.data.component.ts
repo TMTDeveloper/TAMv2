@@ -205,32 +205,52 @@ export class FinancialDataComponent {
       default:
       this.buttonDisable =true;
     }
+    
   }
 
   submit() {
     //console.log(JSON.stringify(this.tabledata));
 
-    if (this.data.status == "1") {
-      this.service
-        .postreq("TbMFinancialDatas", this.data)
-        .subscribe(response => {
-          this.loadData();
-          //console.log(response);
-          error => {
-            //console.log(error);
-          };
-        });
+    if (this.data.cashCashEquivalent== 0 ||
+     this.data.netWorkingCapital== 0 ||
+     this.data.fixedAssets== 0 ||
+     this.data.otherAssets== 0 ||
+     this.data.otherLiabilities== 0 ||
+     this.data.minorityInterest== 0 ||
+     this.data.equity== 0 ||
+     this.data.revenue== 0 ||
+     this.data.costOfRevenue== 0 ||
+     this.data.operatingExpenses== 0 ||
+     this.data.nonOperatingIncome== 0 ||
+     this.data.taxExpense== 0 ||
+     this.data.dividend== 0 ||
+     this.data.operatingProfit== 0 ||
+     this.data.netIncomeProfit== 0 ||
+     this.data.operatingCashFlow== 0) {
+      this.toastr.error ("Data Not Complete!");
     } else {
-      this.service
-        .putreq("TbMFinancialDatas", this.data)
-        .subscribe(response => {
-          this.loadData();
-          error => {
-            //console.log(error);
-          };
-        });
+      if (this.data.status == "1") {
+        this.service
+          .postreq("TbMFinancialDatas", this.data)
+          .subscribe(response => {
+            this.loadData();
+            //console.log(response);
+            error => {
+              //console.log(error);
+            };
+          });
+      } else {
+        this.service
+          .putreq("TbMFinancialDatas", this.data)
+          .subscribe(response => {
+            this.loadData();
+            error => {
+              //console.log(error);
+            };
+          });
+      }
+  
+      this.toastr.success("Data Saved!");
     }
-
-    this.toastr.success("Data Saved!");
   }
 }

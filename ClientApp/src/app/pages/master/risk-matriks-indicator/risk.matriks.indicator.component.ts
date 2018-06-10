@@ -311,7 +311,8 @@ export class RiskMatriksIndicatorComponent {
               this.source = this.source.setFilter(
                 [
                   { field: "condition", search: this.myForm.value.condition },
-                  { field: "yearActive", search: this.myForm.value.yearPeriode }
+                  { field: "yearActive", search: this.myForm.value.yearPeriode },
+                  { field: "flagActive", search: "Y" }
                 ],
                 true
               );

@@ -47,14 +47,14 @@ export class RiskMatriksIndicatorModalComponent {
 
     this.riskIndicatorData
       .filter(function search(item) {
-        return item.yearActive === year && item.condition === conditionA;
-      })
+        return item.yearActive === year && item.condition === conditionA && item.flagActive === 'Aktif';
+      }) 
       .forEach(element => {
         this.data.A.push(element);
       });
     this.riskIndicatorData
       .filter(function search(item) {
-        return item.yearActive === year && item.condition === conditionB;
+        return item.yearActive === year && item.condition === conditionB && item.flagActive === 'Aktif';
       })
       .forEach(element => {
         this.data.B.push(element);

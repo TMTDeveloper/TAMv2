@@ -69,7 +69,7 @@ export class ChartjsPieComponent implements OnDestroy {
                 backgroundColor: ["#a9d9bc", "#ECFF00", "#F02602", "#ec7ea3"]
               }
             ],
-            labels: ["Effective", "Moderate", "Ineffective", "Weak"]
+            labels: ["Effective        ", "Moderate        ", "Ineffective        ", "Weak        "]
           };
 
           this.options = {

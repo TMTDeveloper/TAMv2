@@ -5,13 +5,13 @@
 
       <div class="col-sm-12">
         <div class="form-group">
-          <label>Description</label>
+          <label>Description</label><font color="red">*</font>
           <input type="text" class="form-control" name="description" placeholder="Description" [(ngModel)]="formData.description">
         </div>
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <label>Score</label>
+          <label>Score</label><font color="red">*</font>
           <input type="text" class="form-control" name="score" placeholder="100" [disabled]="formData.scoreDisable" [(ngModel)]="formData.score">
         </div>
       </div>

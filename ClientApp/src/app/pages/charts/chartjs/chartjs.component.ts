@@ -347,6 +347,59 @@ export class ChartjsComponent {
   }
 
   reload() {
+    this.riskArr= [
+      {
+        no: 1,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 2,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 3,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 4,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 5,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 6,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 7,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 8,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 9,
+        riskNo: "",
+        lossEvent: ""
+      },
+      {
+        no: 10,
+        riskNo: "",
+        lossEvent: ""
+      }
+    ];
+
     this.chartDivDept = {
       division: this.division,
       department: this.department

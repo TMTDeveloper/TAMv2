@@ -455,6 +455,7 @@ export class RiskReminderComponent {
   }
 
   deleteControl(event) {
+    if (window.confirm("Are you sure you want to delete?")) {
     const savedData = {
       yearActive: event.data.yearActive,
       typeReminder: event.data.typeReminder,
@@ -480,5 +481,9 @@ export class RiskReminderComponent {
         event.confirm.resolve();
       }
     );
+  } else {
+    event.confirm.reject();
   }
+  }
+  
 }
