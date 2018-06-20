@@ -39,8 +39,8 @@ export class FinancialIndicatorRiskComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Modify",
-      width: "10%"
+      columnTitle: "Edit",
+      width: "5%"
     },
     pager: {
       display: true,
@@ -73,7 +73,7 @@ export class FinancialIndicatorRiskComponent {
         type: "numeric",
         filter: false,
         editable: false,
-        width: "30%",
+        width: "35%",
         valuePrepareFunction: value => {
           if (isNaN(value)) {
             return 0;
@@ -271,8 +271,8 @@ export class FinancialIndicatorRiskComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Modify",
-        width: "10%"
+        columnTitle: "Edit",
+        width: "5%"
       },
       pager: {
         display: true,
@@ -305,7 +305,7 @@ export class FinancialIndicatorRiskComponent {
           type: "numeric",
           filter: false,
           editable: false,
-          width: "30%",
+          width: "35%",
           valuePrepareFunction: value => {
             if (isNaN(value)) {
               return 0;

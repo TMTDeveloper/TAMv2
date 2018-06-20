@@ -45,8 +45,8 @@ export class RiskMatriksIndicatorComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Modify",
-      width: "10%"
+      columnTitle: "Edit",
+      width: "5%"
     },
     pager: {
       display: true,
@@ -209,8 +209,8 @@ export class RiskMatriksIndicatorComponent {
                   edit: this.yearPeriode == moment().format("YYYY"),
                   delete: false,
                   position: "right",
-                  columnTitle: "Modify",
-                  width: "10%"
+                  columnTitle: "Edit",
+                  width: "5%"
                 },
                 pager: {
                   display: true,
@@ -222,7 +222,7 @@ export class RiskMatriksIndicatorComponent {
                     type: "text",
                     filter: false,
                     editable: true,
-                    width: "30%",
+                    width: "25%",
                     valuePrepareFunction: value => {
                       return isNullOrUndefined(
                         this.riskIndicatorData.filter(function search(item) {
@@ -246,7 +246,7 @@ export class RiskMatriksIndicatorComponent {
                     type: "text",
                     filter: false,
                     editable: true,
-                    width: "30%",
+                    width: "25%",
                     valuePrepareFunction: value => {
                       return isNullOrUndefined(
                         this.riskIndicatorData.filter(function search(item) {
@@ -295,13 +295,13 @@ export class RiskMatriksIndicatorComponent {
                     type: "html",
                     filter: false,
                     editable: true,
-                    width: "30%",
+                    width: "15%",
                     editor: {
                       type: "list",
                       config: {
                         list: [
-                          { value: "Aktif", title: "Aktif" },
-                          { value: "Tidak Aktif", title: "Tidak Aktif" }
+                          { value: "Active", title: "Active" },
+                          { value: "Inactive", title: "Inactive" }
                         ]
                       }
                     }
@@ -312,7 +312,7 @@ export class RiskMatriksIndicatorComponent {
                 [
                   { field: "condition", search: this.myForm.value.condition },
                   { field: "yearActive", search: this.myForm.value.yearPeriode },
-                  { field: "flagActive", search: "Y" }
+                  { field: "flagActive", search: "Active" }
                 ],
                 true
               );
@@ -370,7 +370,7 @@ export class RiskMatriksIndicatorComponent {
       indicatorIdA: "",
       indicatorIdB: "",
       resultIdC: "",
-      flagActive: "Aktif",
+      flagActive: "Active",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -438,8 +438,8 @@ export class RiskMatriksIndicatorComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Modify",
-        width: "10%"
+        columnTitle: "Edit",
+        width: "5%"
       },
       pager: {
         display: true,
@@ -451,7 +451,7 @@ export class RiskMatriksIndicatorComponent {
           type: "text",
           filter: false,
           editable: true,
-          width: "30%",
+          width: "25%",
           valuePrepareFunction: value => {
             return isNullOrUndefined(
               this.riskIndicatorData.filter(function search(item) {
@@ -475,7 +475,7 @@ export class RiskMatriksIndicatorComponent {
           type: "text",
           filter: false,
           editable: true,
-          width: "30%",
+          width: "25%",
           valuePrepareFunction: value => {
             return isNullOrUndefined(
               this.riskIndicatorData.filter(function search(item) {
@@ -523,13 +523,13 @@ export class RiskMatriksIndicatorComponent {
           type: "html",
           filter: false,
           editable: true,
-          width: "30%",
+          width: "15%",
           editor: {
             type: "list",
             config: {
               list: [
-                { value: "Aktif", title: "Aktif" },
-                { value: "Tidak Aktif", title: "Tidak Aktif" }
+                { value: "Active", title: "Active" },
+                { value: "Inactive", title: "Inactive" }
               ]
             }
           }
@@ -625,8 +625,8 @@ export class RiskMatriksIndicatorComponent {
           edit: this.yearPeriode == moment().format("YYYY"),
           delete: false,
           position: "right",
-          columnTitle: "Modify",
-          width: "10%"
+          columnTitle: "Edit",
+          width: "5%"
         },
         pager: {
           display: true,
@@ -645,7 +645,7 @@ export class RiskMatriksIndicatorComponent {
             type: "text",
             filter: false,
             editable: true,
-            width: "30%",
+            width: "25%",
             valuePrepareFunction: value => {
               return isNullOrUndefined(
                 this.riskIndicatorData.filter(function search(item) {
@@ -669,7 +669,7 @@ export class RiskMatriksIndicatorComponent {
             type: "text",
             filter: false,
             editable: true,
-            width: "30%",
+            width: "25%",
             valuePrepareFunction: value => {
               return isNullOrUndefined(
                 this.riskIndicatorData.filter(function search(item) {
@@ -717,13 +717,13 @@ export class RiskMatriksIndicatorComponent {
             type: "html",
             filter: false,
             editable: true,
-            width: "30%",
+            width: "15%",
             editor: {
               type: "list",
               config: {
                 list: [
-                  { value: "Aktif", title: "Aktif" },
-                  { value: "Tidak Aktif", title: "Tidak Aktif" }
+                  { value: "Active", title: "Active" },
+                  { value: "Inactive", title: "Inactive" }
                 ]
               }
             }

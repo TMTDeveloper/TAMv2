@@ -38,7 +38,7 @@ export class AccidentInputComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: true,
       position: "right",
-      columnTitle: "Action",
+      columnTitle: "Edit",
       width: "5%"
     },
     pager: {
@@ -365,7 +365,7 @@ export class AccidentInputComponent {
         edit: true,
         delete: true,
         position: "right",
-        columnTitle: "Action",
+        columnTitle: "Edit",
         width: "5%"
       },
       pager: {
@@ -479,7 +479,7 @@ export class AccidentInputComponent {
         edit: true,
         delete: true,
         position: "right",
-        columnTitle: "Action",
+        columnTitle: "Edit",
         width: "5%"
       },
       pager: {

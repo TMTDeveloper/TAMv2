@@ -40,7 +40,7 @@ export class CompanyInputComponent {
       delete: false,
       position: "right",
       columnTitle: "Edit",
-      width: "10%"
+      width: "5%"
     },
     pager: {
       display: true,
@@ -52,7 +52,7 @@ export class CompanyInputComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "75%",
+        width: "80%",
         editor: {
           type: "textarea"
         }
@@ -61,8 +61,8 @@ export class CompanyInputComponent {
       type: 'html', 
       editor:
        { type: 'list', config: 
-       { list: [{ value: 'Aktif', title: 'Aktif' }, 
-       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+       { list: [{ value: 'Active', title: 'Active' }, 
+       { value: 'Inactive', title: 'Inactive' }] } } }
     }
   };
   year: any[] = [
@@ -185,7 +185,7 @@ export class CompanyInputComponent {
       counterNo: lastIndex + 1,
       comInpId: comInpId,
       description: "",
-      flagActive: "Aktif",
+      flagActive: "Active",
       userCreated: "Admin",
       datetimeCreated: moment().format(),
       userUpdate: "Admin",
@@ -245,7 +245,7 @@ export class CompanyInputComponent {
         delete: false,
         position: "right",
         columnTitle: "Edit",
-        width: "10%"
+        width: "5%"
       },
       pager: {
         display: true,
@@ -257,7 +257,7 @@ export class CompanyInputComponent {
           type: "string",
           filter: false,
           editable: true,
-          width: "75%",
+          width: "80%",
           editor: {
             type: "textarea"
           }
@@ -267,8 +267,8 @@ export class CompanyInputComponent {
       type: 'html', 
       editor:
        { type: 'list', config: 
-       { list: [{ value: 'Aktif', title: 'Aktif' }, 
-       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+       { list: [{ value: 'Active', title: 'Active' }, 
+       { value: 'Inactive', title: 'Inactive' }] } } }
       }
     };
     this.source.setFilter(

@@ -27,7 +27,7 @@
         this.dataInput.divisionDepartment.businessProcess == '')?'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&  (this.dataInput.divisionDepartment.companyKpi.description == '' ||
         this.dataInput.divisionDepartment.departmentKpi.description == '' ||
         this.dataInput.divisionDepartment.businessProcess == '')?'danger':''">
-          <div class="form-group row">
+          <div class="form-group row mt-3">
             <label for="division" class="col-sm-2 col-form-label">Division</label>
             <div class="col-sm-6">
 
@@ -47,7 +47,13 @@
 
             </div>
           </div>
-
+          <ng-template #cardComKPI>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                KPI dari company, sebagai indicator untuk proses bisnis
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" placeholder="Please Select">Company&nbsp;KPI<font color="red">*</font>
             </label>
@@ -55,14 +61,20 @@
               <nb-action icon="nb-list" (click)="showModal()"></nb-action>
             </nb-actions>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="KPI dari company, sebagai indicator untuk proses bisnis">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardComKPI">?</nb-action>
             </nb-actions>
             <div class="col-sm-12">
               <textarea readonly="true" rows="3" type="text" [ngClass]="dataInput.divisionDepartment.companyKpi.description==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.divisionDepartment.companyKpi.description"></textarea>
             </div>
           </div>
-
+          <ng-template #cardDeptKPI>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                KPI dari department, yang link dengan KPI company
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
 
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" placeholder="Please Select">Department&nbsp;KPI<font color="red">*</font>
@@ -71,7 +83,7 @@
               <nb-action icon="nb-list" (click)="showDept()"></nb-action>
             </nb-actions>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="KPI dari department, yang link dengan KPI company'">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardDeptKPI">?</nb-action>
             </nb-actions>
 
             <div class="col-sm-12">
@@ -79,6 +91,7 @@
                 [(ngModel)]="dataInput.divisionDepartment.departmentKpi.description" readonly="true"></textarea>
             </div>
           </div>
+          
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" placeholder="Please Input">Business&nbsp;Process<font color="red">*</font>
             </label>
@@ -96,23 +109,35 @@
         this.dataInput.riskDescription.riskLevel == '')? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.riskDescription.lossEvent == '' ||
         this.dataInput.riskDescription.caused == '' || this.loopRiskImpact() ==null ||
         this.dataInput.riskDescription.riskLevel == '')?'danger':''">
+        <ng-template #cardLossEvent>
+          <nb-card class="popover-card">
+            <nb-card-body>
+              Kemungkinan resiko yang ada di dalam critical process</nb-card-body>
+          </nb-card>
+        </ng-template>
           <div class="form-group row mt-3">
             <label class="col-sm-1 col-form-label" placeholder="Please Input">Loss&nbsp;Event<font color="red">*</font>
 
             </label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan resiko yang ada di dalam critical process ">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardLossEvent">?</nb-action>
             </nb-actions>
             <div class="col-sm-12">
               <textarea rows="3" type="text" [ngClass]="dataInput.riskDescription.lossEvent==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
                 [(ngModel)]="dataInput.riskDescription.lossEvent"></textarea>
             </div>
           </div>
+          <ng-template #cardCause>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Sesuatu yang dapat menyebabkan resiko terjadi</nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-1 col-form-label" placeholder="Please Input">Cause<font color="red">*</font>
             </label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Sesuatu yang dapat menyebabkan resiko terjadi">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardCause">?</nb-action>
             </nb-actions>
             <div class="col-sm-12">
               <textarea rows="3" type="text" [ngClass]="dataInput.riskDescription.caused==''&&dataInput.activateValidation?'form-control form-control-danger':'form-control'"
@@ -153,7 +178,7 @@
           <ng-template #cardRiskLevel>
             <nb-card class="popover-card">
               <nb-card-body>
-                Risk level menggambarkan dampak thd perusahaan. Jika inherent risk adalah high, atau impact adalah major maka maka masuk
+                Risk level menggambarkan dampak terhadap perusahaan. Jika inherent risk adalah high, atau impact adalah major maka maka masuk
                 ke level corporate. </nb-card-body>
             </nb-card>
           </ng-template>
@@ -170,13 +195,19 @@
               </select>
             </div>
           </div>
+          <ng-template #cardLossEventDatabase>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Accident yang sudah terjadi di masing-masing department</nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Loss Event Database</label>
             <nb-actions size="small">
               <nb-action icon="nb-list" (click)="showAccident()"></nb-action>
             </nb-actions>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Accident yang sudah terjadi di masing-masing department">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardLossEventDatabase">?</nb-action>
             </nb-actions>
           </div>
           <div class="col-sm-auto">
@@ -191,10 +222,16 @@
         this.dataInput.inherentRisk.overallRisk.description == '' )? 'Not Complete':''" [badgeStatus]="dataInput.activateValidation &&(this.dataInput.inherentRisk.overallImpact.description == '' ||
         this.dataInput.inherentRisk.likelihood == '' ||
         this.dataInput.inherentRisk.overallRisk.description == '')?'danger':''">
+        <ng-template #cardIRNotes>
+          <nb-card class="popover-card">
+            <nb-card-body>
+              Memasukkan asumsi untuk perhitungan impact dan probability / likelihood</nb-card-body>
+          </nb-card>
+        </ng-template>
           <div class="form-group row mt-3">
-            <label class="col-sm-1 col-form-label" placeholder="Please Input">Notes</label>
+            <label class="col-sm-2 col-form-label" placeholder="Please Input">Notes</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Memasukkan asumsi untuk perhitungan impact dan probability / likelihood">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardIRNotes">?</nb-action>
             </nb-actions>
             <div class="col-sm-12">
               <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.inherentRisk.notes"></textarea>
@@ -221,11 +258,16 @@
                     </select>
                   </div>
                 </div>
-
+                <ng-template #cardIRFinAmount>
+                  <nb-card class="popover-card">
+                    <nb-card-body>
+                      Masukkan jumlah maximum foreseeable loss yang mungkin terjadi tanpa control</nb-card-body>
+                  </nb-card>
+                </ng-template>
                 <div class="form-group row ">
                   <label class="col-sm-2 col-form-label">Amount</label>
                   <nb-actions size="small">
-                    <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Masukkan jumlah maximum foreseeable loss yang mungkin terjadi tanpa control">?</nb-action>
+                    <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardIRFinAmount">?</nb-action>
                   </nb-actions>
                   <div class="col-sm-5">
                     <input class="form-control" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',',precision:'0' }" [(ngModel)]="dataInput.inherentRisk.financialImpact.amount"
@@ -233,11 +275,16 @@
                   </div>
                   <label class="col-sm-2 col-form-label">Input In Million IDR</label>
                 </div>
-
+                <ng-template #cardIROPCat>
+                  <nb-card class="popover-card">
+                    <nb-card-body>
+                      Masukkan dampak operational yang relevan terhadap risk yang dibahas</nb-card-body>
+                  </nb-card>
+                </ng-template>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Operational&nbsp;Category</label>
                   <nb-actions size="small">
-                    <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Masukkan dampak operational yang relevan terhadap risk yang dibahas">?</nb-action>
+                    <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardIROPCat">?</nb-action>
                   </nb-actions>
                   <div class="col-sm-5">
                     <select class="form-control" name="risk_impact" placeholders="Please Select" [(ngModel)]="dataInput.inherentRisk.operationalImpact.category"
@@ -264,13 +311,19 @@
                       (keyup)="findOperationalImpactRisk()">
                   </div>
                 </div>
+                <ng-template #cardIRQL>
+                  <nb-card class="popover-card">
+                    <nb-card-body>
+                      Penilaian secara qualitative dengan indicator strategic risk.</nb-card-body>
+                  </nb-card>
+                </ng-template>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Qualitative&nbsp;Impact</label>
                   <nb-actions size="small">
                     <nb-action icon="nb-list" (click)="showQLIR()"></nb-action>
                   </nb-actions>
                   <nb-actions size="small">
-                    <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Penilaian secara qualitative dengan indicator strategic risk.">?</nb-action>
+                    <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardIRQL">?</nb-action>
                   </nb-actions>
                   <div class="col-sm-4">
                     <input type="text" class="form-control" disabled="true" [(ngModel)]="dataInput.inherentRisk.qualitativeIR.desc">
@@ -354,6 +407,12 @@
             this.dataInput.currentAction.Detective +
             this.dataInput.currentAction.Corrective ==
             0  )?'danger':''">
+            <ng-template #cardCtr>
+              <nb-card class="popover-card">
+                <nb-card-body>
+                  Seluruh control yang dimiliki suatu department untuk menurunkan tingkat resiko</nb-card-body>
+              </nb-card>
+            </ng-template>
           <div class="form-group row mt-3">
             <label class="col-sm-2 col-form-label">List of Controls<font color="red">*</font>
             </label>
@@ -362,7 +421,7 @@
 
             </div>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Seluruh control yang dimiliki suatu department untuk menurunkan tingkat resiko">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardCtr">?</nb-action>
             </nb-actions>
           </div>
           <div class="col-sm-auto">
@@ -485,10 +544,17 @@
         compareScore(dataInput.residualRisk.likelihood, dataInput.inherentRisk.likelihood)||(this.dataInput.residualRisk.overallRisk.score>this.dataInput.inherentRisk.overallRisk.score)||
         this.dataInput.residualRisk.likelihood == '' ||
         this.dataInput.residualRisk.overallRisk.description == '' )?'danger':''">
+        <ng-template #cardRdNotes>
+          <nb-card class="popover-card">
+            <nb-card-body>
+              Masukkan asumsi sebagai dasar perhitungan untuk residual risk
+            </nb-card-body>
+          </nb-card>
+        </ng-template>
           <div class="form-group row mt-3">
             <label class="col-sm-2 col-form-label" placeholder="Please Input">Notes</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Masukkan asumsi sebagai dasar perhitungan untuk residual risk">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardRdNotes">?</nb-action>
             </nb-actions>
             <div class="col-sm-12">
               <textarea rows="3" type="text" class="form-control" [(ngModel)]="dataInput.residualRisk.notes"></textarea>
@@ -578,13 +644,20 @@
                       [(ngModel)]="dataInput.residualRisk.operationalImpact.loss" (keyup)="findOperationalImpactRiskRd()">
                   </div>
                 </div>
+              <ng-template #cardRdQL>
+                  <nb-card class="popover-card">
+                    <nb-card-body>
+                      Penilaian secara qualitative dengan indicator strategic risk
+                    </nb-card-body>
+                  </nb-card>
+                </ng-template>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Qualitative&nbsp;Impact</label>
                   <nb-actions size="small">
                     <nb-action icon="nb-list" (click)="showQLRD()"></nb-action>
                   </nb-actions>
                   <nb-actions size="small">
-                    <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Penilaian secara qualitative dengan indicator strategic risk">?</nb-action>
+                    <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardRdQL">?</nb-action>
                   </nb-actions>
                   <div class="col-sm-5">
                     <input type="text" [ngClass]="dataInput.residualRisk.qualitativeRD.score > dataInput.inherentRisk.qualitativeIR.score ?'form-control form-control-danger':'form-control'"
@@ -597,21 +670,35 @@
               </nb-card-body>
             </nb-card>
           </div>
+          <ng-template #cardRdOvrImp>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Penilaian ini akan muncul otomatis sesuai dari hasil penilaian keseluruhan
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Overall&nbsp;Impact</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Penilaian ini akan muncul otomatis sesuai dari hasil penilaian keseluruhan">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardRdOvrImp">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
               <input style="background-color:gainsboro;" type="text" [ngClass]="(this.dataInput.residualRisk.overallImpact.score >  this.dataInput.inherentRisk.overallImpact.score)||(dataInput.residualRisk.overallImpact.description==''&&dataInput.activateValidation)?'form-control form-control-danger':'form-control'"
                 readonly="true" [(ngModel)]="dataInput.residualRisk.overallImpact.description">
             </div>
           </div>
+          <ng-template #cardRdOvrLkl>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Penilaian yang menggambarkan frekuensi terjadinya resiko setelah adanya control
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row ">
             <label class="col-sm-2 col-form-label">Likelihood<font color="red">*</font>
             </label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Penilaian yang menggambarkan frekuensi terjadinya resiko setelah adanya control">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardRdOvrLkl">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
               <select [ngClass]="compareScore(dataInput.residualRisk.likelihood, dataInput.inherentRisk.likelihood)||(dataInput.residualRisk.likelihood==''&&dataInput.activateValidation)?'form-control form-control-danger':'form-control'"
@@ -620,10 +707,17 @@
               </select>
             </div>
           </div>
+          <ng-template #cardRdOvrRisk>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Penilaian resiko setelah adanya control yang dilakukan
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Overall&nbsp;Residual&nbsp;Risk</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Penilaian resiko setelah adanya control yang dilakukan">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardRdOvrRisk">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
               <input [ngStyle]="{'background-color': dataInput.residualRisk.overallRisk.description=='Extreme'?'red':
@@ -650,7 +744,7 @@
               [disabled]="dataInput.expectedRisk.disabled||dataInput.expectedRisk.treatmentPlanArr.length!=0">Do&nbsp;you&nbsp;have&nbsp;any&nbsp;treatment&nbsp;plan?</nb-checkbox>
           </div> -->
 
-          <div class="demo-radio col-sm-5">
+          <div class="demo-radio col-sm-12">
             <div class="row">
               <label class="mt-1 mr-2">Do&nbsp;you&nbsp;have&nbsp;any&nbsp;treatment&nbsp;plan?</label>
               <label class="custom-control custom-radio">
@@ -667,7 +761,13 @@
               </label>
             </div>
           </div>
-
+          <ng-template #cardExPlan>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Action plan yang akan dilakukan dengan tujuan menurunkan tingkat resiko yang saat ini terjadi
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row mt-3">
             <label class="col-sm-2 col-form-label">Treatment&nbsp;Plan<font color="red">*</font>
             </label>
@@ -676,7 +776,7 @@
 
             </div>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Action plan yang akan dilakukan dengan tujuan menurunkan tingkat resiko yang saat ini terjadi">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardExPlan">?</nb-action>
             </nb-actions>
           </div>
           <div class="col-sm-auto">
@@ -696,10 +796,17 @@
             </div>
           </div> -->
           <label>Nilai Expected Risk tidak boleh lebih besar daripada nilai Residual Risk</label>
+          <ng-template #cardExImp>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Kemungkinan impact terjadi ketika treatment plan sudah dilakukan
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Impact</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardExImp">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
               <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':compareScoreImpact(dataInput.expectedRisk.impact)||(dataInput.expectedRisk.impact==''&&dataInput.activateValidation)?'form-control form-control-danger':'form-control'"
@@ -709,10 +816,17 @@
             </div>
       
           </div>
+          <ng-template #cardExLkl>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Kemungkinan probabilitas resiko terjadi ketika treatment plan sudah dilakukan
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Likelihood</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan probabilitas resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardExLkl">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
               <select [ngClass]="dataInput.expectedRisk.treatmentPlanSwitch?'form-control':compareScore(dataInput.expectedRisk.likelihood, dataInput.residualRisk.likelihood)||(dataInput.expectedRisk.likelihood==''&&dataInput.activateValidation)?'form-control form-control-danger':'form-control'"
@@ -726,10 +840,17 @@
                 <input type="text" class="form-control" [(ngModel)]="dataInput.expectedRisk.likelihood.description" disabled="true">
               </div> -->
           </div>
+          <ng-template #cardExRisk>
+            <nb-card class="popover-card">
+              <nb-card-body>
+                Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">Overall&nbsp;Expected&nbsp;Risk</label>
             <nb-actions size="small">
-              <nb-action icon="ion-help" nbPopoverMode="hover" nbPopover="Kemungkinan resiko terjadi ketika treatment plan sudah dilakukan">?</nb-action>
+              <nb-action icon="ion-help" nbPopoverMode="hover" [nbPopover]="cardExRisk">?</nb-action>
             </nb-actions>
             <div class="col-sm-5">
               <input [ngStyle]="{'background-color': dataInput.expectedRisk.risk.description=='Extreme'?'red':

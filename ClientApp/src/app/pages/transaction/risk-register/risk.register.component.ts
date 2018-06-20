@@ -61,7 +61,7 @@ export class RiskRegisterComponent {
       edit: false,
       delete: true,
       position: "right",
-      columnTitle: "Modify",
+      columnTitle: "Delete",
       width: "10%"
     },
     pager: {
@@ -124,7 +124,7 @@ export class RiskRegisterComponent {
       edit: true,
       delete: true,
       position: "right",
-      columnTitle: "Action",
+      columnTitle: "Edit",
       width: "10%"
     },
     pager: {
@@ -358,7 +358,7 @@ export class RiskRegisterComponent {
       edit: !this.dataInput.expectedRisk.treatmentPlanSwitch,
       delete: !this.dataInput.expectedRisk.treatmentPlanSwitch,
       position: "right",
-      columnTitle: "Action",
+      columnTitle: "Edit",
       width: "10%"
     },
     pager: {
@@ -470,7 +470,7 @@ export class RiskRegisterComponent {
       return (
         item.condition == value &&
         item.yearActive == yearPeriode &&
-        item.flagActive == "Aktif"
+        item.flagActive == "Active"
       );
     });
     if (arr[0] != null) {
@@ -478,7 +478,7 @@ export class RiskRegisterComponent {
         return (
           item.condition == value &&
           item.yearActive == yearPeriode &&
-          item.flagActive == "Aktif"
+          item.flagActive == "Active"
         );
       });
     }
@@ -489,7 +489,7 @@ export class RiskRegisterComponent {
       return (
         item.condition == "LKL" &&
         item.yearActive == this.yearPeriode &&
-        item.flagActive == "Aktif"
+        item.flagActive == "Active"
       );
     });
 
@@ -507,7 +507,7 @@ export class RiskRegisterComponent {
       return (
         item.condition == "IMP" &&
         item.yearActive == this.yearPeriode &&
-        item.flagActive == "Aktif"
+        item.flagActive == "Active"
       );
     });
 
@@ -536,7 +536,7 @@ export class RiskRegisterComponent {
           return (
             item.condition == "RTP" &&
             item.yearActive == this.yearPeriode &&
-            item.flagActive == "Aktif"
+            item.flagActive == "Active"
           );
         });
         //console.log("myoptionsss");
@@ -641,7 +641,7 @@ export class RiskRegisterComponent {
     this.activeModal.result.then(
       async response => {
         //console.log(response);
-        if (response != null) {
+        if (response != false) {
           this.dataInput.divisionDepartment.companyKpi.comInpId =
             response.comInpId;
           this.dataInput.divisionDepartment.companyKpi.description =
@@ -2342,5 +2342,1069 @@ export class RiskRegisterComponent {
   reloadPage() {
     this.router.navigateByUrl("/pages/dashboard");
     // window.location.reload();
+  }
+  deloopRiskImpact(riskimpact) {
+    if (riskimpact != null) {
+      let arrResult = [];
+      let lastindex = -1;
+      for (let i = 0; i < riskimpact.length; i++) {
+        if (riskimpact[i] == ",") {
+          arrResult.push(riskimpact.slice(lastindex + 1, i));
+          lastindex = i;
+        }
+      }
+      return arrResult;
+    } else {
+      return [];
+    }
+  }
+
+  createDraft() {
+    //loadmaster
+    let tbMComInputs = [];
+    let TbMDeptInputs = [];
+    let TbMRiskIndicators = [];
+    let TbMOperationalImpacts = [];
+    let TbMFinancialImpacts = [];
+    let TbMQualitativeImpacts = [];
+    let TbRControlDetails = [];
+    let TbRtreatmentDetails = [];
+    this.service.getreq("TbMComInputs").subscribe(response => {
+      tbMComInputs = response;
+      this.service.getreq("TbMDeptInputs").subscribe(response => {
+        TbMDeptInputs = response;
+        this.service.getreq("TbMRiskIndicators").subscribe(response => {
+          TbMRiskIndicators = response;
+          this.service.getreq("TbMOperationalImpacts").subscribe(response => {
+            TbMOperationalImpacts = response;
+            this.service.getreq("TbMFinancialImpacts").subscribe(response => {
+              TbMFinancialImpacts = response;
+              this.service
+                .getreq("TbMQualitativeImpacts")
+                .subscribe(response => {
+                  TbMQualitativeImpacts = response;
+                  this.service
+                    .getreq("TbRControlDetails")
+                    .subscribe(response => {
+                      TbRControlDetails = response;
+                      this.service
+                        .getreq("TbRtreatmentdetails")
+                        .subscribe(response => {
+                          TbRtreatmentDetails = response;
+
+                          this.service
+                            .getreq("TbRRiskAssessments")
+                            .subscribe(response => {
+                              response.forEach(element => {
+                                TbMOperationalImpacts.filter(item => {
+                                  return (
+                                    item.yearActive == element.yearActive &&
+                                    item.operationalId == element.opImpactIr
+                                  );
+                                })[0] != null
+                                  ? console.log("woi")
+                                  : console.log("wei");
+                                let dataInput = {
+                                  counterNo: element.counterNo,
+                                  edit: true,
+                                  activateValidation: false,
+                                  draftDisabled: false,
+                                  riskNo: element.riskNo,
+                                  divisionDepartment: {
+                                    division: {
+                                      charId: element.division
+                                    },
+                                    department: {
+                                      kodeDepartment: element.department
+                                    },
+                                    companyKpi: {
+                                      comInpId: element.companyKpi,
+                                      description:
+                                        tbMComInputs.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.comInpId == element.companyKpi
+                                          );
+                                        })[0] != null
+                                          ? tbMComInputs.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.comInpId ==
+                                                  element.companyKpi
+                                              );
+                                            })[0].description
+                                          : ""
+                                    },
+                                    departmentKpi: {
+                                      deptInpId: element.departmentKpi,
+                                      description:
+                                        TbMDeptInputs.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.deptInpId ==
+                                              element.departmentKpi
+                                          );
+                                        })[0] != null
+                                          ? TbMDeptInputs.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.deptInpId ==
+                                                  element.departmentKpi
+                                              );
+                                            })[0].description
+                                          : ""
+                                    },
+                                    businessProcess: element.businessProcess
+                                  },
+                                  riskDescription: {
+                                    lossEvent: element.lossEvent,
+                                    caused: element.caused,
+                                    accidentObj: [],
+                                    riskImpact: this.deloopRiskImpact(
+                                      element.riskImpact
+                                    ),
+                                    riskLevel: element.riskLevel,
+                                    optionsModel: []
+                                  },
+                                  inherentRisk: {
+                                    overallRisk: {
+                                      indicatorId: element.overallRiskIr,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallRiskIr
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallRiskIr
+                                              );
+                                            })[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallRiskIr
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallRiskIr
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    likelihood:
+                                      TbMRiskIndicators.filter(item => {
+                                        return (
+                                          item.yearActive ==
+                                            element.yearActive &&
+                                          item.indicatorId ==
+                                            element.likelihoodIr
+                                        );
+                                      })[0] != null
+                                        ? TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.likelihoodIr
+                                            );
+                                          })[0].indicatorId +
+                                          "_" +
+                                          TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.likelihoodIr
+                                            );
+                                          })[0].score
+                                        : "",
+                                    overallImpact: {
+                                      indicatorId: element.irImpact,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == element.irImpact
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.irImpact
+                                              );
+                                            })[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == element.irImpact
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.irImpact
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    operationalImpact: {
+                                      category:
+                                        element.opImpactIr != null
+                                          ? element.opImpactIr.slice(0, 3)
+                                          : "",
+                                      loss: element.opAmountIr,
+                                      operationalObj:
+                                        TbMOperationalImpacts.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.operationalId ==
+                                              element.opImpactIr
+                                          );
+                                        })[0] != null
+                                          ? TbMOperationalImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.operationalId ==
+                                                    element.opImpactIr
+                                                );
+                                              }
+                                            )[0]
+                                          : {},
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          const a =
+                                            TbMOperationalImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.operationalId ==
+                                                    element.opImpactIr
+                                                );
+                                              }
+                                            )[0] != null
+                                              ? TbMOperationalImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0].riskIndicatorId
+                                              : "";
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == a
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              const a =
+                                                TbMOperationalImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0] != null
+                                                  ? TbMOperationalImpacts.filter(
+                                                      item => {
+                                                        return (
+                                                          item.yearActive ==
+                                                            element.yearActive &&
+                                                          item.operationalId ==
+                                                            element.opImpactIr
+                                                        );
+                                                      }
+                                                    )[0].riskIndicatorId
+                                                  : "";
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId == a
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    financialImpact: {
+                                      category:
+                                        element.finImpactIr != null
+                                          ? element.finImpactIr.slice(0, 3)
+                                          : "",
+                                      amount: element.finAmountIr,
+                                      financialObj:
+                                        TbMFinancialImpacts.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.financialId ==
+                                              element.finImpactIr
+                                          );
+                                        })[0] != null
+                                          ? TbMFinancialImpacts.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.financialId ==
+                                                  element.finImpactIr
+                                              );
+                                            })[0]
+                                          : {},
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          const a =
+                                            TbMFinancialImpacts.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.operationalId ==
+                                                  element.opImpactIr
+                                              );
+                                            })[0] != null
+                                              ? TbMFinancialImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0].riskIndicatorId
+                                              : "";
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == a
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              const a =
+                                                TbMFinancialImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0] != null
+                                                  ? TbMFinancialImpacts.filter(
+                                                      item => {
+                                                        return (
+                                                          item.yearActive ==
+                                                            element.yearActive &&
+                                                          item.operationalId ==
+                                                            element.opImpactIr
+                                                        );
+                                                      }
+                                                    )[0].riskIndicatorId
+                                                  : "";
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId == a
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    notes: element.notesIr,
+                                    qualitativeIR: {
+                                      id: element.qlImpactIr,
+                                      desc:
+                                        TbMQualitativeImpacts.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.qualitativeId ==
+                                              element.qlImpactIr
+                                          );
+                                        })[0] != null
+                                          ? TbMQualitativeImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.qualitativeId ==
+                                                    element.qlImpactIr
+                                                );
+                                              }
+                                            )[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          const a =
+                                            TbMQualitativeImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.qualitativeId ==
+                                                    element.qlImpactIr
+                                                );
+                                              }
+                                            )[0] != null
+                                              ? TbMQualitativeImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.qualitativeId ==
+                                                        element.qlImpactIr
+                                                    );
+                                                  }
+                                                )[0].riskIndicatorId
+                                              : "";
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == a
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              const a =
+                                                TbMQualitativeImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.qualitativeId ==
+                                                        element.qlImpactIr
+                                                    );
+                                                  }
+                                                )[0] != null
+                                                  ? TbMQualitativeImpacts.filter(
+                                                      item => {
+                                                        return (
+                                                          item.yearActive ==
+                                                            element.yearActive &&
+                                                          item.qualitativeId ==
+                                                            element.qlImpactIr
+                                                        );
+                                                      }
+                                                    )[0].riskIndicatorId
+                                                  : "";
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId == a
+                                              );
+                                            })[0].score
+                                          : 0
+                                    }
+                                  },
+                                  residualRisk: {
+                                    notes: element.notesRd,
+                                    overallRisk: {
+                                      indicatorId: element.overallRd,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallRd
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallRd
+                                              );
+                                            })[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallRd
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallRd
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    likelihood:
+                                      TbMRiskIndicators.filter(item => {
+                                        return (
+                                          item.yearActive ==
+                                            element.yearActive &&
+                                          item.indicatorId ==
+                                            element.likelihoodRd
+                                        );
+                                      })[0] != null
+                                        ? TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.likelihoodRd
+                                            );
+                                          })[0].indicatorId +
+                                          "_" +
+                                          TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.likelihoodRd
+                                            );
+                                          })[0].score
+                                        : "",
+                                    overallImpact: {
+                                      indicatorId: element.rdImpact,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == element.rdImpact
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.rdImpact
+                                              );
+                                            })[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == element.rdImpact
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.rdImpact
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    operationalImpact: {
+                                      category:
+                                        element.opImpactIr != null
+                                          ? element.opImpactIr.slice(0, 3)
+                                          : "",
+                                      loss: element.opAmountRd,
+                                      operationalObj:
+                                        TbMOperationalImpacts.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.operationalId ==
+                                              element.opImpactIr
+                                          );
+                                        })[0] != null
+                                          ? TbMOperationalImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.operationalId ==
+                                                    element.opImpactIr
+                                                );
+                                              }
+                                            )[0]
+                                          : {},
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          const a =
+                                            TbMOperationalImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.operationalId ==
+                                                    element.opImpactIr
+                                                );
+                                              }
+                                            )[0] != null
+                                              ? TbMOperationalImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0].riskIndicatorId
+                                              : "";
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == a
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              const a =
+                                                TbMOperationalImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0] != null
+                                                  ? TbMOperationalImpacts.filter(
+                                                      item => {
+                                                        return (
+                                                          item.yearActive ==
+                                                            element.yearActive &&
+                                                          item.operationalId ==
+                                                            element.opImpactIr
+                                                        );
+                                                      }
+                                                    )[0].riskIndicatorId
+                                                  : "";
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId == a
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    financialImpact: {
+                                      category:
+                                        element.finImpactIr != null
+                                          ? element.finImpactIr.slice(0, 3)
+                                          : "",
+                                      amount: element.finAmountRd,
+                                      financialObj:
+                                        TbMFinancialImpacts.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.financialId ==
+                                              element.finImpactIr
+                                          );
+                                        })[0] != null
+                                          ? TbMFinancialImpacts.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.financialId ==
+                                                  element.finImpactIr
+                                              );
+                                            })[0]
+                                          : {},
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          const a =
+                                            TbMFinancialImpacts.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.operationalId ==
+                                                  element.opImpactIr
+                                              );
+                                            })[0] != null
+                                              ? TbMFinancialImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0].riskIndicatorId
+                                              : "";
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == a
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              const a =
+                                                TbMFinancialImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.operationalId ==
+                                                        element.opImpactIr
+                                                    );
+                                                  }
+                                                )[0] != null
+                                                  ? TbMFinancialImpacts.filter(
+                                                      item => {
+                                                        return (
+                                                          item.yearActive ==
+                                                            element.yearActive &&
+                                                          item.operationalId ==
+                                                            element.opImpactIr
+                                                        );
+                                                      }
+                                                    )[0].riskIndicatorId
+                                                  : "";
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId == a
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    qualitativeRD: {
+                                      id: element.qlImpactRd,
+                                      desc:
+                                        TbMQualitativeImpacts.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.qualitativeId ==
+                                              element.qlImpactRd
+                                          );
+                                        })[0] != null
+                                          ? TbMQualitativeImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.qualitativeId ==
+                                                    element.qlImpactRd
+                                                );
+                                              }
+                                            )[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          const a =
+                                            TbMQualitativeImpacts.filter(
+                                              item => {
+                                                return (
+                                                  item.yearActive ==
+                                                    element.yearActive &&
+                                                  item.qualitativeId ==
+                                                    element.qlImpactRd
+                                                );
+                                              }
+                                            )[0] != null
+                                              ? TbMQualitativeImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.qualitativeId ==
+                                                        element.qlImpactRd
+                                                    );
+                                                  }
+                                                )[0].riskIndicatorId
+                                              : "";
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId == a
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              const a =
+                                                TbMQualitativeImpacts.filter(
+                                                  item => {
+                                                    return (
+                                                      item.yearActive ==
+                                                        element.yearActive &&
+                                                      item.qualitativeId ==
+                                                        element.qlImpactRd
+                                                    );
+                                                  }
+                                                )[0] != null
+                                                  ? TbMQualitativeImpacts.filter(
+                                                      item => {
+                                                        return (
+                                                          item.yearActive ==
+                                                            element.yearActive &&
+                                                          item.qualitativeId ==
+                                                            element.qlImpactRd
+                                                        );
+                                                      }
+                                                    )[0].riskIndicatorId
+                                                  : "";
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId == a
+                                              );
+                                            })[0].score
+                                          : 0
+                                    }
+                                  },
+                                  currentAction: {
+                                    Preventive: 1,
+                                    Detective: 0,
+                                    Corrective: 0,
+                                    operation: element.operationCt,
+                                    controls:
+                                      TbRControlDetails.filter(item => {
+                                        return (
+                                          item.yearActive ==
+                                            element.yearActive &&
+                                          item.riskNo == element.riskNo
+                                        );
+                                      })[0] != null
+                                        ? TbRControlDetails.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.riskNo == element.riskNo
+                                            );
+                                          })
+                                        : [],
+                                    overallControl: {
+                                      indicatorId: element.overallEf,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallEf
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallEf
+                                              );
+                                            })[0].description
+                                          : ""
+                                    },
+                                    appropriateness: {
+                                      indicatorId: element.appropriatenessCt,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.appropriatenessCt
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.appropriatenessCt
+                                              );
+                                            })[0].description
+                                          : ""
+                                    }
+                                  },
+                                  expectedRisk: {
+                                    disabled: true,
+                                    treatmentPlanSwitch: false,
+                                    treatmentPlan: "",
+                                    impact:
+                                      TbMRiskIndicators.filter(item => {
+                                        return (
+                                          item.yearActive ==
+                                            element.yearActive &&
+                                          item.indicatorId == element.impactEx
+                                        );
+                                      })[0] != null
+                                        ? TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.impactEx
+                                            );
+                                          })[0].indicatorId +
+                                          "_" +
+                                          TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.impactEx
+                                            );
+                                          })[0].score
+                                        : "",
+                                    likelihood:
+                                      TbMRiskIndicators.filter(item => {
+                                        return (
+                                          item.yearActive ==
+                                            element.yearActive &&
+                                          item.indicatorId ==
+                                            element.likelihoodEx
+                                        );
+                                      })[0] != null
+                                        ? TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.likelihoodEx
+                                            );
+                                          })[0].indicatorId +
+                                          "_" +
+                                          TbMRiskIndicators.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.indicatorId ==
+                                                element.likelihoodEx
+                                            );
+                                          })[0].score
+                                        : "",
+                                    risk: {
+                                      indicatorId: element.overallEx,
+                                      description:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallEx
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallEx
+                                              );
+                                            })[0].description
+                                          : "",
+                                      score:
+                                        TbMRiskIndicators.filter(item => {
+                                          return (
+                                            item.yearActive ==
+                                              element.yearActive &&
+                                            item.indicatorId ==
+                                              element.overallEx
+                                          );
+                                        })[0] != null
+                                          ? TbMRiskIndicators.filter(item => {
+                                              return (
+                                                item.yearActive ==
+                                                  element.yearActive &&
+                                                item.indicatorId ==
+                                                  element.overallEx
+                                              );
+                                            })[0].score
+                                          : 0
+                                    },
+                                    PIC: "",
+                                    schedule: "",
+                                    treatmentPlanArr:
+                                      TbRtreatmentDetails.filter(item => {
+                                        return (
+                                          item.yearActive ==
+                                            element.yearActive &&
+                                          item.riskNo == element.riskNo
+                                        );
+                                      })[0] != null
+                                        ? TbRtreatmentDetails.filter(item => {
+                                            return (
+                                              item.yearActive ==
+                                                element.yearActive &&
+                                              item.riskNo == element.riskNo
+                                            );
+                                          })
+                                        : []
+                                  }
+                                };
+                                console.log(dataInput);
+                                let savedData = {
+                                  draftKey: element.riskNo,
+                                  draftJson: JSON.stringify(dataInput),
+                                  division: element.division,
+                                  department: element.department,
+                                  type: "RISK",
+                                  year: moment().format("YYYY"),
+                                  userUpdated: "Admin",
+                                  dateUpdated: moment().format(),
+                                  userCreated: "Admin",
+                                  dateCreated: moment().format()
+                                };
+                                this.service
+                                  .postreq("draftrisks", savedData)
+                                  .subscribe(
+                                    response => {
+                                      //console.log(response);
+                                      this.toastr.success("Draft Saved!");
+                                    },
+                                    error => {
+                                      //console.log(error);
+                                      this.toastr.error(
+                                        "Draft Save Failed! Reason: " +
+                                          error.statusText
+                                      );
+                                    }
+                                  );
+                              });
+                            });
+                        });
+                    });
+                });
+            });
+          });
+        });
+      });
+    });
   }
 }

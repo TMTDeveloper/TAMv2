@@ -60,9 +60,10 @@
 
     <nb-tabset>
       <nb-tab tabTitle="Detail">
-        <div class="form-group ">
+        
+            <div class="resizewidth">
           <table id="print_table" class="table table-bordered mt-3">
-            <font size="1">
+            <font size="2">
               <thead>
                 <tr>
 
@@ -79,12 +80,12 @@
                   </th>
 
 
-                  <th bgcolor="orange" style="text-align:center" colspan="5">
+                  <th bgcolor="orange" style="text-align:center" colspan="4">
                     <font color="white">Control</font>
                   </th>
 
 
-                  <th bgcolor="yellow" style="text-align:center" colspan="6">Residual&nbsp;Risk</th>
+                  <th bgcolor="yellow" style="text-align:center" colspan="7">Residual&nbsp;Risk</th>
 
 
                   <th bgcolor="green" style="text-align:center" colspan="6">
@@ -96,53 +97,53 @@
               </thead>
               <thead>
                 <tr>
-                  <th>Risk No</th>
-                  <th>Division</th>
-                  <th>Company KPI</th>
-                  <th>Dept KPI</th>
-                  <th>Department</th>
-                  <th>Business&nbsp;Process</th>
-                  <th>Loss&nbsp;Event</th>
-                  <th>Caused</th>
-                  <th>Risk&nbsp;Impact</th>
-                  <th>Risk&nbsp;Level</th>
-                  <th>Notes</th>
-                  <th>Financial&nbsp;Category</th>
-                  <th>Financial&nbsp;Amount</th>
-                  <th>Operational&nbsp;Category</th>
-                  <th>Operational&nbsp;Loss</th>
-                  <th>Qualitative&nbsp;Impact</th>
-                  <th>Impact</th>
-                  <th>Likelihood</th>
-                  <th>Overall&nbsp;Risk</th>
-                  <th>Control</th>
-                  <th>Operation</th>
-                  <th>Appropriateness</th>
-                  <th>Overall&nbsp;Control</th>
-                  <th>Notes</th>
-                  <th>Financial&nbsp;Amount</th>
-                  <th>Operational&nbsp;Loss</th>
-                  <th>Qualitative&nbsp;Impact</th>
-                  <th>Impact</th>
-                  <th>Likelihood</th>
-                  <th>Overall&nbsp;Risk</th>
-                  <th>Treatment&nbsp;Plan</th>
-                  <th>Impact</th>
-                  <th>Likelihood</th>
-                  <th>Overall</th>
-                  <th>PIC</th>
-                  <th>Schedule</th>
+                  <th width="10%" style="text-align:center">Risk&nbsp;No</th>
+                  <th width="100px" style="text-align:center">Division</th>
+                  <th width="100px" style="text-align:center">Company&nbsp;KPI</th>
+                  <th width="100px" style="text-align:center">Dept&nbsp;PI</th>
+                  <th width="100px" style="text-align:center">Department</th>
+                  <th width="100px" style="text-align:center">Business&nbsp;Process</th>
+                  <th class="wide" style="text-align:center">Loss&nbsp;Event</th>
+                  <th class="wide" style="text-align:center">Caused</th>
+                  <th width="100px" style="text-align:center">Risk&nbsp;Impact</th>
+                  <th width="100px" style="text-align:center">Risk&nbsp;Level</th>
+                  <th class="wide" style="text-align:center">Notes</th>
+                  <th width="100px" style="text-align:center">Financial&nbsp;Category</th>
+                  <th width="100px" style="text-align:center">Financial&nbsp;Amount</th>
+                  <th width="100px" style="text-align:center">Operational&nbsp;Category</th>
+                  <th width="100px" style="text-align:center">Operational&nbsp;Loss</th>
+                  <th width="100px" style="text-align:center">Qualitative&nbsp;Impact</th>
+                  <th width="100px" style="text-align:center">Impact</th>
+                  <th width="100px" style="text-align:center">Likelihood</th>
+                  <th width="100px" style="text-align:center">Overall&nbsp;Risk</th>
+                  <th class="wide" style="text-align:center">Control</th>
+                  <th width="100px" style="text-align:center">Operation</th>
+                  <th width="100px" style="text-align:center">Appropriateness</th>
+                  <th width="100px" style="text-align:center">Overall&nbsp;Control</th>
+                  <th class="wide" style="text-align:center">Notes</th>
+                  <th width="100px" style="text-align:center">Financial&nbsp;Amount</th>
+                  <th width="100px" style="text-align:center">Operational&nbsp;Loss</th>
+                  <th width="100px" style="text-align:center">Qualitative&nbsp;Impact</th>
+                  <th width="100px" style="text-align:center">Impact</th>
+                  <th width="100px" style="text-align:center">Likelihood</th>
+                  <th width="100px" style="text-align:center">Overall&nbsp;Risk</th>
+                  <th class="wide" style="text-align:center">Treatment&nbsp;Plan</th>
+                  <th width="100px" style="text-align:center">Impact</th>
+                  <th width="100px" style="text-align:center">Likelihood</th>
+                  <th width="100px" style="text-align:center">Overall</th>
+                  <th width="100px" style="text-align:center">PIC</th>
+                  <th width="100px" style="text-align:center">Schedule</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of tabledata">
-                  <td>{{ item.riskNo }}</td>
+                  <td width="160px">{{ item.riskNo }}</td>
                   <td>{{ item.descDivision }}</td>
                   <td>{{ item.companyKpi }}</td>
                   <td>{{ item.departmentKpi }}</td>
                   <td>{{ item.descDepartment }}</td>
                   <td>{{ item.businessProcess }}</td>
-                  <td>{{ item.lossEvent }}</td>
+                  <td class="wide">{{ item.lossEvent }}</td>
                   <td>
                     <div *ngFor="let data of insertSpace2(item.caused)">
                       {{data}}
@@ -161,7 +162,7 @@
                   <td>{{ item.irLikelihood }}</td>
                   <td>{{ item.irOverall }}</td>
                   <td>
-                    <div *ngFor="let data of insertSpace(item.control)">
+                    <div *ngFor="let data of insertSpace2(item.control)">
                       {{data}}
                       <br>
                     </div>
@@ -177,7 +178,7 @@
                   <td>{{ item.rdLikelihood }}</td>
                   <td>{{ item.rdOverall }}</td>
                   <td>
-                    <div *ngFor="let data of insertSpace(item.treatmentPlan)">
+                    <div *ngFor="let data of insertSpace2(item.treatmentPlan)">
                       {{data}}
                       <br>
                     </div>
@@ -186,44 +187,45 @@
                   <td>{{ item.exLikelihood }}</td>
                   <td>{{ item.exOverall }}</td>
                   <td>
-                    <div *ngFor="let data of insertSpace(item.exPic)">
+                    <div *ngFor="let data of insertSpace2(item.exPic)">
                       {{data}}
                       <br>
                     </div>
                   </td>
                   <td>
-                    <div *ngFor="let data of insertSpace(item.exDueDate)">
+                    <div *ngFor="let data of insertSpace2(item.exDueDate)">
                       {{data}}
                       <br>
                     </div>
                   </td>
                 </tr>
-              </tbody>
+              </tbody>  
             </font>
           </table>
-        </div>
+          </div>
+        
 
       </nb-tab>
       <nb-tab tabTitle="Risk Map">
 
-        <div class="form-group row">
+        <div class="row">
           <div class="form-group ">
 
             <table class="table table-bordered">
               <font size="1">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th width="100">Risk&nbsp;No&nbsp;</th>
-                    <th width="400">Loss&nbsp;Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</th>
+                    <th class="small">No</th>
+                    <th width="80">Risk&nbsp;No&nbsp;</th>
+                    <th class="medium" style="text-align:center">Loss&nbsp;Event</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of tabledata">
-                    <td>{{ item.no}}</td>
+                    <td  class="small">{{ item.no}}</td>
                     <td width="80">{{ item.riskNo}}</td>
-                    <td width="400">{{ item.lossEvent }}</td>
+                    <td class="medium" >{{ item.lossEvent }}</td>
                     <td width="160px">
                       <div class="row">
                         <button type="button" id="heat" class="btn btn-hero-primary mr-1" (click)="showModal(item)">View</button>

@@ -315,7 +315,7 @@ export class DeptInputComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: true,
         position: "right",
-        columnTitle: "Action",
+        columnTitle: "Edit",
         width: "5%"
       },
       pager: {
@@ -335,7 +335,7 @@ export class DeptInputComponent {
           type: "string",
           filter: false,
           editable: true,
-          width: "80%",
+          width: "90%",
           editor: {
             type: "textarea"
           }
@@ -376,7 +376,7 @@ export class DeptInputComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: true,
         position: "right",
-        columnTitle: "Action",
+        columnTitle: "Edit",
         width: "5%"
       },
       pager: {
@@ -396,7 +396,7 @@ export class DeptInputComponent {
           type: "string",
           filter: false,
           editable: true,
-          width: "80%",
+          width: "90%",
           editor: {
             type: "textarea"
           }

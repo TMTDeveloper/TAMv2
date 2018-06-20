@@ -590,7 +590,7 @@ export class ChartjsComponent {
   }
 
   processData(data) {
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 10; i++) {
       if (data[i] != null) {
         this.riskArr[i].riskNo = data[i].riskNo;
         this.riskArr[i].lossEvent = data[i].lossEvent;

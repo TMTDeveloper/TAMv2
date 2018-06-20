@@ -43,8 +43,8 @@ export class QualitativeIndicatorComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Modify",
-      width: "10%"
+      columnTitle: "Edit",
+      width: "5%"
     },
     pager: {
       display: true,
@@ -63,14 +63,14 @@ export class QualitativeIndicatorComponent {
         type: "string",
         filter: false,
         editable: false,
-        width: "30%"
+        width: "25%"
       },
       description: {
         title: "Description",
         type: "string",
         filter: false,
         editable: true,
-        width: "60%"
+        width: "65%"
       }
     }
   };
@@ -234,8 +234,8 @@ export class QualitativeIndicatorComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Modify",
-        width: "10%"
+        columnTitle: "Edit",
+        width: "5%"
       },
       pager: {
         display: true,
@@ -254,14 +254,14 @@ export class QualitativeIndicatorComponent {
           type: "string",
           filter: false,
           editable: false,
-          width: "30%"
+          width: "25%"
         },
         description: {
           title: "Description",
           type: "string",
           filter: false,
           editable: true,
-          width: "60%",
+          width: "65%",
           editor: {
             type: "textarea"
           }

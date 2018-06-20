@@ -38,8 +38,8 @@ export class ViewDraftComponent {
       edit: false,
       delete: true,
       position: "right",
-      columnTitle: "Modify",
-      width: "10%"
+      columnTitle: "Delete",
+      width: "5%"
     },
     pager: {
       display: true,
@@ -51,7 +51,7 @@ export class ViewDraftComponent {
         type: "text",
         filter: false,
         editable: false,
-        width: "30%"
+        width: "35%"
       },
       dateCreated: {
         title: "Date Created",

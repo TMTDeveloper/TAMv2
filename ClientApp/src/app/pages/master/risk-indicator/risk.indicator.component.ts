@@ -40,8 +40,8 @@ export class RiskIndicatorComponent {
       edit: this.yearPeriode == moment().format("YYYY"),
       delete: false,
       position: "right",
-      columnTitle: "Modify",
-      width: "10%"
+      columnTitle: "Edit",
+      width: "5%"
     },
     pager: {
       display: true,
@@ -53,7 +53,7 @@ export class RiskIndicatorComponent {
         type: "string",
         filter: false,
         editable: true,
-        width: "60%"
+        width: "70%"
       },
       score: {
         title: "Score ",
@@ -67,8 +67,8 @@ export class RiskIndicatorComponent {
       editable: this.scoreDisable==true, 
       editor:
        { type: 'list', config: 
-       { list: [{ value: 'Aktif', title: 'Aktif' }, 
-       { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+       { list: [{ value: 'Active', title: 'Active' }, 
+       { value: 'Inactive', title: 'Inactive' }] } } }
     }
   };
   source: LocalDataSource = new LocalDataSource();
@@ -220,7 +220,7 @@ export class RiskIndicatorComponent {
       condition: this.myForm.value.condition,
       indicatorId: indicator,
       score: "",
-      flagActive: "Aktif",
+      flagActive: "Active",
       UserCreated: "admin",
       DatetimeCreated: moment().format(),
       UserUpdate: "admin",
@@ -312,8 +312,8 @@ export class RiskIndicatorComponent {
         edit: this.yearPeriode == moment().format("YYYY"),
         delete: false,
         position: "right",
-        columnTitle: "Modify",
-        width: "10%"
+        columnTitle: "Edit",
+        width: "5%"
       },
       pager: {
         display: true,
@@ -325,7 +325,7 @@ export class RiskIndicatorComponent {
           type: "string",
           filter: false,
           editable: true,
-          width: "60%"
+          width: "70%"
         },
         score: {
           title: "Score ",
@@ -339,8 +339,8 @@ export class RiskIndicatorComponent {
         editable: this.addDisable==true,
         editor:
          { type: 'list', config: 
-         { list: [{ value: 'Aktif', title: 'Aktif' }, 
-         { value: 'Tidak Aktif', title: 'Tidak Aktif' }] } } }
+         { list: [{ value: 'Active', title: 'Active' }, 
+         { value: 'Inactive', title: 'Inactive' }] } } }
       }
     };
     this.source.setFilter(

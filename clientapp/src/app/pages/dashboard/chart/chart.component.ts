@@ -121,7 +121,7 @@ export class ChartComponent implements OnInit {
         .labels()
         .useHtml(true)
         .enabled(true)
-        .minFontSize(4)
+        .minFontSize(3)
         .format(function() {
           if (
             this.getData("irdata") != null ||
@@ -132,11 +132,11 @@ export class ChartComponent implements OnInit {
             let RD =
               this.getData("rddata") != null ? this.getData("rddata") : "";
             return (
-              "<span style='color:yellow; font-size:20px;'>" +
+              "<span style='color:yellow; font-size:14px;'>" +
               IR +
               "</span>" +
               "<br/>" +
-              "<span style='color:blue; font-size:20px;'>" +
+              "<span style='color:blue; font-size:14px;'>" +
               RD +
               "</span>"
             );
@@ -163,11 +163,11 @@ export class ChartComponent implements OnInit {
             let RD =
               this.getData("rddata") != null ? this.getData("rddata") : "";
             return (
-              "<span style='color:yellow; font-size:20px;'>" +
+              "<span style='color:yellow; font-size:14px;'>" +
               IR +
               "</span>" +
               "<br/>" +
-              "<span style='color:blue; font-size:20px;'>" +
+              "<span style='color:blue; font-size:14px;'>" +
               RD +
               "</span>"
             );
@@ -202,11 +202,11 @@ export class ChartComponent implements OnInit {
               let RD =
                 this.getData("rddata") != null ? this.getData("rddata") : "";
               return (
-                "<span style='color:yellow; font-size:20px;'>" +
+                "<span style='color:yellow; font-size:14px;'>" +
                 IR +
                 "</span>" +
                 "<br/>" +
-                "<span style='color:blue; font-size:20px;'>" +
+                "<span style='color:blue; font-size:14px;'>" +
                 RD +
                 "</span>"
               );
@@ -567,7 +567,7 @@ export class ChartComponent implements OnInit {
       .labels()
       .useHtml(true)
       .enabled(true)
-      .minFontSize(4)
+      .minFontSize(3)
       .format(function() {
         return (
           "<font color='yellow'>" +
