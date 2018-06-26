@@ -156,7 +156,7 @@ export class DashboardComponent {
     private toastr: ToastrService,
     public usercred: UserCred
   ) {
-    console.log(this.usercred.getUser());
+    //console.log(this.usercred.getUser());
     this.buttonDisable = false;
     this.loadData();
     this.loadApprove();
@@ -269,7 +269,12 @@ export class DashboardComponent {
       return (
         item.division == this.division && item.department == this.department
       );
-    });
+      
+    }
+  );
+  
+  console.log(this.fullData)
+  console.log(this.tabledata)
 
     this.tabledata = this.tabledata.sort(function(a, b) {
       return a.no - b.no;
@@ -341,7 +346,7 @@ export class DashboardComponent {
       irLikelihood: data.irLikelihood,
       rdLikelihood: data.rdLikelihood
     };
-    console.log({
+    /*console.log({
       finImpactCategory: data.finImpactCategory,
       finAmountIr: data.finAmountIr,
       opAmountIr: data.opAmountIr,
@@ -354,7 +359,7 @@ export class DashboardComponent {
       qlImpactRd: data.qlImpactRd,
       irLikelihood: data.irLikelihood,
       rdLikelihood: data.rdLikelihood
-    });
+    });*/
   }
 
   saveCSV() {

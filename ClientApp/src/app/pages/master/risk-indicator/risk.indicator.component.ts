@@ -63,7 +63,7 @@ export class RiskIndicatorComponent {
         width: "10%"
       },
       flagActive: { title: 'Status', 
-      type: 'html',
+      type: 'html', width: "15%",
       editable: this.scoreDisable==true, 
       editor:
        { type: 'list', config: 
@@ -335,7 +335,7 @@ export class RiskIndicatorComponent {
           width: "10%"
         },
         flagActive: { title: 'Status', 
-        type: 'html', 
+        type: 'html', width: "15%", 
         editable: this.addDisable==true,
         editor:
          { type: 'list', config: 

@@ -100,7 +100,7 @@ export class ChartComponent implements OnInit {
   set heat(value: any) {
     this.data = null;
     //console.log("msefert");
-    console.log(value);
+    //console.log(value);
     this.heatData = value;
     this.data = this.dataDefault;
     //console.log("msefert");
@@ -142,7 +142,7 @@ export class ChartComponent implements OnInit {
             );
           }
         });
-      console.log(data);
+     // console.log(data);
       this.chart.data(null);
       this.chart.data(data);
       //console.log("masukchart");

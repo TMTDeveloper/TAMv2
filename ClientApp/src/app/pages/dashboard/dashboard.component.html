@@ -42,6 +42,7 @@
             <option *ngFor="let data of departmentFilter" value="{{data.kodeDepartment}}">{{data.department}}</option>
           </select>
         </div>
+       
 
       </div>
       <div class="row">
@@ -97,10 +98,10 @@
               </thead>
               <thead>
                 <tr>
-                  <th width="10%" style="text-align:center">Risk&nbsp;No</th>
+                  <th class="medium" style="text-align:center">Risk&nbsp;No</th>
                   <th width="100px" style="text-align:center">Division</th>
                   <th width="100px" style="text-align:center">Company&nbsp;KPI</th>
-                  <th width="100px" style="text-align:center">Dept&nbsp;PI</th>
+                  <th width="100px" style="text-align:center">Dept&nbsp;KPI</th>
                   <th width="100px" style="text-align:center">Department</th>
                   <th width="100px" style="text-align:center">Business&nbsp;Process</th>
                   <th class="wide" style="text-align:center">Loss&nbsp;Event</th>
@@ -137,12 +138,12 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of tabledata">
-                  <td width="160px">{{ item.riskNo }}</td>
-                  <td>{{ item.descDivision }}</td>
-                  <td>{{ item.companyKpi }}</td>
-                  <td>{{ item.departmentKpi }}</td>
-                  <td>{{ item.descDepartment }}</td>
-                  <td>{{ item.businessProcess }}</td>
+                  <td class="medium">{{ item.riskNo }}</td>
+                  <td style="text-align:center">{{ item.descDivision }}</td>
+                  <td style="text-align:center">{{ item.companyKpi }}</td>
+                  <td style="text-align:center">{{ item.departmentKpi }}</td>
+                  <td style="text-align:center">{{ item.descDepartment }}</td>
+                  <td >{{ item.businessProcess }}</td>
                   <td class="wide">{{ item.lossEvent }}</td>
                   <td>
                     <div *ngFor="let data of insertSpace2(item.caused)">
@@ -151,41 +152,41 @@
                     </div>
                   </td>
                   <td>{{ item.riskImpact }}</td>
-                  <td>{{ item.riskLevel }}</td>
+                  <td style="text-align:center">{{ item.riskLevel }}</td>
                   <td>{{ item.notesIr }}</td>
-                  <td>{{ item.finImpactCategory }}</td>
-                  <td>{{ item.finAmountIr }}</td>
-                  <td>{{ item.opImpactCategory }}</td>
-                  <td>{{ item.opAmountIr }}</td>
-                  <td>{{ item.qlImpactIr }}</td>
-                  <td>{{ item.irImpact }}</td>
-                  <td>{{ item.irLikelihood }}</td>
-                  <td>{{ item.irOverall }}</td>
+                  <td style="text-align:center">{{ item.finImpactCategory }}</td>
+                  <td style="text-align:center">{{ item.finAmountIr }}</td>
+                  <td style="text-align:center">{{ item.opImpactCategory }}</td>
+                  <td style="text-align:center">{{ item.opAmountIr }}</td>
+                  <td style="text-align:center">{{ item.qlImpactIr }}</td>
+                  <td style="text-align:center">{{ item.irImpact }}</td>
+                  <td style="text-align:center">{{ item.irLikelihood }}</td>
+                  <td style="text-align:center"> {{ item.irOverall }}</td>
                   <td>
                     <div *ngFor="let data of insertSpace2(item.control)">
                       {{data}}
                       <br>
                     </div>
                   </td>
-                  <td>{{ item.operationCt }}</td>
-                  <td>{{ item.appropriatenessCt }}</td>
-                  <td>{{ item.efOverall }}</td>
+                  <td style="text-align:center">{{ item.operationCt }}</td>
+                  <td style="text-align:center">{{ item.appropriatenessCt }}</td>
+                  <td style="text-align:center">{{ item.efOverall }}</td>
                   <td>{{ item.notesRd }}</td>
-                  <td>{{ item.finAmountRd }}</td>
-                  <td>{{ item.opAmountRd }}</td>
-                  <td>{{ item.qlImpactRd }}</td>
-                  <td>{{ item.rdImpact }}</td>
-                  <td>{{ item.rdLikelihood }}</td>
-                  <td>{{ item.rdOverall }}</td>
+                  <td style="text-align:center">{{ item.finAmountRd }}</td>
+                  <td style="text-align:center">{{ item.opAmountRd }}</td>
+                  <td style="text-align:center">{{ item.qlImpactRd }}</td>
+                  <td style="text-align:center">{{ item.rdImpact }}</td>
+                  <td style="text-align:center">{{ item.rdLikelihood }}</td>
+                  <td style="text-align:center">{{ item.rdOverall }}</td>
                   <td>
                     <div *ngFor="let data of insertSpace2(item.treatmentPlan)">
                       {{data}}
                       <br>
                     </div>
                   </td>
-                  <td>{{ item.exImpact }}</td>
-                  <td>{{ item.exLikelihood }}</td>
-                  <td>{{ item.exOverall }}</td>
+                  <td style="text-align:center">{{ item.exImpact }}</td>
+                  <td style="text-align:center">{{ item.exLikelihood }}</td>
+                  <td style="text-align:center">{{ item.exOverall }}</td>
                   <td>
                     <div *ngFor="let data of insertSpace2(item.exPic)">
                       {{data}}

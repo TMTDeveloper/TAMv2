@@ -35,7 +35,7 @@
         <button class="btn btn-hero-primary" (click)="print('print_tab1')">Print Chart</button>
       </div>
       <div class="form-group mr-1">
-        <button class="btn btn-hero-primary" (click)="printReport()">Print Report</button>
+        <button class="btn btn-hero-primary" (click)="print('print_tab2')">Print Report</button>
       </div>
       <div class="form-group">
         <button class="btn btn-hero-primary" (click)="showModal()" [disabled]="canApprove()">Approval</button>
@@ -379,7 +379,7 @@
             </div>
           </div>
 
-          <div class="print_report" *ngFor="let arr of fullDataArr">
+          <div class="print_report">
             <font size="4">
               <table class="table table-bordered">
 
@@ -431,7 +431,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of arr">
+                  <tr *ngFor="let item of fullDataList">
                     <td>{{ item.riskNo }}</td>
                     <td>{{ item.departmentKpi }}</td>
                     <td>{{ item.lossEvent }}</td>

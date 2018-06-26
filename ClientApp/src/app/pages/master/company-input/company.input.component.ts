@@ -58,7 +58,7 @@ export class CompanyInputComponent {
         }
       },
       flagActive: { title: 'Status', 
-      type: 'html', 
+      type: 'html', width: "15%", 
       editor:
        { type: 'list', config: 
        { list: [{ value: 'Active', title: 'Active' }, 
@@ -264,7 +264,7 @@ export class CompanyInputComponent {
           
         },
         flagActive: { title: 'Status', 
-      type: 'html', 
+      type: 'html', width: "15%", 
       editor:
        { type: 'list', config: 
        { list: [{ value: 'Active', title: 'Active' }, 

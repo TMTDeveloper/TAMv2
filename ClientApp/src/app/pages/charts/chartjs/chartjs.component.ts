@@ -245,7 +245,6 @@ export class ChartjsComponent {
   tabledata: any[] = [];
   fullData: any[] = [];
   fullDataList: any[] = [];
-  fullDataArr: any[] = [];
   riskArr: Array<any> = [
     {
       no: 1,
@@ -348,7 +347,7 @@ export class ChartjsComponent {
   }
 
   reload() {
-    this.riskArr = [
+    this.riskArr= [
       {
         no: 1,
         riskNo: "",
@@ -427,19 +426,6 @@ export class ChartjsComponent {
     this.fullDataList = this.fullDataList.sort(function(a, b) {
       return a.no - b.no;
     });
-    this.fullDataArr = [];
-    let tempData = [];
-    let ind = 0;
-    this.fullDataList.forEach(element => {
-      tempData.push(element);
-      if (ind == 4) {
-        this.fullDataArr.push(tempData);
-        tempData = [];
-        ind = 0;
-      }
-      ind++;
-    });
-
     ////console.log(this.fullData);
     if (this.tabledata[0] != null) {
       this.processData(this.tabledata);
@@ -676,35 +662,6 @@ export class ChartjsComponent {
   print(id) {
     ////console.log(this.dataInput);
     let element = <HTMLScriptElement>document.getElementById(id);
-
-    var divHeight = element.offsetHeight;
-    var divWidth = element.offsetWidth;
-    var ratio = divHeight / divWidth;
-    // Create your table here (The dynamic table needs to be converted to canvas).
-
-    html2canvas(element, {
-      useCORS: true
-    }).then((canvas: any) => {
-      var width = canvas.width;
-      var height = canvas.height;
-      var imgData = canvas.toDataURL("image/png");
-      let orientation = element.id == "print_tab1" ? "portrait" : "landscape";
-      var doc = new jsPDF({
-        orientation: "landscape",
-        unit: "mm",
-        format: [
-          Math.floor(width * 0.264583) + 5,
-          Math.floor(height * 0.264583) + 5
-        ]
-      });
-      doc.addImage(canvas.toDataURL("image/PNG"), "PNG", 2, 2);
-      doc.save(`Report-${Date.now()}.pdf`);
-    });
-  }
-
-  printReport() {
-    ////console.log(this.dataInput);
-    let element = <HTMLScriptElement>document.getElementById("print_tab2");
 
     var divHeight = element.offsetHeight;
     var divWidth = element.offsetWidth;
